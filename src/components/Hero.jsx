@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
-import { Link } from "react-router-dom";
+
 
 export default function Hero() {
   return (
