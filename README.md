@@ -1,12 +1,107 @@
-<<<<<<< HEAD
-# React + Vite
+# Subhajit Pradhan - Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean, modern portfolio website showcasing my projects, skills, and experience as a software developer.
 
-Currently, two official plugins are available:
+🌐 **Live Site**: [subhajit.me](https://subhajit.me)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-=======
-# subhajitlucky.github.io
->>>>>>> 9fd9731e1da1fbd4aa9527d7d113a043ccf1f59a
+## 🚀 Features
+
+- **Clean Design**: Minimal, professional layout focusing on content
+- **Responsive**: Works perfectly on all devices and screen sizes
+- **Fast Performance**: Built with Vite for optimal loading speeds
+- **Real Projects**: Showcases actual GitHub repositories and work
+- **Easy Navigation**: Simple routing between Home and Projects
+- **Contact Integration**: Direct links to email, GitHub, and LinkedIn
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 18, React Router DOM
+- **Build Tool**: Vite
+- **Styling**: Pure CSS with modern layout techniques
+- **Deployment**: GitHub Pages
+- **Code Quality**: ESLint for code consistency
+
+## 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── Navbar.jsx          # Navigation component
+│   ├── Navbar.css
+│   ├── Hero.jsx            # Landing section
+│   └── Hero.css
+├── pages/
+│   ├── Home.jsx            # Home page
+│   ├── Home.css
+│   ├── Projects.jsx        # Projects showcase
+│   └── Projects.css
+├── App.jsx                 # Main app with routing
+├── App.css                 # Global styles
+└── main.jsx                # Entry point
+```
+
+## 🎯 Featured Projects
+
+- **DeMarket** - Decentralized marketplace with Solidity smart contracts
+- **PradhanFresh** - E-commerce platform for fresh produce (TypeScript, PostgreSQL)
+- **ICP Token Wallet** - Cryptocurrency wallet for Internet Computer tokens
+- **Task Manager** - Full-stack MERN application
+- **Contest Radar** - Coding contest tracking platform
+- **And more..** - Check out the [Projects page](https://subhajit.me/projects)
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/subhajitlucky/subhajit.me.git
+cd subhajit.me
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+The build files will be generated in the `dist/` directory.
+
+## 📧 Contact
+
+- **Email**: [subhajitpradhan310@gmail.com](mailto:subhajitpradhan310@gmail.com)
+- **GitHub**: [subhajitlucky](https://github.com/subhajitlucky)
+- **LinkedIn**: [subhajitlucky](https://linkedin.com/in/subhajitlucky)
+- **Location**: Odisha, India
+
+## 📄 Resume
+
+View my resume: [Download PDF](./assets/Subhajit_Resume.pdf)
+
+## 🤝 Contributing
+
+This is a personal portfolio project, but suggestions and feedback are always welcome! Feel free to open an issue or reach out directly.
+
+## 📝 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+⭐ **Built with passion by Subhajit Pradhan**
