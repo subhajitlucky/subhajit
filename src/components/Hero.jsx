@@ -35,7 +35,7 @@ function Hero() {
             </a>
 
             <a 
-              href="https://linkedin.com/in/subhajitpradhan" 
+              href="https://linkedin.com/in/subhajitlucky" 
               target="_blank" 
               rel="noopener noreferrer"
               className="contact-link"
