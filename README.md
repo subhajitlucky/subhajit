@@ -42,6 +42,8 @@ npm run build:vercel
 npm run lint
 ```
 
+<!-- Deployment trigger: 2025-06-13 17:13 -->
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18, React Router DOM
