@@ -13,6 +13,35 @@ A clean, modern portfolio website showcasing my projects, skills, and experience
 - **Easy Navigation**: Simple routing between Home and Projects
 - **Contact Integration**: Direct links to email, GitHub, and LinkedIn
 
+## 🌐 Deployment
+
+This project is configured to deploy on multiple platforms:
+
+### GitHub Pages
+- **URL**: [subhajitlucky.github.io/subhajit](https://subhajitlucky.github.io/subhajit/)
+- **Auto-deployment**: Triggers on push to `main` branch
+- **Build command**: `npm run build:github`
+
+### Vercel
+- **URL**: Custom domain or Vercel subdomain
+- **Auto-deployment**: Connect GitHub repository to Vercel
+- **Build command**: `npm run build:vercel`
+
+### Build Commands
+```bash
+# For local development
+npm run dev
+
+# For GitHub Pages deployment
+npm run build:github
+
+# For Vercel deployment
+npm run build:vercel
+
+# For linting
+npm run lint
+```
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 18, React Router DOM

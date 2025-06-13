@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router basename="/subhajit">
+    <Router basename={import.meta.env.BASE_URL}>
       <div className="app">
         <Navbar />
         <main className="main-content">
