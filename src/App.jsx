@@ -5,8 +5,11 @@ import Projects from './pages/Projects';
 import './App.css';
 
 function App() {
+  // Determine basename from the current environment
+  const basename = import.meta.env.BASE_URL;
+  
   return (
-    <Router basename={import.meta.env.BASE_URL}>
+    <Router basename={basename}>
       <div className="app">
         <Navbar />
         <main className="main-content">
