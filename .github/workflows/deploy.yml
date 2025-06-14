@@ -49,8 +49,13 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages # Add a name to the artifact
           path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        # No need to specify artifact_name here if it's the default 'github-pages'
+        # and configure-pages is used. However, if configure-pages is removed or
+        # if we want to be very explicit, we might need it.
+        # For now, let's rely on configure-pages setting up the environment.
