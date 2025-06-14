@@ -1,0 +1,81 @@
+.blog-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.blog-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.blog-intro {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Coming Soon Section */
+.blog-coming-soon {
+  display: flex;
+  justify-content: center;
+}
+
+.coming-soon-card {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: 0 8px 32px rgba(0, 123, 255, 0.3);
+}
+
+.coming-soon-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.coming-soon-card p {
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .blog-page {
+    padding: 20px 15px;
+  }
+  
+  .blog-header {
+    margin-bottom: 40px;
+  }
+  
+  .blog-header h1 {
+    font-size: 2rem;
+  }
+  
+  .blog-intro {
+    font-size: 1rem;
+  }
+  
+  .coming-soon-card {
+    padding: 30px 20px;
+    margin: 0 10px;
+  }
+} 

@@ -1,15 +1,21 @@
 .navbar {
-  padding: 20px 40px;
   background-color: #fff;
   border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .nav-logo {
@@ -17,34 +23,59 @@
   font-weight: bold;
   color: #333;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .nav-logo:hover {
-  color: #666;
+  color: #007bff;
 }
 
 .nav-links {
   display: flex;
-  gap: 30px;
+  gap: 2rem;
+  align-items: center;
 }
 
 .nav-link {
-  color: #333;
+  color: #666;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 6px;
+  position: relative;
 }
 
 .nav-link:hover {
-  color: #666;
+  color: #007bff;
+  background-color: #f8f9fa;
+}
+
+.nav-link:active {
+  transform: translateY(1px);
+}
+
+/* Active link indicator */
+.nav-link.active {
+  color: #007bff;
+  background-color: #f8f9fa;
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    padding: 15px 20px;
+  .nav-container {
+    padding: 0 15px;
   }
   
   .nav-links {
-    gap: 20px;
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    font-size: 0.9rem;
+    padding: 6px 8px;
+  }
+  
+  .nav-logo {
+    font-size: 1.3rem;
   }
 } 

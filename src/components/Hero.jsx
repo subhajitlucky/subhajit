@@ -14,35 +14,10 @@ function Hero() {
           📍 Odisha, India
         </p>
 
-        <div className="hero-contact">
-          <p className="contact-title">Reach me:</p>
-          
-          <div className="contact-links">
-            <a 
-              href="mailto:subhajitpradhan310@gmail.com" 
-              className="contact-link"
-            >
-              📧 Gmail
-            </a>
-
-            <a 
-              href="https://github.com/subhajitlucky" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="contact-link"
-            >
-              🔗 GitHub
-            </a>
-
-            <a 
-              href="https://linkedin.com/in/subhajitlucky" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="contact-link"
-            >
-              💼 LinkedIn
-            </a>
-          </div>
+        <div className="hero-cta">
+          <p className="hero-tagline">
+            "The only way to do great work is to love what you do" - Steve Jobs
+          </p>
         </div>
       </div>
     </section>

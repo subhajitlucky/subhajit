@@ -10,6 +10,7 @@ function Navbar() {
         </Link>
         <div className="nav-links">
           <Link to="/projects" className="nav-link">Projects</Link>
+          <Link to="/blog" className="nav-link">Blog</Link>
           <a 
             href="./assets/Subhajit_Resume.pdf"
             target="_blank" 
