@@ -43,9 +43,6 @@ jobs:
           echo "Index.html content check:"
           grep -n "subhajit" dist/index.html || echo "No subhajit paths found"
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -55,7 +52,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        # No need to specify artifact_name here if it's the default 'github-pages'
-        # and configure-pages is used. However, if configure-pages is removed or
-        # if we want to be very explicit, we might need it.
-        # For now, let's rely on configure-pages setting up the environment.
+        with:
+          artifact_name: github-pages # Explicitly use the named artifact
