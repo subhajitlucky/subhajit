@@ -46,8 +46,22 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages # Add a name to the artifact
+          name: github-pages
           path: './dist'
+
+      - name: Download artifact for inspection
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: ./artifact_inspect # Download to a specific folder
+
+      - name: Inspect downloaded artifact
+        run: |
+          echo "Inspecting downloaded artifact in ./artifact_inspect"
+          ls -laR ./artifact_inspect
+          echo "--- artifact_inspect/index.html content ---"
+          cat ./artifact_inspect/index.html | grep -E "(script.*src=|link.*href=)" || echo "index.html not found or no script/link tags"
+          echo "----------------------------------------"
 
       - name: Deploy to GitHub Pages
         id: deployment
