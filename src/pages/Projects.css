@@ -47,6 +47,26 @@
   flex-direction: column;
 }
 
+.project-card.featured {
+  border: 2px solid #007bff;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  position: relative;
+}
+
+.project-card.featured::before {
+  content: "⭐ Featured";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 0 12px 0 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 1;
+}
+
 .project-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
@@ -134,6 +154,18 @@
   background-color: #007bff;
   color: white;
   transform: translateY(-1px);
+}
+
+.demo-link {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white !important;
+  border: 2px solid transparent;
+}
+
+.demo-link:hover {
+  background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
 
 .more-projects {

@@ -3,59 +3,63 @@ import './Projects.css';
 function Projects() {
   const projects = [
     {
-      title: "DeMarket",
-      description: "A decentralized local marketplace platform that enables users to buy and sell goods and services using cryptocurrencies.",
-      tech: "JavaScript, React, Solidity",
-      github: "https://github.com/subhajitlucky/DeMarket",
-      year: "2025"
-    },
-    {
       title: "PradhanFresh",
-      description: "A family-owned business dedicated to bringing the freshest fruits and vegetables directly from local farms to your table.",
-      tech: "TypeScript, React, Node.js, PostgreSQL",
+      description: "A comprehensive full-stack e-commerce platform for fresh produce delivery. Features user authentication, product management, and modern TypeScript architecture with PostgreSQL backend.",
+      tech: "TypeScript, React, Node.js, PostgreSQL, Prisma",
       github: "https://github.com/subhajitlucky/pradhanfresh",
-      year: "2025"
+      demo: "https://pradhanfresh.vercel.app",
+      year: "2025",
+      featured: true
     },
     {
-      title: "ICP Token Wallet",
-      description: "A secure and user-friendly wallet for managing Internet Computer (ICP) tokens efficiently.",
-      tech: "JavaScript, React, Rust",
-      github: "https://github.com/subhajitlucky/icp-token-wallet",
-      year: "2025"
+      title: "DeMarket",
+      description: "A decentralized local marketplace platform enabling users to buy and sell goods using cryptocurrencies. Built with smart contracts and supports Sepolia ETH and Avalanche AVAX.",
+      tech: "JavaScript, React, Solidity, Web3, Blockchain",
+      github: "https://github.com/subhajitlucky/DeMarket",
+      year: "2025",
+      featured: true
     },
     {
-      title: "Task Manager",
-      description: "A full-stack MERN (MongoDB, Express.js, React, Node.js) task management application that allows users to create, read, update, and delete tasks.",
-      tech: "MERN Stack",
-      github: "https://github.com/subhajitlucky/task_manager",
+      title: "Event NFT Ticket",
+      description: "An innovative NFT-based event ticketing system that provides secure, verifiable, and transferable digital tickets for events using blockchain technology.",
+      tech: "JavaScript, React, Solidity, NFTs",
+      github: "https://github.com/subhajitlucky/event_nft_ticket",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "TokenVault",
+      description: "A secure cryptocurrency token management and storage solution with advanced security features for digital asset protection.",
+      tech: "JavaScript, React, Web3, Blockchain",
+      github: "https://github.com/subhajitlucky/tokenVault",
       year: "2025"
     },
     {
       title: "Contest Radar",
-      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms.",
+      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms with real-time updates.",
       tech: "JavaScript, React, API Integration",
       github: "https://github.com/subhajitlucky/contest_radar",
       year: "2025"
     },
     {
-      title: "Guess the Thief",
-      description: "A real-time multiplayer game where players must use their wits to identify the Thief.",
-      tech: "JavaScript, Real-time Gaming",
-      github: "https://github.com/subhajitlucky/guess_the_thief",
+      title: "Task Manager",
+      description: "A full-stack MERN application with complete CRUD functionality for task management, featuring user authentication and responsive design.",
+      tech: "MERN Stack (MongoDB, Express, React, Node.js)",
+      github: "https://github.com/subhajitlucky/task_manager",
       year: "2025"
     },
     {
-      title: "Solana Wallet Checker",
-      description: "A simple web application to check the SOL balance of any Solana wallet address on Devnet or Mainnet, built with React and Vite.",
-      tech: "JavaScript, React, Solana",
-      github: "https://github.com/subhajitlucky/solana_wallet_checker",
+      title: "ICP Token Wallet",
+      description: "A secure and user-friendly wallet for managing Internet Computer (ICP) tokens with advanced transaction handling and portfolio tracking.",
+      tech: "JavaScript, React, Rust, Internet Computer",
+      github: "https://github.com/subhajitlucky/icp-token-wallet",
       year: "2025"
     },
     {
-      title: "Auth System",
-      description: "Authentication system built with MERN stack providing secure user registration and login functionality.",
-      tech: "MERN Stack, JWT, Security",
-      github: "https://github.com/subhajitlucky/auth-system",
+      title: "Authentication System",
+      description: "A robust authentication system built with MERN stack providing secure user registration, login, and session management with JWT tokens.",
+      tech: "MERN Stack, JWT, Security, bcrypt",
+      github: "https://github.com/subhajitlucky/authentication",
       year: "2025"
     }
   ];
@@ -64,11 +68,14 @@ function Projects() {
     <div className="projects-page">
       <div className="container">
         <h1>Projects</h1>
-        <p className="projects-intro">Here are some of the projects I&apos;ve built while exploring different technologies and solving real-world problems.</p>
+        <p className="projects-intro">
+          Here are some of my featured projects showcasing expertise in blockchain development, 
+          full-stack web applications, and modern JavaScript technologies.
+        </p>
         
         <div className="projects-grid">
           {projects.map((project, index) => (
-            <div key={index} className="project-card">
+            <div key={index} className={`project-card ${project.featured ? 'featured' : ''}`}>
               <div className="project-header">
                 <h3 className="project-title">{project.title}</h3>
                 <span className="project-year">{project.year}</span>
@@ -90,6 +97,16 @@ function Projects() {
                 >
                   🔗 GitHub
                 </a>
+                {project.demo && (
+                  <a 
+                    href={project.demo} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="project-link demo-link"
+                  >
+                    🚀 Live Demo
+                  </a>
+                )}
               </div>
             </div>
           ))}
