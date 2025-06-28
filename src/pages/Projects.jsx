@@ -12,33 +12,35 @@ function Projects() {
       featured: true
     },
     {
-      title: "DeMarket",
-      description: "A decentralized local marketplace platform enabling users to buy and sell goods using cryptocurrencies. Built with smart contracts and supports Sepolia ETH and Avalanche AVAX.",
-      tech: "JavaScript, React, Solidity, Web3, Blockchain",
-      github: "https://github.com/subhajitlucky/DeMarket",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Event NFT Ticket",
-      description: "An innovative NFT-based event ticketing system that provides secure, verifiable, and transferable digital tickets for events using blockchain technology.",
-      tech: "JavaScript, React, Solidity, NFTs",
-      github: "https://github.com/subhajitlucky/event_nft_ticket",
+      title: "QuantumTicket",
+      description: "Blockchain-powered event ticketing platform that mints verifiable NFT tickets on-chain. Provides seamless purchase flow, QR code verification, and secondary resale with royalty support.",
+      tech: "React, Vite, Solidity, Ethers.js, NFT, Smart Contracts",
+      github: "https://github.com/subhajitlucky/quantumTicket",
+      demo: "https://quantumticket.vercel.app/",
       year: "2025",
       featured: true
     },
     {
       title: "TokenVault",
-      description: "A secure cryptocurrency token management and storage solution with advanced security features for digital asset protection.",
-      tech: "JavaScript, React, Web3, Blockchain",
+      description: "Professional multi-chain portfolio tracker supporting 8+ blockchain networks. Provides real-time balance tracking, automatic token detection, and unified portfolio analytics across Solana, Ethereum, Polygon, Arbitrum, and more.",
+      tech: "React, Ethers.js, Solana Web3.js, Multi-Chain APIs",
       github: "https://github.com/subhajitlucky/tokenVault",
+      demo: "https://tokenvault.vercel.app/",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "ICP Token Wallet",
+      description: "A secure and user-friendly wallet for managing Internet Computer (ICP) tokens with advanced transaction handling and portfolio tracking capabilities.",
+      tech: "JavaScript, React, Rust, Internet Computer",
+      github: "https://github.com/subhajitlucky/icp-token-wallet",
       year: "2025"
     },
     {
-      title: "Contest Radar",
-      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms with real-time updates.",
-      tech: "JavaScript, React, API Integration",
-      github: "https://github.com/subhajitlucky/contest_radar",
+      title: "Authentication System",
+      description: "A robust authentication system built with MERN stack providing secure user registration, login, and session management with JWT tokens and bcrypt encryption.",
+      tech: "MERN Stack, JWT, Security, bcrypt",
+      github: "https://github.com/subhajitlucky/authentication",
       year: "2025"
     },
     {
@@ -49,17 +51,10 @@ function Projects() {
       year: "2025"
     },
     {
-      title: "ICP Token Wallet",
-      description: "A secure and user-friendly wallet for managing Internet Computer (ICP) tokens with advanced transaction handling and portfolio tracking.",
-      tech: "JavaScript, React, Rust, Internet Computer",
-      github: "https://github.com/subhajitlucky/icp-token-wallet",
-      year: "2025"
-    },
-    {
-      title: "Authentication System",
-      description: "A robust authentication system built with MERN stack providing secure user registration, login, and session management with JWT tokens.",
-      tech: "MERN Stack, JWT, Security, bcrypt",
-      github: "https://github.com/subhajitlucky/authentication",
+      title: "Contest Radar",
+      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms with real-time updates and notifications.",
+      tech: "JavaScript, React, API Integration",
+      github: "https://github.com/subhajitlucky/contest_radar",
       year: "2025"
     }
   ];
