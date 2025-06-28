@@ -1,0 +1,226 @@
+/* ===== BASE FOOTER STYLES (DAY THEME) ===== */
+.footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  padding: 2rem 0;
+  margin-top: auto;
+  transition: all 0.8s ease;
+}
+
+/* ===== SPACE THEME FOOTER ===== */
+[data-theme="space"] .footer {
+  background: linear-gradient(135deg, 
+    rgba(10, 10, 15, 0.95) 0%, 
+    rgba(26, 26, 46, 0.98) 50%, 
+    rgba(10, 10, 15, 0.95) 100%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Space theme cosmic border effect */
+[data-theme="space"] .footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #90CAF9 25%, 
+    #81C784 50%, 
+    #FFB74D 75%, 
+    transparent 100%
+  );
+  animation: cosmicBorder 4s ease-in-out infinite;
+}
+
+@keyframes cosmicBorder {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ===== SOCIAL LINKS ===== */
+.footer-social {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: #666;
+  text-decoration: none;
+  border-radius: 50%;
+  border: 2px solid #e9ecef;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-link:hover {
+  color: #007bff;
+  border-color: #007bff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.social-link:active {
+  transform: translateY(-1px);
+}
+
+/* Space theme social links */
+[data-theme="space"] .social-link {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #e3f2fd;
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="space"] .social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.1), 
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+[data-theme="space"] .social-link:hover::before {
+  left: 100%;
+}
+
+[data-theme="space"] .social-link:hover {
+  color: #90CAF9;
+  border-color: rgba(144, 202, 249, 0.5);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 6px 20px rgba(144, 202, 249, 0.3),
+    0 0 30px rgba(144, 202, 249, 0.1);
+}
+
+/* Individual social link colors in space theme */
+[data-theme="space"] .social-link:nth-child(1):hover {
+  /* GitHub */
+  color: #90CAF9;
+  box-shadow: 
+    0 6px 20px rgba(144, 202, 249, 0.3),
+    0 0 30px rgba(144, 202, 249, 0.1);
+}
+
+[data-theme="space"] .social-link:nth-child(2):hover {
+  /* LinkedIn */
+  color: #81C784;
+  border-color: rgba(129, 199, 132, 0.5);
+  box-shadow: 
+    0 6px 20px rgba(129, 199, 132, 0.3),
+    0 0 30px rgba(129, 199, 132, 0.1);
+}
+
+[data-theme="space"] .social-link:nth-child(3):hover {
+  /* Email */
+  color: #FFB74D;
+  border-color: rgba(255, 183, 77, 0.5);
+  box-shadow: 
+    0 6px 20px rgba(255, 183, 77, 0.3),
+    0 0 30px rgba(255, 183, 77, 0.1);
+}
+
+/* ===== COPYRIGHT TEXT ===== */
+.footer-copyright {
+  text-align: center;
+}
+
+.footer-copyright p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  transition: all 0.8s ease;
+}
+
+/* Space theme copyright */
+[data-theme="space"] .footer-copyright p {
+  color: #90CAF9;
+  text-shadow: 0 0 10px rgba(144, 202, 249, 0.3);
+  position: relative;
+}
+
+[data-theme="space"] .footer-copyright p::after {
+  content: '✨';
+  margin-left: 8px;
+  animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .footer {
+    padding: 1.5rem 0;
+  }
+  
+  .footer-container {
+    padding: 0 15px;
+  }
+  
+  .footer-social {
+    gap: 1.5rem;
+  }
+  
+  .social-link {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .footer-copyright p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 0 10px;
+  }
+  
+  .footer-social {
+    gap: 1rem;
+  }
+  
+  .social-link {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .footer-copyright p {
+    font-size: 0.8rem;
+  }
+} 

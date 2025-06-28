@@ -1,5 +1,5 @@
 import Hero from '../components/Hero';
-import './Home.css';
+import '../styles/Home.css';
 
 function Home() {
   return (

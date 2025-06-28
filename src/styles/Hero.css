@@ -1,0 +1,409 @@
+/* ===== BASE HERO STYLES (DAY THEME) ===== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  transition: all 0.8s ease;
+}
+
+/* ===== HERO CONTAINER ===== */
+.hero-container {
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+/* ===== DAY THEME TEXT STYLES ===== */
+.hero-name {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.8s ease;
+}
+
+.hero-intro {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #555;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.8s ease;
+}
+
+.hero-location {
+  font-size: 1rem;
+  margin-bottom: 40px;
+  color: #666;
+  transition: all 0.8s ease;
+}
+
+.hero-cta {
+  margin-top: 20px;
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  color: #666;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-style: italic;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #007bff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.8s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-tagline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== SPACE THEME OVERRIDES ===== */
+[data-theme="space"] .hero {
+  background: linear-gradient(135deg, 
+    #0a0a0f 0%, 
+    #1a1a2e 25%, 
+    #16213e 50%, 
+    #0f0f23 75%, 
+    #000000 100%
+  );
+}
+
+[data-theme="space"] .hero-name.cosmic-glow {
+  font-size: 3rem;
+  background: linear-gradient(45deg, #ffffff, #e3f2fd, #bbdefb);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  animation: textGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
+  100% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+}
+
+[data-theme="space"] .hero-intro.stellar-text {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+  color: #e3f2fd;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="space"] .hero-location.cosmic-location {
+  font-size: 1.1rem;
+  color: #90CAF9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="space"] .hero-tagline {
+  font-size: 1.2rem;
+  color: #FFECB3;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+[data-theme="space"] .hero-tagline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+[data-theme="space"] .hero-tagline:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== SPACE THEME ELEMENTS (Hidden in day theme) ===== */
+.starfield,
+.particles,
+.shooting-stars,
+.constellation-dots {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+[data-theme="space"] .starfield,
+[data-theme="space"] .particles,
+[data-theme="space"] .shooting-stars,
+[data-theme="space"] .constellation-dots {
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* ===== STARFIELD BACKGROUND ===== */
+.starfield {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 300%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 90px 40px, #ffffff, transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(2px 2px at 160px 30px, #ffffff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: drift 120s linear infinite;
+}
+
+.stars-medium {
+  background-image: 
+    radial-gradient(1px 1px at 40px 60px, #4FC3F7, transparent),
+    radial-gradient(1px 1px at 120px 20px, #81C784, transparent),
+    radial-gradient(1px 1px at 80px 100px, #FFB74D, transparent);
+  animation: drift 80s linear infinite reverse;
+}
+
+.stars-large {
+  background-image: 
+    radial-gradient(2px 2px at 60px 80px, #E1BEE7, transparent),
+    radial-gradient(1px 1px at 140px 40px, #90CAF9, transparent);
+  animation: drift 60s linear infinite;
+}
+
+@keyframes drift {
+  from { transform: translate3d(-100px, -100px, 0) rotate(0deg); }
+  to { transform: translate3d(-100px, -100px, 0) rotate(360deg); }
+}
+
+/* ===== FLOATING PARTICLES ===== */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  width: 3px;
+  height: 3px;
+  animation: float 20s linear infinite;
+}
+
+.particle-1 { top: 20%; left: 10%; animation-delay: 0s; animation-duration: 25s; }
+.particle-2 { top: 60%; left: 20%; animation-delay: 2s; animation-duration: 30s; }
+.particle-3 { top: 40%; left: 80%; animation-delay: 4s; animation-duration: 22s; }
+.particle-4 { top: 80%; left: 60%; animation-delay: 6s; animation-duration: 28s; }
+.particle-5 { top: 10%; left: 70%; animation-delay: 8s; animation-duration: 35s; }
+.particle-6 { top: 70%; left: 30%; animation-delay: 10s; animation-duration: 20s; }
+.particle-7 { top: 30%; left: 90%; animation-delay: 12s; animation-duration: 26s; }
+.particle-8 { top: 90%; left: 15%; animation-delay: 14s; animation-duration: 32s; }
+.particle-9 { top: 50%; left: 50%; animation-delay: 16s; animation-duration: 24s; }
+.particle-10 { top: 15%; left: 40%; animation-delay: 18s; animation-duration: 29s; }
+.particle-11 { top: 75%; left: 75%; animation-delay: 1s; animation-duration: 27s; }
+.particle-12 { top: 35%; left: 25%; animation-delay: 3s; animation-duration: 31s; }
+.particle-13 { top: 65%; left: 85%; animation-delay: 5s; animation-duration: 23s; }
+.particle-14 { top: 25%; left: 55%; animation-delay: 7s; animation-duration: 33s; }
+.particle-15 { top: 85%; left: 45%; animation-delay: 9s; animation-duration: 21s; }
+.particle-16 { top: 45%; left: 65%; animation-delay: 11s; animation-duration: 34s; }
+.particle-17 { top: 55%; left: 35%; animation-delay: 13s; animation-duration: 25s; }
+.particle-18 { top: 95%; left: 95%; animation-delay: 15s; animation-duration: 30s; }
+.particle-19 { top: 5%; left: 5%; animation-delay: 17s; animation-duration: 28s; }
+.particle-20 { top: 65%; left: 5%; animation-delay: 19s; animation-duration: 26s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+  10%, 90% { opacity: 1; }
+  50% { transform: translate(30px, -30px) rotate(180deg); opacity: 0.8; }
+}
+
+/* ===== SHOOTING STARS ===== */
+.shooting-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: linear-gradient(45deg, #ffffff, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 6px #ffffff;
+  animation: shoot 3s linear infinite;
+}
+
+.shooting-star:nth-child(1) {
+  top: 20%;
+  left: 0;
+  animation-delay: 0s;
+  animation-duration: 3s;
+}
+
+.shooting-star:nth-child(2) {
+  top: 40%;
+  left: 0;
+  animation-delay: 2s;
+  animation-duration: 4s;
+}
+
+.shooting-star:nth-child(3) {
+  top: 60%;
+  left: 0;
+  animation-delay: 4s;
+  animation-duration: 2.5s;
+}
+
+@keyframes shoot {
+  0% {
+    transform: translate(-100px, 100px) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-100px, 100px) scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(300px, -300px) scale(1);
+  }
+  100% {
+    transform: translate(300px, -300px) scale(0);
+    opacity: 0;
+  }
+}
+
+/* ===== CONSTELLATION DOTS ===== */
+.constellation-dots {
+  position: relative;
+  height: 100px;
+  margin: 20px 0;
+}
+
+.dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #81C784, #4CAF50);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #81C784;
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+
+.dot-1 { top: 20%; left: 30%; animation-delay: 0s; }
+.dot-2 { top: 40%; left: 50%; animation-delay: 0.5s; }
+.dot-3 { top: 25%; left: 70%; animation-delay: 1s; }
+.dot-4 { top: 60%; left: 60%; animation-delay: 1.5s; }
+.dot-5 { top: 70%; left: 40%; animation-delay: 2s; }
+
+@keyframes twinkle {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.2); }
+}
+
+.constellation-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.constellation-lines line {
+  stroke: rgba(129, 199, 132, 0.4);
+  stroke-width: 1;
+  animation: fadeInOut 6s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 90vh;
+    padding: 30px 15px;
+  }
+  
+  .hero-name {
+    font-size: 2rem;
+  }
+  
+  [data-theme="space"] .hero-name.cosmic-glow {
+    font-size: 2.2rem;
+  }
+  
+  .hero-intro {
+    font-size: 1.1rem;
+  }
+  
+  [data-theme="space"] .hero-intro.stellar-text {
+    font-size: 1.1rem;
+  }
+  
+  .constellation-dots {
+    height: 80px;
+  }
+  
+  .hero-tagline {
+    font-size: 1rem;
+    padding: 16px;
+  }
+  
+  [data-theme="space"] .hero-tagline {
+    font-size: 1rem;
+    padding: 20px;
+  }
+  
+  .particle {
+    width: 2px;
+    height: 2px;
+  }
+} 

@@ -1,6 +1,35 @@
-import './Projects.css';
+import { useState, useEffect } from 'react';
+import '../styles/Projects.css';
 
 function Projects() {
+  const [isSpaceTheme, setIsSpaceTheme] = useState(false);
+
+  useEffect(() => {
+    // Check initial theme from body attribute
+    const checkTheme = () => {
+      const theme = document.body.getAttribute('data-theme');
+      setIsSpaceTheme(theme === 'space');
+    };
+
+    checkTheme();
+
+    // Listen for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+          checkTheme();
+        }
+      });
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const projects = [
     {
       title: "PradhanFresh",
@@ -61,6 +90,32 @@ function Projects() {
 
   return (
     <div className="projects-page">
+      {/* Complete Cosmic Elements - Only show in space theme */}
+      {isSpaceTheme && (
+        <>
+          {/* Animated Starfield Background */}
+          <div className="starfield">
+            <div className="stars stars-small"></div>
+            <div className="stars stars-medium"></div>
+            <div className="stars stars-large"></div>
+          </div>
+          
+          {/* Floating Particles */}
+          <div className="particles">
+            {Array.from({ length: 20 }, (_, i) => (
+              <div key={i} className={`particle particle-${i + 1}`}></div>
+            ))}
+          </div>
+          
+          {/* Shooting Stars */}
+          <div className="shooting-stars">
+            <div className="shooting-star"></div>
+            <div className="shooting-star"></div>
+            <div className="shooting-star"></div>
+          </div>
+        </>
+      )}
+
       <div className="container">
         <h1>Projects</h1>
         <p className="projects-intro">
