@@ -85,6 +85,13 @@ function Projects() {
       tech: "JavaScript, React, API Integration",
       github: "https://github.com/subhajitlucky/contest_radar",
       year: "2025"
+    },
+    {
+      title: "Guess the Thief",
+      description: "A real-time multiplayer social deduction game where players must identify the Thief among them. Implements lobby management, role assignment, and gameplay entirely in real-time using WebSockets.",
+      tech: "Node.js, Express, Socket.IO, React, Vite, WebSockets",
+      github: "https://github.com/subhajitlucky/guess_the_thief",
+      year: "2025"
     }
   ];
 
