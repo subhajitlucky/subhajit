@@ -31,7 +31,7 @@ function Projects() {
   }, []);
 
   const projects = [
-    
+
     {
       title: "DeMarket",
       description: "Advanced decentralized marketplace on Ethereum with 73% gas optimization, event-based data architecture, and enterprise-grade security. Features real-time analytics, MetaMask integration, and comprehensive testing suite.",
@@ -76,6 +76,13 @@ function Projects() {
       demo: "https://shreejagannatha.vercel.app",
       year: "2025",
       featured: true
+    }, {
+      title: "Contest Radar",
+      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms with real-time updates and notifications.",
+      tech: "JavaScript, React, API Integration",
+      github: "https://github.com/subhajitlucky/contest_radar",
+      demo: "https://contestradar.vercel.app/",
+      year: "2025"
     },
     {
       title: "ICP Token Wallet",
@@ -98,13 +105,7 @@ function Projects() {
       github: "https://github.com/subhajitlucky/task_manager",
       year: "2025"
     },
-    {
-      title: "Contest Radar",
-      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms with real-time updates and notifications.",
-      tech: "JavaScript, React, API Integration",
-      github: "https://github.com/subhajitlucky/contest_radar",
-      year: "2025"
-    },
+
     {
       title: "Guess the Thief",
       description: "A real-time multiplayer social deduction game where players must identify the Thief among them. Implements lobby management, role assignment, and gameplay entirely in real-time using WebSockets.",
@@ -125,14 +126,14 @@ function Projects() {
             <div className="stars stars-medium"></div>
             <div className="stars stars-large"></div>
           </div>
-          
+
           {/* Floating Particles */}
           <div className="particles">
             {Array.from({ length: 20 }, (_, i) => (
               <div key={i} className={`particle particle-${i + 1}`}></div>
             ))}
           </div>
-          
+
           {/* Shooting Stars */}
           <div className="shooting-stars">
             <div className="shooting-star"></div>
@@ -145,10 +146,10 @@ function Projects() {
       <div className="container">
         <h1>Projects</h1>
         <p className="projects-intro">
-          Here are some of my featured projects showcasing expertise in blockchain development, 
+          Here are some of my featured projects showcasing expertise in blockchain development,
           full-stack web applications, and modern JavaScript technologies.
         </p>
-        
+
         <div className="projects-grid">
           {projects.map((project, index) => (
             <div key={index} className={`project-card ${project.featured ? 'featured' : ''}`}>
@@ -156,27 +157,27 @@ function Projects() {
                 <h3 className="project-title">{project.title}</h3>
                 <span className="project-year">{project.year}</span>
               </div>
-              
+
               <p className="project-description">{project.description}</p>
-              
+
               <div className="project-tech">
                 <span className="tech-label">Tech:</span>
                 <span className="tech-stack">{project.tech}</span>
               </div>
-              
+
               <div className="project-links">
-                <a 
-                  href={project.github} 
-                  target="_blank" 
+                <a
+                  href={project.github}
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="project-link"
                 >
                   🔗 GitHub
                 </a>
                 {project.demo && (
-                  <a 
-                    href={project.demo} 
-                    target="_blank" 
+                  <a
+                    href={project.demo}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="project-link demo-link"
                   >
@@ -187,13 +188,13 @@ function Projects() {
             </div>
           ))}
         </div>
-        
+
         <div className="more-projects">
           <p>
             View all my projects on{" "}
-            <a 
-              href="https://github.com/subhajitlucky?tab=repositories" 
-              target="_blank" 
+            <a
+              href="https://github.com/subhajitlucky?tab=repositories"
+              target="_blank"
               rel="noopener noreferrer"
               className="github-link"
             >
