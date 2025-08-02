@@ -33,6 +33,15 @@ function Projects() {
   const projects = [
     
     {
+      title: "DeMarket",
+      description: "Advanced decentralized marketplace on Ethereum with 73% gas optimization, event-based data architecture, and enterprise-grade security. Features real-time analytics, MetaMask integration, and comprehensive testing suite.",
+      tech: "Solidity, React, Ethers.js, Hardhat, Vite, Smart Contracts",
+      github: "https://github.com/subhajitlucky/demarket",
+      demo: "https://demarketplace.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
       title: "PradhanFresh",
       description: "A comprehensive full-stack e-commerce platform for fresh produce delivery. Features user authentication, product management, and modern TypeScript architecture with PostgreSQL backend.",
       tech: "TypeScript, React, Node.js, PostgreSQL, Prisma",
