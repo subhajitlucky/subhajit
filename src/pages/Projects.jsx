@@ -69,6 +69,15 @@ function Projects() {
       featured: true
     },
     {
+      title: "Shree Jagannatha Temple",
+      description: "A tourism website dedicated to the sacred Shree Jagannatha Temple in Puri, Odisha. Features stunning visual animations, comprehensive temple information, festival guides for devotees and tourists.",
+      tech: "React, Vite, Chakra UI, CSS3 Animations, Responsive Design",
+      github: "https://github.com/subhajitlucky/Shree_Jagannatha",
+      demo: "https://shreejagannatha.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
       title: "ICP Token Wallet",
       description: "A secure and user-friendly wallet for managing Internet Computer (ICP) tokens with advanced transaction handling and portfolio tracking capabilities.",
       tech: "JavaScript, React, Rust, Internet Computer",
@@ -102,15 +111,6 @@ function Projects() {
       tech: "Node.js, Express, Socket.IO, React, Vite, WebSockets",
       github: "https://github.com/subhajitlucky/guess_the_thief",
       year: "2025"
-    },
-    {
-      title: "Shree Jagannatha Temple",
-      description: "A tourism website dedicated to the sacred Shree Jagannatha Temple in Puri, Odisha. Features stunning visual animations, comprehensive temple information, festival guides for devotees and tourists.",
-      tech: "React, Vite, Chakra UI, CSS3 Animations, Responsive Design",
-      github: "https://github.com/subhajitlucky/Shree_Jagannatha",
-      demo: "https://shreejagannatha.vercel.app",
-      year: "2025",
-      featured: true
     }
   ];
 
