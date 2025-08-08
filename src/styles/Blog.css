@@ -85,13 +85,9 @@
 [data-theme="space"] .blog-header h1 {
   color: #90CAF9;
   text-shadow: 0 0 20px rgba(144, 202, 249, 0.8);
-  animation: textGlow 3s ease-in-out infinite alternate;
+  
 }
 
-@keyframes textGlow {
-  from { text-shadow: 0 0 20px rgba(144, 202, 249, 0.5); }
-  to { text-shadow: 0 0 30px rgba(144, 202, 249, 1), 0 0 40px rgba(144, 202, 249, 0.7); }
-}
 
 .blog-intro {
   font-size: 1.2rem;

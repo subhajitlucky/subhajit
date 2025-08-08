@@ -92,12 +92,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  animation: textGlow 4s ease-in-out infinite alternate;
-}
-
-@keyframes textGlow {
-  0% { filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3)); }
-  100% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
 }
 
 [data-theme="space"] .hero-intro.stellar-text {
