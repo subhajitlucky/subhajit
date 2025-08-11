@@ -2,7 +2,7 @@
 
 A clean, modern portfolio website showcasing my projects, skills, and experience as a software developer.
 
-🌐 **Live Site**: [subhajit.me](https://subhajit.me)
+🌐 **Live Site**: [subhajit](https://subhajitxyz.vercel.app)
 
 ## 🚀 Features
 
