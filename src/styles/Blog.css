@@ -84,8 +84,6 @@
 
 [data-theme="space"] .blog-header h1 {
   color: #90CAF9;
-  text-shadow: 0 0 20px rgba(144, 202, 249, 0.8);
-  
 }
 
 
@@ -100,7 +98,6 @@
 
 [data-theme="space"] .blog-intro {
   color: #B0BEC5;
-  text-shadow: 0 0 10px rgba(176, 190, 197, 0.5);
 }
 
 /* ===== COMING SOON SECTION ===== */
@@ -138,7 +135,6 @@
   background: linear-gradient(135deg, rgba(26, 35, 126, 0.3) 0%, rgba(13, 71, 161, 0.2) 100%);
   border: 2px solid transparent;
   background-clip: padding-box;
-  backdrop-filter: blur(10px);
   position: relative;
 }
 
@@ -217,7 +213,6 @@
   background: rgba(144, 202, 249, 0.1);
   color: #90CAF9;
   border: 1px solid rgba(144, 202, 249, 0.3);
-  backdrop-filter: blur(10px);
 }
 
 [data-theme="space"] .topic-tag:hover {

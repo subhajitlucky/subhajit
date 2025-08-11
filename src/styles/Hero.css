@@ -27,7 +27,6 @@
   margin-bottom: 20px;
   color: #333;
   font-weight: bold;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   transition: all 0.8s ease;
 }
 
@@ -87,35 +86,28 @@
 
 [data-theme="space"] .hero-name.cosmic-glow {
   font-size: 3rem;
-  background: linear-gradient(45deg, #ffffff, #e3f2fd, #bbdefb);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  color: #ffffff;
 }
 
 [data-theme="space"] .hero-intro.stellar-text {
   font-size: 1.3rem;
   margin-bottom: 30px;
-  color: #e3f2fd;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
 }
 
 [data-theme="space"] .hero-location.cosmic-location {
   font-size: 1.1rem;
-  color: #90CAF9;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
 }
 
 [data-theme="space"] .hero-tagline {
   font-size: 1.2rem;
-  color: #FFECB3;
+  color: #ffffff;
   padding: 25px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
 }
 
 [data-theme="space"] .hero-tagline::before {

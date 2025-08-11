@@ -94,7 +94,6 @@
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid rgba(255, 255, 255, 0.2);
   color: #e3f2fd;
-  backdrop-filter: blur(10px);
 }
 
 [data-theme="space"] .social-link::before {
@@ -167,7 +166,6 @@
 /* Space theme copyright */
 [data-theme="space"] .footer-copyright p {
   color: #90CAF9;
-  text-shadow: 0 0 10px rgba(144, 202, 249, 0.3);
   position: relative;
 }
 

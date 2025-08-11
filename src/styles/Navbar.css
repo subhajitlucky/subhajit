@@ -7,14 +7,12 @@
   top: 0;
   z-index: 100;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
 }
 
 /* ===== SPACE THEME NAVBAR ===== */
 [data-theme="space"] .navbar {
   background-color: rgba(10, 10, 15, 0.95);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
 }
 
 .nav-container {
@@ -41,12 +39,10 @@
 
 [data-theme="space"] .nav-logo {
   color: #e3f2fd;
-  text-shadow: 0 0 10px rgba(227, 242, 253, 0.5);
 }
 
 [data-theme="space"] .nav-logo:hover {
   color: #90CAF9;
-  text-shadow: 0 0 15px rgba(144, 202, 249, 0.8);
 }
 
 /* ===== NAVIGATION LINKS ===== */

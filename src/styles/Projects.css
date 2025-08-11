@@ -188,8 +188,6 @@
 
 [data-theme="space"] .projects-page h1 {
   color: #90CAF9;
-  text-shadow: 0 0 20px rgba(144, 202, 249, 0.8);
-  
 }
 
 .projects-intro {
@@ -206,7 +204,6 @@
 
 [data-theme="space"] .projects-intro {
   color: #B0BEC5;
-  text-shadow: 0 0 10px rgba(176, 190, 197, 0.5);
 }
 
 /* ===== PROJECTS GRID ===== */
@@ -243,7 +240,6 @@
   background: linear-gradient(135deg, rgba(26, 35, 126, 0.3) 0%, rgba(13, 71, 161, 0.2) 100%);
   border: 1px solid rgba(144, 202, 249, 0.3);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
 }
 
 [data-theme="space"] .project-card::before {
@@ -291,7 +287,6 @@
 
 [data-theme="space"] .project-title {
   color: #90CAF9;
-  text-shadow: 0 0 10px rgba(144, 202, 249, 0.5);
 }
 
 .project-year {
@@ -372,7 +367,6 @@
 [data-theme="space"] .project-link {
   color: #90CAF9;
   border-color: #90CAF9;
-  text-shadow: 0 0 5px rgba(144, 202, 249, 0.5);
 }
 
 [data-theme="space"] .project-link:hover {
@@ -415,7 +409,6 @@
 [data-theme="space"] .more-projects {
   background: rgba(13, 71, 161, 0.2);
   border-color: rgba(144, 202, 249, 0.3);
-  backdrop-filter: blur(10px);
 }
 
 .more-projects p {

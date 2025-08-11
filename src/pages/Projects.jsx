@@ -31,7 +31,6 @@ function Projects() {
   }, []);
 
   const projects = [
-
     {
       title: "DeMarket",
       description: "Advanced decentralized marketplace on Ethereum with 73% gas optimization, event-based data architecture, and enterprise-grade security. Features real-time analytics, MetaMask integration, and comprehensive testing suite.",
@@ -76,42 +75,6 @@ function Projects() {
       demo: "https://shreejagannatha.vercel.app",
       year: "2025",
       featured: true
-    }, {
-      title: "Contest Radar",
-      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms with real-time updates and notifications.",
-      tech: "JavaScript, React, API Integration",
-      github: "https://github.com/subhajitlucky/contest_radar",
-      demo: "https://contestradar.vercel.app/",
-      year: "2025"
-    },
-    {
-      title: "ICP Token Wallet",
-      description: "A secure and user-friendly wallet for managing Internet Computer (ICP) tokens with advanced transaction handling and portfolio tracking capabilities.",
-      tech: "JavaScript, React, Rust, Internet Computer",
-      github: "https://github.com/subhajitlucky/icp-token-wallet",
-      year: "2025"
-    },
-    {
-      title: "Authentication System",
-      description: "A robust authentication system built with MERN stack providing secure user registration, login, and session management with JWT tokens and bcrypt encryption.",
-      tech: "MERN Stack, JWT, Security, bcrypt",
-      github: "https://github.com/subhajitlucky/authentication",
-      year: "2025"
-    },
-    {
-      title: "Task Manager",
-      description: "A full-stack MERN application with complete CRUD functionality for task management, featuring user authentication and responsive design.",
-      tech: "MERN Stack (MongoDB, Express, React, Node.js)",
-      github: "https://github.com/subhajitlucky/task_manager",
-      year: "2025"
-    },
-
-    {
-      title: "Guess the Thief",
-      description: "A real-time multiplayer social deduction game where players must identify the Thief among them. Implements lobby management, role assignment, and gameplay entirely in real-time using WebSockets.",
-      tech: "Node.js, Express, Socket.IO, React, Vite, WebSockets",
-      github: "https://github.com/subhajitlucky/guess_the_thief",
-      year: "2025"
     }
   ];
 
@@ -146,8 +109,9 @@ function Projects() {
       <div className="container">
         <h1>Projects</h1>
         <p className="projects-intro">
-          Here are some of my featured projects showcasing expertise in blockchain development,
-          full-stack web applications, and modern JavaScript technologies.
+          Here are my featured projects showcasing expertise in blockchain development,
+          full-stack web applications, and modern JavaScript technologies. Each project demonstrates
+          real-world problem solving and implementation of industry best practices.
         </p>
 
         <div className="projects-grid">

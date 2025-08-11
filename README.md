@@ -73,12 +73,11 @@ src/
 
 ## 🎯 Featured Projects
 
-- **DeMarket** - Decentralized marketplace with Solidity smart contracts
-- **PradhanFresh** - E-commerce platform for fresh produce (TypeScript, PostgreSQL)
-- **ICP Token Wallet** - Cryptocurrency wallet for Internet Computer tokens
-- **Task Manager** - Full-stack MERN application
-- **Contest Radar** - Coding contest tracking platform
-- **And more..** - Check out the [Projects page](https://subhajit.me/projects)
+- **DeMarket** - Advanced decentralized marketplace on Ethereum with 73% gas optimization
+- **PradhanFresh** - Full-stack e-commerce platform for fresh produce delivery (TypeScript, PostgreSQL)
+- **QuantumTicket** - Blockchain-powered event ticketing platform with NFT tickets
+- **TokenVault** - Professional multi-chain portfolio tracker supporting 8+ blockchain networks
+- **Shree Jagannatha Temple** - Tourism website with stunning visual animations
 
 ## 🚀 Getting Started
 
