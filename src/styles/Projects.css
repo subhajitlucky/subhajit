@@ -3,13 +3,13 @@
   position: relative;
   min-height: 100vh;
   padding: 80px 0 60px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background-color: #f8f9fa;
   transition: all 0.8s ease;
 }
 
 /* ===== SPACE THEME PROJECTS PAGE ===== */
 [data-theme="space"] .projects-page {
-  background: linear-gradient(135deg, #0a0a2e 0%, #16213e 50%, #0f3460 100%);
+  background-color: #0a0a0f;
   color: #ffffff;
 }
 
@@ -120,7 +120,7 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: linear-gradient(45deg, #ffffff, transparent);
+  background-color: #ffffff;
   border-radius: 50%;
   box-shadow: 0 0 6px #ffffff;
   animation: shoot 3s linear infinite;
@@ -237,7 +237,7 @@
 }
 
 [data-theme="space"] .project-card {
-  background: linear-gradient(135deg, rgba(26, 35, 126, 0.3) 0%, rgba(13, 71, 161, 0.2) 100%);
+  background-color: rgba(13, 71, 161, 0.2);
   border: 1px solid rgba(144, 202, 249, 0.3);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
@@ -249,7 +249,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, transparent, rgba(144, 202, 249, 0.1), transparent);
+  background-color: rgba(144, 202, 249, 0.1);
   transform: translateX(-100%);
   transition: transform 0.6s;
 }
@@ -266,7 +266,7 @@
 
 [data-theme="space"] .project-card.featured {
   border: 2px solid #81C784;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(129, 199, 132, 0.1) 100%);
+  background-color: rgba(129, 199, 132, 0.1);
 }
 
 /* ===== PROJECT CONTENT ===== */

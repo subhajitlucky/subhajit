@@ -9,7 +9,7 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background-color: #ffffff;
   transition: all 0.8s ease;
 }
 
@@ -75,13 +75,7 @@
 
 /* ===== SPACE THEME OVERRIDES ===== */
 [data-theme="space"] .hero {
-  background: linear-gradient(135deg, 
-    #0a0a0f 0%, 
-    #1a1a2e 25%, 
-    #16213e 50%, 
-    #0f0f23 75%, 
-    #000000 100%
-  );
+  background-color: #0a0a0f;
 }
 
 [data-theme="space"] .hero-name.cosmic-glow {
@@ -117,7 +111,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background-color: rgba(255, 255, 255, 0.1);
   animation: shimmer 3s infinite;
 }
 
@@ -257,7 +251,7 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: linear-gradient(45deg, #ffffff, transparent);
+  background-color: #ffffff;
   border-radius: 50%;
   box-shadow: 0 0 6px #ffffff;
   animation: shoot 3s linear infinite;
