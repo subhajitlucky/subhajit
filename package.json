@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://subhajitlucky.github.io/subhajit/",
+  "homepage": "https://subhajitxyz.vercel.app",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

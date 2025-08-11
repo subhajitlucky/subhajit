@@ -2,7 +2,7 @@
 
 A clean, modern portfolio website showcasing my projects, skills, and experience as a software developer.
 
-🌐 **Live Site**: [subhajit](https://subhajitxyz.vercel.app)
+🌐 **Live Site**: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
 
 ## 🚀 Features
 
@@ -23,7 +23,7 @@ This project is configured to deploy on multiple platforms:
 - **Build command**: `npm run build:github`
 
 ### Vercel
-- **URL**: Custom domain or Vercel subdomain
+- **URL**: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
 - **Auto-deployment**: Connect GitHub repository to Vercel
 - **Build command**: `npm run build:vercel`
 
@@ -79,6 +79,8 @@ src/
 - **TokenVault** - Professional multi-chain portfolio tracker supporting 8+ blockchain networks
 - **Shree Jagannatha Temple** - Tourism website with stunning visual animations
 
+View all projects on the [Projects page](https://subhajitxyz.vercel.app/projects)
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -123,6 +125,8 @@ The build files will be generated in the `dist/` directory.
 ## 📄 Resume
 
 View my resume: [Download PDF](./assets/Subhajit_Resume.pdf)
+
+View my portfolio: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
 
 ## 🤝 Contributing
 
