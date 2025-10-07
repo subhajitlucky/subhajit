@@ -75,6 +75,78 @@ function Projects() {
       demo: "https://shreejagannatha.vercel.app",
       year: "2025",
       featured: true
+    },
+    {
+      title: "Buddha",
+      description: "A website dedicated to the life and teachings of Buddha.",
+      tech: "JavaScript, React",
+      github: "https://github.com/subhajitlucky/buddha",
+      demo: "https://buddhaa.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "Orissa",
+      description: "A comprehensive and data-rich React-based website dedicated to showcasing the rich heritage, culture, and tourism opportunities of Odisha state in India.",
+      tech: "JavaScript, React",
+      github: "https://github.com/subhajitlucky/orissa",
+      demo: "https://orissa.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "ChitraData",
+      description: "ChitraData is a React-based data visualization tool that allows users to create beautiful, interactive charts and graphs.",
+      tech: "TypeScript, React",
+      github: "https://github.com/subhajitlucky/chitraData",
+      demo: "https://chitraData.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "Dahi",
+      description: "Super Dahi bridges ancient Ayurvedic wisdom with contemporary microbiome research, empowering home fermenters to cultivate restorative, probiotic-rich dahi through guided rituals and community wisdom.",
+      tech: "CSS, HTML, JavaScript",
+      github: "https://github.com/subhajitlucky/dahi",
+      demo: "https://superdahi.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "Coin Flip",
+      description: "Coin Flip : Try Your Luck",
+      tech: "CSS, HTML, JavaScript",
+      github: "https://github.com/subhajitlucky/coin_flip",
+      demo: "https://coin-flip-lucky.vercel.app",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "Contest Radar",
+      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms.",
+      tech: "JavaScript, React",
+      github: "https://github.com/subhajitlucky/contest_radar",
+      demo: "http://subhajitlucky.github.io/contest_radar",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "Guess the Thief",
+      description: "A real-time multiplayer game where players must use their wits to identify the Thief.",
+      tech: "CSS, HTML, JavaScript",
+      github: "https://github.com/subhajitlucky/guess_the_thief",
+      demo:"",
+      year: "2025",
+      featured: true
+    },
+    {
+      title: "ICP Token Wallet",
+      description: "ICP Token Wallet: A secure and user-friendly wallet for managing Internet Computer (ICP) tokens efficiently.",
+      tech: "JavaScript, React, Internet Computer",
+      github: "https://github.com/subhajitlucky/icp-token-wallet",
+      demo: "",
+      year: "2025",
+      featured: true
     }
   ];
 
