@@ -90,7 +90,7 @@ function Hero() {
 
         <div className={`hero-cta ${isSpaceTheme ? 'cosmic-quote' : ''}`}>
           <p className="hero-tagline">
-            "The only way to do great work is to love what you do" - Steve Jobs
+            &quot;The only way to do great work is to love what you do&quot; - Steve Jobs
           </p>
         </div>
       </div>

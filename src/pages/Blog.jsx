@@ -80,7 +80,7 @@ function Blog() {
           <div className="coming-soon-card">
             <h3>🚀 Coming Soon!</h3>
             <p>
-              I'm currently working on creating engaging content. Stay tuned for fascinating topics 
+              I&apos;m currently working on creating engaging content. Stay tuned for fascinating topics 
               about space, technology, and everything in between!
             </p>
           </div>

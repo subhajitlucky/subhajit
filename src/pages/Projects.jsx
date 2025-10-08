@@ -135,7 +135,7 @@ function Projects() {
       description: "A real-time multiplayer game where players must use their wits to identify the Thief.",
       tech: "CSS, HTML, JavaScript",
       github: "https://github.com/subhajitlucky/guess_the_thief",
-      demo:"",
+      demo: "",
       year: "2025",
       featured: true
     },
@@ -145,6 +145,16 @@ function Projects() {
       tech: "JavaScript, React, Internet Computer",
       github: "https://github.com/subhajitlucky/icp-token-wallet",
       demo: "",
+      year: "2025",
+      featured: true
+    }
+    ,
+    {
+      title: "RigKatha",
+      description: "RigKatha transforms the ancient Rig Veda into engaging visual stories (comic-style panels) with narration, shloka text, and interactive learning—built as a responsive educational PWA.",
+      tech: "React 18, TypeScript, TailwindCSS, Framer Motion, Vite, Web Speech API",
+      github: "https://github.com/subhajitlucky/rigkatha",
+      demo: "https://rigkatha.vercel.app/",
       year: "2025",
       featured: true
     }
