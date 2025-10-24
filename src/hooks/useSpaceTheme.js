@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
 
 function resolveInitialTheme() {
-  if (typeof document === 'undefined') {
-    return false;
+  if (typeof window !== 'undefined') {
+    const savedTheme = localStorage.getItem('portfolioTheme');
+    if (savedTheme) {
+      return savedTheme === 'space';
+    }
   }
-
-  return document.body?.getAttribute('data-theme') === 'space';
+  
+  if (typeof document !== 'undefined') {
+    return document.body?.getAttribute('data-theme') === 'space';
+  }
+  
+  return false;
 }
 
 function useSpaceTheme() {

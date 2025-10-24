@@ -1,6 +1,6 @@
 /* ===== BASE NAVBAR STYLES (DAY THEME) ===== */
 .navbar {
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid #e9ecef;
   padding: 1rem 0;
   position: sticky;
@@ -8,12 +8,16 @@
   z-index: 100;
   transition: all 0.3s ease;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 /* ===== SPACE THEME NAVBAR ===== */
 [data-theme="space"] .navbar {
-  background-color: rgba(10, 10, 15, 0.95);
+  background-color: rgba(10, 10, 15, 0.85);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-container {

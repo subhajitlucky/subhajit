@@ -1,3 +1,2 @@
-.home {
-  min-height: calc(100vh - 80px);
-} 
+/* Height is managed by Hero component */
+ 

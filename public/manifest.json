@@ -1,8 +1,20 @@
 {
   "name": "Subhajit Pradhan Portfolio",
   "short_name": "Subhajit Portfolio",
-  "start_url": ".",
+  "description": "Subhajit Pradhan - Full Stack Developer Portfolio showcasing blockchain, web development, and modern JavaScript projects",
+  "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#ffffff",
-  "description": "Subhajit Pradhan - Full Stack Developer Portfolio"
+  "theme_color": "#3498db",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "developer", "technology"],
+  "lang": "en-US"
 }
