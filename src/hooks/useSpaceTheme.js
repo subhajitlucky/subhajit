@@ -24,6 +24,7 @@ function useSpaceTheme() {
     };
 
     if (typeof MutationObserver === 'undefined') {
+      checkTheme();
       return undefined;
     }
 
@@ -39,6 +40,8 @@ function useSpaceTheme() {
       attributes: true,
       attributeFilter: ['data-theme']
     });
+
+    checkTheme();
 
     return () => observer.disconnect();
   }, []);
