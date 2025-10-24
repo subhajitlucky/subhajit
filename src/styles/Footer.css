@@ -80,6 +80,11 @@
   transform: translateY(-1px);
 }
 
+.social-link:focus-visible {
+  outline: 2px solid var(--color-accent-primary, #3498db);
+  outline-offset: 4px;
+}
+
 /* Space theme social links */
 [data-theme="space"] .social-link {
   background: rgba(255, 255, 255, 0.05);
@@ -109,6 +114,11 @@
   box-shadow: 
     0 6px 20px rgba(144, 202, 249, 0.3),
     0 0 30px rgba(144, 202, 249, 0.1);
+}
+
+[data-theme="space"] .social-link:focus-visible {
+  outline: 2px solid rgba(144, 202, 249, 0.8);
+  box-shadow: 0 0 0 4px rgba(144, 202, 249, 0.2);
 }
 
 /* Individual social link colors in space theme */

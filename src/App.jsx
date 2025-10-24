@@ -13,8 +13,11 @@ function App() {
   return (
     <Router basename={basename}>
       <div className="app">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Navbar />
-        <main className="main-content">
+        <main id="main-content" className="main-content" tabIndex={-1}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />

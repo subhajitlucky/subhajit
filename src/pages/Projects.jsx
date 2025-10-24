@@ -1,192 +1,16 @@
-import { useState, useEffect } from 'react';
 import '../styles/Projects.css';
+import SpaceBackground from '../components/SpaceBackground';
+import ScrollToTop from '../components/ScrollToTop';
+import useSpaceTheme from '../hooks/useSpaceTheme';
+import projects from '../data/projects';
 
 function Projects() {
-  const [isSpaceTheme, setIsSpaceTheme] = useState(false);
-
-  useEffect(() => {
-    // Check initial theme from body attribute
-    const checkTheme = () => {
-      const theme = document.body.getAttribute('data-theme');
-      setIsSpaceTheme(theme === 'space');
-    };
-
-    checkTheme();
-
-    // Listen for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-          checkTheme();
-        }
-      });
-    });
-
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const projects = [
-    {
-      title: "DeMarket",
-      description: "Advanced decentralized marketplace on Ethereum with 73% gas optimization, event-based data architecture, and enterprise-grade security. Features real-time analytics, MetaMask integration, and comprehensive testing suite.",
-      tech: "Solidity, React, Ethers.js, Hardhat, Vite, Smart Contracts",
-      github: "https://github.com/subhajitlucky/demarket",
-      demo: "https://demarketplace.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "PradhanFresh",
-      description: "A comprehensive full-stack e-commerce platform for fresh produce delivery. Features user authentication, product management, and modern TypeScript architecture with PostgreSQL backend.",
-      tech: "TypeScript, React, Node.js, PostgreSQL, Prisma",
-      github: "https://github.com/subhajitlucky/pradhanfresh",
-      demo: "https://pradhanfresh.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "QuantumTicket",
-      description: "Blockchain-powered event ticketing platform that mints verifiable NFT tickets on-chain. Provides seamless purchase flow, QR code verification, and secondary resale with royalty support.",
-      tech: "React, Vite, Solidity, Ethers.js, NFT, Smart Contracts",
-      github: "https://github.com/subhajitlucky/quantumTicket",
-      demo: "https://quantumticket.vercel.app/",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "TokenVault",
-      description: "Professional multi-chain portfolio tracker supporting 8+ blockchain networks. Provides real-time balance tracking, automatic token detection, and unified portfolio analytics across Solana, Ethereum, Polygon, Arbitrum, and more.",
-      tech: "React, Ethers.js, Solana Web3.js, Multi-Chain APIs",
-      github: "https://github.com/subhajitlucky/tokenVault",
-      demo: "https://tokenvault.vercel.app/",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Shree Jagannatha Temple",
-      description: "A tourism website dedicated to the sacred Shree Jagannatha Temple in Puri, Odisha. Features stunning visual animations, comprehensive temple information, festival guides for devotees and tourists.",
-      tech: "React, Vite, Chakra UI, CSS3 Animations, Responsive Design",
-      github: "https://github.com/subhajitlucky/Shree_Jagannatha",
-      demo: "https://shreejagannatha.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Buddha",
-      description: "A website dedicated to the life and teachings of Buddha.",
-      tech: "JavaScript, React",
-      github: "https://github.com/subhajitlucky/buddha",
-      demo: "https://buddhaa.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Orissa",
-      description: "A comprehensive and data-rich React-based website dedicated to showcasing the rich heritage, culture, and tourism opportunities of Odisha state in India.",
-      tech: "JavaScript, React",
-      github: "https://github.com/subhajitlucky/orissa",
-      demo: "https://orissa.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "ChitraData",
-      description: "ChitraData is a React-based data visualization tool that allows users to create beautiful, interactive charts and graphs.",
-      tech: "TypeScript, React",
-      github: "https://github.com/subhajitlucky/chitraData",
-      demo: "https://chitraData.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Dahi",
-      description: "Super Dahi bridges ancient Ayurvedic wisdom with contemporary microbiome research, empowering home fermenters to cultivate restorative, probiotic-rich dahi through guided rituals and community wisdom.",
-      tech: "CSS, HTML, JavaScript",
-      github: "https://github.com/subhajitlucky/dahi",
-      demo: "https://superdahi.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Coin Flip",
-      description: "Coin Flip : Try Your Luck",
-      tech: "CSS, HTML, JavaScript",
-      github: "https://github.com/subhajitlucky/coin_flip",
-      demo: "https://coin-flip-lucky.vercel.app",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Contest Radar",
-      description: "A modern, responsive web application for tracking upcoming coding contests from various competitive programming platforms.",
-      tech: "JavaScript, React",
-      github: "https://github.com/subhajitlucky/contest_radar",
-      demo: "http://subhajitlucky.github.io/contest_radar",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "Guess the Thief",
-      description: "A real-time multiplayer game where players must use their wits to identify the Thief.",
-      tech: "CSS, HTML, JavaScript",
-      github: "https://github.com/subhajitlucky/guess_the_thief",
-      demo: "",
-      year: "2025",
-      featured: true
-    },
-    {
-      title: "ICP Token Wallet",
-      description: "ICP Token Wallet: A secure and user-friendly wallet for managing Internet Computer (ICP) tokens efficiently.",
-      tech: "JavaScript, React, Internet Computer",
-      github: "https://github.com/subhajitlucky/icp-token-wallet",
-      demo: "",
-      year: "2025",
-      featured: true
-    }
-    ,
-    {
-      title: "RigKatha",
-      description: "RigKatha transforms the ancient Rig Veda into engaging visual stories (comic-style panels) with narration, shloka text, and interactive learning—built as a responsive educational PWA.",
-      tech: "React 18, TypeScript, TailwindCSS, Framer Motion, Vite, Web Speech API",
-      github: "https://github.com/subhajitlucky/rigkatha",
-      demo: "https://rigkatha.vercel.app/",
-      year: "2025",
-      featured: true
-    }
-  ];
+  const isSpaceTheme = useSpaceTheme();
 
   return (
     <div className="projects-page">
       {/* Complete Cosmic Elements - Only show in space theme */}
-      {isSpaceTheme && (
-        <>
-          {/* Animated Starfield Background */}
-          <div className="starfield">
-            <div className="stars stars-small"></div>
-            <div className="stars stars-medium"></div>
-            <div className="stars stars-large"></div>
-          </div>
-
-          {/* Floating Particles */}
-          <div className="particles">
-            {Array.from({ length: 20 }, (_, i) => (
-              <div key={i} className={`particle particle-${i + 1}`}></div>
-            ))}
-          </div>
-
-          {/* Shooting Stars */}
-          <div className="shooting-stars">
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-          </div>
-        </>
-      )}
+      {isSpaceTheme && <SpaceBackground />}
 
       <div className="container">
         <h1>Projects</h1>
@@ -249,6 +73,7 @@ function Projects() {
           </p>
         </div>
       </div>
+      <ScrollToTop />
     </div>
   );
 }

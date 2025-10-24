@@ -1,71 +1,16 @@
-import { useState, useEffect } from 'react';
 import '../styles/Blog.css';
+import SpaceBackground from '../components/SpaceBackground';
+import ScrollToTop from '../components/ScrollToTop';
+import useSpaceTheme from '../hooks/useSpaceTheme';
+import blogTopics from '../data/blogTopics';
 
 function Blog() {
-  const [isSpaceTheme, setIsSpaceTheme] = useState(false);
-
-  useEffect(() => {
-    // Check initial theme from body attribute
-    const checkTheme = () => {
-      const theme = document.body.getAttribute('data-theme');
-      setIsSpaceTheme(theme === 'space');
-    };
-
-    checkTheme();
-
-    // Listen for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-          checkTheme();
-        }
-      });
-    });
-
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const upcomingTopics = [
-    "🚀 Space Exploration",
-    "⚛️ Quantum Physics", 
-    "🏛️ Ancient History",
-    "💻 Programming Tips",
-    "🌌 Cosmic Mysteries",
-    "🔬 Science Breakthroughs"
-  ];
+  const isSpaceTheme = useSpaceTheme();
 
   return (
     <div className="blog-page">
       {/* Complete Cosmic Elements - Only show in space theme */}
-      {isSpaceTheme && (
-        <>
-          {/* Animated Starfield Background */}
-          <div className="starfield">
-            <div className="stars stars-small"></div>
-            <div className="stars stars-medium"></div>
-            <div className="stars stars-large"></div>
-          </div>
-          
-          {/* Floating Particles */}
-          <div className="particles">
-            {Array.from({ length: 20 }, (_, i) => (
-              <div key={i} className={`particle particle-${i + 1}`}></div>
-            ))}
-          </div>
-          
-          {/* Shooting Stars */}
-          <div className="shooting-stars">
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-            <div className="shooting-star"></div>
-          </div>
-        </>
-      )}
+      {isSpaceTheme && <SpaceBackground />}
 
       <div className="container">
         <div className="blog-header">
@@ -78,7 +23,7 @@ function Blog() {
 
         <div className="blog-coming-soon">
           <div className="coming-soon-card">
-            <h3>🚀 Coming Soon!</h3>
+            <h2>🚀 Coming Soon!</h2>
             <p>
               I&apos;m currently working on creating engaging content. Stay tuned for fascinating topics 
               about space, technology, and everything in between!
@@ -87,16 +32,17 @@ function Blog() {
         </div>
 
         <div className="blog-topics-preview">
-          <h4>What to Expect</h4>
-          <div className="topic-tags">
-            {upcomingTopics.map((topic, index) => (
-              <span key={index} className="topic-tag">
+          <h2>What to Expect</h2>
+          <ul className="topic-tags" aria-label="Upcoming blog topics">
+            {blogTopics.map((topic, index) => (
+              <li key={index} className="topic-tag">
                 {topic}
-              </span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
+      <ScrollToTop />
     </div>
   );
 }
