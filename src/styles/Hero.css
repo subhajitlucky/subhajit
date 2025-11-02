@@ -4,12 +4,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   padding: 40px 20px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-color: var(--color-hero-bg, #f8f9fa);
+  background-color: #ffffff;
   transition: all 0.8s ease;
 }
 
@@ -22,65 +22,103 @@
 }
 
 /* ===== DAY THEME TEXT STYLES ===== */
-.hero-title {
-  font-size: 1rem;
+.hero-title-wrapper {
+  font-size: 1.5rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--color-accent-primary, #3498db);
-  margin-bottom: 8px;
+  color: #2d3748;
+  margin-bottom: 24px;
+  min-height: 2rem;
   transition: all 0.8s ease;
+}
+
+.typed-text {
+  display: inline-block;
+}
+
+.cursor {
+  display: inline-block;
+  width: 2px;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
 }
 
 .hero-name {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: var(--color-text-primary, #2c3e50);
-  font-weight: 700;
-  transition: all 0.8s ease;
-}
-
-.hero-intro {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: var(--color-text-secondary, #34495e);
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+  font-weight: 600;
+  letter-spacing: -0.5px;
   transition: all 0.8s ease;
 }
 
 .hero-location {
-  font-size: 1rem;
-  margin-bottom: 40px;
-  color: var(--color-text-soft, #7f8c8d);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  color: #718096;
   transition: all 0.8s ease;
 }
 
 .hero-cta {
-  margin-top: 20px;
+  margin-top: 12px;
+}
+
+.hero-quote {
+  font-size: 1.1rem;
+  color: #4a5568;
+  max-width: 600px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+  font-style: italic;
+  transition: all 0.8s ease;
 }
 
 .hero-tagline {
-  font-size: 1.1rem;
-  color: var(--color-text-secondary, #34495e);
-  max-width: 700px;
+  font-size: 0.9rem;
+  color: #4a5568;
+  max-width: 650px;
   margin: 0 auto;
   line-height: 1.6;
-  font-style: italic;
-  padding: 20px;
-  background: var(--color-card-bg, #ffffff);
-  border-radius: 12px;
-  border-left: 4px solid var(--color-accent-primary, #3498db);
-  box-shadow: 0 4px 16px var(--color-card-shadow, rgba(0, 0, 0, 0.08));
-  transition: all 0.8s ease;
+  padding: 20px 24px;
+  background: #f7fafc;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
 }
 
 .hero-tagline:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: #cbd5e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.hero-projects-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #4a5568;
+  background: transparent;
+  text-decoration: none;
+  border: none;
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+.hero-projects-btn:hover {
+  color: #2d3748;
+  background: transparent;
+  transform: translateY(-1px);
+}
+
+.hero-projects-btn:focus-visible {
+  outline: 2px solid #3182ce;
+  outline-offset: 2px;
 }
 
 /* ===== SPACE THEME OVERRIDES ===== */
@@ -88,57 +126,54 @@
   background-color: #0a0a0f;
 }
 
-[data-theme="space"] .hero-title.cosmic-title {
-  color: var(--color-accent-secondary, #81C784);
-  text-shadow: 0 0 10px rgba(129, 199, 132, 0.5);
+[data-theme="space"] .hero-title-wrapper.cosmic-title {
+  color: #90CAF9;
 }
 
 [data-theme="space"] .hero-name.cosmic-glow {
-  font-size: 3rem;
-  color: var(--color-text-primary, #ffffff);
+  font-size: 2rem;
+  color: #e2e8f0;
+  margin-bottom: 16px;
 }
 
-[data-theme="space"] .hero-intro.stellar-text {
-  font-size: 1.3rem;
-  margin-bottom: 30px;
-  color: var(--color-text-primary, #ffffff);
+[data-theme="space"] .hero-quote.cosmic-quote {
+  color: #cbd5e0;
 }
 
 [data-theme="space"] .hero-location.cosmic-location {
-  font-size: 1.1rem;
-  color: var(--color-text-primary, #ffffff);
+  font-size: 0.9rem;
+  color: #a0aec0;
+  margin-bottom: 24px;
 }
 
 [data-theme="space"] .hero-tagline {
-  font-size: 1.2rem;
-  color: var(--color-text-primary, #ffffff);
-  padding: 25px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-[data-theme="space"] .hero-tagline::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  font-size: 0.9rem;
+  color: #cbd5e0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 [data-theme="space"] .hero-tagline:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: none;
+}
+
+[data-theme="space"] .hero-projects-btn {
+  color: #e2e8f0;
+  background: transparent;
+  border: none;
+}
+
+[data-theme="space"] .hero-projects-btn:hover {
+  color: #ffffff;
+  background: transparent;
+  transform: translateY(-1px);
+}
+
+[data-theme="space"] .hero-projects-btn:focus-visible {
+  outline: 2px solid #90CAF9;
+  outline-offset: 2px;
 }
 
 /* ===== CONSTELLATION DOTS ===== */
@@ -199,77 +234,125 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .hero {
-    min-height: 90vh;
+    min-height: calc(100vh - 60px);
     padding: 30px 15px;
   }
-  
-  .hero-name {
-    font-size: 2rem;
-  }
-  
-  [data-theme="space"] .hero-name.cosmic-glow {
-    font-size: 2.2rem;
-  }
-  
-  .hero-intro {
-    font-size: 1.1rem;
-  }
-  
-  [data-theme="space"] .hero-intro.stellar-text {
-    font-size: 1.1rem;
-  }
-  
-  .constellation-dots {
-    height: 80px;
-  }
-  
-  .hero-tagline {
-    font-size: 1rem;
-    padding: 16px;
-  }
-  
-  [data-theme="space"] .hero-tagline {
-    font-size: 1rem;
-    padding: 20px;
-  }
-} 
 
-@media (max-width: 480px) {
-  .hero {
-    min-height: auto;
-    padding: 90px 16px 48px;
-    gap: 0.5rem;
+  .hero-container {
+    max-width: 600px;
+  }
+
+  .hero-title-wrapper {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
   }
 
   .hero-name {
-    font-size: 1.8rem;
-  }
-
-  [data-theme="space"] .hero-name.cosmic-glow {
-    font-size: 2rem;
-  }
-
-  .hero-intro {
-    font-size: 1rem;
+    font-size: 1.75rem;
     margin-bottom: 12px;
   }
 
-  .hero-location {
-    margin-bottom: 24px;
+  .hero-quote {
+    font-size: 1rem;
+    margin-bottom: 20px;
   }
 
-  .constellation-dots {
-    height: 60px;
-    margin: 16px 0;
+  .hero-location {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
   }
 
   .hero-tagline {
-    font-size: 0.95rem;
-    padding: 14px;
+    font-size: 0.85rem;
+    padding: 16px 20px;
+  }
+
+  .hero-projects-btn {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+
+  [data-theme="space"] .hero-title-wrapper.cosmic-title {
+    font-size: 1.3rem;
+  }
+
+  [data-theme="space"] .hero-name.cosmic-glow {
+    font-size: 1.75rem;
+    margin-bottom: 12px;
+  }
+
+  [data-theme="space"] .hero-quote.cosmic-quote {
+    font-size: 1rem;
+  }
+
+  [data-theme="space"] .hero-location.cosmic-location {
+    margin-bottom: 20px;
   }
 
   [data-theme="space"] .hero-tagline {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: calc(100vh - 60px);
+    padding: 90px 16px 48px;
+  }
+
+  .hero-container {
+    max-width: 500px;
+  }
+
+  .hero-title-wrapper {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .hero-name {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-quote {
     font-size: 0.95rem;
-    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .hero-location {
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.8rem;
+    padding: 14px 16px;
+  }
+
+  .hero-projects-btn {
+    padding: 7px 14px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+  }
+
+  [data-theme="space"] .hero-title-wrapper.cosmic-title {
+    font-size: 1.2rem;
+  }
+
+  [data-theme="space"] .hero-name.cosmic-glow {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  [data-theme="space"] .hero-quote.cosmic-quote {
+    font-size: 0.95rem;
+  }
+
+  [data-theme="space"] .hero-location.cosmic-location {
+    margin-bottom: 16px;
+  }
+
+  [data-theme="space"] .hero-tagline {
+    font-size: 0.8rem;
   }
 }

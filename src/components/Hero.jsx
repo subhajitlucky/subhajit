@@ -1,31 +1,70 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Hero.css';
 import SpaceBackground from './SpaceBackground';
 import useSpaceTheme from '../hooks/useSpaceTheme';
 
 function Hero() {
   const isSpaceTheme = useSpaceTheme();
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTyping, setIsTyping] = useState(true);
+
+  const titles = [
+    'Full Stack Developer',
+    'Software Engineer',
+    'Blockchain Developer',
+    'Backend Developer'
+  ];
+
+  useEffect(() => {
+    const currentTitle = titles[currentIndex];
+    let charIndex = 0;
+    setIsTyping(true);
+
+    const typingInterval = setInterval(() => {
+      if (charIndex < currentTitle.length) {
+        setDisplayText(currentTitle.slice(0, charIndex + 1));
+        charIndex++;
+      } else {
+        clearInterval(typingInterval);
+        setIsTyping(false);
+
+        setTimeout(() => {
+          const deletingInterval = setInterval(() => {
+            if (charIndex > 0) {
+              charIndex--;
+              setDisplayText(currentTitle.slice(0, charIndex));
+            } else {
+              clearInterval(deletingInterval);
+              setCurrentIndex((prev) => (prev + 1) % titles.length);
+            }
+          }, 50);
+        }, 1500);
+      }
+    }, 80);
+
+    return () => clearInterval(typingInterval);
+  }, [currentIndex]);
 
   return (
     <section className="hero">
-      {/* Conditional Space Elements - Only show in space theme */}
       {isSpaceTheme && <SpaceBackground />}
 
       <div className="hero-container">
-        
-        
         <h1 className={`hero-name ${isSpaceTheme ? 'cosmic-glow' : ''}`}>
           Subhajit Pradhan
         </h1>
 
-        {/* <p className={`hero-title ${isSpaceTheme ? 'cosmic-title' : ''}`}>
-          Software Engineer
-        </p> */}
-        
-        <p className={`hero-intro ${isSpaceTheme ? 'stellar-text' : ''}`}>
-          I love computers and love to build fun things
+        <div className={`hero-title-wrapper ${isSpaceTheme ? 'cosmic-title' : ''}`}>
+          <span className="typed-text">{displayText}</span>
+          {isTyping && <span className="cursor">|</span>}
+        </div>
+
+        <p className={`hero-quote ${isSpaceTheme ? 'cosmic-quote' : ''}`}>
+          "The only way to do great work is to love what you do"
         </p>
-        
-        {/* Constellation - Only show in space theme */}
+
         {isSpaceTheme && (
           <div className="constellation-dots" aria-hidden="true" role="presentation">
             <div className="dot dot-1"></div>
@@ -41,15 +80,15 @@ function Hero() {
             </svg>
           </div>
         )}
-        
+
         <p className={`hero-location ${isSpaceTheme ? 'cosmic-location' : ''}`}>
           {isSpaceTheme ? '🌍' : '📍'} Odisha, India
         </p>
 
-        <div className={`hero-cta ${isSpaceTheme ? 'cosmic-quote' : ''}`}>
-          <p className="hero-tagline">
-            &quot;The only way to do great work is to love what you do&quot; - Steve Jobs
-          </p>
+        <div className="hero-cta">
+          <Link to="/projects" className="hero-projects-btn">
+            View my work →
+          </Link>
         </div>
       </div>
     </section>

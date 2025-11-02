@@ -94,9 +94,9 @@ function Navbar() {
           id={navMenuId}
           className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}
         >
-          <Link 
-            to="/projects" 
-            className={`nav-link ${location.pathname === '/projects' ? 'active' : ''}`} 
+          <Link
+            to="/projects"
+            className={`nav-link ${location.pathname === '/projects' ? 'active' : ''}`}
             onClick={closeMobileMenu}
           >
             Projects
