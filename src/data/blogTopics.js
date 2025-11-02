@@ -1,10 +1,10 @@
 const blogTopics = [
-  "🚀 Space Exploration",
-  "⚛️ Quantum Physics",
-  "🏛️ Ancient History",
-  "💻 Programming Tips",
-  "🌌 Cosmic Mysteries",
-  "🔬 Science Breakthroughs"
+  "Blockchain Development",
+  "Full-Stack Architecture",
+  "Smart Contract Engineering",
+  "Web3 Integration",
+  "Software Engineering",
+  "Debugging Techniques"
 ];
 
 export default blogTopics;

@@ -14,32 +14,27 @@ function Blog() {
 
       <div className="container">
         <div className="blog-header">
-          <h1>Blog</h1>
-          <p className="blog-intro">
-            Welcome to my blog! Here I share my thoughts and insights on space, physics, history, 
-            programming, and everything that fascinates me about our universe and technology.
-          </p>
+          <h1>Writing</h1>
         </div>
 
-        <div className="blog-coming-soon">
-          <div className="coming-soon-card">
-            <h2>🚀 Coming Soon!</h2>
-            <p>
-              I&apos;m currently working on creating engaging content. Stay tuned for fascinating topics 
-              about space, technology, and everything in between!
+        <div className="blog-content">
+          <article className="blog-post-preview">
+            <p className="blog-status">Currently writing</p>
+            <p className="blog-description">
+              I share technical insights, lessons learned from building projects,
+              and thoughts on software development. Currently working on several posts
+              covering blockchain development, full-stack architecture, and debugging techniques.
             </p>
-          </div>
-        </div>
+          </article>
 
-        <div className="blog-topics-preview">
-          <h2>What to Expect</h2>
-          <ul className="topic-tags" aria-label="Upcoming blog topics">
-            {blogTopics.map((topic, index) => (
-              <li key={index} className="topic-tag">
-                {topic}
-              </li>
-            ))}
-          </ul>
+          <div className="blog-topics">
+            <h2>Topics</h2>
+            <ul className="topic-list">
+              {blogTopics.map((topic, index) => (
+                <li key={index}>{topic}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
       <ScrollToTop />
