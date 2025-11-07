@@ -1,5 +1,11 @@
 const projects = [
   {
+    title: "CampusHelper",
+    description: "Centralized online platform for university students and staff to report, search, and claim lost or found items on campus",
+    github: "https://github.com/subhajitlucky/campushelper",
+    demo: "https://campushelper.vercel.app"
+  },
+  {
     title: "DeMarket",
     description: "Decentralized marketplace on Ethereum with 73% gas optimization",
     github: "https://github.com/subhajitlucky/demarket",
