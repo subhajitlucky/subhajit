@@ -14,7 +14,7 @@ function Projects() {
 
       <div className="container">
         <div className="projects-header">
-          <h1>Things I've Built</h1>
+          <h1>Proof of Work</h1>
         </div>
 
         <div className="projects-list">
