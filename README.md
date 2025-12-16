@@ -26,6 +26,7 @@ This project is configured to deploy on multiple platforms:
 - **URL**: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
 - **Auto-deployment**: Connect GitHub repository to Vercel
 - **Build command**: `npm run build:vercel`
+- **Analytics**: To collect pageviews use Vercel Analytics — run `npm i @vercel/analytics` and add `import { Analytics } from "@vercel/analytics/react"` and an `<Analytics />` node (e.g., in `App.jsx` or `main.jsx`).
 
 ### Build Commands
 ```bash
