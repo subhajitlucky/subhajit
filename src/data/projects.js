@@ -1,11 +1,5 @@
 const projects = [
   {
-    title: "Onchain AI Agent",
-    description: "A Cognitive Intent Layer for blockchain. Automates complex DeFi workflows, handles natural language payments, and provides enterprise-grade security guardrails.",
-    github: "https://github.com/subhajitlucky/onchain-ai-agent",
-    demo: "https://github.com/subhajitlucky/onchain-ai-agent"
-  },
-  {
     title: "CampusHelper",
     description: "Centralized online platform for university students and staff to report, search, and claim lost or found items on campus",
     github: "https://github.com/subhajitlucky/campushelper",
@@ -30,16 +24,15 @@ const projects = [
     demo: "https://chitradata.vercel.app"
   },
   {
-    title: "Contest Radar",
-    description: "Real-time coding contest tracker from multiple platforms",
-    github: "https://github.com/subhajitlucky/contest_radar",
-    demo: "https://contestradar.vercel.app"
-  },
-  {
     title: "CSCosmos",
     description: "A curated hub of 127 interactive visual learning microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering.",
     github: "https://github.com/subhajitlucky/cscosmos",
     demo: "https://cscosmos.vercel.app"
+  }, {
+    title: "Onchain AI Agent",
+    description: "A Cognitive Intent Layer for blockchain. Automates complex DeFi workflows, handles natural language payments, and provides enterprise-grade security guardrails.",
+    github: "https://github.com/subhajitlucky/onchain-ai-agent",
+    demo: "https://github.com/subhajitlucky/onchain-ai-agent"
   }
 ];
 
