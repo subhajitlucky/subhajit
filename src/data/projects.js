@@ -1,33 +1,21 @@
 const projects = [
   {
+    title: "Onchain AI Agent",
+    description: "A Cognitive Intent Layer for blockchain. Automates complex DeFi workflows, handles natural language payments, and provides enterprise-grade security guardrails.",
+    github: "https://github.com/subhajitlucky/onchain-ai-agent",
+    demo: "https://github.com/subhajitlucky/onchain-ai-agent"
+  },
+  {
     title: "CampusHelper",
     description: "Centralized online platform for university students and staff to report, search, and claim lost or found items on campus",
     github: "https://github.com/subhajitlucky/campushelper",
     demo: "https://campushelper.vercel.app"
   },
   {
-    title: "DeMarket",
-    description: "Decentralized marketplace on Ethereum with 73% gas optimization",
-    github: "https://github.com/subhajitlucky/demarket",
-    demo: "https://demarketplace.vercel.app"
-  },
-  {
-    title: "PradhanFresh",
-    description: "Full-stack e-commerce platform for fresh produce delivery",
-    github: "https://github.com/subhajitlucky/pradhanfresh",
-    demo: "https://pradhanfresh.vercel.app"
-  },
-  {
     title: "QuantumTicket",
     description: "Blockchain event ticketing with NFT ticket minting",
     github: "https://github.com/subhajitlucky/quantumTicket",
     demo: "https://quantumticket.vercel.app/"
-  },
-  {
-    title: "TokenVault",
-    description: "Multi-chain portfolio tracker supporting 8+ blockchain networks",
-    github: "https://github.com/subhajitlucky/tokenVault",
-    demo: "https://tokenvault.vercel.app/"
   },
   {
     title: "RigKatha",
