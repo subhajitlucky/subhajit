@@ -1,7 +1,7 @@
 const projects = [
   {
     title: "CampusHelper",
-    description: "Centralized online platform for university students and staff to report, search, and claim lost or found items on campus",
+    description: "A centralized platform for reporting and claiming lost items on campus.",
     github: "https://github.com/subhajitlucky/campushelper",
     demo: "https://campushelper.vercel.app"
   },
@@ -25,12 +25,12 @@ const projects = [
   },
   {
     title: "CSCosmos",
-    description: "A curated hub of 127 interactive visual learning microsites across Full-Stack, DSA, Web3, AI, Core CS, DevOps, and Advanced Engineering.",
+    description: "A curated hub of 127+ interactive visual learning microsites.",
     github: "https://github.com/subhajitlucky/cscosmos",
     demo: "https://cscosmos.vercel.app"
   }, {
     title: "Onchain AI Agent",
-    description: "A Cognitive Intent Layer for blockchain. Automates complex DeFi workflows, handles natural language payments, and provides enterprise-grade security guardrails.",
+    description: "A cognitive intent layer for automated blockchain workflows.",
     github: "https://github.com/subhajitlucky/onchain-ai-agent",
     demo: "https://github.com/subhajitlucky/onchain-ai-agent"
   }

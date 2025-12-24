@@ -1,32 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import Projects from './pages/Projects';
-import Blog from './pages/Blog';
+import ResumePortfolio from './components/ResumePortfolio';
 import './App.css';
 
 function App() {
-  // Determine basename from the current environment
-  const basename = import.meta.env.BASE_URL;
-  
   return (
-    <Router basename={basename}>
-      <div className="app">
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <Navbar />
-        <main id="main-content" className="main-content" tabIndex={-1}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/blog" element={<Blog />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <div className="app">
+      <ResumePortfolio />
+    </div>
   );
 }
 
