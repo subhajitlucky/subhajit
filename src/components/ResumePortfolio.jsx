@@ -59,29 +59,39 @@ const ResumePortfolio = () => {
   };
 
   const skills = [
-    { name: "C", category: "core" },
-    { name: "C++", category: "core" },
-    { name: "Java", category: "core" },
-    { name: "Python", category: "core" },
+    { name: "TypeScript", category: "core" },
+    { name: "JavaScript", category: "core" },
+    { name: "Solidity", category: "core" },
     { name: "Rust", category: "core" },
     { name: "Go", category: "core" },
+    { name: "Python", category: "core" },
+    { name: "C++", category: "core" },
+    { name: "Java", category: "core" },
     
-    { name: "JavaScript", category: "frontend" },
-    { name: "TypeScript", category: "frontend" },
-    { name: "React.js", category: "frontend" },
     { name: "Next.js", category: "frontend" },
-    { name: "TailwindCSS", category: "frontend" },
+    { name: "React.js", category: "frontend" },
+    { name: "Express.js", category: "frontend" },
+    { name: "Tailwind CSS", category: "frontend" },
+    { name: "REST", category: "frontend" },
+    { name: "GraphQL", category: "frontend" },
 
-    { name: "Node.js", category: "backend" },
-    { name: "MySQL", category: "backend" },
+    { name: "Ethereum", category: "backend" },
+    { name: "ICP", category: "backend" },
+    { name: "Solana", category: "backend" },
+    { name: "NFT", category: "backend" },
+    { name: "Hardhat", category: "backend" },
+    { name: "Ethers.js", category: "backend" },
+    { name: "Web3.js", category: "backend" },
     { name: "PostgreSQL", category: "backend" },
     { name: "MongoDB", category: "backend" },
+    { name: "MySQL", category: "backend" },
+    { name: "Node.js", category: "backend" },
     { name: "Prisma", category: "backend" },
 
-    { name: "Solidity", category: "web3" },
-    { name: "Ethers.js", category: "web3" },
-
     { name: "Git", category: "tool" },
+    { name: "Docker", category: "tool" },
+    { name: "GitHub Actions", category: "tool" },
+    { name: "Postman", category: "tool" },
   ];
 
   // Base URL logic for resume path (works for local and gh-pages)
@@ -106,10 +116,10 @@ const ResumePortfolio = () => {
           <header className="resume-header">
             <div className="header-content">
               <h1>Subhajit Pradhan</h1>
-              <span className="title">Software Engineer & Developer</span>
+              <span className="title">Full-Stack & Blockchain Developer</span>
               <p className="bio">
-                Building decentralized applications and high-performance web systems. 
-                Expertise in modern frontend frameworks, smart contracts, and scalable backend architecture.
+                Full-stack and blockchain developer with hands-on experience building AI-driven systems,
+                decentralized applications, and scalable backend architectures.
               </p>
             </div>
             <div className="contact-info">
