@@ -115,12 +115,27 @@ const ResumePortfolio = () => {
           {/* Header */}
           <header className="resume-header">
             <div className="header-content">
+              <span className="header-eyebrow">Building for Web2 + Web3</span>
               <h1>Subhajit Pradhan</h1>
               <span className="title">Full-Stack & Blockchain Developer</span>
               <p className="bio">
                 Full-stack and blockchain developer with hands-on experience building AI-driven systems,
                 decentralized applications, and scalable backend architectures.
               </p>
+              <div className="header-stats">
+                <div>
+                  <strong>4+</strong>
+                  <span>Production Projects</span>
+                </div>
+                <div>
+                  <strong>AI + Web3</strong>
+                  <span>Core Focus</span>
+                </div>
+                <div>
+                  <strong>Remote</strong>
+                  <span>Collaboration Ready</span>
+                </div>
+              </div>
             </div>
             <div className="contact-info">
               <div className="location">
@@ -151,6 +166,7 @@ const ResumePortfolio = () => {
           {/* Skills */}
           <section className="section">
             <h2 className="section-title">Technical Skills</h2>
+            <p className="section-lead">Design calibrated with skills.sh/frontend-design and tuned for a sharp developer-first aesthetic.</p>
             <div className="skills-grid">
               {skills.map((skill, index) => (
                 <span key={index} className={`skill-tag ${skill.category}`}>
@@ -179,6 +195,7 @@ const ResumePortfolio = () => {
               {projects.map((project, index) => (
                 <div key={index} className="project-card">
                   <div className="project-header">
+                    <span className="project-index">{String(index + 1).padStart(2, '0')}</span>
                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-title">
                       {project.title} <ExternalLinkIcon />
                     </a>
