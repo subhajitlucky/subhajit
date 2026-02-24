@@ -4,7 +4,6 @@ import projects from '../data/projects';
 import SpaceBackground from './SpaceBackground';
 import '../styles/SpaceTheme.css';
 
-// Icons
 const GithubIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
 );
@@ -42,13 +41,9 @@ const ResumePortfolio = () => {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('portfolioTheme');
-    if (savedTheme) {
-      setTheme(savedTheme);
-      document.body.setAttribute('data-theme', savedTheme);
-    } else {
-      setTheme('light');
-      document.body.setAttribute('data-theme', 'light');
-    }
+    const nextTheme = savedTheme || 'light';
+    setTheme(nextTheme);
+    document.body.setAttribute('data-theme', nextTheme);
   }, []);
 
   const toggleTheme = () => {
@@ -59,166 +54,150 @@ const ResumePortfolio = () => {
   };
 
   const skills = [
-    { name: "TypeScript", category: "core" },
-    { name: "JavaScript", category: "core" },
-    { name: "Solidity", category: "core" },
-    { name: "Rust", category: "core" },
-    { name: "Go", category: "core" },
-    { name: "Python", category: "core" },
-    { name: "C++", category: "core" },
-    { name: "Java", category: "core" },
-    
-    { name: "Next.js", category: "frontend" },
-    { name: "React.js", category: "frontend" },
-    { name: "Express.js", category: "frontend" },
-    { name: "Tailwind CSS", category: "frontend" },
-    { name: "REST", category: "frontend" },
-    { name: "GraphQL", category: "frontend" },
-
-    { name: "Ethereum", category: "backend" },
-    { name: "ICP", category: "backend" },
-    { name: "Solana", category: "backend" },
-    { name: "NFT", category: "backend" },
-    { name: "Hardhat", category: "backend" },
-    { name: "Ethers.js", category: "backend" },
-    { name: "Web3.js", category: "backend" },
-    { name: "PostgreSQL", category: "backend" },
-    { name: "MongoDB", category: "backend" },
-    { name: "MySQL", category: "backend" },
-    { name: "Node.js", category: "backend" },
-    { name: "Prisma", category: "backend" },
-
-    { name: "Git", category: "tool" },
-    { name: "Docker", category: "tool" },
-    { name: "GitHub Actions", category: "tool" },
-    { name: "Postman", category: "tool" },
+    { name: 'TypeScript', category: 'core' },
+    { name: 'JavaScript', category: 'core' },
+    { name: 'Solidity', category: 'core' },
+    { name: 'Rust', category: 'core' },
+    { name: 'Go', category: 'core' },
+    { name: 'Python', category: 'core' },
+    { name: 'C++', category: 'core' },
+    { name: 'Java', category: 'core' },
+    { name: 'Next.js', category: 'frontend' },
+    { name: 'React.js', category: 'frontend' },
+    { name: 'Express.js', category: 'frontend' },
+    { name: 'Tailwind CSS', category: 'frontend' },
+    { name: 'REST', category: 'frontend' },
+    { name: 'GraphQL', category: 'frontend' },
+    { name: 'Ethereum', category: 'backend' },
+    { name: 'ICP', category: 'backend' },
+    { name: 'Solana', category: 'backend' },
+    { name: 'NFT', category: 'backend' },
+    { name: 'Hardhat', category: 'backend' },
+    { name: 'Ethers.js', category: 'backend' },
+    { name: 'Web3.js', category: 'backend' },
+    { name: 'PostgreSQL', category: 'backend' },
+    { name: 'MongoDB', category: 'backend' },
+    { name: 'MySQL', category: 'backend' },
+    { name: 'Node.js', category: 'backend' },
+    { name: 'Prisma', category: 'backend' },
+    { name: 'Git', category: 'tool' },
+    { name: 'Docker', category: 'tool' },
+    { name: 'GitHub Actions', category: 'tool' },
+    { name: 'Postman', category: 'tool' },
   ];
 
-  // Base URL logic for resume path (works for local and gh-pages)
+  const skillGroups = {
+    Core: skills.filter((skill) => skill.category === 'core'),
+    Frontend: skills.filter((skill) => skill.category === 'frontend'),
+    Blockchain: skills.filter((skill) => skill.category === 'backend').slice(0, 7),
+    Platform: skills.filter((skill) => skill.category === 'backend').slice(7).concat(skills.filter((skill) => skill.category === 'tool')),
+  };
+
   const resumePath = `${import.meta.env.BASE_URL}resume.pdf`.replace('//', '/');
 
   return (
     <>
       {theme === 'space' && <SpaceBackground />}
-      
       <div className="resume-wrapper">
-        <button 
-          className="theme-toggle" 
+        <button
+          className="theme-toggle"
           onClick={toggleTheme}
           aria-label="Toggle theme"
-          title={theme === 'light' ? "Switch to Cosmic Mode" : "Switch to Document Mode"}
+          title={theme === 'light' ? 'Switch to Cosmic Mode' : 'Switch to Document Mode'}
         >
           {theme === 'light' ? <MoonIcon /> : <SunIcon />}
         </button>
 
-        <div className="resume-container">
-          {/* Header */}
-          <header className="resume-header">
-            <div className="header-content">
-              <span className="header-eyebrow">Building for Web2 + Web3</span>
+        <main className="resume-container">
+          <section className="hero-grid">
+            <div className="hero-panel">
+              <span className="kicker">FRONTEND DESIGN SKILL APPLIED</span>
               <h1>Subhajit Pradhan</h1>
-              <span className="title">Full-Stack & Blockchain Developer</span>
+              <p className="headline">Full-Stack + Blockchain Engineer crafting AI-native products.</p>
               <p className="bio">
-                Full-stack and blockchain developer with hands-on experience building AI-driven systems,
-                decentralized applications, and scalable backend architectures.
+                Building production systems where modern frontend engineering, secure backend logic, and Web3 interactions meet.
+                I focus on fast UX, clear architecture, and deployable outcomes.
               </p>
-              <div className="header-stats">
-                <div>
-                  <strong>4+</strong>
-                  <span>Production Projects</span>
-                </div>
-                <div>
-                  <strong>AI + Web3</strong>
-                  <span>Core Focus</span>
-                </div>
-                <div>
-                  <strong>Remote</strong>
-                  <span>Collaboration Ready</span>
+              <div className="action-row">
+                <a href={resumePath} target="_blank" rel="noopener noreferrer" className="resume-btn">
+                  <FileTextIcon /> <span>Open Resume</span>
+                </a>
+                <div className="location-chip">
+                  <MapPinIcon /> Odisha, India
                 </div>
               </div>
             </div>
-            <div className="contact-info">
-              <div className="location">
-                <MapPinIcon />
-                <span>Odisha, India</span>
-              </div>
-              <div className="social-icons">
-                <a 
-                  href="mailto:subhajitpradhan310@gmail.com" 
-                  title="Send Email"
-                  aria-label="Email"
-                >
-                  <MailIcon />
-                </a>
-                <a href="https://linkedin.com/in/subhajitlucky" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                  <LinkedinIcon />
-                </a>
-                <a href="https://github.com/subhajitlucky" target="_blank" rel="noopener noreferrer" title="GitHub">
-                  <GithubIcon />
-                </a>
-              </div>
-              <a href={resumePath} target="_blank" rel="noopener noreferrer" className="resume-btn">
-                <FileTextIcon /> <span>Resume</span>
-              </a>
-            </div>
-          </header>
 
-          {/* Skills */}
-          <section className="section">
-            <h2 className="section-title">Technical Skills</h2>
-            <p className="section-lead">Design calibrated with skills.sh/frontend-design and tuned for a sharp developer-first aesthetic.</p>
-            <div className="skills-grid">
-              {skills.map((skill, index) => (
-                <span key={index} className={`skill-tag ${skill.category}`}>
-                  {skill.name}
-                </span>
+            <aside className="meta-rail">
+              <div className="meta-block">
+                <h3>Contact</h3>
+                <a href="mailto:subhajitpradhan310@gmail.com" className="meta-link"><MailIcon /> Email</a>
+                <a href="https://linkedin.com/in/subhajitlucky" target="_blank" rel="noopener noreferrer" className="meta-link"><LinkedinIcon /> LinkedIn</a>
+                <a href="https://github.com/subhajitlucky" target="_blank" rel="noopener noreferrer" className="meta-link"><GithubIcon /> GitHub</a>
+              </div>
+              <div className="meta-block metrics">
+                <div><strong>4+</strong><span>Flagship Builds</span></div>
+                <div><strong>AI + Web3</strong><span>Primary Domain</span></div>
+                <div><strong>Remote</strong><span>Team Ready</span></div>
+              </div>
+            </aside>
+          </section>
+
+          <section className="section skills-section">
+            <h2 className="section-title">Skill Matrix</h2>
+            <div className="skill-columns">
+              {Object.entries(skillGroups).map(([groupName, list]) => (
+                <article key={groupName} className="skill-group">
+                  <h3>{groupName}</h3>
+                  <div className="skills-grid">
+                    {list.map((skill) => (
+                      <span key={`${groupName}-${skill.name}`} className={`skill-tag ${skill.category}`}>
+                        {skill.name}
+                      </span>
+                    ))}
+                  </div>
+                </article>
               ))}
             </div>
           </section>
 
-          {/* GitHub Contributions */}
-          <section className="section">
-            <h2 className="section-title">GitHub Contributions</h2>
+          <section className="section github-shell">
+            <h2 className="section-title">Contribution Pulse</h2>
             <div className="github-stats">
-                <img 
-                  src="https://ghchart.rshah.org/2b6cb0/subhajitlucky" 
-                  alt="Subhajit's Github Chart" 
-                  style={{ width: '100%', minHeight: '100px' }}
-                />
+              <img
+                src="https://ghchart.rshah.org/2b6cb0/subhajitlucky"
+                alt="Subhajit's Github Chart"
+                style={{ width: '100%', minHeight: '120px' }}
+              />
             </div>
           </section>
 
-          {/* Projects */}
-          <section className="section">
-            <h2 className="section-title">Proof of Work</h2>
+          <section className="section projects-shell">
+            <h2 className="section-title">Selected Work</h2>
             <div className="projects-grid">
               {projects.map((project, index) => (
-                <div key={index} className="project-card">
-                  <div className="project-header">
-                    <span className="project-index">{String(index + 1).padStart(2, '0')}</span>
+                <article key={project.title} className="project-card">
+                  <span className="project-step">{String(index + 1).padStart(2, '0')}</span>
+                  <div className="project-body">
                     <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-title">
                       {project.title} <ExternalLinkIcon />
                     </a>
-                    <div className="project-links">
-                      {project.github && (
-                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                          Source
-                    </a>
-                      )}
-                    </div>
+                    <p className="project-description">{project.description}</p>
+                    {project.github && (
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
+                        View source
+                      </a>
+                    )}
                   </div>
-                  <p className="project-description">{project.description}</p>
-                </div>
+                </article>
               ))}
             </div>
           </section>
 
-          
-          {/* Footer */}
-          <footer style={{ marginTop: 'auto', paddingTop: '30px', textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-            <p>© {new Date().getFullYear()} Subhajit Pradhan.</p>
+          <footer className="portfolio-footer">
+            <p>© {new Date().getFullYear()} Subhajit Pradhan</p>
           </footer>
-        </div>
+        </main>
       </div>
     </>
   );
