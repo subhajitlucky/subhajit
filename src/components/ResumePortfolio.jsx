@@ -111,7 +111,7 @@ const ResumePortfolio = () => {
         <main className="resume-container">
           <section className="hero-grid">
             <div className="hero-panel">
-              <span className="kicker">FRONTEND DESIGN SKILL APPLIED</span>
+              <span className="kicker">DESIGN SYSTEM V3</span>
               <h1>Subhajit Pradhan</h1>
               <p className="headline">Full-Stack + Blockchain Engineer crafting AI-native products.</p>
               <p className="bio">
@@ -141,6 +141,12 @@ const ResumePortfolio = () => {
                 <div><strong>Remote</strong><span>Team Ready</span></div>
               </div>
             </aside>
+          </section>
+
+          <section className="experience-strip">
+            <article><strong>2026</strong><span>Associate Blockchain Developer Intern · uElement</span></article>
+            <article><strong>2025</strong><span>Blockchain Developer Trainee · QuadB</span></article>
+            <article><strong>BCA</strong><span>Centurion University · CGPA 8.9</span></article>
           </section>
 
           <section className="section skills-section">
