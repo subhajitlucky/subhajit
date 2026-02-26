@@ -68,17 +68,66 @@ button {
 
 /* Layout Utilities */
 .container {
-  width: min(1200px, 90%);
+  width: min(1400px, 94%);
   margin: 0 auto;
 }
 
 .section-padding {
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
-@media (max-width: 768px) {
-  .section-padding {
-    padding: 60px 0;
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.bento-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.bento-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+@media (max-width: 1280px) {
+  .bento-item {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    display: grid; /* Keep grid but change cols */
+  }
+  
+  .bento-item {
+    grid-column: span 1 !important;
+  }
+  
+  .bento-item:first-child {
+    grid-column: span 2 !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .bento-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container {
+    padding: 0 16px;
   }
 }
 
