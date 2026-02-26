@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import '../styles/SpaceTheme.css';
 
 const PARTICLE_COUNT = 20;
 const PARTICLES = Array.from({ length: PARTICLE_COUNT }, (_, index) => index + 1);

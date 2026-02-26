@@ -1,5 +1,5 @@
 import ResumePortfolio from './components/ResumePortfolio';
-import './App.css';
+import './styles/ModernTheme.css';
 
 function App() {
   return (

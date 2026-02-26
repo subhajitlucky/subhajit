@@ -1,31 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/ResumePortfolio.css';
 import projects from '../data/projects';
+import blogTopics from '../data/blogTopics';
 import SpaceBackground from './SpaceBackground';
-import '../styles/SpaceTheme.css';
+import '../styles/ModernTheme.css';
 
-const GithubIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+const GithubIcon = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
 );
 
-const LinkedinIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+const LinkedinIcon = ({ size = 20 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
 );
 
-const ExternalLinkIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-);
-
-const MailIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-);
-
-const MapPinIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-);
-
-const FileTextIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+const ExternalLinkIcon = ({ size = 16 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
 );
 
 const MoonIcon = () => (
@@ -55,157 +43,154 @@ const ResumePortfolio = () => {
 
   const skills = [
     { name: 'TypeScript', category: 'core' },
-    { name: 'JavaScript', category: 'core' },
     { name: 'Solidity', category: 'core' },
     { name: 'Rust', category: 'core' },
     { name: 'Go', category: 'core' },
-    { name: 'Python', category: 'core' },
-    { name: 'C++', category: 'core' },
-    { name: 'Java', category: 'core' },
     { name: 'Next.js', category: 'frontend' },
-    { name: 'React.js', category: 'frontend' },
-    { name: 'Express.js', category: 'frontend' },
-    { name: 'Tailwind CSS', category: 'frontend' },
-    { name: 'REST', category: 'frontend' },
-    { name: 'GraphQL', category: 'frontend' },
-    { name: 'Ethereum', category: 'backend' },
-    { name: 'ICP', category: 'backend' },
-    { name: 'Solana', category: 'backend' },
-    { name: 'NFT', category: 'backend' },
-    { name: 'Hardhat', category: 'backend' },
-    { name: 'Ethers.js', category: 'backend' },
-    { name: 'Web3.js', category: 'backend' },
-    { name: 'PostgreSQL', category: 'backend' },
-    { name: 'MongoDB', category: 'backend' },
-    { name: 'MySQL', category: 'backend' },
+    { name: 'React', category: 'frontend' },
+    { name: 'Tailwind', category: 'frontend' },
+    { name: 'Ethereum', category: 'blockchain' },
+    { name: 'Solana', category: 'blockchain' },
     { name: 'Node.js', category: 'backend' },
-    { name: 'Prisma', category: 'backend' },
-    { name: 'Git', category: 'tool' },
-    { name: 'Docker', category: 'tool' },
-    { name: 'GitHub Actions', category: 'tool' },
-    { name: 'Postman', category: 'tool' },
+    { name: 'PostgreSQL', category: 'backend' },
+    { name: 'Docker', category: 'tools' },
   ];
-
-  const skillGroups = {
-    Core: skills.filter((skill) => skill.category === 'core'),
-    Frontend: skills.filter((skill) => skill.category === 'frontend'),
-    Blockchain: skills.filter((skill) => skill.category === 'backend').slice(0, 7),
-    Platform: skills.filter((skill) => skill.category === 'backend').slice(7).concat(skills.filter((skill) => skill.category === 'tool')),
-  };
 
   const resumePath = `${import.meta.env.BASE_URL}resume.pdf`.replace('//', '/');
 
   return (
-    <>
+    <div className="portfolio-root">
       {theme === 'space' && <SpaceBackground />}
-      <div className="resume-wrapper">
-        <button
-          className="theme-toggle"
-          onClick={toggleTheme}
-          aria-label="Toggle theme"
-          title={theme === 'light' ? 'Switch to Cosmic Mode' : 'Switch to Document Mode'}
-        >
-          {theme === 'light' ? <MoonIcon /> : <SunIcon />}
-        </button>
+      <div className="cosmic-overlay" />
+      
+      <button className="theme-switch" onClick={toggleTheme} aria-label="Toggle theme">
+        {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+      </button>
 
-        <main className="resume-container">
-          <section className="hero-grid">
-            <div className="hero-panel">
-              <span className="kicker">DESIGN SYSTEM V3</span>
-              <h1>Subhajit Pradhan</h1>
-              <p className="headline">Full-Stack + Blockchain Engineer crafting AI-native products.</p>
-              <p className="bio">
-                Building production systems where modern frontend engineering, secure backend logic, and Web3 interactions meet.
-                I focus on fast UX, clear architecture, and deployable outcomes.
-              </p>
-              <div className="action-row">
-                <a href={resumePath} target="_blank" rel="noopener noreferrer" className="resume-btn">
-                  <FileTextIcon /> <span>Open Resume</span>
+      <main>
+        {/* HERO SECTION */}
+        <section className="hero section-padding">
+          <div className="container">
+            <span className="hero-kicker reveal">DESIGN SYSTEM V4</span>
+            <h1 className="reveal reveal-delay-1">Subhajit<br />Pradhan</h1>
+            <p className="hero-bio reveal reveal-delay-2">
+              Full-Stack + Blockchain Engineer crafting <strong>AI-native</strong> products. 
+              Building the intent-centric future of Web3.
+            </p>
+            <div className="reveal reveal-delay-3" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+              <a href={resumePath} target="_blank" rel="noopener noreferrer" className="btn btn-primary pulse">
+                View Resume
+              </a>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <a href="https://github.com/subhajitlucky" target="_blank" rel="noopener noreferrer" className="btn btn-outline" aria-label="GitHub">
+                  <GithubIcon />
                 </a>
-                <div className="location-chip">
-                  <MapPinIcon /> Odisha, India
+                <a href="https://linkedin.com/in/subhajitlucky" target="_blank" rel="noopener noreferrer" className="btn btn-outline" aria-label="LinkedIn">
+                  <LinkedinIcon />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* EXPERIENCE STRIP */}
+        <section className="section-padding" style={{ background: 'var(--surface-muted)' }}>
+          <div className="container">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px' }}>
+              <div className="reveal">
+                <span className="hero-kicker">CURRENT</span>
+                <h3>uElement</h3>
+                <p style={{ color: 'var(--text-muted)' }}>Blockchain Intern · 2026</p>
+              </div>
+              <div className="reveal reveal-delay-1">
+                <span className="hero-kicker">PREVIOUS</span>
+                <h3>QuadB</h3>
+                <p style={{ color: 'var(--text-muted)' }}>Blockchain Trainee · 2025</p>
+              </div>
+              <div className="reveal reveal-delay-2">
+                <span className="hero-kicker">EDUCATION</span>
+                <h3>Centurion University</h3>
+                <p style={{ color: 'var(--text-muted)' }}>BCA · CGPA 8.9</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* PROJECTS */}
+        <section className="section-padding">
+          <div className="container">
+            <h2 className="reveal" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', marginBottom: '48px' }}>Selected Work</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+              {projects.map((project, i) => (
+                <article key={project.title} className={`reveal reveal-delay-${(i % 4) + 1}`}>
+                  <div className="project-card">
+                    <span className="project-tag">0{i + 1}</span>
+                    <h3>{project.title}</h3>
+                    <p className="project-desc">{project.description}</p>
+                    <div className="project-footer">
+                      {project.demo && (
+                        <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: 'var(--accent)' }}>
+                          Live Demo <ExternalLinkIcon />
+                        </a>
+                      )}
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link" style={{ color: 'var(--text-muted)' }}>
+                          Source <GithubIcon size={14} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* SKILLS */}
+        <section className="section-padding" style={{ borderTop: '1px solid var(--border)' }}>
+          <div className="container">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '60px' }}>
+              <div className="reveal">
+                <h2 style={{ fontSize: '2.5rem', marginBottom: '24px' }}>Toolkit</h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem' }}>
+                  A specialized stack for high-performance blockchain applications and AI-driven interfaces.
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '32px' }}>
+                  {skills.map(skill => (
+                    <span key={skill.name} className="skill-tag">
+                      {skill.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="reveal reveal-delay-2">
+                <h2 style={{ fontSize: '2.5rem', marginBottom: '24px' }}>Focus Areas</h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '32px' }}>
+                  Core domains where I apply my engineering efforts.
+                </p>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  {blogTopics.map(topic => (
+                    <div key={topic} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent)' }} />
+                      <span style={{ fontWeight: 500 }}>{topic}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
+          </div>
+        </section>
 
-            <aside className="meta-rail">
-              <div className="meta-block">
-                <h3>Contact</h3>
-                <a href="mailto:subhajitpradhan310@gmail.com" className="meta-link"><MailIcon /> Email</a>
-                <a href="https://linkedin.com/in/subhajitlucky" target="_blank" rel="noopener noreferrer" className="meta-link"><LinkedinIcon /> LinkedIn</a>
-                <a href="https://github.com/subhajitlucky" target="_blank" rel="noopener noreferrer" className="meta-link"><GithubIcon /> GitHub</a>
-              </div>
-              <div className="meta-block metrics">
-                <div><strong>4+</strong><span>Flagship Builds</span></div>
-                <div><strong>AI + Web3</strong><span>Primary Domain</span></div>
-                <div><strong>Remote</strong><span>Team Ready</span></div>
-              </div>
-            </aside>
-          </section>
-
-          <section className="experience-strip">
-            <article><strong>2026</strong><span>Associate Blockchain Developer Intern · uElement</span></article>
-            <article><strong>2025</strong><span>Blockchain Developer Trainee · QuadB</span></article>
-            <article><strong>BCA</strong><span>Centurion University · CGPA 8.9</span></article>
-          </section>
-
-          <section className="section skills-section">
-            <h2 className="section-title">Skill Matrix</h2>
-            <div className="skill-columns">
-              {Object.entries(skillGroups).map(([groupName, list]) => (
-                <article key={groupName} className="skill-group">
-                  <h3>{groupName}</h3>
-                  <div className="skills-grid">
-                    {list.map((skill) => (
-                      <span key={`${groupName}-${skill.name}`} className={`skill-tag ${skill.category}`}>
-                        {skill.name}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="section github-shell">
-            <h2 className="section-title">Contribution Pulse</h2>
-            <div className="github-stats">
-              <img
-                src="https://ghchart.rshah.org/2b6cb0/subhajitlucky"
-                alt="Subhajit's Github Chart"
-                style={{ width: '100%', minHeight: '120px' }}
-              />
-            </div>
-          </section>
-
-          <section className="section projects-shell">
-            <h2 className="section-title">Selected Work</h2>
-            <div className="projects-grid">
-              {projects.map((project, index) => (
-                <article key={project.title} className="project-card">
-                  <span className="project-step">{String(index + 1).padStart(2, '0')}</span>
-                  <div className="project-body">
-                    <a href={project.demo} target="_blank" rel="noopener noreferrer" className="project-title">
-                      {project.title} <ExternalLinkIcon />
-                    </a>
-                    <p className="project-description">{project.description}</p>
-                    {project.github && (
-                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="project-link">
-                        View source
-                      </a>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <footer className="portfolio-footer">
-            <p>© {new Date().getFullYear()} Subhajit Pradhan</p>
-          </footer>
-        </main>
-      </div>
-    </>
+        {/* FOOTER */}
+        <footer className="section-padding" style={{ borderTop: '1px solid var(--border)', textAlign: 'center' }}>
+          <div className="container">
+            <p style={{ color: 'var(--text-muted)' }}>
+              © {new Date().getFullYear()} Subhajit Pradhan. Built for the Decentralized Web.
+            </p>
+          </div>
+        </footer>
+      </main>
+    </div>
   );
 };
 
