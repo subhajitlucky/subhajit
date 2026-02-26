@@ -85,7 +85,7 @@ const ResumePortfolio = () => {
   ];
 
   // Base URL logic for resume path (works for local and gh-pages)
-  const resumePath = `${import.meta.env.BASE_URL}assets/Subhajit_Resume.pdf`.replace('//', '/');
+  const resumePath = `${import.meta.env.BASE_URL}resume.pdf`.replace('//', '/');
 
   return (
     <>
