@@ -1,28 +1,36 @@
 const projects = [
   {
-    title: "IntentPay",
-    description: "An AI-powered intent layer for natural-language blockchain transactions and DeFi automation.",
-    github: "https://github.com/subhajitlucky/intentpay",
-    demo: "https://github.com/subhajitlucky/intentpay"
+    title: 'IntentPay',
+    description:
+      'AI-driven intent layer that translates natural language into on-chain DeFi transactions.',
+    github: 'https://github.com/subhajitlucky/intentpay',
+    demo: 'https://github.com/subhajitlucky/intentpay',
+    tags: ['TypeScript', 'Solidity', 'AI'],
   },
   {
-    title: "Tarka Sabha",
-    description: "An autonomous AI debate platform with multi-provider orchestration and secure key management.",
-    github: "https://github.com/subhajitlucky/tarka-sabha",
-    demo: "https://github.com/subhajitlucky/tarka-sabha"
+    title: 'Tarka Sabha',
+    description:
+      'Multi-agent AI debate platform with provider orchestration and secure credential management.',
+    github: 'https://github.com/subhajitlucky/tarka-sabha',
+    demo: 'https://github.com/subhajitlucky/tarka-sabha',
+    tags: ['Node.js', 'React', 'AI'],
   },
   {
-    title: "CampusHelper",
-    description: "A full-stack lost-and-found platform for students and staff with auth, uploads, and search.",
-    github: "https://github.com/subhajitlucky/campushelper",
-    demo: "https://campushelper.vercel.app"
+    title: 'CampusHelper',
+    description:
+      'Full-stack lost-and-found system with authentication, file uploads, and full-text search.',
+    github: 'https://github.com/subhajitlucky/campushelper',
+    demo: 'https://campushelper.vercel.app',
+    tags: ['React', 'Node.js', 'PostgreSQL'],
   },
   {
-    title: "QuantumTicket",
-    description: "A decentralized NFT ticketing dApp for minting, selling, and on-chain ticket verification.",
-    github: "https://github.com/subhajitlucky/quantumTicket",
-    demo: "https://quantumticket.vercel.app/"
-  }
+    title: 'QuantumTicket',
+    description:
+      'On-chain NFT ticketing system — mint, transfer, and verify event tickets via smart contracts.',
+    github: 'https://github.com/subhajitlucky/quantumTicket',
+    demo: 'https://quantumticket.vercel.app/',
+    tags: ['Solidity', 'Ethers.js', 'React'],
+  },
 ];
 
 export default projects;
