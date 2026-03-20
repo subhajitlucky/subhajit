@@ -159,8 +159,8 @@ export default function ResumePortfolio() {
                 <a className="ct-row" href="https://github.com/subhajitlucky" target="_blank" rel="noopener noreferrer">
                   <GH s={14} /> github.com/subhajitlucky
                 </a>
-                <a className="ct-row" href="https://www.linkedin.com/in/subhajit-pradhan-profile" target="_blank" rel="noopener noreferrer">
-                  <LI s={14} /> linkedin.com/in/subhajit-pradhan-profile
+                <a className="ct-row" href="https://www.linkedin.com/in/subhajitlucky/" target="_blank" rel="noopener noreferrer">
+                  <LI s={14} /> linkedin.com/in/subhajit
                 </a>
                 <a className="ct-row" href={RESUME} target="_blank" rel="noopener noreferrer">
                   <DL s={14} /> Download Resume (PDF)
