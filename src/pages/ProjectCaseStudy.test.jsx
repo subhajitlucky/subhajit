@@ -26,7 +26,9 @@ describe('ProjectCaseStudy', () => {
   it('suppresses the demo link when it duplicates the GitHub URL', () => {
     renderRoute('/projects/tarka-sabha');
 
-    expect(screen.getByRole('link', { name: /GitHub/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /Open Tarka Sabha GitHub repository/i }),
+    ).toHaveAttribute('href', 'https://github.com/subhajitlucky/tarka-sabha');
     expect(screen.queryByRole('link', { name: /Demo/i })).not.toBeInTheDocument();
   });
 
@@ -34,7 +36,7 @@ describe('ProjectCaseStudy', () => {
     renderRoute('/projects/campushelper');
 
     expect(screen.getByRole('heading', { name: /CampusHelper/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /Demo/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /Open CampusHelper live demo/i })).toHaveAttribute(
       'href',
       'https://campushelper.vercel.app',
     );

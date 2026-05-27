@@ -26,6 +26,9 @@ describe('App routing', () => {
     expect(
       screen.getByRole('heading', { level: 1, name: /Tarka Sabha/i }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /Open Tarka Sabha GitHub repository/i }),
+    ).toHaveAttribute('href', 'https://github.com/subhajitlucky/tarka-sabha');
   });
 
   it('renders the not-found route with a page heading', () => {

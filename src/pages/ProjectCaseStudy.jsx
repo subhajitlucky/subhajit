@@ -42,11 +42,21 @@ function ProjectCaseStudy() {
           </div>
 
           <nav className="case-study__links" aria-label={`${project.title} project links`}>
-            <a href={project.github} target="_blank" rel="noreferrer">
+            <a
+              aria-label={`Open ${project.title} GitHub repository`}
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+            >
               GitHub
             </a>
             {hasSeparateDemo ? (
-              <a href={project.demo} target="_blank" rel="noreferrer">
+              <a
+                aria-label={`Open ${project.title} live demo`}
+                href={project.demo}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Demo
               </a>
             ) : null}
