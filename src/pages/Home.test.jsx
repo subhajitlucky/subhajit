@@ -12,6 +12,8 @@ describe('Home', () => {
     );
 
     expect(screen.getByRole('heading', { name: /AI Full-Stack Engineer/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Proof Snapshot/i })).toBeInTheDocument();
+    expect(screen.getByText(/AI orchestration across providers/i)).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Selected Work/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Read Tarka Sabha case study/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Engineering Range/i })).toBeInTheDocument();
