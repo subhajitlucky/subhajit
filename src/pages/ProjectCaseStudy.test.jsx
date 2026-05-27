@@ -23,6 +23,23 @@ describe('ProjectCaseStudy', () => {
     expect(screen.getByRole('heading', { name: /Tradeoffs/i })).toBeInTheDocument();
   });
 
+  it('suppresses the demo link when it duplicates the GitHub URL', () => {
+    renderRoute('/projects/tarka-sabha');
+
+    expect(screen.getByRole('link', { name: /GitHub/i })).toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: /Demo/i })).not.toBeInTheDocument();
+  });
+
+  it('renders a demo link when a project has a distinct demo URL', () => {
+    renderRoute('/projects/campushelper');
+
+    expect(screen.getByRole('heading', { name: /CampusHelper/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Demo/i })).toHaveAttribute(
+      'href',
+      'https://campushelper.vercel.app',
+    );
+  });
+
   it('renders a useful not-found state for an unknown slug', () => {
     renderRoute('/projects/not-real');
 

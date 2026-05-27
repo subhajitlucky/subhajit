@@ -20,6 +20,8 @@ function ProjectCaseStudy() {
     );
   }
 
+  const hasSeparateDemo = project.demo && project.demo !== project.github;
+
   return (
     <article className="case-study">
       <section className="case-study__hero" aria-labelledby="case-study-heading">
@@ -43,9 +45,11 @@ function ProjectCaseStudy() {
             <a href={project.github} target="_blank" rel="noreferrer">
               GitHub
             </a>
-            <a href={project.demo} target="_blank" rel="noreferrer">
-              Demo
-            </a>
+            {hasSeparateDemo ? (
+              <a href={project.demo} target="_blank" rel="noreferrer">
+                Demo
+              </a>
+            ) : null}
           </nav>
         </div>
       </section>
