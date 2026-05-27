@@ -27,8 +27,8 @@ const projects = [
     ],
     stack: ['React', 'Node.js', 'AI provider APIs'],
     tags: ['React', 'Node.js', 'AI'],
-    github: 'https://github.com/subhajitlucky/tarka-sabha',
-    demo: 'https://github.com/subhajitlucky/tarka-sabha',
+    github: 'https://github.com/subhajitlucky/tarkaSabha',
+    demo: 'https://github.com/subhajitlucky/tarkaSabha',
   },
   {
     title: 'IntentPay',

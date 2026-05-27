@@ -73,5 +73,5 @@ The app includes the SPA redirect restore script in `index.html` so direct route
 
 - Email: [subhajitpradhan310@gmail.com](mailto:subhajitpradhan310@gmail.com)
 - GitHub: [subhajitlucky](https://github.com/subhajitlucky)
-- LinkedIn: [subhajit-pradhan-profile](https://www.linkedin.com/in/subhajit-pradhan-profile)
+- LinkedIn: [subhajitlucky](https://www.linkedin.com/in/subhajitlucky)
 - Location: Odisha, India

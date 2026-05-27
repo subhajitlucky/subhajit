@@ -29,7 +29,7 @@ describe('ProjectCaseStudy', () => {
 
     expect(
       screen.getByRole('link', { name: /Open Tarka Sabha GitHub repository/i }),
-    ).toHaveAttribute('href', 'https://github.com/subhajitlucky/tarka-sabha');
+    ).toHaveAttribute('href', 'https://github.com/subhajitlucky/tarkaSabha');
     expect(screen.queryByRole('link', { name: /Demo/i })).not.toBeInTheDocument();
   });
 

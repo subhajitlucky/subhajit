@@ -6,7 +6,7 @@ export const profile = {
   resume: '/assets/Subhajit_ResumeV8.pdf',
   links: {
     github: 'https://github.com/subhajitlucky',
-    linkedin: 'https://www.linkedin.com/in/subhajit-pradhan-profile',
+    linkedin: 'https://www.linkedin.com/in/subhajitlucky',
   },
   summary:
     'I build AI-powered web applications end to end, from product workflow and frontend UX to backend orchestration, data, APIs, and deployment.',

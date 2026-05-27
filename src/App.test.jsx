@@ -28,7 +28,7 @@ describe('App routing', () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole('link', { name: /Open Tarka Sabha GitHub repository/i }),
-    ).toHaveAttribute('href', 'https://github.com/subhajitlucky/tarka-sabha');
+    ).toHaveAttribute('href', 'https://github.com/subhajitlucky/tarkaSabha');
   });
 
   it('renders the not-found route with a page heading', () => {
