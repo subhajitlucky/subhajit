@@ -1,12 +1,12 @@
 {
-  "name": "Subhajit Pradhan Portfolio",
-  "short_name": "Subhajit Portfolio",
-  "description": "Subhajit Pradhan - Full Stack Developer Portfolio showcasing blockchain, web development, and modern JavaScript projects",
+  "name": "Subhajit Pradhan - AI Full-Stack Engineer",
+  "short_name": "Subhajit AI",
+  "description": "AI full-stack portfolio for Subhajit Pradhan, spanning product UX, backend orchestration, data, APIs, and deployment.",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#3498db",
+  "background_color": "#f5f5f2",
+  "theme_color": "#1f4f46",
   "icons": [
     {
       "src": "./favicon.svg",
