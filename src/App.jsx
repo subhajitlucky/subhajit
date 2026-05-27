@@ -2,41 +2,8 @@ import { Link, Route, Routes, useParams } from 'react-router-dom';
 import Section from './components/Section';
 import SiteFooter from './components/SiteFooter';
 import SiteHeader from './components/SiteHeader';
-import { profile } from './data/profile';
 import projects from './data/projects';
-
-function Home() {
-  return (
-    <>
-      <section className="hero-section" aria-labelledby="home-heading">
-        <div className="hero-copy">
-          <p className="eyebrow">{profile.name}</p>
-          <h1 id="home-heading">AI Full-Stack Engineer</h1>
-          <p className="lede">{profile.summary}</p>
-        </div>
-      </section>
-
-      <Section eyebrow="Selected work" title="Project case studies">
-        <div className="project-list">
-          {projects.map((project) => (
-            <article className="project-card" key={project.slug}>
-              <div>
-                <h3>{project.title}</h3>
-                <p>{project.oneLine}</p>
-              </div>
-              <Link
-                aria-label={`Read ${project.title} case study`}
-                to={`/projects/${project.slug}`}
-              >
-                Read case study
-              </Link>
-            </article>
-          ))}
-        </div>
-      </Section>
-    </>
-  );
-}
+import Home from './pages/Home';
 
 function ProjectCaseStudy() {
   const { slug } = useParams();
