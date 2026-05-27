@@ -1,21 +1,33 @@
-# Subhajit Pradhan - AI Full-Stack Portfolio
+# Subhajit Pradhan Portfolio
 
-Personal portfolio for Subhajit Pradhan, positioned as an AI full-stack engineer building web applications across product UX, backend orchestration, data, APIs, and deployment.
+Premium Next.js portfolio for [subhajitpradhan.vercel.app](https://subhajitpradhan.vercel.app), positioned for:
 
-Live site: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
+- `Subhajit Pradhan`
+- `Subhajit Pradhan developer`
+- `Subhajit Pradhan full stack developer`
+- `Subhajit Pradhan blockchain developer`
 
-## Site Structure
+The site is built as a server-rendered engineering dossier with project case studies, MDX blog posts, JSON-LD schema, canonical metadata, sitemap, robots, and recruiter-focused calls to action.
 
-- Homepage dossier at `/` with positioning, proof snapshot, selected work, engineering range, and experience.
-- Project case-study routes at `/projects/:slug`.
-- Shared profile and project content in `src/data/profile.js` and `src/data/projects.js`.
-- Vite public assets in `public/`, including favicon, manifest, resume, sitemap, and social image files.
+## Stack
 
-## Current Selected Projects
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- Framer Motion
+- MDX blog content
+- Vitest
+- Vercel Analytics
 
-- **Tarka Sabha**: Multi-agent AI debate platform with provider orchestration and secure credential management.
-- **IntentPay**: AI-driven intent layer that translates natural language into on-chain DeFi transactions.
-- **CampusHelper**: Full-stack lost-and-found system with authentication, file uploads, and full-text search.
+## Routes
+
+- `/` - homepage with About, Skills, Experience, Projects, Blogs, Currently Building, Contact, Open Source Work, and FAQ.
+- `/projects` - project index.
+- `/projects/[slug]` - static project case studies.
+- `/blog` - MDX blog index.
+- `/blog/[slug]` - static blog articles.
+- `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, `/opengraph-image`, `/twitter-image`.
 
 ## Commands
 
@@ -23,51 +35,27 @@ Live site: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
 npm install
 npm run dev
 npm run lint
+npm run typecheck
 npm run test -- --run
 npm run build
 ```
 
-Additional deployment builds:
+## Content
 
-```bash
-npm run build:vercel
-npm run build:github
-```
+- Site/profile content: `src/data/site.ts`
+- Project content: `src/data/projects.ts`
+- Blog metadata: `src/data/blog.ts`
+- MDX articles: `content/blog/*.mdx`
+- Metadata/schema helpers: `src/lib/metadata.ts`
 
-## Tech Stack
+## SEO Docs
 
-- React 18 with React Router
-- Vite
-- Feature-scoped CSS files
-- Vitest and Testing Library
-- ESLint
-
-## Project Layout
-
-```text
-src/
-├── components/             # Reusable layout, evidence, project, and stack components
-├── data/
-│   ├── profile.js          # Profile, links, proof, stack, and experience content
-│   └── projects.js         # Selected project case-study content
-├── pages/
-│   ├── Home.jsx            # Homepage dossier
-│   └── ProjectCaseStudy.jsx
-├── styles/
-│   ├── base.css            # Reset, typography, and focus defaults
-│   ├── theme.css           # Color and spacing tokens
-│   └── layout.css          # App, homepage, and case-study layout
-├── App.jsx                 # Routes and app shell
-└── main.jsx                # React entry point
-```
-
-## Deployment
-
-Vercel should use `npm run build:vercel`, which builds with the root base path for [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app).
-
-GitHub Pages should use `npm run build:github`, which builds with `/subhajit/` as the base path. Publish the generated `dist/` directory through GitHub Pages or the `gh-pages` package.
-
-The app includes the SPA redirect restore script in `index.html` so direct route visits can work when paired with the GitHub Pages redirect file.
+- [SEO checklist](docs/seo-checklist.md)
+- [Google Search Console setup](docs/google-search-console.md)
+- [Backlink strategy](docs/backlink-strategy.md)
+- [Domain migration strategy](docs/domain-migration-strategy.md)
+- [Indexing strategy](docs/indexing-strategy.md)
+- [Deployment steps](docs/deployment-steps.md)
 
 ## Contact
 

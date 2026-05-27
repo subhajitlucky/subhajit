@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://subhajitxyz.vercel.app/sitemap.xml
