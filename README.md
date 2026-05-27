@@ -1,143 +1,74 @@
-# Subhajit Pradhan - Portfolio Website
+# Subhajit Pradhan - AI Full-Stack Portfolio
 
-A clean, modern portfolio website showcasing my projects, skills, and experience as a software developer.
+Personal portfolio for Subhajit Pradhan, positioned as an AI full-stack engineer building web applications across product UX, backend orchestration, data, APIs, and deployment.
 
-🌐 **Live Site**: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
+Live site: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
 
-## 🚀 Features
+## Site Structure
 
-- **Clean Design**: Minimal, professional layout focusing on content
-- **Responsive**: Works perfectly on all devices and screen sizes
-- **Fast Performance**: Built with Vite for optimal loading speeds
-- **Real Projects**: Showcases actual GitHub repositories and work
-- **Easy Navigation**: Simple routing between Home and Projects
-- **Contact Integration**: Direct links to email, GitHub, and LinkedIn
+- Homepage dossier at `/` with positioning, proof snapshot, selected work, engineering range, and experience.
+- Project case-study routes at `/projects/:slug`.
+- Shared profile and project content in `src/data/profile.js` and `src/data/projects.js`.
+- Vite public assets in `public/`, including favicon, manifest, resume, sitemap, and social image files.
 
-## 🌐 Deployment
+## Current Selected Projects
 
-This project is configured to deploy on multiple platforms:
+- **Tarka Sabha**: Multi-agent AI debate platform with provider orchestration and secure credential management.
+- **IntentPay**: AI-driven intent layer that translates natural language into on-chain DeFi transactions.
+- **CampusHelper**: Full-stack lost-and-found system with authentication, file uploads, and full-text search.
 
-### GitHub Pages
-- **URL**: [subhajitlucky.github.io/subhajit](https://subhajitlucky.github.io/subhajit/)
-- **Auto-deployment**: Triggers on push to `main` branch
-- **Build command**: `npm run build:github`
+## Commands
 
-### Vercel
-- **URL**: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
-- **Auto-deployment**: Connect GitHub repository to Vercel
-- **Build command**: `npm run build:vercel`
-- **Analytics**: To collect pageviews use Vercel Analytics — run `npm i @vercel/analytics` and add `import { Analytics } from "@vercel/analytics/react"` and an `<Analytics />` node (e.g., in `App.jsx` or `main.jsx`).
-
-### Build Commands
-```bash
-# For local development
-npm run dev
-
-# For GitHub Pages deployment
-npm run build:github
-
-# For Vercel deployment
-npm run build:vercel
-
-# For linting
-npm run lint
-```
-
-
-
-## 🛠️ Tech Stack
-
-- **Frontend**: React 18, React Router DOM
-- **Build Tool**: Vite
-- **Styling**: Pure CSS with modern layout techniques
-- **Deployment**: GitHub Pages
-- **Code Quality**: ESLint for code consistency
-
-## 📁 Project Structure
-
-```
-src/
-├── components/
-│   ├── Navbar.jsx          # Navigation component
-│   ├── Navbar.css
-│   ├── Hero.jsx            # Landing section
-│   └── Hero.css
-├── pages/
-│   ├── Home.jsx            # Home page
-│   ├── Home.css
-│   ├── Projects.jsx        # Projects showcase
-│   └── Projects.css
-├── App.jsx                 # Main app with routing
-├── App.css                 # Global styles
-└── main.jsx                # Entry point
-```
-
-## 🎯 Featured Projects
-
-- **DeMarket** - Advanced decentralized marketplace on Ethereum with 73% gas optimization
-- **PradhanFresh** - Full-stack e-commerce platform for fresh produce delivery (TypeScript, PostgreSQL)
-- **QuantumTicket** - Blockchain-powered event ticketing platform with NFT tickets
-- **TokenVault** - Professional multi-chain portfolio tracker supporting 8+ blockchain networks
-- **Shree Jagannatha Temple** - Tourism website with stunning visual animations
-
-View all projects on the [Projects page](https://subhajitxyz.vercel.app/projects)
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/subhajitlucky/subhajit.me.git
-cd subhajit.me
-```
-
-2. Install dependencies:
 ```bash
 npm install
-```
-
-3. Start the development server:
-```bash
 npm run dev
-```
-
-4. Open [http://localhost:5173](http://localhost:5173) in your browser
-
-### Build for Production
-
-```bash
+npm run lint
+npm run test -- --run
 npm run build
 ```
 
-The build files will be generated in the `dist/` directory.
+Additional deployment builds:
 
-## 📧 Contact
+```bash
+npm run build:vercel
+npm run build:github
+```
 
-- **Email**: [subhajitpradhan310@gmail.com](mailto:subhajitpradhan310@gmail.com)
-- **GitHub**: [subhajitlucky](https://github.com/subhajitlucky)
-- **LinkedIn**: [subhajitlucky](https://linkedin.com/in/subhajitlucky)
-- **Location**: Odisha, India
+## Tech Stack
 
-## 📄 Resume
+- React 18 with React Router
+- Vite
+- Feature-scoped CSS files
+- Vitest and Testing Library
+- ESLint
 
-View my resume: [Download PDF](./assets/Subhajit_Resume.pdf)
+## Project Layout
 
-View my portfolio: [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app)
+```text
+src/
+├── components/             # Reusable layout, evidence, project, and stack components
+├── data/
+│   ├── profile.js          # Profile, links, proof, stack, and experience content
+│   └── projects.js         # Selected project case-study content
+├── pages/
+│   ├── Home.jsx            # Homepage dossier
+│   └── ProjectCaseStudy.jsx
+├── App.jsx                 # Routes and app shell
+├── App.css                 # App-level layout styles
+└── main.jsx                # React entry point
+```
 
-## 🤝 Contributing
+## Deployment
 
-This is a personal portfolio project, but suggestions and feedback are always welcome! Feel free to open an issue or reach out directly.
+Vercel should use `npm run build:vercel`, which builds with the root base path for [subhajitxyz.vercel.app](https://subhajitxyz.vercel.app).
 
-## 📝 License
+GitHub Pages should use `npm run build:github`, which builds with `/subhajit/` as the base path. Publish the generated `dist/` directory through GitHub Pages or the `gh-pages` package.
 
-This project is open source and available under the [MIT License](LICENSE).
+The app includes the SPA redirect restore script in `index.html` so direct route visits can work when paired with the GitHub Pages redirect file.
 
----
+## Contact
 
-⭐ **Built with passion by Subhajit Pradhan**
-# Deployment test Fri Jun 13 17:13:59 UTC 2025
+- Email: [subhajitpradhan310@gmail.com](mailto:subhajitpradhan310@gmail.com)
+- GitHub: [subhajitlucky](https://github.com/subhajitlucky)
+- LinkedIn: [subhajit-pradhan-profile](https://www.linkedin.com/in/subhajit-pradhan-profile)
+- Location: Odisha, India
