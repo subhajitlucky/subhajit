@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: dark;
   --bg: #080807;
   --panel: #0f100e;
   --text: #f5f2e8;
@@ -9,7 +10,23 @@
   --line: rgba(245, 242, 232, 0.14);
   --accent: #b8ff2c;
   --accent-ink: #101208;
+  --lede: #d7d3c7;
   --max: 1040px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg: #fafafa;
+    --panel: #f4f4f1;
+    --text: #171715;
+    --muted: #545249;
+    --quiet: #77736a;
+    --line: rgba(23, 23, 21, 0.16);
+    --accent: #315a25;
+    --accent-ink: #ffffff;
+    --lede: #35342f;
+  }
 }
 
 * {
@@ -180,7 +197,7 @@ p {
 .hero__lede {
   max-width: 680px;
   margin-bottom: 24px;
-  color: #d7d3c7;
+  color: var(--lede);
   font-size: 1.08rem;
 }
 
