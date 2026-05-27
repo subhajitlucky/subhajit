@@ -48,7 +48,7 @@ function ProjectCaseStudy() {
 
   return (
     <article className="case-study">
-      <Section eyebrow={project.role} title={project.title}>
+      <Section eyebrow={project.role} headingLevel={1} title={project.title}>
         <p className="lede">{project.description}</p>
         <dl className="case-study__facts">
           <div>
@@ -67,7 +67,7 @@ function ProjectCaseStudy() {
 
 function NotFound() {
   return (
-    <Section eyebrow="404" title="Page not found">
+    <Section eyebrow="404" headingLevel={1} title="Page not found">
       <p>The page you are looking for is not part of this portfolio yet.</p>
       <Link to="/">Return home</Link>
     </Section>

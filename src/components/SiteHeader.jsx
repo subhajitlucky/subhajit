@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { profile } from '../data/profile';
+import { getPublicAssetUrl } from '../publicAssetUrl';
 
 function SiteHeader() {
   return (
@@ -14,7 +15,11 @@ function SiteHeader() {
         </Link>
 
         <div className="site-nav__links">
-          <a href={profile.resume} target="_blank" rel="noreferrer">
+          <a
+            href={getPublicAssetUrl(profile.resume)}
+            target="_blank"
+            rel="noreferrer"
+          >
             Resume
           </a>
           <a href={`mailto:${profile.email}`}>Email</a>

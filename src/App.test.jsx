@@ -21,6 +21,20 @@ describe('App routing', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('heading', { name: /Tarka Sabha/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 1, name: /Tarka Sabha/i }),
+    ).toBeInTheDocument();
+  });
+
+  it('renders the not-found route with a page heading', () => {
+    render(
+      <MemoryRouter initialEntries={['/missing-page']}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(
+      screen.getByRole('heading', { level: 1, name: /Page not found/i }),
+    ).toBeInTheDocument();
   });
 });
