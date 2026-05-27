@@ -11,7 +11,9 @@ describe('App routing', () => {
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole('heading', { name: /AI Full-Stack Engineer/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('heading', { level: 1, name: /AI Full-Stack Engineer/i }),
+    ).toBeInTheDocument();
   });
 
   it('renders a project route', () => {
