@@ -18,5 +18,6 @@ describe('Home', () => {
     expect(screen.getByRole('link', { name: /Read Tarka Sabha case study/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Engineering Range/i })).toBeInTheDocument();
     expect(screen.getByText(/uElement/i)).toBeInTheDocument();
+    expect(document.title).toBe('Subhajit Pradhan - AI Full-Stack Engineer');
   });
 });

@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import projects from '../data/projects';
 
 function ProjectCaseStudy() {
   const { slug } = useParams();
   const project = projects.find((item) => item.slug === slug);
+
+  useEffect(() => {
+    document.title = project
+      ? `${project.title} - Subhajit Pradhan`
+      : 'Project not found - Subhajit Pradhan';
+  }, [project]);
 
   if (!project) {
     return (

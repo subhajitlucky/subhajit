@@ -21,6 +21,7 @@ describe('ProjectCaseStudy', () => {
     expect(screen.getByRole('heading', { name: /Problem/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Architecture/i })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Tradeoffs/i })).toBeInTheDocument();
+    expect(document.title).toBe('Tarka Sabha - Subhajit Pradhan');
   });
 
   it('suppresses the demo link when it duplicates the GitHub URL', () => {
@@ -47,5 +48,6 @@ describe('ProjectCaseStudy', () => {
 
     expect(screen.getByRole('heading', { name: /Project not found/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Back to home/i })).toBeInTheDocument();
+    expect(document.title).toBe('Project not found - Subhajit Pradhan');
   });
 });

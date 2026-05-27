@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import EvidenceList from '../components/EvidenceList';
 import ProjectBrief from '../components/ProjectBrief';
 import Section from '../components/Section';
@@ -6,6 +7,10 @@ import { profile } from '../data/profile';
 import projects from '../data/projects';
 
 function Home() {
+  useEffect(() => {
+    document.title = 'Subhajit Pradhan - AI Full-Stack Engineer';
+  }, []);
+
   return (
     <div className="home-page">
       <section className="home-hero" aria-labelledby="home-heading">
