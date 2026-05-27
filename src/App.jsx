@@ -24,7 +24,12 @@ function Home() {
                 <h3>{project.title}</h3>
                 <p>{project.oneLine}</p>
               </div>
-              <Link to={`/projects/${project.slug}`}>Read case study</Link>
+              <Link
+                aria-label={`Read ${project.title} case study`}
+                to={`/projects/${project.slug}`}
+              >
+                Read case study
+              </Link>
             </article>
           ))}
         </div>
