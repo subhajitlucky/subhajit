@@ -1,36 +1,9 @@
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import Section from './components/Section';
 import SiteFooter from './components/SiteFooter';
 import SiteHeader from './components/SiteHeader';
-import projects from './data/projects';
 import Home from './pages/Home';
-
-function ProjectCaseStudy() {
-  const { slug } = useParams();
-  const project = projects.find((item) => item.slug === slug);
-
-  if (!project) {
-    return <NotFound />;
-  }
-
-  return (
-    <article className="case-study">
-      <Section eyebrow={project.role} headingLevel={1} title={project.title}>
-        <p className="lede">{project.description}</p>
-        <dl className="case-study__facts">
-          <div>
-            <dt>Problem</dt>
-            <dd>{project.problem}</dd>
-          </div>
-          <div>
-            <dt>Workflow</dt>
-            <dd>{project.workflow}</dd>
-          </div>
-        </dl>
-      </Section>
-    </article>
-  );
-}
+import ProjectCaseStudy from './pages/ProjectCaseStudy';
 
 function NotFound() {
   return (
