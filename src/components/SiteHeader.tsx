@@ -1,6 +1,4 @@
-import { BriefcaseBusiness, Code2, Download, Mail } from 'lucide-react';
 import Link from 'next/link';
-import ButtonLink from '@/components/ButtonLink';
 import { siteConfig } from '@/data/site';
 
 export default function SiteHeader() {
@@ -20,14 +18,10 @@ export default function SiteHeader() {
       </nav>
 
       <div className="site-header__actions" aria-label="Contact links">
-        <ButtonLink href={siteConfig.resumePath} icon={<Download size={16} />} variant="ghost">
-          Resume
-        </ButtonLink>
-        <ButtonLink href={siteConfig.links.email} icon={<Mail size={16} />} variant="primary">
-          Email
-        </ButtonLink>
+        <Link href={siteConfig.resumePath}>Resume</Link>
+        <a href={siteConfig.links.email}>Email</a>
         <a href={siteConfig.links.github} aria-label="GitHub profile" rel="noreferrer" target="_blank">
-          <Code2 size={18} />
+          GitHub
         </a>
         <a
           href={siteConfig.links.linkedin}
@@ -35,7 +29,7 @@ export default function SiteHeader() {
           rel="noreferrer"
           target="_blank"
         >
-          <BriefcaseBusiness size={18} />
+          LinkedIn
         </a>
       </div>
     </header>

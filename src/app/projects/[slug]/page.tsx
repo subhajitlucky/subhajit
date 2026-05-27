@@ -1,4 +1,3 @@
-import { ArrowLeft, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -51,7 +50,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <JsonLd data={projectJsonLd(project)} />
       <article className="case-study">
         <Link className="back-link" href="/projects">
-          <ArrowLeft size={16} aria-hidden="true" />
           Projects
         </Link>
         <header className="case-study__hero">
@@ -76,11 +74,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             </dl>
             <div className="case-study__actions">
-              <ButtonLink href={project.github} external icon={<ExternalLinkIcon size={16} />} variant="primary">
+              <ButtonLink href={project.github} external variant="primary">
                 GitHub
               </ButtonLink>
               {hasSeparateDemo && project.demo ? (
-                <ButtonLink href={project.demo} external icon={<ExternalLinkIcon size={16} />} variant="secondary">
+                <ButtonLink href={project.demo} external variant="secondary">
                   Live Demo
                 </ButtonLink>
               ) : null}

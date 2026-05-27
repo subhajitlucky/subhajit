@@ -1,4 +1,3 @@
-import { ArrowUpRight, Code2 } from 'lucide-react';
 import Link from 'next/link';
 import type { Project } from '@/data/projects';
 
@@ -25,10 +24,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="project-card__links">
         <Link href={`/projects/${project.slug}`}>
           Case study
-          <ArrowUpRight size={16} aria-hidden="true" />
         </Link>
         <a href={project.github} rel="noreferrer" target="_blank">
-          <Code2 size={16} aria-hidden="true" />
           Source
         </a>
       </div>

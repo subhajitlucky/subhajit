@@ -1,4 +1,3 @@
-import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import type { BlogPost } from '@/data/blog';
 
@@ -24,7 +23,6 @@ export default function BlogCard({ post }: BlogCardProps) {
       </ul>
       <Link className="text-link" href={`/blog/${post.slug}`}>
         Read article
-        <ArrowUpRight size={16} aria-hidden="true" />
       </Link>
     </article>
   );

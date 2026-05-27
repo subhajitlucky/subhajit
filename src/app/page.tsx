@@ -1,10 +1,8 @@
-import { ArrowRight, BookOpen, Code2, Download, Mail } from 'lucide-react';
 import Link from 'next/link';
 import BlogCard from '@/components/BlogCard';
 import ButtonLink from '@/components/ButtonLink';
 import ExternalLink from '@/components/ExternalLink';
 import JsonLd from '@/components/JsonLd';
-import MotionReveal from '@/components/MotionReveal';
 import ProjectCard from '@/components/ProjectCard';
 import Section from '@/components/Section';
 import { blogPosts } from '@/data/blog';
@@ -37,42 +35,13 @@ export default function HomePage() {
         <div className="hero__content">
           <p className="eyebrow">Available for product engineering teams</p>
           <h1 id="home-heading">{siteConfig.headline}</h1>
-          <p className="hero__lede">{siteConfig.description}</p>
+          <p className="hero__lede">{profileSummary.short}</p>
           <div className="hero__actions">
-            <ButtonLink href={siteConfig.links.email} icon={<Mail size={18} />} variant="primary">
-              Contact Subhajit
-            </ButtonLink>
-            <ButtonLink href={siteConfig.resumePath} icon={<Download size={18} />} variant="secondary">
-              Download Resume
-            </ButtonLink>
-            <ButtonLink href="/blog" icon={<BookOpen size={18} />} variant="ghost">
-              Read Writing
-            </ButtonLink>
+            <ButtonLink href={siteConfig.links.email} variant="primary">Email</ButtonLink>
+            <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
+            <ButtonLink href={siteConfig.links.github} external variant="ghost">GitHub</ButtonLink>
           </div>
         </div>
-
-        <MotionReveal className="hero__panel" delay={0.08}>
-          <div className="signal-card">
-            <div className="signal-card__header">
-              <span>Engineering signal</span>
-              <strong>2026</strong>
-            </div>
-            <dl>
-              <div>
-                <dt>Primary role</dt>
-                <dd>{siteConfig.role}</dd>
-              </div>
-              <div>
-                <dt>Core stack</dt>
-                <dd>Next.js, Node.js, PostgreSQL, Solidity</dd>
-              </div>
-              <div>
-                <dt>Proof</dt>
-                <dd>Case studies, live demos, GitHub repos, MDX writing</dd>
-              </div>
-            </dl>
-          </div>
-        </MotionReveal>
       </section>
 
       <section className="proof-strip" aria-label="Portfolio proof points">
@@ -84,7 +53,7 @@ export default function HomePage() {
         ))}
       </section>
 
-      <Section id="about" eyebrow="About" title="A portfolio built around evidence">
+      <Section id="about" eyebrow="About" title="About">
         <div className="two-column-copy">
           {profileSummary.long.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
@@ -92,7 +61,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="skills" eyebrow="Skills" title="Practical engineering range">
+      <Section id="skills" eyebrow="Skills" title="Skills">
         <div className="skills-grid">
           {skillGroups.map((group) => (
             <article key={group.name} className="skill-group">
@@ -107,7 +76,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="experience" eyebrow="Experience" title="Work and education">
+      <Section id="experience" eyebrow="Experience" title="Experience">
         <ol className="timeline">
           {experience.map((item) => (
             <li key={`${item.organization}-${item.period}`}>
@@ -122,7 +91,7 @@ export default function HomePage() {
         </ol>
       </Section>
 
-      <Section id="projects" eyebrow="Projects" title="Selected project case studies">
+      <Section id="projects" eyebrow="Projects" title="Projects">
         <div className="card-grid">
           {featuredProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
@@ -130,11 +99,10 @@ export default function HomePage() {
         </div>
         <Link className="section-link" href="/projects">
           View all projects
-          <ArrowRight size={18} aria-hidden="true" />
         </Link>
       </Section>
 
-      <Section id="blogs" eyebrow="Blogs" title="Technical writing for search and credibility">
+      <Section id="blogs" eyebrow="Writing" title="Writing">
         <div className="card-grid card-grid--three">
           {featuredPosts.map((post) => (
             <BlogCard key={post.slug} post={post} />
@@ -142,7 +110,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="currently-building" eyebrow="Currently building" title="Active engineering threads">
+      <Section id="currently-building" eyebrow="Currently building" title="Currently building">
         <div className="build-list">
           {currentlyBuilding.map((item) => (
             <article key={item.title}>
@@ -153,11 +121,10 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="open-source" eyebrow="Open source work" title="Code you can inspect">
+      <Section id="open-source" eyebrow="Open source" title="Open source">
         <div className="source-list">
           {openSourceWork.map((item) => (
             <article key={item.name}>
-              <Code2 size={20} aria-hidden="true" />
               <div>
                 <h3>{item.name}</h3>
                 <p>{item.summary}</p>
@@ -168,7 +135,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="faq" eyebrow="FAQ" title="Search-friendly answers">
+      <Section id="faq" eyebrow="FAQ" title="FAQ">
         <div className="faq-list">
           {faqs.map((faq) => (
             <details key={faq.question}>
@@ -179,7 +146,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="contact" eyebrow="Contact" title="Start with the work">
+      <Section id="contact" eyebrow="Contact" title="Contact">
         <div className="contact-panel">
           <div>
             <h3>Recruiters and engineering teams</h3>
@@ -189,10 +156,10 @@ export default function HomePage() {
             </p>
           </div>
           <div className="contact-panel__actions">
-            <ButtonLink href={siteConfig.links.email} icon={<Mail size={18} />} variant="primary">
+            <ButtonLink href={siteConfig.links.email} variant="primary">
               {siteConfig.email}
             </ButtonLink>
-            <ButtonLink href={siteConfig.links.github} external icon={<Code2 size={18} />} variant="secondary">
+            <ButtonLink href={siteConfig.links.github} external variant="secondary">
               GitHub
             </ButtonLink>
           </div>

@@ -1,4 +1,3 @@
-import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -57,7 +56,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <JsonLd data={blogPostingJsonLd(post)} />
       <article className="article-page">
         <Link className="back-link" href="/blog">
-          <ArrowLeft size={16} aria-hidden="true" />
           Blog
         </Link>
         <header className="article-page__header">
