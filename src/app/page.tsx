@@ -151,8 +151,8 @@ export default function HomePage() {
           <div>
             <h3>Recruiters and engineering teams</h3>
             <p>
-              Send the role, product context, and the strongest reason you think Subhajit Pradhan
-              is a fit. The fastest path is email.
+              Send me the role, product context, and what you want help shipping. Email is the
+              fastest path.
             </p>
           </div>
           <div className="contact-panel__actions">

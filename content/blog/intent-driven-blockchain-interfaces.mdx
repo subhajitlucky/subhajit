@@ -2,7 +2,7 @@
 
 An intent-driven blockchain interface sounds simple: a user writes what they want, the product prepares the transaction, and the wallet handles confirmation. The risk is that natural language can feel more certain than it actually is.
 
-For Subhajit Pradhan, the useful version of this pattern separates three layers. The first layer interprets the user request. The second layer translates that interpretation into explicit transaction steps. The third layer asks the user to inspect and confirm what will happen on-chain.
+In IntentPay, I separate this pattern into three layers. The first layer interprets the user request. The second layer translates that interpretation into explicit transaction steps. The third layer asks the user to inspect and confirm what will happen on-chain.
 
 ## The interface has to slow down at the right moment
 
@@ -17,6 +17,6 @@ That is the reason IntentPay treats natural-language input as a starting point, 
 
 ## Where the engineering gets interesting
 
-The hard part is not only Solidity. It is the product boundary between AI output, validation, wallet UX, and contract execution. Subhajit Pradhan uses this project to explore that boundary with TypeScript, Solidity, Ethers.js, and explicit transaction previews.
+The hard part is not only Solidity. It is the product boundary between AI output, validation, wallet UX, and contract execution. I use this project to explore that boundary with TypeScript, Solidity, Ethers.js, and explicit transaction previews.
 
 The goal is not to hide blockchain complexity completely. The goal is to make the complexity legible before a user signs anything.

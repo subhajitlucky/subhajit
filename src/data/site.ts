@@ -8,7 +8,7 @@ export const siteConfig = {
   resumePath: '/assets/Subhajit_ResumeV8.pdf',
   availability: 'Open to full-stack, blockchain, and AI product engineering roles',
   description:
-    'Subhajit Pradhan is a full stack and blockchain developer building AI-assisted products, backend APIs, smart contract workflows, and production-ready web applications.',
+    'I am a full stack and blockchain developer building AI-assisted products, backend APIs, smart contract workflows, and production-ready web applications.',
   keywords: [
     'Subhajit Pradhan',
     'Subhajit Pradhan developer',
@@ -37,8 +37,8 @@ export const profileSummary = {
   short:
     'I build practical software across product UX, backend systems, data, deployment, and blockchain workflows.',
   long: [
-    'Subhajit Pradhan is a full stack and blockchain developer focused on useful products rather than decorative portfolio tricks. His work spans React and Next.js interfaces, Node.js APIs, PostgreSQL-backed workflows, Solidity contracts, AI orchestration, and Vercel deployments.',
-    'The portfolio is structured as an engineering dossier: what Subhajit Pradhan builds, why each project exists, how the systems are shaped, and where the tradeoffs are. Recruiters and engineering teams can scan the homepage quickly, then open deeper case studies and blog notes for technical credibility.',
+    'I am Subhajit Pradhan, a full stack and blockchain developer from Odisha, India. I care about useful products, clear interfaces, maintainable code, and systems that can be explained after they ship.',
+    'My work spans React and Next.js interfaces, Node.js APIs, PostgreSQL-backed workflows, Solidity contracts, AI orchestration, and Vercel deployments. This site is intentionally short: scan the projects, inspect the code, read the tradeoffs, and email me if the work fits your team.',
   ],
 } as const;
 
@@ -146,24 +146,24 @@ export const openSourceWork = [
 
 export const faqs = [
   {
-    question: 'Who is Subhajit Pradhan?',
+    question: 'Who am I?',
     answer:
-      'Subhajit Pradhan is a full stack and blockchain developer from Odisha, India, building web applications, APIs, smart contract workflows, and AI-assisted products.',
+      'I am Subhajit Pradhan, a full stack and blockchain developer from Odisha, India.',
   },
   {
-    question: 'What kind of developer is Subhajit Pradhan?',
+    question: 'What do I build?',
     answer:
-      'Subhajit Pradhan works across frontend, backend, data, deployment, and blockchain layers, with projects in React, Next.js, Node.js, PostgreSQL, Solidity, and AI provider orchestration.',
+      'I build web applications, APIs, data-backed workflows, smart contract interfaces, and AI-assisted products.',
   },
   {
-    question: 'Is Subhajit Pradhan available for developer roles?',
+    question: 'Am I open to roles?',
     answer:
-      'Yes. The portfolio includes contact links for recruiter conversations, full-stack engineering roles, blockchain projects, and AI product engineering work.',
+      'Yes. I am open to full-stack engineering, blockchain, and AI product engineering conversations.',
   },
   {
-    question: 'Where can I see Subhajit Pradhan projects?',
+    question: 'Where can you inspect my work?',
     answer:
-      'The homepage links to selected project case studies, GitHub repositories, live demos, and blog posts explaining project architecture and tradeoffs.',
+      'Start with the selected projects, GitHub repositories, live demos, and short writing notes linked from this site.',
   },
 ] as const;
 
