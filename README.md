@@ -53,8 +53,11 @@ src/
 ├── pages/
 │   ├── Home.jsx            # Homepage dossier
 │   └── ProjectCaseStudy.jsx
+├── styles/
+│   ├── base.css            # Reset, typography, and focus defaults
+│   ├── theme.css           # Color and spacing tokens
+│   └── layout.css          # App, homepage, and case-study layout
 ├── App.jsx                 # Routes and app shell
-├── App.css                 # App-level layout styles
 └── main.jsx                # React entry point
 ```
 
