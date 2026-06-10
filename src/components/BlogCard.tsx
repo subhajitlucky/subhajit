@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { BlogPost } from '@/data/blog';
+import { formatDisplayDate } from '@/lib/date-format';
 
 type BlogCardProps = {
   post: BlogPost;
@@ -10,7 +11,7 @@ export default function BlogCard({ post }: BlogCardProps) {
     <article className="blog-card">
       <div className="blog-card__meta">
         <span>{post.readingTime}</span>
-        <span>{new Date(`${post.publishedAt}T00:00:00`).getFullYear()}</span>
+        <span>{formatDisplayDate(post.publishedAt)}</span>
       </div>
       <h3>
         <Link href={`/blog/${post.slug}`}>{post.title}</Link>

@@ -1,22 +1,89 @@
-## Intent is not execution
+## The unsafe version is easy to build
 
-An intent-driven blockchain interface sounds simple: a user writes what they want, the product prepares the transaction, and the wallet handles confirmation. The risk is that natural language can feel more certain than it actually is.
+The tempting version of an AI wallet product is simple: user types a command, the model interprets it, the app prepares a transaction, and the wallet pops open.
 
-In IntentPay, I separate this pattern into three layers. The first layer interprets the user request. The second layer translates that interpretation into explicit transaction steps. The third layer asks the user to inspect and confirm what will happen on-chain.
+That is also the version I do not trust.
 
-## The interface has to slow down at the right moment
+Natural language is useful because it lets a user express intent without learning protocol vocabulary. It is risky for the same reason. A sentence like "send the payment to Rahul" may hide missing context: which Rahul, which wallet, which token, which chain, what amount, what gas cost, and what happens if the model inferred the wrong action.
 
-Blockchain products should not make irreversible actions feel casual. A good full stack and blockchain developer has to design the backend and frontend around review states:
+So the rule I use in IntentPay is strict:
 
-- what contract will be called
-- what token or asset is involved
-- what wallet action is required
-- what can fail before or after confirmation
+```text
+AI can draft the transaction plan.
+The interface must make the plan inspectable.
+The wallet action stays explicit.
+```
 
-That is the reason IntentPay treats natural-language input as a starting point, not a command that automatically touches a smart contract.
+The model is not treated as an executor. It is treated as a parser and planning layer.
 
-## Where the engineering gets interesting
+In code, I want that boundary to look more like this than a direct contract call:
 
-The hard part is not only Solidity. It is the product boundary between AI output, validation, wallet UX, and contract execution. I use this project to explore that boundary with TypeScript, Solidity, Ethers.js, and explicit transaction previews.
+```ts
+type TransactionPlan = {
+  action: "send" | "swap" | "mint" | "verify";
+  chainId: number;
+  target: string;
+  valueLabel: string;
+  warnings: string[];
+  requiresWalletConfirmation: true;
+};
+```
 
-The goal is not to hide blockchain complexity completely. The goal is to make the complexity legible before a user signs anything.
+That shape forces the product to show a plan before it asks for a signature.
+
+## The product boundary matters more than the prompt
+
+The important engineering decision is not "which prompt gets the best answer." The important decision is where the model is allowed to stop.
+
+For IntentPay, I split the flow into 3 boundaries:
+
+- intent capture: the user writes the goal in normal language
+- transaction preparation: the app maps the interpreted goal into explicit blockchain steps
+- wallet confirmation: the user reviews and signs the action manually
+
+That means a model response should never directly mutate contract state. Even if the model returns structured JSON, the app still needs validation between interpretation and execution.
+
+The validation layer should answer boring but necessary questions:
+
+- Is the destination address resolved and shown to the user?
+- Is the amount exact, including token decimals?
+- Is the chain/network visible?
+- Is the contract call understandable before signing?
+- Can the user cancel without side effects?
+
+If those questions are not visible in the UI, the product is hiding risk instead of reducing it.
+
+## Review screens are not friction. They are safety.
+
+Crypto UX often treats review steps as a tax. I think that is wrong. In a wallet-driven flow, a review step is part of the product, not a modal you add at the end.
+
+The review state should be designed like a receipt before payment:
+
+- action: "Send", "Swap", "Mint", "Transfer", or "Verify"
+- asset: token, NFT, or contract-controlled value
+- destination: resolved address plus human label if available
+- network: the chain the user is about to touch
+- fees: gas estimate or at least a clear warning that gas applies
+- failure states: insufficient balance, wrong network, invalid address, rejected signature
+
+This is where frontend and backend choices meet. The frontend has to present the risk clearly. The backend has to avoid trusting model output as final truth. The contract layer has to keep irreversible rules explicit.
+
+## What I would inspect in the code
+
+If I were reviewing this project as an engineer, I would not only ask whether the UI looks polished. I would check these things:
+
+- whether model output is separated from wallet execution
+- whether transaction previews are generated before confirmation
+- whether failed or rejected wallet actions have clear states
+- whether private keys or sensitive wallet data are kept out of client code
+- whether supported actions are constrained instead of open-ended
+
+That last point matters. The product should not pretend to support every DeFi operation on day one. A narrower, well-validated action set is better than a magical chat box that can produce unsafe instructions.
+
+## The tradeoff
+
+This approach adds steps. It makes the product feel less magical.
+
+I think that is the right tradeoff for blockchain interfaces. The goal is not to make on-chain actions feel casual. The goal is to let users express intent quickly, then slow the interface down exactly where money, ownership, or irreversible state changes are involved.
+
+That is the product lesson I am taking from IntentPay: AI improves the input layer, but the execution layer still needs boring, explicit, inspectable engineering.

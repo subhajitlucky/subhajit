@@ -16,6 +16,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <Link href={`/projects/${project.slug}`}>{project.title}</Link>
       </h3>
       <p>{project.oneLine}</p>
+      <ul className="evidence-list" aria-label={`${project.title} proof`}>
+        {project.proof.map((item) => (
+          <li key={item}>{item}</li>
+        ))}
+      </ul>
       <ul className="tag-list" aria-label={`${project.title} stack`}>
         {project.stack.map((item) => (
           <li key={item}>{item}</li>

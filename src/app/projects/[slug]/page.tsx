@@ -83,10 +83,43 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </ButtonLink>
               ) : null}
             </div>
+            <div className="inspection-links">
+              <h2>Inspect the code</h2>
+              <ul>
+                {project.inspectionLinks.map((link) => (
+                  <li key={link.href}>
+                    <a href={link.href} rel="noreferrer" target="_blank">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </aside>
         </header>
 
+        <section className="project-visual" aria-labelledby="project-visual-heading">
+          <div>
+            <p className="eyebrow">Workflow proof</p>
+            <h2 id="project-visual-heading">{project.visual.title}</h2>
+            <p>{project.visual.caption}</p>
+          </div>
+          <ol>
+            {project.visual.steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
+
         <div className="case-study__sections">
+          <section>
+            <h2>Proof</h2>
+            <ul>
+              {project.proof.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
           <section>
             <h2>Problem</h2>
             <p>{project.problem}</p>

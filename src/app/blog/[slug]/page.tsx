@@ -6,6 +6,7 @@ import { blogPosts, getBlogPost } from '@/data/blog';
 import { getProject } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 import { BlogContent } from '@/lib/blog-content';
+import { formatDisplayDate } from '@/lib/date-format';
 import { blogPostingJsonLd, createMetadata } from '@/lib/metadata';
 
 type BlogPostPageProps = {
@@ -64,7 +65,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <p>{post.description}</p>
           <div>
             <span>{post.readingTime}</span>
-            <span>{post.publishedAt}</span>
+            <time dateTime={post.publishedAt}>{formatDisplayDate(post.publishedAt)}</time>
           </div>
         </header>
         <div className="mdx-content">

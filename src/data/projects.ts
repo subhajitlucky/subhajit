@@ -6,6 +6,7 @@ export type Project = {
   status: string;
   oneLine: string;
   description: string;
+  proof: string[];
   problem: string;
   usersOrContext: string;
   workflow: string;
@@ -17,6 +18,15 @@ export type Project = {
   tags: string[];
   github: string;
   demo?: string;
+  visual: {
+    title: string;
+    caption: string;
+    steps: string[];
+  };
+  inspectionLinks: {
+    label: string;
+    href: string;
+  }[];
   seoKeywords: string[];
 };
 
@@ -31,6 +41,10 @@ export const projects: Project[] = [
       'AI-driven intent layer that translates natural language into on-chain DeFi transaction workflows.',
     description:
       'IntentPay connects natural-language transaction intent with blockchain execution flows, smart contracts, and wallet confirmation steps.',
+    proof: [
+      'Separates AI interpretation from irreversible contract execution.',
+      'Keeps wallet review visible before transaction confirmation.',
+    ],
     problem:
       'On-chain transaction flows can force users to understand protocol actions, contract interactions, wallet steps, and irreversible execution before they can complete a payment or DeFi operation.',
     usersOrContext:
@@ -56,6 +70,25 @@ export const projects: Project[] = [
     tags: ['Blockchain', 'AI', 'Full Stack'],
     github: 'https://github.com/subhajitlucky/intentpay',
     demo: 'https://github.com/subhajitlucky/intentpay',
+    visual: {
+      title: 'Intent review boundary',
+      caption: 'Natural language is converted into an inspectable transaction plan before any wallet action.',
+      steps: ['Intent input', 'AI planning', 'Transaction preview', 'Wallet confirmation'],
+    },
+    inspectionLinks: [
+      {
+        label: 'AI planner',
+        href: 'https://github.com/subhajitlucky/intentpay/blob/main/ai-agent.js',
+      },
+      {
+        label: 'Wallet manager',
+        href: 'https://github.com/subhajitlucky/intentpay/blob/main/wallet-manager.js',
+      },
+      {
+        label: 'Frontend',
+        href: 'https://github.com/subhajitlucky/intentpay/tree/main/frontend',
+      },
+    ],
     seoKeywords: [
       'Subhajit Pradhan blockchain developer',
       'intent driven blockchain interface',
@@ -72,6 +105,10 @@ export const projects: Project[] = [
       'Multi-agent AI debate platform with provider orchestration and secure credential management.',
     description:
       'Tarka Sabha is a multi-agent AI debate platform that coordinates prompts, provider access, generated arguments, and debate-state flows.',
+    proof: [
+      'Backend boundary keeps provider credentials out of the browser.',
+      'Debate workflow state is separated from provider-specific logic.',
+    ],
     problem:
       'AI debate workflows need a structured way to coordinate multiple model providers, user prompts, and credentials without mixing product logic with provider-specific details.',
     usersOrContext:
@@ -95,7 +132,26 @@ export const projects: Project[] = [
     stack: ['React', 'Node.js', 'AI provider APIs'],
     tags: ['AI', 'React', 'Node.js'],
     github: 'https://github.com/subhajitlucky/tarkaSabha',
-    demo: 'https://github.com/subhajitlucky/tarkaSabha',
+    demo: 'https://tarkasabha.vercel.app',
+    visual: {
+      title: 'Debate workflow state',
+      caption: 'The product separates debate setup, agent turns, provider calls, and generated output.',
+      steps: ['Topic setup', 'Agent roles', 'Provider boundary', 'Debate output'],
+    },
+    inspectionLinks: [
+      {
+        label: 'App source',
+        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/src',
+      },
+      {
+        label: 'Data model',
+        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/prisma',
+      },
+      {
+        label: 'README',
+        href: 'https://github.com/subhajitlucky/tarkaSabha/blob/main/README.md',
+      },
+    ],
     seoKeywords: [
       'Subhajit Pradhan developer',
       'multi agent AI debate platform',
@@ -112,6 +168,10 @@ export const projects: Project[] = [
       'Full-stack lost-and-found system with authentication, file uploads, and full-text search.',
     description:
       'CampusHelper is a practical campus lost-and-found system with authenticated reporting, image uploads, search, and a live deployment.',
+    proof: [
+      'Ships auth, image uploads, PostgreSQL-backed data, and search.',
+      'Live deployment proves the flow runs beyond a local demo.',
+    ],
     problem:
       'Campus lost-and-found posts need a searchable, authenticated flow where users can report items, add images, and find relevant matches.',
     usersOrContext:
@@ -135,6 +195,25 @@ export const projects: Project[] = [
     tags: ['Full Stack', 'PostgreSQL', 'Product'],
     github: 'https://github.com/subhajitlucky/campushelper',
     demo: 'https://campushelper.vercel.app',
+    visual: {
+      title: 'Lost-and-found product loop',
+      caption: 'Reports move through authenticated creation, uploaded evidence, searchable records, and review.',
+      steps: ['Sign in', 'Create report', 'Upload image', 'Search records'],
+    },
+    inspectionLinks: [
+      {
+        label: 'App source',
+        href: 'https://github.com/subhajitlucky/campushelper/tree/main/src',
+      },
+      {
+        label: 'Prisma schema',
+        href: 'https://github.com/subhajitlucky/campushelper/tree/main/prisma',
+      },
+      {
+        label: 'README',
+        href: 'https://github.com/subhajitlucky/campushelper/blob/main/README.md',
+      },
+    ],
     seoKeywords: [
       'Subhajit Pradhan full stack developer',
       'React Node PostgreSQL project',
@@ -151,6 +230,10 @@ export const projects: Project[] = [
       'On-chain NFT ticketing system for minting, transferring, and verifying event tickets.',
     description:
       'QuantumTicket explores a blockchain ticketing workflow where event tickets can be represented and verified through smart contracts.',
+    proof: [
+      'Models ticket ownership and transfer through NFT contract state.',
+      'Treats verification as a first-class user flow, not an afterthought.',
+    ],
     problem:
       'Event tickets need tamper-resistant ownership, transfer history, and a verification path that is harder to fake than static QR screenshots.',
     usersOrContext:
@@ -173,6 +256,25 @@ export const projects: Project[] = [
     tags: ['Blockchain', 'Solidity', 'NFT'],
     github: 'https://github.com/subhajitlucky/quantumTicket',
     demo: 'https://quantumticket.vercel.app',
+    visual: {
+      title: 'NFT ticket lifecycle',
+      caption: 'Tickets are created, transferred, and verified through wallet-connected contract state.',
+      steps: ['Event setup', 'Mint ticket', 'Transfer owner', 'Verify entry'],
+    },
+    inspectionLinks: [
+      {
+        label: 'Smart contracts',
+        href: 'https://github.com/subhajitlucky/quantumTicket/tree/main/blockchain',
+      },
+      {
+        label: 'Frontend',
+        href: 'https://github.com/subhajitlucky/quantumTicket/tree/main/frontend',
+      },
+      {
+        label: 'Roadmap',
+        href: 'https://github.com/subhajitlucky/quantumTicket/blob/main/ROADMAP.md',
+      },
+    ],
     seoKeywords: [
       'Subhajit Pradhan blockchain developer',
       'Solidity NFT ticketing project',

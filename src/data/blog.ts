@@ -12,13 +12,13 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
-    title: 'Designing intent-driven blockchain interfaces without hiding risk',
+    title: 'AI can draft a transaction. It should not execute one.',
     slug: 'intent-driven-blockchain-interfaces',
     description:
-      'How I map natural-language intent to explicit wallet and smart contract workflows.',
+      'The product boundary I use in IntentPay: natural language can prepare a plan, but every wallet action needs visible review.',
     publishedAt: '2026-05-27',
     updatedAt: '2026-05-27',
-    readingTime: '5 min read',
+    readingTime: '6 min read',
     tags: ['Blockchain', 'Product UX', 'Solidity'],
     keywords: [
       'Subhajit Pradhan blockchain developer',
@@ -28,13 +28,13 @@ export const blogPosts: BlogPost[] = [
     relatedProjectSlugs: ['intentpay', 'quantumticket'],
   },
   {
-    title: 'What a useful multi-agent AI project needs beyond prompts',
+    title: 'Multi-agent apps need workflow state, not just better prompts',
     slug: 'multi-agent-ai-debate-platforms',
     description:
-      'A practical note on provider boundaries, credential handling, and workflow state in AI applications.',
+      'What Tarka Sabha taught me about provider boundaries, credential handling, and making AI output inspectable.',
     publishedAt: '2026-05-27',
     updatedAt: '2026-05-27',
-    readingTime: '4 min read',
+    readingTime: '5 min read',
     tags: ['AI', 'Node.js', 'Architecture'],
     keywords: [
       'Subhajit Pradhan developer',
@@ -44,13 +44,13 @@ export const blogPosts: BlogPost[] = [
     relatedProjectSlugs: ['tarka-sabha'],
   },
   {
-    title: 'Building a portfolio that recruiters and search engines can read',
+    title: 'A portfolio should behave like a product review surface',
     slug: 'portfolio-seo-architecture',
     description:
-      'How I structure this portfolio around indexable proof, project decisions, and fast server-rendered pages.',
+      'How I changed this portfolio to reduce scan fatigue and put proof, tradeoffs, and source links before decoration.',
     publishedAt: '2026-05-27',
     updatedAt: '2026-05-27',
-    readingTime: '6 min read',
+    readingTime: '5 min read',
     tags: ['SEO', 'Next.js', 'Career'],
     keywords: [
       'Subhajit Pradhan full stack developer',

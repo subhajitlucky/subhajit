@@ -1,23 +1,103 @@
-## A portfolio is an interface for trust
+## A portfolio is not a poster
 
-A developer portfolio should not depend on visual flash. Recruiters and engineers are trying to answer simple questions quickly: who is this person, what can they build, and where is the proof?
+The first version of a developer portfolio often tries to prove taste. Big hero text, gradients, animated details, oversized cards, and long skill lists.
 
-That is why this portfolio is structured around indexable content and project evidence. The homepage gives the short version. Project pages explain problem, workflow, architecture, decisions, tradeoffs, and next improvements. Blog posts add longer notes on engineering thinking.
+That is not what a tired reviewer needs.
 
-## Search engines need stable signals
+A portfolio is closer to a product review surface. The user is trying to answer a few questions quickly:
 
-For name-based SEO, the basics matter:
+- What does this person build?
+- Which projects are real enough to inspect?
+- Where is the source code?
+- What decisions did they make?
+- Can they explain tradeoffs?
 
-- the canonical domain should be consistent
-- the H1 should clearly identify the person and role
-- project and blog routes should render real HTML
-- schema should describe the person, website, FAQs, articles, and software projects
-- internal links should connect homepage, projects, and writing
+If the page makes those answers hard to find, the design is failing even if it looks polished.
 
-I use my name where it helps the reader understand authorship and context. That is different from keyword stuffing, which makes a page worse for humans and less trustworthy for search.
+## The homepage should not ask for trust
 
-## Performance is part of credibility
+The homepage should give evidence before adjectives.
 
-A portfolio for a full stack developer should load quickly, work on mobile, and avoid unnecessary JavaScript. Next.js, static rendering, font optimization, image optimization, and small client islands make the technical foundation match the message.
+That is why I reduced this portfolio from a longer sequence of sections into a tighter scan path:
 
-The goal is a site that feels premium because it is clear, fast, and specific.
+```text
+Hero -> Proof points -> Projects -> Experience -> Writing -> Contact
+```
+
+The content model should make that scan path hard to accidentally dilute:
+
+```ts
+type ProjectProof = {
+  problem: string;
+  proof: string[];
+  inspectionLinks: { label: string; href: string }[];
+  tradeoffs: string[];
+};
+```
+
+If a project cannot fill that shape, it probably needs more work before it deserves homepage space.
+
+The removed sections were not useless, but they were repetitive. Skills, currently building, open source, FAQ, and about content were all saying versions of the same thing. A reviewer does not need five sections to learn that I use React, Node, Solidity, and AI tools.
+
+They need project proof.
+
+## Project cards should answer "why should I click?"
+
+A weak project card says:
+
+```text
+Project name
+Short description
+React / Node / PostgreSQL
+Source
+```
+
+That is not enough anymore. Most fresher portfolios can list a stack.
+
+A stronger card should include one or two proof points:
+
+- what was implemented beyond the tutorial surface
+- what boundary or architecture decision matters
+- whether the project has a live deployment
+- what risk or tradeoff the project handles
+
+That is why the cards now include compact evidence lines like auth, uploads, search, wallet review, provider boundaries, or contract-state verification.
+
+The point is not to inflate the project. The point is to make the reason for inspecting it visible.
+
+## SEO should support the reader, not replace substance
+
+I still care about SEO because the portfolio should be discoverable by name and role. But SEO cannot be the article.
+
+The useful technical foundation is straightforward:
+
+- stable canonical domain
+- server-rendered routes
+- project and blog pages with real HTML
+- schema for person, website, articles, and software projects
+- internal links between homepage, projects, and writing
+- fast static pages with minimal client JavaScript
+
+Those details help search engines and recruiters parse the site. But they only matter if the content itself is worth reading.
+
+## What I would review in another portfolio
+
+If I were reviewing a fresher portfolio, I would check:
+
+- Does the first screen say what they actually build?
+- Are the best projects above the fold or easy to reach?
+- Do project pages explain problem, workflow, architecture, decisions, and tradeoffs?
+- Do links work?
+- Is the codebase maintainable?
+- Does the site avoid unnecessary UI tricks?
+- Does it load quickly and work on mobile?
+
+That checklist is more useful than asking whether the portfolio looks "creative."
+
+## The current direction
+
+The goal for this portfolio is restrained proof.
+
+It should not hide behind templates. It should not rely on decoration. It should make the work easy to scan, the code easy to find, and the engineering decisions easy to judge.
+
+That is a better signal than a flashy page with weak projects.

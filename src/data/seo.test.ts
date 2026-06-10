@@ -4,8 +4,10 @@ import { projects } from '@/data/projects';
 import { absoluteUrl, faqs, siteConfig } from '@/data/site';
 
 describe('portfolio SEO content model', () => {
-  it('uses the required homepage H1 phrase and canonical domain', () => {
-    expect(siteConfig.headline).toBe('Subhajit Pradhan – Full Stack & Blockchain Developer');
+  it('uses the focused homepage H1 phrase and canonical domain', () => {
+    expect(siteConfig.headline).toBe(
+      'Subhajit Pradhan builds full-stack, AI, and blockchain products.',
+    );
     expect(siteConfig.baseUrl).toBe('https://subhajitpradhan.vercel.app');
     expect(absoluteUrl('/blog')).toBe('https://subhajitpradhan.vercel.app/blog');
   });
@@ -31,5 +33,14 @@ describe('portfolio SEO content model', () => {
     expect(projects.some((project) => project.tags.includes('Full Stack'))).toBe(true);
     expect(blogPosts).toHaveLength(3);
     expect(faqs.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('gives every project visual and code inspection evidence', () => {
+    for (const project of projects) {
+      expect(project.visual.title.length).toBeGreaterThan(0);
+      expect(project.visual.steps.length).toBeGreaterThanOrEqual(3);
+      expect(project.inspectionLinks.length).toBeGreaterThanOrEqual(2);
+      expect(project.inspectionLinks.every((link) => link.href.startsWith('https://'))).toBe(true);
+    }
   });
 });

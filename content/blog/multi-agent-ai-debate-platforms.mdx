@@ -1,22 +1,98 @@
-## Prompts are not enough
+## A prompt box is not an AI product
 
-Many AI projects stop at a prompt box. A useful multi-agent product needs more structure: provider boundaries, secure credentials, workflow state, and a clear way to compare output.
+A lot of AI projects look impressive until you inspect the code path. There is a text box, a model call, and a response area. That is a demo, not a product architecture.
 
-Tarka Sabha is where I explore that engineering layer. The product idea is an AI debate platform, but the important technical question is how to coordinate multiple agents without turning the codebase into provider-specific glue.
+Tarka Sabha forced me to think about the next layer: what happens when multiple agents participate in the same workflow, when each response depends on shared context, and when provider details should not leak into the interface.
 
-## Provider boundaries matter
+For a debate platform, the hard part is not generating text. The hard part is keeping the debate understandable after generation starts.
 
-If provider logic leaks everywhere, every model change becomes a product refactor. A cleaner implementation keeps orchestration behind backend boundaries, so the interface can stay focused on the debate flow.
+## The minimum useful architecture
 
-That also protects API credentials. A browser should not need direct access to provider keys. For me, this is where full-stack judgment matters: product UX, backend orchestration, and security boundaries have to agree with each other.
+The shape I prefer is simple:
 
-## Make the workflow visible
+```text
+UI -> debate workflow -> provider adapter -> model API
+```
 
-An AI debate platform should show more than final text. It should make the workflow understandable:
+The UI should know about debate concepts: topic, side, round, participant, argument, response history. It should not know which provider SDK is being used or how credentials are stored.
 
-- what context was used
-- which agents participated
-- how responses were generated
-- where comparison or history should live next
+The provider adapter should know how to call a model. It should not own the product workflow.
 
-That turns an AI demo into a product with architecture, state, and room to scale.
+That separation makes the code easier to change. If the model provider changes, the debate UI should not need a rewrite. If the debate rules change, the credential layer should not care.
+
+The adapter contract can stay intentionally small:
+
+```ts
+type DebateMessage = {
+  agentId: string;
+  round: number;
+  content: string;
+};
+
+type ModelProvider = {
+  generateTurn(context: DebateMessage[]): Promise<DebateMessage>;
+};
+```
+
+The rest of the app can then work with debate messages instead of provider-specific response objects.
+
+## State is the product
+
+In Tarka Sabha, the useful product state is not just the latest generated paragraph. It is the full debate structure:
+
+- the topic being argued
+- the participating personas or agents
+- the current round
+- the context each agent received
+- the generated response
+- the order of turns
+- the history needed for comparison
+
+Without that state, users cannot understand why an answer appeared. They can only consume output. That is weak UX for an AI tool.
+
+A better interface should let the user inspect the workflow:
+
+- which agent spoke
+- what role or stance it had
+- what context was included
+- what changed between rounds
+- where the debate can be replayed or compared
+
+That turns the app from "AI generated some text" into "the system ran a visible process."
+
+## Credentials belong behind a boundary
+
+Provider keys should not be a frontend concern. Even for a small project, putting credential logic behind a backend boundary is worth it because it teaches the right habit.
+
+The backend can centralize:
+
+- provider selection
+- request shaping
+- rate limiting later
+- error normalization
+- credential access
+- logging of workflow events
+
+The frontend can then stay focused on the user task: setting up the debate and reading the result.
+
+This is the difference between building an AI feature and copying an API example into a component.
+
+## What I would improve next
+
+The next serious version of Tarka Sabha should add a better review layer around generated output.
+
+I would want:
+
+- a debate timeline instead of a flat response list
+- per-agent response cards with round numbers
+- a comparison view for strongest claims and weak arguments
+- persistent debate history
+- clearer provider errors when a model fails
+
+Those are not decorative features. They are product features because they help the user understand the AI workflow.
+
+## The takeaway
+
+The strongest AI projects are not the ones with the longest prompts. They are the ones where the workflow, state, and boundaries are clear enough that another engineer can inspect the system and know where each responsibility lives.
+
+That is what I want Tarka Sabha to prove: not that I can call an LLM API, but that I can structure an AI product so it has room to become real software.
