@@ -2,7 +2,6 @@ import Link from 'next/link';
 import BlogCard from '@/components/BlogCard';
 import ButtonLink from '@/components/ButtonLink';
 import JsonLd from '@/components/JsonLd';
-import ProjectCard from '@/components/ProjectCard';
 import Section from '@/components/Section';
 import { blogPosts } from '@/data/blog';
 import { projects } from '@/data/projects';
@@ -36,8 +35,24 @@ const featuredProjectSlugs = [
   'smritiflow',
   'cscosmos',
   'tarka-sabha',
-  'intentpay',
-  'campushelper',
+];
+
+const philosophy = [
+  {
+    title: 'Design the boundary first',
+    body:
+      'I try to make irreversible actions, credentials, data ownership, and external services explicit before shaping the interface around them.',
+  },
+  {
+    title: 'Prefer inspectable systems',
+    body:
+      'Source, tests, deployment paths, generated metadata, and failure modes should be easy for another engineer to review.',
+  },
+  {
+    title: 'Make tradeoffs visible',
+    body:
+      'A useful case study should explain what was not solved yet, what risks remain, and why the current architecture is still reasonable.',
+  },
 ];
 
 export default function HomePage() {
@@ -55,32 +70,44 @@ export default function HomePage() {
       <JsonLd data={itemListJsonLd('Subhajit Pradhan projects', '/projects', projects)} />
       <JsonLd data={itemListJsonLd('Subhajit Pradhan blog posts', '/blog', blogPosts)} />
 
-      <section className="hero" aria-labelledby="home-heading">
-        <div className="hero__content">
-          <p className="eyebrow">Open to software engineering roles</p>
-          <h1 id="home-heading">{siteConfig.headline}</h1>
-          <p className="hero__role">{siteConfig.role}</p>
-          <p className="hero__lede">{profileSummary.short}</p>
-          <dl className="hero__meta" aria-label="Portfolio highlights">
-            <div>
-              <dt>Published tools</dt>
-              <dd>RLS Doctor, SmritiFlow</dd>
+      <section id="home" className="hero" aria-labelledby="home-heading">
+        <div className="hero__kicker">
+          <span>Portfolio / 2026</span>
+          <span>{siteConfig.availability}</span>
+        </div>
+        <div className="hero__grid">
+          <div>
+            <p className="eyebrow">Software engineering portfolio</p>
+            <h1 id="home-heading">{siteConfig.headline}</h1>
+          </div>
+          <div className="hero__summary">
+            <p className="hero__role">{siteConfig.role}</p>
+            <p className="hero__lede">{profileSummary.short}</p>
+            <div className="hero__actions">
+              <ButtonLink href={siteConfig.links.email} variant="primary">Email me</ButtonLink>
+              <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
+              <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
             </div>
-            <div>
-              <dt>Focus</dt>
-              <dd>Full-stack, AI workflows, developer tools</dd>
-            </div>
-            <div>
-              <dt>Proof</dt>
-              <dd>npm packages, CI, case studies, source</dd>
-            </div>
-          </dl>
-          <div className="hero__actions">
-            <ButtonLink href={siteConfig.links.email} variant="primary">Email me</ButtonLink>
-            <ButtonLink href="/#projects" variant="secondary">View work</ButtonLink>
-            <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
           </div>
         </div>
+        <dl className="hero__meta" aria-label="Portfolio highlights">
+          <div>
+            <dt>Published tools</dt>
+            <dd>RLS Doctor, SmritiFlow</dd>
+          </div>
+          <div>
+            <dt>Focus</dt>
+            <dd>Full-stack, AI workflows, developer tools</dd>
+          </div>
+          <div>
+            <dt>Proof</dt>
+            <dd>npm packages, CI, live apps, source</dd>
+          </div>
+          <div>
+            <dt>Location</dt>
+            <dd>{siteConfig.location}</dd>
+          </div>
+        </dl>
       </section>
 
       <section className="proof-strip" aria-label="Portfolio proof points">
@@ -108,14 +135,105 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="projects" eyebrow="Selected work" title="Best work first">
-        <div className="card-grid">
+      <Section id="projects" eyebrow="Selected Work" title="Published systems and product work">
+        <div className="case-study-list">
           {featuredProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <article className="work-entry" key={project.slug}>
+              <header>
+                <div className="work-entry__meta">
+                  <span>{project.year}</span>
+                  <span>{project.status}</span>
+                  <span>{project.role}</span>
+                </div>
+                <h3>
+                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                </h3>
+                <p>{project.description}</p>
+              </header>
+              <div className="work-entry__body">
+                <dl className="work-entry__facts" aria-label={`${project.title} case study summary`}>
+                  <div>
+                    <dt>Problem</dt>
+                    <dd>{project.problem}</dd>
+                  </div>
+                  <div>
+                    <dt>Architecture</dt>
+                    <dd>{project.architecture}</dd>
+                  </div>
+                  <div>
+                    <dt>Tradeoffs</dt>
+                    <dd>{project.tradeoffs[0]}</dd>
+                  </div>
+                  <div>
+                    <dt>Timeline</dt>
+                    <dd>{project.year} / {project.status}</dd>
+                  </div>
+                  <div>
+                    <dt>Tech Stack</dt>
+                    <dd>{project.stack.join(', ')}</dd>
+                  </div>
+                  <div>
+                    <dt>Lessons Learned</dt>
+                    <dd>{project.decisions[0]}</dd>
+                  </div>
+                </dl>
+                <dl className="metric-row" aria-label={`${project.title} metrics`}>
+                  {project.metrics.slice(0, 4).map((metric) => (
+                    <div key={metric.label}>
+                      <dt>{metric.label}</dt>
+                      <dd>{metric.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+              <footer className="work-entry__links">
+                <Link href={`/projects/${project.slug}`}>Read case study</Link>
+                <a href={project.github} rel="noreferrer" target="_blank">Source</a>
+                {project.demo ? (
+                  <a href={project.demo} rel="noreferrer" target="_blank">Demo</a>
+                ) : null}
+              </footer>
+            </article>
           ))}
         </div>
-        <Link className="section-link" href="/projects">
-          View all case studies
+      </Section>
+
+      <Section id="case-studies" eyebrow="Case Studies" title="Complete project archive">
+        <div className="case-index">
+          {projects.map((project) => (
+            <article key={project.slug}>
+              <div>
+                <span>{project.year}</span>
+                <h3>
+                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                </h3>
+              </div>
+              <p>{project.oneLine}</p>
+              <Link href={`/projects/${project.slug}`}>Open</Link>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="philosophy" eyebrow="Engineering Philosophy" title="How I make technical decisions">
+        <div className="principle-list">
+          {philosophy.map((item) => (
+            <article key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="writing" eyebrow="Writing" title="Engineering notes">
+        <div className="article-list">
+          {featuredPosts.map((post) => (
+            <BlogCard key={post.slug} post={post} />
+          ))}
+        </div>
+        <Link className="section-link" href="/blog">
+          View all writing
         </Link>
       </Section>
 
@@ -123,10 +241,10 @@ export default function HomePage() {
         <ol className="timeline">
           {experience.map((item) => (
             <li key={`${item.organization}-${item.period}`}>
-              <span>{item.period}</span>
+              <time>{item.period}</time>
               <div>
                 <h3>{item.organization}</h3>
-                <p>{item.title}</p>
+                <p className="timeline__role">{item.title}</p>
                 <p>{item.summary}</p>
               </div>
             </li>
@@ -134,15 +252,7 @@ export default function HomePage() {
         </ol>
       </Section>
 
-      <Section id="writing" eyebrow="Writing" title="Engineering notes">
-        <div className="card-grid card-grid--three">
-          {featuredPosts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
-        </div>
-      </Section>
-
-      <Section id="skills" eyebrow="Skills & Stack" title="Technical Toolkit">
+      <Section id="skills" eyebrow="Skills" title="Technical toolkit">
         <div className="skills-grid">
           {skills.map((group) => (
             <article key={group.category} className="skill-group">

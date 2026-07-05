@@ -5,7 +5,7 @@ export default function SiteHeader() {
   return (
     <header className="site-header">
       <Link className="site-header__brand" href="/" aria-label="Subhajit Pradhan home">
-        <span>SP</span>
+        <span aria-hidden="true">SP</span>
         <strong>{siteConfig.name}</strong>
       </Link>
 
@@ -20,17 +20,6 @@ export default function SiteHeader() {
       <div className="site-header__actions" aria-label="Contact links">
         <Link href={siteConfig.resumePath}>Resume</Link>
         <a href={siteConfig.links.email}>Email</a>
-        <a href={siteConfig.links.github} aria-label="GitHub profile" rel="noreferrer" target="_blank">
-          GitHub
-        </a>
-        <a
-          href={siteConfig.links.linkedin}
-          aria-label="LinkedIn profile"
-          rel="noreferrer"
-          target="_blank"
-        >
-          LinkedIn
-        </a>
       </div>
     </header>
   );

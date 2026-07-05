@@ -6,11 +6,11 @@ export default function SiteFooter() {
     <footer className="site-footer">
       <div>
         <p>{siteConfig.name}</p>
-        <span>{siteConfig.role}</span>
+        <span>{siteConfig.location}</span>
       </div>
       <nav aria-label="Footer navigation">
-        <Link href="/blog">Blog</Link>
         <Link href="/projects">Projects</Link>
+        <Link href="/blog">Writing</Link>
         <a href={siteConfig.links.email}>
           Contact
         </a>

@@ -28,10 +28,11 @@ export const siteConfig = {
     email: 'mailto:subhajitpradhan310@gmail.com',
   },
   nav: [
+    { label: 'About', href: '/#about' },
     { label: 'Work', href: '/#projects' },
-    { label: 'Experience', href: '/#experience' },
-    { label: 'Skills', href: '/#skills' },
+    { label: 'Case Studies', href: '/#case-studies' },
     { label: 'Writing', href: '/#writing' },
+    { label: 'Experience', href: '/#experience' },
     { label: 'Contact', href: '/#contact' },
   ],
 } as const;
