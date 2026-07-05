@@ -15,6 +15,7 @@ dist
 dist-ssr
 *.local
 /tmp/
+/output/
 /Subhajit_Resume*.pdf
 
 # Editor directories and files

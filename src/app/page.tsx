@@ -34,6 +34,8 @@ export const metadata = createMetadata({
 export default function HomePage() {
   const featuredProjects = projects.slice(0, 4);
   const featuredPosts = blogPosts.slice(0, 3);
+  const cscosmos = projects.find((project) => project.slug === 'cscosmos');
+  const intentPay = projects.find((project) => project.slug === 'intentpay');
 
   return (
     <>
@@ -55,6 +57,42 @@ export default function HomePage() {
             <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
           </div>
         </div>
+        <aside className="hero-proof" aria-label="Engineering proof">
+          <div className="hero-proof__header">
+            <p className="eyebrow">Engineering proof</p>
+            <h2>Built systems, not just screens</h2>
+          </div>
+          <dl className="hero-proof__metrics">
+            <div>
+              <dt>CSCosmos</dt>
+              <dd>172 modules</dd>
+            </div>
+            <div>
+              <dt>Live microsites</dt>
+              <dd>34</dd>
+            </div>
+            <div>
+              <dt>Architecture</dt>
+              <dd>Server-rendered case studies</dd>
+            </div>
+          </dl>
+          <div className="hero-proof__focus">
+            <h3>Current focus</h3>
+            <ul>
+              <li>
+                {cscosmos
+                  ? 'CSCosmos maps 172 modules and 34 live microsites.'
+                  : 'Computer science learning platform.'}
+              </li>
+              <li>
+                {intentPay
+                  ? 'IntentPay keeps AI planning separate from wallet execution.'
+                  : 'AI drafts, wallet executes.'}
+              </li>
+              <li>Inspectable project architecture and tradeoffs</li>
+            </ul>
+          </div>
+        </aside>
       </section>
 
       <section className="proof-strip" aria-label="Portfolio proof points">

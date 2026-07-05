@@ -16,6 +16,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <Link href={`/projects/${project.slug}`}>{project.title}</Link>
       </h3>
       <p>{project.oneLine}</p>
+      <dl className="project-card__metrics" aria-label={`${project.title} metrics`}>
+        {project.metrics.slice(0, 3).map((metric) => (
+          <div key={metric.label}>
+            <dt>{metric.label}</dt>
+            <dd>{metric.value}</dd>
+          </div>
+        ))}
+      </dl>
       <ul className="evidence-list" aria-label={`${project.title} proof`}>
         {project.proof.map((item) => (
           <li key={item}>{item}</li>
