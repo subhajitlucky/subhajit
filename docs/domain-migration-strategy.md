@@ -8,16 +8,16 @@ Use this as the only canonical site:
 https://subhajitpradhan.vercel.app
 ```
 
-## Old Domain Handling
+## Secondary Alias Handling
 
-The old deployment domain `subhajitxyz.vercel.app` should not appear in metadata, sitemap, robots, schema, README, or social cards.
+The secondary aliases `subhajitlucky.vercel.app` and `subhajitxyz.vercel.app` should not appear as canonical metadata, sitemap, robots host, schema URLs, README primary links, or social card URLs.
 
-If the old Vercel deployment remains public:
+If the secondary Vercel deployments remain public:
 
-1. Add a permanent redirect from `subhajitxyz.vercel.app/*` to `subhajitpradhan.vercel.app/:path*`.
-2. Keep the new site canonical tags pointing to `subhajitpradhan.vercel.app`.
-3. Submit only the new sitemap to Google Search Console.
-4. Update GitHub, LinkedIn, resume, and project README links to the new domain.
+1. Add permanent redirects from `subhajitlucky.vercel.app/*` and `subhajitxyz.vercel.app/*` to `subhajitpradhan.vercel.app/:path*` if Vercel project settings allow it.
+2. Keep canonical tags pointing to `subhajitpradhan.vercel.app`.
+3. Submit only the `subhajitpradhan.vercel.app` sitemap to Google Search Console.
+4. Use `subhajitpradhan.vercel.app` as the primary link on GitHub, LinkedIn, resume, and project READMEs.
 
 ## Custom Domain Option
 

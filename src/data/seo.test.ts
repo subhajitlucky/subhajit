@@ -12,10 +12,11 @@ describe('portfolio SEO content model', () => {
     expect(absoluteUrl('/blog')).toBe('https://subhajitpradhan.vercel.app/blog');
   });
 
-  it('does not leak the old deployment domain into canonical content', () => {
+  it('does not leak secondary Vercel aliases into canonical content', () => {
     const serialized = JSON.stringify({ siteConfig, projects, blogPosts });
 
     expect(serialized).not.toContain('subhajitxyz.vercel.app');
+    expect(serialized).not.toContain('subhajitlucky.vercel.app');
     expect(serialized).not.toContain('subhajit-pradhan-profile');
     expect(serialized).not.toContain('subhajitlucky/tarka-sabha');
   });

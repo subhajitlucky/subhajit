@@ -7,7 +7,7 @@ Rebuild the deployed portfolio as a server-rendered, highly indexable Next.js po
 ## Audit Findings
 
 - The live deployment is a Vite SPA with an empty HTML body before JavaScript renders. Lighthouse scores are strong, but search engines and social crawlers get less durable content than they would from static/server-rendered routes.
-- The live canonical URL, OpenGraph URL, sitemap, and robots sitemap still reference `subhajitxyz.vercel.app`, which splits authority away from the target domain.
+- The live canonical URL, OpenGraph URL, sitemap, and robots sitemap should all reference `subhajitpradhan.vercel.app` to avoid splitting authority away from the target domain.
 - The current H1 does not contain the required phrase: `Subhajit Pradhan – Full Stack & Blockchain Developer`.
 - The current page has useful content, but it lacks indexable sections for About, Blogs, Currently Building, Open Source Work, FAQ, and long-form personal-name SEO content.
 - Project links in the live site include old URLs that were already corrected locally.
@@ -61,4 +61,3 @@ Use `Subhajit Pradhan` naturally throughout long-form sections. Avoid keyword st
 - `npm run build`
 - Local Playwright smoke test for desktop and mobile.
 - Local Lighthouse target: 95+ for Performance, Accessibility, Best Practices, and SEO.
-
