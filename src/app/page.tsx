@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import ButtonLink from '@/components/ButtonLink';
 import JsonLd from '@/components/JsonLd';
-import Section from '@/components/Section';
 import { blogPosts } from '@/data/blog';
 import { projects } from '@/data/projects';
 import {
@@ -27,16 +26,16 @@ export const metadata = createMetadata({
   keywords: ['Subhajit Pradhan portfolio', 'Software Engineer portfolio', 'AI products'],
 });
 
-const featuredProjectSlugs = [
-  'rls-doctor',
-  'smritiflow',
-  'cscosmos',
-];
+const featuredProjectSlugs = ['rls-doctor', 'smritiflow', 'cscosmos'];
 
 export default function HomePage() {
   const featuredProjects = featuredProjectSlugs
     .map((slug) => projects.find((project) => project.slug === slug))
     .filter((project): project is (typeof projects)[number] => Boolean(project));
+
+  const primarySkills = skills
+    .filter((group) => ['Languages', 'Frontend', 'Backend & APIs', 'AI & Integrations', 'Databases', 'DevOps & Cloud'].includes(group.category))
+    .map((group) => ({ ...group, items: group.items.slice(0, 5) }));
 
   return (
     <>
@@ -47,110 +46,109 @@ export default function HomePage() {
       <JsonLd data={itemListJsonLd('Subhajit Pradhan projects', '/projects', projects)} />
       <JsonLd data={itemListJsonLd('Subhajit Pradhan blog posts', '/blog', blogPosts)} />
 
-      <section id="home" className="hero" aria-labelledby="home-heading">
-        <div className="hero__grid">
-          <div>
-            <h1 id="home-heading">{siteConfig.headline}</h1>
-            <p className="hero__role">{siteConfig.role}</p>
-            <p className="hero__location">{siteConfig.location}</p>
-          </div>
-          <div className="hero__summary">
-            <p className="hero__lede">
-              I build developer tools and AI products with clean architecture,
-              useful UX, and inspectable source.
-            </p>
-            <div className="hero__actions">
-              <ButtonLink href={siteConfig.links.email} variant="primary">Email me</ButtonLink>
-              <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
-              <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
-            </div>
+      <section id="home" className="home-hero" aria-labelledby="home-heading">
+        <div className="home-hero__identity">
+          <p className="kicker">Software Engineer</p>
+          <h1 id="home-heading">{siteConfig.name}</h1>
+          <p className="home-hero__role">{siteConfig.role}</p>
+          <p className="home-hero__location">{siteConfig.location}</p>
+        </div>
+
+        <div className="home-hero__pitch">
+          <p>
+            I build developer tools, AI workflows, and production web apps with clear
+            architecture, tests, and shipped releases.
+          </p>
+          <div className="home-hero__actions">
+            <ButtonLink href={siteConfig.links.email} variant="primary">Email</ButtonLink>
+            <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
+            <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
           </div>
         </div>
-        <dl className="hero__meta" aria-label="Portfolio highlights">
-          <div>
-            <dt>Products shipped</dt>
-            <dd>3+</dd>
-          </div>
-          <div>
-            <dt>Case studies</dt>
-            <dd>{projects.length}</dd>
-          </div>
-          <div>
-            <dt>Proof</dt>
-            <dd>Source, CI, demos</dd>
-          </div>
-        </dl>
       </section>
 
-      <Section id="projects" eyebrow="Selected Work" title="Selected Work">
-        <div className="work-table">
+      <section className="proof-row" aria-label="Portfolio proof">
+        <div>
+          <strong>2</strong>
+          <span>Published CLIs</span>
+        </div>
+        <div>
+          <strong>{projects.length}</strong>
+          <span>Case studies</span>
+        </div>
+        <div>
+          <strong>3</strong>
+          <span>Featured systems</span>
+        </div>
+      </section>
+
+      <section id="projects" className="home-section" aria-labelledby="work-heading">
+        <div className="home-section__heading">
+          <p className="kicker">Selected Work</p>
+          <h2 id="work-heading">Best proof</h2>
+        </div>
+        <div className="work-list">
           {featuredProjects.map((project) => (
-            <article className="work-entry" key={project.slug}>
-              <h3>
-                <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-              </h3>
+            <article key={project.slug} className="work-row">
+              <div>
+                <h3>
+                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                </h3>
+                <p>{project.status} / {project.year}</p>
+              </div>
               <p>{project.oneLine}</p>
               <strong>{project.metrics[0]?.value}</strong>
-              <div className="work-entry__links">
+              <nav aria-label={`${project.title} links`}>
                 <Link href={`/projects/${project.slug}`}>Case study</Link>
                 <a href={project.github} rel="noreferrer" target="_blank">Source</a>
-              </div>
+              </nav>
             </article>
           ))}
+          <Link className="text-link" href="/projects">View all case studies</Link>
         </div>
-        <Link className="section-link" href="/projects">
-          View all case studies
-        </Link>
-      </Section>
+      </section>
 
-      <Section id="experience" eyebrow="Experience" title="Experience">
-        <ol className="timeline">
+      <section id="experience" className="home-section" aria-labelledby="experience-heading">
+        <div className="home-section__heading">
+          <p className="kicker">Experience</p>
+          <h2 id="experience-heading">Recent roles</h2>
+        </div>
+        <ol className="experience-list">
           {experience.map((item) => (
             <li key={`${item.organization}-${item.period}`}>
               <time>{item.period}</time>
-              <div>
-                <h3>{item.organization}</h3>
-                <p className="timeline__role">{item.title}</p>
-              </div>
+              <h3>{item.organization}</h3>
+              <p>{item.title}</p>
             </li>
           ))}
         </ol>
-      </Section>
+      </section>
 
-      <Section id="skills" eyebrow="Skills" title="Technical toolkit">
-        <div className="skills-grid skills-grid--compact">
-          {skills.slice(0, 6).map((group) => (
-            <article key={group.category} className="skill-group">
+      <section id="skills" className="home-section" aria-labelledby="skills-heading">
+        <div className="home-section__heading">
+          <p className="kicker">Skills</p>
+          <h2 id="skills-heading">Toolkit</h2>
+        </div>
+        <div className="skill-list">
+          {primarySkills.map((group) => (
+            <article key={group.category}>
               <h3>{group.category}</h3>
-              <ul>
-                {group.items.slice(0, 5).map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <p>{group.items.join(' / ')}</p>
             </article>
           ))}
         </div>
-      </Section>
+      </section>
 
-      <Section id="contact" eyebrow="Contact" title="Contact">
-        <div className="contact-panel">
-          <div>
-            <h3>Recruiters and engineering teams</h3>
-            <p>
-              Send me the role, product context, and what you want help shipping. Email is the
-              fastest path.
-            </p>
-          </div>
-          <div className="contact-panel__actions">
-            <ButtonLink href={siteConfig.links.email} variant="primary">
-              {siteConfig.email}
-            </ButtonLink>
-            <ButtonLink href={siteConfig.links.github} external variant="secondary">
-              GitHub
-            </ButtonLink>
-          </div>
+      <section id="contact" className="home-section contact-cta" aria-labelledby="contact-heading">
+        <div>
+          <p className="kicker">Contact</p>
+          <h2 id="contact-heading">Let’s build something useful.</h2>
         </div>
-      </Section>
+        <div className="contact-cta__actions">
+          <ButtonLink href={siteConfig.links.email} variant="primary">{siteConfig.email}</ButtonLink>
+          <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
+        </div>
+      </section>
 
       <section
         id="machine-readable-profile"
