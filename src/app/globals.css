@@ -729,6 +729,23 @@
     grid-template-columns: minmax(160px, 0.28fr) minmax(0, 1fr) auto;
   }
 
+  .blog-card__meta {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+  }
+
+  .blog-card h3,
+  .blog-card p {
+    grid-column: 2;
+  }
+
+  .blog-card .text-link {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    align-self: center;
+    white-space: nowrap;
+  }
+
   .blog-card h3,
   .project-card h3 {
     font-size: 1.15rem;
@@ -1041,7 +1058,11 @@
     .project-card h3,
     .project-card > p,
     .project-card__summary,
-    .project-card__links {
+    .project-card__links,
+    .blog-card__meta,
+    .blog-card h3,
+    .blog-card p,
+    .blog-card .text-link {
       grid-column: auto;
       grid-row: auto;
     }
