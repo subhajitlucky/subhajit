@@ -11,6 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === '/' ? 1 : 0.8,
   }));
 
+  const homepageSectionRoutes = ['#projects', '#experience', '#about', '#contact'].map((hash) => ({
+    url: absoluteUrl(`/${hash}`),
+    lastModified: new Date('2026-05-27'),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
   const projectRoutes = projects.map((project) => ({
     url: absoluteUrl(`/projects/${project.slug}`),
     lastModified: new Date('2026-05-27'),
@@ -25,5 +32,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...blogRoutes];
+  return [...staticRoutes, ...homepageSectionRoutes, ...projectRoutes, ...blogRoutes];
 }

@@ -19,4 +19,13 @@ describe('sitemap route data', () => {
       expect(urls).toContain(`https://subhajitpradhan.vercel.app/blog/${post.slug}`);
     }
   });
+
+  it('includes homepage section anchors for crawler discovery', () => {
+    const urls = sitemap().map((entry) => entry.url);
+
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/#projects');
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/#experience');
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/#about');
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/#contact');
+  });
 });

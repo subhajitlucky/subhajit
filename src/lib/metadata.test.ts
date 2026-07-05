@@ -7,8 +7,10 @@ import {
   createMetadata,
   faqJsonLd,
   itemListJsonLd,
+  organizationJsonLd,
   personJsonLd,
   projectJsonLd,
+  softwareEngineerJsonLd,
 } from '@/lib/metadata';
 
 describe('metadata helpers', () => {
@@ -37,6 +39,17 @@ describe('metadata helpers', () => {
     expect(person.sameAs).toContain('https://github.com/subhajitlucky');
     expect(faq['@type']).toBe('FAQPage');
     expect(faq.mainEntity.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('generates SoftwareEngineer and Organization schema for AI-readable identity', () => {
+    const engineer = softwareEngineerJsonLd();
+    const organization = organizationJsonLd();
+
+    expect(engineer['@type']).toBe('SoftwareEngineer');
+    expect(engineer.name).toBe(siteConfig.name);
+    expect(engineer.hasOccupation.name).toContain('Software Engineer');
+    expect(organization['@type']).toBe('Organization');
+    expect(organization.founder.name).toBe(siteConfig.name);
   });
 
   it('generates item, project, and article schema', () => {

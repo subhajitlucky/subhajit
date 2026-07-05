@@ -8,11 +8,28 @@ import { blogPosts } from '@/data/blog';
 import { projects } from '@/data/projects';
 import {
   experience,
+  machineReadableProfile,
   profileSummary,
   proofPoints,
   siteConfig,
+  skills,
 } from '@/data/site';
-import { itemListJsonLd, personJsonLd, websiteJsonLd } from '@/lib/metadata';
+import {
+  createMetadata,
+  itemListJsonLd,
+  organizationJsonLd,
+  personJsonLd,
+  softwareEngineerJsonLd,
+  websiteJsonLd,
+} from '@/lib/metadata';
+
+export const dynamic = 'force-static';
+
+export const metadata = createMetadata({
+  title: `${siteConfig.name} - Software Engineer Portfolio`,
+  description: siteConfig.description,
+  keywords: ['Subhajit Pradhan portfolio', 'Software Engineer portfolio', 'AI products'],
+});
 
 export default function HomePage() {
   const featuredProjects = projects.slice(0, 4);
@@ -21,6 +38,8 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={personJsonLd()} />
+      <JsonLd data={softwareEngineerJsonLd()} />
+      <JsonLd data={organizationJsonLd()} />
       <JsonLd data={websiteJsonLd()} />
       <JsonLd data={itemListJsonLd('Subhajit Pradhan projects', '/projects', projects)} />
       <JsonLd data={itemListJsonLd('Subhajit Pradhan blog posts', '/blog', blogPosts)} />
@@ -28,7 +47,7 @@ export default function HomePage() {
       <section className="hero" aria-labelledby="home-heading">
         <div className="hero__content">
           <p className="eyebrow">Open to product engineering roles</p>
-          <h1 id="home-heading">{siteConfig.headline}</h1>
+          <h1 id="home-heading"><span className="gradient-title">{siteConfig.headline}</span></h1>
           <p className="hero__lede">{profileSummary.short}</p>
           <div className="hero__actions">
             <ButtonLink href={siteConfig.links.email} variant="primary">Email me</ButtonLink>
@@ -46,6 +65,22 @@ export default function HomePage() {
           </article>
         ))}
       </section>
+
+      <Section id="about" eyebrow="About" title="Software engineer building inspectable products">
+        <div className="about-panel">
+          <p>{profileSummary.long}</p>
+          <ul className="evidence-list" aria-label="Profile highlights">
+            <li>{siteConfig.availability}</li>
+            <li>
+              Core stack: Next.js, React, TypeScript, Node.js, PostgreSQL, Solidity, and AI APIs.
+            </li>
+            <li>
+              Portfolio content is rendered as HTML with semantic sections, project proof, writing,
+              and contact links.
+            </li>
+          </ul>
+        </div>
+      </Section>
 
       <Section id="projects" eyebrow="Selected work" title="Projects with proof">
         <div className="card-grid">
@@ -81,6 +116,21 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section id="skills" eyebrow="Skills & Stack" title="Technical Toolkit">
+        <div className="skills-grid">
+          {skills.map((group) => (
+            <article key={group.category} className="skill-group">
+              <h3>{group.category}</h3>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </Section>
+
       <Section id="contact" eyebrow="Contact" title="Contact">
         <div className="contact-panel">
           <div>
@@ -100,6 +150,47 @@ export default function HomePage() {
           </div>
         </div>
       </Section>
+
+      <section
+        id="machine-readable-profile"
+        className="sr-only"
+        aria-labelledby="machine-readable-profile-heading"
+      >
+        <h2 id="machine-readable-profile-heading">Machine-readable profile</h2>
+        <p>Name: {machineReadableProfile.name}</p>
+        <p>Role: {machineReadableProfile.role}</p>
+        <p>Location: {machineReadableProfile.location}</p>
+        <p>Availability: {machineReadableProfile.availability}</p>
+        <p>Summary: {machineReadableProfile.summary}</p>
+        <h3>Skills</h3>
+        <ul>
+          {machineReadableProfile.skills.map((skill) => (
+            <li key={skill}>{skill}</li>
+          ))}
+        </ul>
+        <h3>Experience</h3>
+        <ul>
+          {machineReadableProfile.experience.map((item) => (
+            <li key={`${item.organization}-${item.period}`}>
+              {item.title} at {item.organization}, {item.period}. {item.summary}
+            </li>
+          ))}
+        </ul>
+        <h3>Projects</h3>
+        <ul>
+          {machineReadableProfile.projects.map((project) => (
+            <li key={project.title}>
+              {project.title}: {project.description} Stack: {project.stack.join(', ')}. Source:{' '}
+              {project.github}
+              {project.demo ? `. Demo: ${project.demo}` : ''}
+            </li>
+          ))}
+        </ul>
+        <h3>Contact</h3>
+        <p>Email: {machineReadableProfile.contact.email}</p>
+        <p>GitHub: {machineReadableProfile.contact.github}</p>
+        <p>LinkedIn: {machineReadableProfile.contact.linkedin}</p>
+      </section>
     </>
   );
 }

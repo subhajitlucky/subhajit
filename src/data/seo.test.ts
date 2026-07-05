@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { blogPosts } from '@/data/blog';
 import { projects } from '@/data/projects';
-import { absoluteUrl, faqs, siteConfig } from '@/data/site';
+import { absoluteUrl, faqs, machineReadableProfile, siteConfig } from '@/data/site';
 
 describe('portfolio SEO content model', () => {
   it('uses the focused homepage H1 phrase and canonical domain', () => {
@@ -42,5 +42,16 @@ describe('portfolio SEO content model', () => {
       expect(project.inspectionLinks.length).toBeGreaterThanOrEqual(2);
       expect(project.inspectionLinks.every((link) => link.href.startsWith('https://'))).toBe(true);
     }
+  });
+
+  it('exposes a complete machine-readable profile for AI crawlers and assistive tech', () => {
+    expect(machineReadableProfile.name).toBe('Subhajit Pradhan');
+    expect(machineReadableProfile.role).toContain('Software Engineer');
+    expect(machineReadableProfile.contact.email).toBe(siteConfig.email);
+    expect(machineReadableProfile.contact.github).toBe(siteConfig.links.github);
+    expect(machineReadableProfile.contact.linkedin).toBe(siteConfig.links.linkedin);
+    expect(machineReadableProfile.skills.length).toBeGreaterThan(10);
+    expect(machineReadableProfile.projects.length).toBeGreaterThanOrEqual(4);
+    expect(machineReadableProfile.experience.length).toBeGreaterThanOrEqual(3);
   });
 });

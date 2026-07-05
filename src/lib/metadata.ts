@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { absoluteUrl, faqs, siteConfig } from '@/data/site';
+import { absoluteUrl, faqs, machineReadableProfile, siteConfig } from '@/data/site';
 import type { BlogPost } from '@/data/blog';
 import type { Project } from '@/data/projects';
 
@@ -103,6 +103,49 @@ export function personJsonLd() {
       'AI product workflows',
     ],
     description: siteConfig.description,
+  };
+}
+
+export function softwareEngineerJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareEngineer',
+    name: siteConfig.name,
+    url: siteConfig.baseUrl,
+    email: siteConfig.email,
+    description: machineReadableProfile.summary,
+    sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
+    knowsAbout: machineReadableProfile.skills,
+    hasOccupation: {
+      '@type': 'Occupation',
+      name: siteConfig.role,
+      occupationalCategory: '15-1252.00',
+      skills: machineReadableProfile.skills.join(', '),
+    },
+    workLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressRegion: 'Odisha',
+        addressCountry: 'IN',
+      },
+    },
+  };
+}
+
+export function organizationJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: `${siteConfig.name} Portfolio`,
+    url: siteConfig.baseUrl,
+    description: siteConfig.description,
+    founder: {
+      '@type': 'Person',
+      name: siteConfig.name,
+      url: siteConfig.baseUrl,
+    },
+    sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
   };
 }
 
