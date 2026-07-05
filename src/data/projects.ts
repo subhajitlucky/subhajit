@@ -40,6 +40,108 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'RLS Doctor',
+    slug: 'rls-doctor',
+    role: 'Developer tools and database security engineer',
+    year: '2026',
+    status: 'Published CLI',
+    oneLine:
+      'npm-published Postgres and Supabase RLS auditor that catches unsafe Row Level Security policies before deployment.',
+    description:
+      'RLS Doctor is a TypeScript CLI for auditing Postgres and Supabase Row Level Security posture from local development or CI. It inspects catalog metadata, reports risky tables and policies, explains findings, and ships as an installable npm package.',
+    proof: [
+      'Published on npm as rls-doctor with npx install-free usage.',
+      'Runs GitHub Actions across Node 20, Node 22, and a disposable Postgres integration database.',
+      'Detects disabled RLS, broad public policies, missing WITH CHECK clauses, and FORCE RLS hardening gaps.',
+    ],
+    problem:
+      'Supabase and Postgres applications can leak tenant or user data through small RLS mistakes: disabled row security, broad anon policies, write policies without WITH CHECK, or tables exposed before policies are reviewed.',
+    usersOrContext:
+      'Built for developers and teams using Supabase or Postgres who want a fast local and CI check before shipping database policy changes.',
+    workflow:
+      'A developer runs npx rls-doctor check with a read-only connection string, reviews a human-readable or JSON report, and uses rls-doctor explain to inspect one risky table with suggested SQL next steps.',
+    architecture:
+      'A Node.js and TypeScript CLI reads Postgres catalog views through node-postgres, maps table and pg_policies metadata into a typed audit model, scores findings by severity, and renders text or JSON reports for local terminals and CI.',
+    decisions: [
+      'Kept the tool local-first and read-only so it does not require Supabase management API access or hosted-account permissions.',
+      'Separated catalog loading, risk analysis, and reporters so the scoring logic can be tested without a database connection.',
+      'Added a disposable Postgres integration test because catalog metadata can behave differently from mocked fixtures.',
+      'Published as an npm CLI so developers can run it with npx instead of cloning the repository.',
+    ],
+    tradeoffs: [
+      'Catalog inspection catches common configuration risks, but it cannot prove application-level authorization correctness.',
+      'Suggested SQL is intentionally conservative because ownership columns and tenant models vary across projects.',
+      'RLS and grants are separate layers in Supabase, so the tool focuses on RLS while documenting grant-review expectations.',
+    ],
+    nextImprovements: [
+      'Add grant inspection for exposed schemas and client roles.',
+      'Generate markdown reports for pull request comments.',
+      'Add policy diffing between staging and production snapshots.',
+    ],
+    metrics: [
+      { label: 'Distribution', value: 'Published npm CLI' },
+      { label: 'Install path', value: 'npx rls-doctor' },
+      { label: 'CI coverage', value: 'Node 20, Node 22, Postgres 16' },
+      { label: 'Safety mode', value: 'Read-only catalog audit' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'CLI command',
+        detail: 'Developers run check or explain with a Postgres connection string.',
+      },
+      {
+        label: 'Catalog loader',
+        detail: 'node-postgres reads pg_class, pg_namespace, and pg_policies metadata.',
+      },
+      {
+        label: 'Audit analyzer',
+        detail: 'Typed rules score RLS-disabled tables, public policies, missing checks, and hardening gaps.',
+      },
+      {
+        label: 'Reporters',
+        detail: 'Text output helps humans, while JSON output supports CI and automation.',
+      },
+      {
+        label: 'Integration tests',
+        detail: 'Disposable Postgres fixtures verify real catalog behavior before release.',
+      },
+    ],
+    stack: ['TypeScript', 'Node.js', 'PostgreSQL', 'Supabase RLS', 'GitHub Actions', 'npm'],
+    tags: ['Developer Tools', 'PostgreSQL', 'Security'],
+    github: 'https://github.com/subhajitlucky/rls-doctor',
+    demo: 'https://www.npmjs.com/package/rls-doctor',
+    visual: {
+      title: 'RLS audit pipeline',
+      caption:
+        'The CLI turns Postgres catalog metadata into actionable security findings for local development and CI.',
+      steps: ['Run npx command', 'Load catalog', 'Score RLS risks', 'Explain fixes'],
+    },
+    inspectionLinks: [
+      {
+        label: 'npm package',
+        href: 'https://www.npmjs.com/package/rls-doctor',
+      },
+      {
+        label: 'Analyzer rules',
+        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/src/audit/analyzer.ts',
+      },
+      {
+        label: 'Postgres integration test',
+        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/scripts/run-integration.js',
+      },
+      {
+        label: 'Supabase RLS guide',
+        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/docs/guides/supabase-rls-patterns.md',
+      },
+    ],
+    seoKeywords: [
+      'Subhajit Pradhan developer tools engineer',
+      'Postgres RLS security CLI',
+      'Supabase Row Level Security auditor',
+      'TypeScript npm CLI project',
+    ],
+  },
+  {
     title: 'IntentPay',
     slug: 'intentpay',
     role: 'Full-stack and smart contract engineer',
