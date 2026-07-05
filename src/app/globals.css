@@ -1801,3 +1801,320 @@
     }
   }
 }
+
+@layer components {
+  /* ===== Site-wide layout polish ===== */
+  .page-hero {
+    max-width: 900px;
+    margin-inline: 0;
+    padding: 72px 0 44px;
+    text-align: left;
+  }
+
+  .page-hero--compact {
+    min-height: auto;
+    padding: 64px 0 40px;
+  }
+
+  .page-hero h1 {
+    max-width: 820px;
+    font-size: clamp(2.6rem, 6vw, 4.9rem);
+    line-height: 0.98;
+  }
+
+  .page-hero p {
+    max-width: 720px;
+    margin-inline: 0;
+    font-size: 1.08rem;
+    line-height: 1.65;
+  }
+
+  .index-grid,
+  .index-grid--blog {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .index-grid .project-card,
+  .index-grid--blog .blog-card {
+    padding: 22px 24px;
+  }
+
+  .index-grid .project-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    column-gap: 28px;
+    align-items: start;
+  }
+
+  .index-grid .project-card__metrics,
+  .index-grid .project-card .evidence-list,
+  .index-grid .project-card .tag-list,
+  .index-grid .project-card__links {
+    grid-column: 2;
+  }
+
+  .index-grid .project-card__topline,
+  .index-grid .project-card h3,
+  .index-grid .project-card > p {
+    grid-column: 1;
+  }
+
+  .index-grid .project-card__metrics {
+    margin-top: 0;
+  }
+
+  .index-grid--blog .blog-card {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr) auto;
+    column-gap: 24px;
+    align-items: start;
+  }
+
+  .index-grid--blog .blog-card__meta {
+    grid-column: 1;
+    margin-bottom: 0;
+  }
+
+  .index-grid--blog .blog-card h3,
+  .index-grid--blog .blog-card p,
+  .index-grid--blog .blog-card .tag-list {
+    grid-column: 2;
+  }
+
+  .index-grid--blog .blog-card .section-link {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    align-self: center;
+    white-space: nowrap;
+  }
+
+  .case-study {
+    padding-top: 62px;
+  }
+
+  .case-study__hero {
+    align-items: start;
+    gap: 44px;
+    padding-bottom: 58px;
+  }
+
+  .case-study__hero h1 {
+    max-width: 760px;
+    font-size: clamp(3rem, 7vw, 5.4rem);
+  }
+
+  .case-study__hero p {
+    max-width: 760px;
+    font-size: 1.08rem;
+  }
+
+  .project-metrics,
+  .project-visual,
+  .architecture-flow {
+    border-top: 1px solid var(--line);
+    padding: 42px 0;
+  }
+
+  .project-metrics {
+    align-items: start;
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+
+  .project-metrics dl {
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project-metrics dl div {
+    border: 0;
+    border-right: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .project-metrics dl div:last-child {
+    border-right: 0;
+  }
+
+  .project-visual {
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+  }
+
+  .project-visual ol {
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .project-visual li {
+    min-height: auto;
+    padding: 18px 20px;
+    border: 0;
+    border-right: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .project-visual li:last-child {
+    border-right: 0;
+  }
+
+  .architecture-flow {
+    gap: 24px;
+  }
+
+  .architecture-flow ol {
+    grid-template-columns: 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .architecture-flow li {
+    padding: 18px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .architecture-flow li::before,
+  .architecture-flow li + li::after {
+    display: none;
+  }
+
+  .case-study__sections {
+    max-width: 860px;
+    margin-inline: 0;
+    padding-top: 18px;
+  }
+
+  .article-page {
+    max-width: 860px;
+    margin-inline: 0;
+    padding-top: 64px;
+  }
+
+  .article-page__header {
+    padding-bottom: 42px;
+    text-align: left;
+  }
+
+  .article-page__header h1 {
+    max-width: 820px;
+    font-size: clamp(2.4rem, 5vw, 4.4rem);
+    line-height: 1;
+  }
+
+  .article-page__header p {
+    max-width: 720px;
+    margin-inline: 0;
+    font-size: 1.08rem;
+  }
+
+  .article-page__header div {
+    justify-content: flex-start;
+  }
+
+  .mdx-content {
+    max-width: 760px;
+    margin-inline: 0;
+  }
+
+  @media (max-width: 960px) {
+    .page-hero,
+    .page-hero--compact,
+    .article-page__header {
+      text-align: left;
+    }
+
+    .index-grid .project-card,
+    .index-grid--blog .blog-card,
+    .case-study__hero,
+    .project-metrics,
+    .project-visual {
+      grid-template-columns: 1fr;
+    }
+
+    .index-grid .project-card__metrics,
+    .index-grid .project-card .evidence-list,
+    .index-grid .project-card .tag-list,
+    .index-grid .project-card__links,
+    .index-grid .project-card__topline,
+    .index-grid .project-card h3,
+    .index-grid .project-card > p,
+    .index-grid--blog .blog-card__meta,
+    .index-grid--blog .blog-card h3,
+    .index-grid--blog .blog-card p,
+    .index-grid--blog .blog-card .tag-list,
+    .index-grid--blog .blog-card .section-link {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .index-grid .project-card__metrics {
+      margin-top: 12px;
+    }
+
+    .index-grid--blog .blog-card .section-link {
+      justify-self: start;
+    }
+
+    .project-metrics dl,
+    .project-visual ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .page-hero,
+    .page-hero--compact,
+    .article-page,
+    .case-study {
+      padding-top: 46px;
+    }
+
+    .page-hero h1,
+    .article-page__header h1,
+    .case-study__hero h1 {
+      font-size: clamp(2.35rem, 12vw, 3.5rem);
+    }
+
+    .page-hero p,
+    .article-page__header p,
+    .case-study__hero p {
+      font-size: 1rem;
+    }
+
+    .index-grid .project-card,
+    .index-grid--blog .blog-card {
+      padding: 18px;
+    }
+
+    .project-metrics dl,
+    .project-visual ol {
+      grid-template-columns: 1fr;
+    }
+
+    .project-metrics dl div,
+    .project-visual li {
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-metrics dl div:last-child,
+    .project-visual li:last-child {
+      border-bottom: 0;
+    }
+
+    .article-page__header div {
+      gap: 12px;
+    }
+  }
+}
+
