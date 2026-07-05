@@ -47,7 +47,7 @@ export default function HomePage() {
       <section className="hero" aria-labelledby="home-heading">
         <div className="hero__content">
           <p className="eyebrow">Open to product engineering roles</p>
-          <h1 id="home-heading"><span className="gradient-title">{siteConfig.headline}</span></h1>
+          <h1 id="home-heading">{siteConfig.headline}</h1>
           <p className="hero__lede">{profileSummary.short}</p>
           <div className="hero__actions">
             <ButtonLink href={siteConfig.links.email} variant="primary">Email me</ButtonLink>
