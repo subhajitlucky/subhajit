@@ -12,6 +12,32 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'subhajitlucky.vercel.app',
+          },
+        ],
+        destination: 'https://subhajitpradhan.vercel.app/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'subhajitxyz.vercel.app',
+          },
+        ],
+        destination: 'https://subhajitpradhan.vercel.app/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withMDX(nextConfig);
