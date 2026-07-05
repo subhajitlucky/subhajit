@@ -98,6 +98,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </aside>
         </header>
 
+        <section className="project-metrics" aria-labelledby="project-metrics-heading">
+          <div>
+            <p className="eyebrow">Metrics</p>
+            <h2 id="project-metrics-heading">Proof in numbers</h2>
+          </div>
+          <dl>
+            {project.metrics.map((metric) => (
+              <div key={metric.label}>
+                <dt>{metric.label}</dt>
+                <dd>{metric.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
         <section className="project-visual" aria-labelledby="project-visual-heading">
           <div>
             <p className="eyebrow">Workflow proof</p>
@@ -107,6 +122,22 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <ol>
             {project.visual.steps.map((step) => (
               <li key={step}>{step}</li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="architecture-flow" aria-labelledby="architecture-flow-heading">
+          <div>
+            <p className="eyebrow">Architecture</p>
+            <h2 id="architecture-flow-heading">System shape</h2>
+            <p>{project.architecture}</p>
+          </div>
+          <ol>
+            {project.architectureDiagram.map((node) => (
+              <li key={node.label}>
+                <h3>{node.label}</h3>
+                <p>{node.detail}</p>
+              </li>
             ))}
           </ol>
         </section>
@@ -131,10 +162,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <section>
             <h2>Product workflow</h2>
             <p>{project.workflow}</p>
-          </section>
-          <section>
-            <h2>Architecture</h2>
-            <p>{project.architecture}</p>
           </section>
           <section>
             <h2>Key engineering decisions</h2>

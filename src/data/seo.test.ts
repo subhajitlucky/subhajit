@@ -41,6 +41,8 @@ describe('portfolio SEO content model', () => {
     for (const project of projects) {
       expect(project.visual.title.length).toBeGreaterThan(0);
       expect(project.visual.steps.length).toBeGreaterThanOrEqual(3);
+      expect(project.metrics.length).toBeGreaterThanOrEqual(3);
+      expect(project.architectureDiagram.length).toBeGreaterThanOrEqual(3);
       expect(project.inspectionLinks.length).toBeGreaterThanOrEqual(2);
       expect(project.inspectionLinks.every((link) => link.href.startsWith('https://'))).toBe(true);
     }

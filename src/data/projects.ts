@@ -14,6 +14,14 @@ export type Project = {
   decisions: string[];
   tradeoffs: string[];
   nextImprovements: string[];
+  metrics: {
+    label: string;
+    value: string;
+  }[];
+  architectureDiagram: {
+    label: string;
+    detail: string;
+  }[];
   stack: string[];
   tags: string[];
   github: string;
@@ -65,6 +73,34 @@ export const projects: Project[] = [
     nextImprovements: [
       'Add stricter intent validation and safer transaction previews.',
       'Document the contract boundaries and supported transaction types.',
+    ],
+    metrics: [
+      { label: 'Safety boundary', value: 'AI drafts, wallet executes' },
+      { label: 'Core layers', value: 'Intent, preview, contract, wallet' },
+      { label: 'Primary risk handled', value: 'Irreversible on-chain actions' },
+      { label: 'Review state', value: 'Before every wallet confirmation' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'User intent',
+        detail: 'Natural-language transaction request starts the flow.',
+      },
+      {
+        label: 'AI planner',
+        detail: 'Interprets the request and prepares a structured action plan.',
+      },
+      {
+        label: 'Transaction preview',
+        detail: 'Shows the action, wallet impact, and confirmation context.',
+      },
+      {
+        label: 'Wallet execution',
+        detail: 'User approval remains the boundary before on-chain execution.',
+      },
+      {
+        label: 'Smart contract',
+        detail: 'Solidity logic receives the confirmed transaction only after review.',
+      },
     ],
     stack: ['TypeScript', 'Solidity', 'Ethers.js', 'AI workflows'],
     tags: ['Blockchain', 'AI', 'Full Stack'],
@@ -134,6 +170,34 @@ export const projects: Project[] = [
       'Generate sitemap entries for every active topic and live microsite.',
       'Add screenshots, difficulty labels, prerequisites, and related-topic links for stronger learning paths.',
     ],
+    metrics: [
+      { label: 'Planned modules', value: '172' },
+      { label: 'Live microsites', value: '34' },
+      { label: 'Domains', value: '8' },
+      { label: 'Core routes', value: 'Home, topics, about, domain, detail' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'Topic catalog',
+        detail: 'TypeScript data source for 172 modules, status, domains, slugs, and URLs.',
+      },
+      {
+        label: 'Domain routes',
+        detail: 'React Router groups modules into Full Stack, DSA, Web3, Security, AI, Core CS, DevOps, and Advanced Systems.',
+      },
+      {
+        label: 'Search and filters',
+        detail: 'Learners can find topics without knowing the domain hierarchy first.',
+      },
+      {
+        label: 'Topic detail',
+        detail: 'Each module exposes status, context, and a launch path when live.',
+      },
+      {
+        label: 'Microsites',
+        detail: 'Live modules run as focused deployments linked from the central hub.',
+      },
+    ],
     stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Router'],
     tags: ['Full Stack', 'React', 'Learning Platform'],
     github: 'https://github.com/subhajitlucky/cscosmos',
@@ -199,6 +263,34 @@ export const projects: Project[] = [
       'Add richer debate history views.',
       'Improve response comparison and citation displays.',
     ],
+    metrics: [
+      { label: 'Model boundary', value: 'Provider calls stay server-side' },
+      { label: 'Core workflow', value: 'Topic, roles, turns, output' },
+      { label: 'Primary design goal', value: 'Inspectable multi-agent state' },
+      { label: 'Data layer', value: 'Prisma-backed workflow records' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'Debate setup',
+        detail: 'User defines the topic, debate context, and agent roles.',
+      },
+      {
+        label: 'Workflow state',
+        detail: 'Application state tracks agent turns and generated arguments.',
+      },
+      {
+        label: 'Backend boundary',
+        detail: 'Provider keys and model calls stay outside the browser.',
+      },
+      {
+        label: 'AI providers',
+        detail: 'Model-specific responses are coordinated behind the same product flow.',
+      },
+      {
+        label: 'Review UI',
+        detail: 'The interface presents generated arguments for comparison and inspection.',
+      },
+    ],
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma'],
     tags: ['AI', 'Next.js', 'TypeScript'],
     github: 'https://github.com/subhajitlucky/tarkaSabha',
@@ -261,6 +353,34 @@ export const projects: Project[] = [
     nextImprovements: [
       'Improve moderation and matching flows for duplicate or related item reports.',
     ],
+    metrics: [
+      { label: 'Core flows', value: 'Auth, report, upload, search' },
+      { label: 'Data model', value: 'User-owned item reports' },
+      { label: 'Storage surface', value: 'Images plus structured item fields' },
+      { label: 'Primary UX goal', value: 'Find matching lost/found items faster' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'Authenticated user',
+        detail: 'Users sign in before creating or managing item reports.',
+      },
+      {
+        label: 'Report form',
+        detail: 'Item metadata and uploaded evidence are captured together.',
+      },
+      {
+        label: 'Application API',
+        detail: 'Backend routes validate requests and coordinate persistence.',
+      },
+      {
+        label: 'Database',
+        detail: 'Structured records support browsing, ownership, and search.',
+      },
+      {
+        label: 'Search results',
+        detail: 'Users review relevant lost-and-found entries from stored reports.',
+      },
+    ],
     stack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Supabase'],
     tags: ['Full Stack', 'Next.js', 'PostgreSQL'],
     github: 'https://github.com/subhajitlucky/campushelper',
@@ -321,6 +441,34 @@ export const projects: Project[] = [
     ],
     nextImprovements: [
       'Add event admin tooling and clearer contract deployment documentation.',
+    ],
+    metrics: [
+      { label: 'Core flows', value: 'Mint, transfer, verify' },
+      { label: 'Ownership model', value: 'NFT-backed ticket state' },
+      { label: 'Verification path', value: 'Wallet-connected contract reads' },
+      { label: 'Primary risk handled', value: 'Fake static ticket screenshots' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'Event setup',
+        detail: 'Ticket configuration defines what can be minted and verified.',
+      },
+      {
+        label: 'Smart contract',
+        detail: 'Solidity contract owns ticket state and transfer behavior.',
+      },
+      {
+        label: 'Wallet interface',
+        detail: 'React and Ethers.js connect user actions to contract calls.',
+      },
+      {
+        label: 'Ownership transfer',
+        detail: 'Ticket movement is represented through NFT ownership state.',
+      },
+      {
+        label: 'Entry verification',
+        detail: 'Verification checks contract-backed ownership instead of static images.',
+      },
     ],
     stack: ['Solidity', 'Ethers.js', 'React'],
     tags: ['Blockchain', 'Solidity', 'NFT'],
