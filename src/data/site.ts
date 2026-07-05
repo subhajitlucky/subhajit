@@ -2,15 +2,15 @@ import { projects } from '@/data/projects';
 
 export const siteConfig = {
   name: 'Subhajit Pradhan',
-  headline: 'Subhajit Pradhan builds full-stack, AI, and blockchain products.',
-  role: 'Software Engineer, Full Stack & Blockchain Developer',
+  headline: 'Subhajit Pradhan',
+  role: 'Software Engineer · Developer Tools · AI Products',
   baseUrl: 'https://subhajitpradhan.vercel.app',
   location: 'Odisha, India',
   email: 'subhajitpradhan310@gmail.com',
   resumePath: '/assets/Subhajit_ResumeV9.pdf',
-  availability: 'Open to full-stack, blockchain, and AI product engineering roles',
+  availability: 'Open to software engineering, full-stack, and AI product engineering roles',
   description:
-    'Full-stack developer building practical web apps, AI workflows, and blockchain interfaces with clear UX, maintainable backends, and shipped deployments.',
+    'Software engineer building developer tools, AI workflows, and production web apps with clear architecture, tests, and shipped deployments.',
   keywords: [
     'Subhajit Pradhan',
     'Subhajit Pradhan developer',
@@ -38,23 +38,23 @@ export const siteConfig = {
 
 export const profileSummary = {
   short:
-    'I focus on product UX, backend boundaries, data flows, deployment, and safer wallet-driven interfaces.',
+    'Software engineer building developer tools, AI workflows, and production web apps with clear architecture, tests, and shipped releases.',
   long:
-    'I am a software engineer from Odisha, India building production-ready full-stack products, AI workflows, and blockchain interfaces. My work emphasizes inspectable architecture, server-rendered product content, clear UX states, reliable backend boundaries, and safer wallet-driven flows.',
+    'I am a software engineer from Odisha, India building production-ready full-stack products, developer tools, AI workflows, and blockchain interfaces. My work emphasizes inspectable architecture, reliable backend boundaries, practical UX, tests, CI, and deployable systems.',
 } as const;
 
 export const proofPoints = [
   {
-    label: 'Built beyond tutorials',
-    value: 'Auth, uploads, search, data models, deployment, and product flows that can be inspected.',
+    label: 'Published tools',
+    value: 'RLS Doctor and SmritiFlow are installable CLIs with agent-facing workflows.',
   },
   {
-    label: 'Explains tradeoffs',
-    value: 'Case studies cover problem framing, architecture choices, limitations, and next steps.',
+    label: 'Readable engineering',
+    value: 'Case studies explain architecture, tradeoffs, limitations, tests, and next steps.',
   },
   {
-    label: 'Keeps UX practical',
-    value: 'Interfaces prioritize clear states, safe actions, readable code, and reviewer-friendly proof.',
+    label: 'Production habits',
+    value: 'I prioritize SSR, accessibility, CI, clean data boundaries, and reviewer-friendly proof.',
   },
 ] as const;
 

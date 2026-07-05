@@ -148,6 +148,109 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: 'SmritiFlow',
+    slug: 'smritiflow',
+    role: 'Developer tools and AI workflow engineer',
+    year: '2026',
+    status: 'Published CLI',
+    oneLine:
+      'CLI for maintaining living repository memory so coding agents can resume work with current project context.',
+    description:
+      'SmritiFlow is a CLI for maintaining living repository memory for coding agents. It scans a codebase, writes structured artifacts, and generates concise agent-facing docs so work can resume with current context instead of guesswork.',
+    proof: [
+      'Published as the smritiflow CLI with smritiflow and sf command aliases.',
+      'Generates cache, project map, scan report, AGENTS.md, and AI handoff docs.',
+      'Includes init, scan, refresh, status, and resume workflows for agent handoffs.',
+      'Exposes a repo-hosted Agent Skill through npx skills add subhajitlucky/smritiflow.',
+    ],
+    problem:
+      'Long-running codebase work often loses context between sessions. Agents and developers need a current, structured view of files, changes, active areas, and next actions instead of rebuilding context from scratch.',
+    usersOrContext:
+      'Built for developers using coding agents who need repeatable repository scans, freshness checks, and handoff summaries.',
+    workflow:
+      'A developer initializes SmritiFlow in a repo, runs scan or refresh after meaningful changes, checks status before resuming, and uses resume to get focused context for the next work session.',
+    architecture:
+      'A TypeScript monorepo ships a Node.js CLI, repo parser, git utilities, core workflow commands, artifact generators, and shared constants. Generated JSON artifacts feed concise docs and agent instructions.',
+    decisions: [
+      'Split parsing, git inspection, generators, and command workflows into packages so each layer can be tested independently.',
+      'Generated both machine-readable JSON and human-readable docs because agents need structure while developers need quick summaries.',
+      'Added a short sf alias for repeated terminal use without making the primary command ambiguous.',
+      'Packaged a repo-hosted Agent Skill so compatible agents know the scan, status, refresh, and resume workflow.',
+    ],
+    tradeoffs: [
+      'Generated summaries can become stale, so the CLI includes status and refresh commands instead of pretending context stays fresh forever.',
+      'Repository scanning is useful for orientation, but it should complement direct code inspection rather than replace it.',
+      'A CLI-first interface is efficient for developers, but future UI or PR-comment output could improve team adoption.',
+    ],
+    nextImprovements: [
+      'Add richer stale-signal scoring across branches and uncommitted changes.',
+      'Generate compact PR handoff summaries.',
+      'Add more language-specific route and dependency extraction.',
+    ],
+    metrics: [
+      { label: 'Distribution', value: 'npm CLI + Agent Skill' },
+      { label: 'Commands', value: 'init, scan, refresh, status, resume' },
+      { label: 'Artifacts', value: 'JSON + AGENTS + docs/ai' },
+      { label: 'CLI aliases', value: 'smritiflow, sf' },
+    ],
+    architectureDiagram: [
+      {
+        label: 'CLI command',
+        detail: 'Developers run init, scan, refresh, status, or resume from the target repository.',
+      },
+      {
+        label: 'Repo parser',
+        detail: 'The scanner detects project structure, routes, imports, and relevant files.',
+      },
+      {
+        label: 'Git context',
+        detail: 'Git utilities identify changed files and freshness signals.',
+      },
+      {
+        label: 'Artifact generator',
+        detail: 'Structured cache, project map, scan report, AGENTS.md, and docs/ai files are written.',
+      },
+      {
+        label: 'Agent resume',
+        detail: 'Agents read generated artifacts to resume with current context and next actions.',
+      },
+    ],
+    stack: ['TypeScript', 'Node.js', 'pnpm', 'Vitest', 'Commander', 'Agent Skills'],
+    tags: ['Developer Tools', 'AI Agents', 'TypeScript'],
+    github: 'https://github.com/subhajitlucky/smritiflow',
+    demo: 'https://www.npmjs.com/package/smritiflow',
+    visual: {
+      title: 'Repository memory loop',
+      caption:
+        'SmritiFlow turns repository scans into structured memory and concise agent handoff docs.',
+      steps: ['Initialize', 'Scan repo', 'Refresh changes', 'Resume work'],
+    },
+    inspectionLinks: [
+      {
+        label: 'npm package',
+        href: 'https://www.npmjs.com/package/smritiflow',
+      },
+      {
+        label: 'CLI package',
+        href: 'https://github.com/subhajitlucky/smritiflow/tree/main/apps/cli',
+      },
+      {
+        label: 'Core workflows',
+        href: 'https://github.com/subhajitlucky/smritiflow/tree/main/packages/core/src',
+      },
+      {
+        label: 'Agent Skill',
+        href: 'https://github.com/subhajitlucky/smritiflow/blob/main/.agents/skills/smritiflow/SKILL.md',
+      },
+    ],
+    seoKeywords: [
+      'Subhajit Pradhan developer tools engineer',
+      'AI agent repository memory CLI',
+      'SmritiFlow coding agent workflow',
+      'TypeScript CLI project',
+    ],
+  },
+  {
     title: 'IntentPay',
     slug: 'intentpay',
     role: 'Full-stack and smart contract engineer',

@@ -5,9 +5,7 @@ import { absoluteUrl, faqs, machineReadableProfile, siteConfig } from '@/data/si
 
 describe('portfolio SEO content model', () => {
   it('uses the focused homepage H1 phrase and canonical domain', () => {
-    expect(siteConfig.headline).toBe(
-      'Subhajit Pradhan builds full-stack, AI, and blockchain products.',
-    );
+    expect(siteConfig.headline).toBe('Subhajit Pradhan');
     expect(siteConfig.baseUrl).toBe('https://subhajitpradhan.vercel.app');
     expect(absoluteUrl('/blog')).toBe('https://subhajitpradhan.vercel.app/blog');
   });

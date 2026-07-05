@@ -17,7 +17,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </h3>
       <p>{project.oneLine}</p>
       <dl className="project-card__metrics" aria-label={`${project.title} metrics`}>
-        {project.metrics.slice(0, 3).map((metric) => (
+        {project.metrics.slice(0, 2).map((metric) => (
           <div key={metric.label}>
             <dt>{metric.label}</dt>
             <dd>{metric.value}</dd>
@@ -25,12 +25,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         ))}
       </dl>
       <ul className="evidence-list" aria-label={`${project.title} proof`}>
-        {project.proof.map((item) => (
+        {project.proof.slice(0, 2).map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>
       <ul className="tag-list" aria-label={`${project.title} stack`}>
-        {project.stack.map((item) => (
+        {project.stack.slice(0, 4).map((item) => (
           <li key={item}>{item}</li>
         ))}
       </ul>

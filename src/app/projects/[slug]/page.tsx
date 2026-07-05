@@ -44,6 +44,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const hasSeparateDemo = project.demo && project.demo !== project.github;
+  const demoLabel = project.demo?.includes('npmjs.com') ? 'npm package' : 'Live Demo';
 
   return (
     <>
@@ -79,7 +80,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </ButtonLink>
               {hasSeparateDemo && project.demo ? (
                 <ButtonLink href={project.demo} external variant="secondary">
-                  Live Demo
+                  {demoLabel}
                 </ButtonLink>
               ) : null}
             </div>

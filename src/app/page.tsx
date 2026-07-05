@@ -31,11 +31,20 @@ export const metadata = createMetadata({
   keywords: ['Subhajit Pradhan portfolio', 'Software Engineer portfolio', 'AI products'],
 });
 
+const featuredProjectSlugs = [
+  'rls-doctor',
+  'smritiflow',
+  'cscosmos',
+  'tarka-sabha',
+  'intentpay',
+  'campushelper',
+];
+
 export default function HomePage() {
-  const featuredProjects = projects.slice(0, 4);
+  const featuredProjects = featuredProjectSlugs
+    .map((slug) => projects.find((project) => project.slug === slug))
+    .filter((project): project is (typeof projects)[number] => Boolean(project));
   const featuredPosts = blogPosts.slice(0, 3);
-  const cscosmos = projects.find((project) => project.slug === 'cscosmos');
-  const intentPay = projects.find((project) => project.slug === 'intentpay');
 
   return (
     <>
@@ -48,51 +57,30 @@ export default function HomePage() {
 
       <section className="hero" aria-labelledby="home-heading">
         <div className="hero__content">
-          <p className="eyebrow">Open to product engineering roles</p>
+          <p className="eyebrow">Open to software engineering roles</p>
           <h1 id="home-heading">{siteConfig.headline}</h1>
+          <p className="hero__role">{siteConfig.role}</p>
           <p className="hero__lede">{profileSummary.short}</p>
+          <dl className="hero__meta" aria-label="Portfolio highlights">
+            <div>
+              <dt>Published tools</dt>
+              <dd>RLS Doctor, SmritiFlow</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>Full-stack, AI workflows, developer tools</dd>
+            </div>
+            <div>
+              <dt>Proof</dt>
+              <dd>npm packages, CI, case studies, source</dd>
+            </div>
+          </dl>
           <div className="hero__actions">
             <ButtonLink href={siteConfig.links.email} variant="primary">Email me</ButtonLink>
             <ButtonLink href="/#projects" variant="secondary">View work</ButtonLink>
             <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
           </div>
         </div>
-        <aside className="hero-proof" aria-label="Engineering proof">
-          <div className="hero-proof__header">
-            <p className="eyebrow">Engineering proof</p>
-            <h2>Built systems, not just screens</h2>
-          </div>
-          <dl className="hero-proof__metrics">
-            <div>
-              <dt>CSCosmos</dt>
-              <dd>172 modules</dd>
-            </div>
-            <div>
-              <dt>Live microsites</dt>
-              <dd>34</dd>
-            </div>
-            <div>
-              <dt>Architecture</dt>
-              <dd>Server-rendered case studies</dd>
-            </div>
-          </dl>
-          <div className="hero-proof__focus">
-            <h3>Current focus</h3>
-            <ul>
-              <li>
-                {cscosmos
-                  ? 'CSCosmos maps 172 modules and 34 live microsites.'
-                  : 'Computer science learning platform.'}
-              </li>
-              <li>
-                {intentPay
-                  ? 'IntentPay keeps AI planning separate from wallet execution.'
-                  : 'AI drafts, wallet executes.'}
-              </li>
-              <li>Inspectable project architecture and tradeoffs</li>
-            </ul>
-          </div>
-        </aside>
       </section>
 
       <section className="proof-strip" aria-label="Portfolio proof points">
@@ -104,7 +92,7 @@ export default function HomePage() {
         ))}
       </section>
 
-      <Section id="about" eyebrow="About" title="Software engineer building inspectable products">
+      <Section id="about" eyebrow="About" title="What I build">
         <div className="about-panel">
           <p>{profileSummary.long}</p>
           <ul className="evidence-list" aria-label="Profile highlights">
@@ -120,7 +108,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section id="projects" eyebrow="Selected work" title="Projects with proof">
+      <Section id="projects" eyebrow="Selected work" title="Best work first">
         <div className="card-grid">
           {featuredProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
