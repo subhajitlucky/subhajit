@@ -142,8 +142,11 @@ export default function HomePage() {
       <section id="contact" className="home-section contact-cta" aria-labelledby="contact-heading">
         <div>
           <p className="kicker">Contact</p>
-          <h2 id="contact-heading">Let’s build something useful.</h2>
+          <h2 id="contact-heading">Contact</h2>
         </div>
+        <p>
+          Send the role, product context, and what you want help shipping.
+        </p>
         <div className="contact-cta__actions">
           <ButtonLink href={siteConfig.links.email} variant="primary">{siteConfig.email}</ButtonLink>
           <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
