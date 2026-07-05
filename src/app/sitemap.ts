@@ -4,7 +4,7 @@ import { projects } from '@/data/projects';
 import { absoluteUrl } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ['/', '/projects', '/blog'].map((path) => ({
+  const staticRoutes = ['/', '/projects', '/blog', '/llms.txt'].map((path) => ({
     url: absoluteUrl(path),
     lastModified: new Date('2026-05-27'),
     changeFrequency: 'weekly' as const,

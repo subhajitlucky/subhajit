@@ -10,6 +10,7 @@ describe('sitemap route data', () => {
     expect(urls).toContain('https://subhajitpradhan.vercel.app/');
     expect(urls).toContain('https://subhajitpradhan.vercel.app/projects');
     expect(urls).toContain('https://subhajitpradhan.vercel.app/blog');
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/llms.txt');
 
     for (const project of projects) {
       expect(urls).toContain(`https://subhajitpradhan.vercel.app/projects/${project.slug}`);
