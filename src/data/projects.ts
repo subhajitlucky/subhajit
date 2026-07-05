@@ -46,11 +46,12 @@ export const projects: Project[] = [
     year: '2026',
     status: 'Published CLI',
     oneLine:
-      'npm-published Postgres and Supabase RLS auditor that catches unsafe Row Level Security policies before deployment.',
+      'npm-published Postgres and Supabase RLS auditor with an installable Agent Skill for AI-assisted database reviews.',
     description:
-      'RLS Doctor is a TypeScript CLI for auditing Postgres and Supabase Row Level Security posture from local development or CI. It inspects catalog metadata, reports risky tables and policies, explains findings, and ships as an installable npm package.',
+      'RLS Doctor is a TypeScript CLI and repo-hosted Agent Skill for auditing Postgres and Supabase Row Level Security posture from local development, CI, or AI-assisted review workflows.',
     proof: [
       'Published on npm as rls-doctor with npx install-free usage.',
+      'Exposes an installable Agent Skill through npx skills add subhajitlucky/rls-doctor.',
       'Runs GitHub Actions across Node 20, Node 22, and a disposable Postgres integration database.',
       'Detects disabled RLS, broad public policies, missing WITH CHECK clauses, and FORCE RLS hardening gaps.',
     ],
@@ -59,7 +60,7 @@ export const projects: Project[] = [
     usersOrContext:
       'Built for developers and teams using Supabase or Postgres who want a fast local and CI check before shipping database policy changes.',
     workflow:
-      'A developer runs npx rls-doctor check with a read-only connection string, reviews a human-readable or JSON report, and uses rls-doctor explain to inspect one risky table with suggested SQL next steps.',
+      'A developer runs npx rls-doctor check with a read-only connection string, or installs the rls-doctor Agent Skill so an AI coding agent knows how to audit RLS safely without leaking credentials.',
     architecture:
       'A Node.js and TypeScript CLI reads Postgres catalog views through node-postgres, maps table and pg_policies metadata into a typed audit model, scores findings by severity, and renders text or JSON reports for local terminals and CI.',
     decisions: [
@@ -67,6 +68,7 @@ export const projects: Project[] = [
       'Separated catalog loading, risk analysis, and reporters so the scoring logic can be tested without a database connection.',
       'Added a disposable Postgres integration test because catalog metadata can behave differently from mocked fixtures.',
       'Published as an npm CLI so developers can run it with npx instead of cloning the repository.',
+      'Packaged the audit workflow as an Agent Skill so compatible AI agents can install the RLS review process from GitHub.',
     ],
     tradeoffs: [
       'Catalog inspection catches common configuration risks, but it cannot prove application-level authorization correctness.',
@@ -79,10 +81,10 @@ export const projects: Project[] = [
       'Add policy diffing between staging and production snapshots.',
     ],
     metrics: [
-      { label: 'Distribution', value: 'Published npm CLI' },
+      { label: 'Distribution', value: 'npm CLI + Agent Skill' },
       { label: 'Install path', value: 'npx rls-doctor' },
+      { label: 'Skill install', value: 'npx skills add' },
       { label: 'CI coverage', value: 'Node 20, Node 22, Postgres 16' },
-      { label: 'Safety mode', value: 'Read-only catalog audit' },
     ],
     architectureDiagram: [
       {
@@ -128,6 +130,10 @@ export const projects: Project[] = [
       {
         label: 'Postgres integration test',
         href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/scripts/run-integration.js',
+      },
+      {
+        label: 'Agent Skill',
+        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/.agents/skills/rls-doctor/SKILL.md',
       },
       {
         label: 'Supabase RLS guide',
