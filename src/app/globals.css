@@ -383,7 +383,7 @@
     display: grid;
     grid-template-columns: 210px minmax(0, 1fr);
     gap: 44px;
-    padding-block: 70px;
+    padding-block: 56px;
     border-bottom: 1px solid var(--line);
   }
 
@@ -436,10 +436,22 @@
     gap: 0;
   }
 
+  .archive-summary {
+    max-width: 680px;
+  }
+
+  .archive-summary p {
+    color: var(--text);
+    font-size: clamp(1.05rem, 2vw, 1.22rem);
+    line-height: 1.6;
+  }
+
   .work-entry {
     display: grid;
-    gap: 26px;
-    padding-block: 34px;
+    grid-template-columns: 150px minmax(0, 1fr) minmax(220px, 0.38fr);
+    gap: 28px;
+    align-items: start;
+    padding-block: 26px;
     border-top: 1px solid var(--line);
   }
 
@@ -449,15 +461,35 @@
   }
 
   .work-entry h3 {
-    margin-top: 10px;
-    font-size: clamp(1.55rem, 3vw, 2.2rem);
-    line-height: 1.12;
+    margin-top: 6px;
+    font-size: clamp(1.3rem, 2vw, 1.65rem);
+    line-height: 1.18;
   }
 
   .work-entry header > p {
-    max-width: 800px;
-    margin-top: 12px;
-    font-size: 1.02rem;
+    color: var(--quiet);
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+
+  .work-entry__main {
+    display: grid;
+    gap: 10px;
+  }
+
+  .work-entry__meta-points {
+    display: grid;
+    gap: 12px;
+  }
+
+  .work-entry__meta-points dl {
+    display: grid;
+    gap: 10px;
+    margin: 0;
   }
 
   .work-entry__facts {
@@ -477,6 +509,17 @@
   .work-entry__links,
   .project-card__links {
     padding-top: 2px;
+  }
+
+  .work-entry .metric-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .work-entry__proof {
+    max-width: 680px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
 
   .work-entry__links a,
@@ -1034,6 +1077,7 @@
     .hero__meta,
     .proof-strip,
     .metric-row,
+    .work-entry .metric-row,
     .work-entry__facts,
     .skills-grid,
     .project-metrics dl,

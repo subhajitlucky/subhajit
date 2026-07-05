@@ -34,24 +34,20 @@ const featuredProjectSlugs = [
   'rls-doctor',
   'smritiflow',
   'cscosmos',
-  'tarka-sabha',
 ];
 
 const philosophy = [
   {
-    title: 'Design the boundary first',
-    body:
-      'I try to make irreversible actions, credentials, data ownership, and external services explicit before shaping the interface around them.',
+    title: 'Boundaries first',
+    body: 'Credentials, irreversible actions, and data ownership stay explicit.',
   },
   {
-    title: 'Prefer inspectable systems',
-    body:
-      'Source, tests, deployment paths, generated metadata, and failure modes should be easy for another engineer to review.',
+    title: 'Inspectable systems',
+    body: 'Source, tests, deployment paths, and failure modes should be easy to review.',
   },
   {
-    title: 'Make tradeoffs visible',
-    body:
-      'A useful case study should explain what was not solved yet, what risks remain, and why the current architecture is still reasonable.',
+    title: 'Visible tradeoffs',
+    body: 'Good engineering explains the limits, not just the happy path.',
   },
 ];
 
@@ -59,7 +55,7 @@ export default function HomePage() {
   const featuredProjects = featuredProjectSlugs
     .map((slug) => projects.find((project) => project.slug === slug))
     .filter((project): project is (typeof projects)[number] => Boolean(project));
-  const featuredPosts = blogPosts.slice(0, 3);
+  const featuredPosts = blogPosts.slice(0, 2);
 
   return (
     <>
@@ -127,91 +123,59 @@ export default function HomePage() {
             <li>
               Core stack: Next.js, React, TypeScript, Node.js, PostgreSQL, Solidity, and AI APIs.
             </li>
-            <li>
-              Portfolio content is rendered as HTML with semantic sections, project proof, writing,
-              and contact links.
-            </li>
           </ul>
         </div>
       </Section>
 
-      <Section id="projects" eyebrow="Selected Work" title="Published systems and product work">
+      <Section id="projects" eyebrow="Selected Work" title="Best proof first">
         <div className="case-study-list">
           {featuredProjects.map((project) => (
             <article className="work-entry" key={project.slug}>
-              <header>
-                <div className="work-entry__meta">
-                  <span>{project.year}</span>
-                  <span>{project.status}</span>
-                  <span>{project.role}</span>
-                </div>
-                <h3>
-                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-                </h3>
-                <p>{project.description}</p>
-              </header>
-              <div className="work-entry__body">
-                <dl className="work-entry__facts" aria-label={`${project.title} case study summary`}>
-                  <div>
-                    <dt>Problem</dt>
-                    <dd>{project.problem}</dd>
-                  </div>
-                  <div>
-                    <dt>Architecture</dt>
-                    <dd>{project.architecture}</dd>
-                  </div>
-                  <div>
-                    <dt>Tradeoffs</dt>
-                    <dd>{project.tradeoffs[0]}</dd>
-                  </div>
-                  <div>
-                    <dt>Timeline</dt>
-                    <dd>{project.year} / {project.status}</dd>
-                  </div>
-                  <div>
-                    <dt>Tech Stack</dt>
-                    <dd>{project.stack.join(', ')}</dd>
-                  </div>
-                  <div>
-                    <dt>Lessons Learned</dt>
-                    <dd>{project.decisions[0]}</dd>
-                  </div>
-                </dl>
-                <dl className="metric-row" aria-label={`${project.title} metrics`}>
-                  {project.metrics.slice(0, 4).map((metric) => (
+              <div className="work-entry__meta">
+                <span>{project.year}</span>
+                <span>{project.status}</span>
+              </div>
+              <div className="work-entry__main">
+                <header>
+                  <p>{project.role}</p>
+                  <h3>
+                    <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                  </h3>
+                </header>
+                <p>{project.oneLine}</p>
+                <p className="work-entry__proof">{project.proof[0]}</p>
+              </div>
+              <div className="work-entry__meta-points">
+                <dl aria-label={`${project.title} metrics`}>
+                  {project.metrics.slice(0, 2).map((metric) => (
                     <div key={metric.label}>
                       <dt>{metric.label}</dt>
                       <dd>{metric.value}</dd>
                     </div>
                   ))}
                 </dl>
+                <div className="work-entry__links">
+                  <Link href={`/projects/${project.slug}`}>Case study</Link>
+                  <a href={project.github} rel="noreferrer" target="_blank">Source</a>
+                </div>
               </div>
-              <footer className="work-entry__links">
-                <Link href={`/projects/${project.slug}`}>Read case study</Link>
-                <a href={project.github} rel="noreferrer" target="_blank">Source</a>
-                {project.demo ? (
-                  <a href={project.demo} rel="noreferrer" target="_blank">Demo</a>
-                ) : null}
-              </footer>
             </article>
           ))}
         </div>
+        <Link className="section-link" href="/projects">
+          View all case studies
+        </Link>
       </Section>
 
       <Section id="case-studies" eyebrow="Case Studies" title="Complete project archive">
-        <div className="case-index">
-          {projects.map((project) => (
-            <article key={project.slug}>
-              <div>
-                <span>{project.year}</span>
-                <h3>
-                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-                </h3>
-              </div>
-              <p>{project.oneLine}</p>
-              <Link href={`/projects/${project.slug}`}>Open</Link>
-            </article>
-          ))}
+        <div className="archive-summary">
+          <p>
+            {projects.length} detailed case studies with problem framing, architecture,
+            tradeoffs, metrics, source links, and next steps.
+          </p>
+          <Link className="section-link" href="/projects">
+            Browse case studies
+          </Link>
         </div>
       </Section>
 
@@ -245,7 +209,7 @@ export default function HomePage() {
               <div>
                 <h3>{item.organization}</h3>
                 <p className="timeline__role">{item.title}</p>
-                <p>{item.summary}</p>
+                <p>{item.summary.split('.')[0]}.</p>
               </div>
             </li>
           ))}
