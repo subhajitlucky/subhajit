@@ -14,6 +14,8 @@ tsconfig.tsbuildinfo
 dist
 dist-ssr
 *.local
+/tmp/
+/Subhajit_Resume*.pdf
 
 # Editor directories and files
 .vscode/*
