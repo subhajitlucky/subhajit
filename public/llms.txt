@@ -40,6 +40,14 @@ Source: https://github.com/subhajitlucky/intentpay
 Stack: TypeScript, Solidity, Ethers.js, AI workflows
 Summary: AI-driven intent layer that translates natural language into on-chain DeFi transaction workflows while keeping wallet review visible before execution.
 
+### CSCosmos
+
+URL: https://subhajitpradhan.vercel.app/projects/cscosmos
+Source: https://github.com/subhajitlucky/cscosmos
+Demo: https://cscosmos.vercel.app
+Stack: React, TypeScript, Vite, Tailwind CSS, React Router
+Summary: Curated computer science learning hub with 172 planned visual modules, 34 live microsites, search, domain browsing, topic detail routes, and live/coming-soon status.
+
 ### Tarka Sabha
 
 URL: https://subhajitpradhan.vercel.app/projects/tarka-sabha

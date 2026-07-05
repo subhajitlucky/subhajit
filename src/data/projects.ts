@@ -96,6 +96,76 @@ export const projects: Project[] = [
     ],
   },
   {
+    title: 'CSCosmos',
+    slug: 'cscosmos',
+    role: 'Product and frontend platform engineer',
+    year: '2026',
+    status: 'Live platform',
+    oneLine:
+      'Curated computer science learning hub organizing 172 visual microsite modules across eight engineering domains.',
+    description:
+      'CSCosmos is a React and TypeScript learning platform that maps 172 computer science topics, tracks 34 live microsites, and routes learners through domain pages, search, topic details, and live module launches.',
+    proof: [
+      'Models 172 topics across Full Stack, DSA, Web3, Security, AI, Core CS, DevOps, and Advanced Systems.',
+      'Links 34 live microsites from a single searchable hub with active versus coming-soon states.',
+      'Ships metadata, robots.txt, sitemap.xml, and llms.txt to make the platform easier to inspect.',
+    ],
+    problem:
+      'Computer science visualizers are usually scattered across separate demos and articles, which makes it hard for learners to see relationships between fundamentals, system internals, Web3, AI, DevOps, and advanced engineering topics.',
+    usersOrContext:
+      'Built for self-directed developers who want a navigable map of computer science topics and direct links into focused visual learning modules.',
+    workflow:
+      'A learner searches or browses by domain, opens a topic detail page, checks whether the module is live, and launches the related microsite when available.',
+    architecture:
+      'A Vite React SPA uses React Router for domain and topic routes, TypeScript data modules for the topic catalog, Tailwind CSS for the UI, local storage for theme persistence, and Vercel rewrites for deep-link support.',
+    decisions: [
+      'Kept the topic catalog in TypeScript so counts, badges, routes, and launch links all derive from one source of truth.',
+      'Separated domains from topics to support both high-level browsing and direct topic discovery.',
+      'Used active and coming-soon states so the platform can honestly show live modules while preserving the broader roadmap.',
+      'Added static discovery files around the SPA so reviewers and AI tools can understand the project even before client-side rendering.',
+    ],
+    tradeoffs: [
+      'The Vite SPA keeps the hub fast to build and easy to deploy, but it does not produce rich per-route HTML before hydration.',
+      'Separate microsite deployments isolate each topic, but they increase maintenance work across many small projects.',
+      'A TypeScript data catalog is simple and reviewable now, but a larger platform may eventually need MDX, generated content, or a CMS.',
+    ],
+    nextImprovements: [
+      'Migrate the hub to static or server-rendered routes so each domain and topic page ships crawlable HTML.',
+      'Generate sitemap entries for every active topic and live microsite.',
+      'Add screenshots, difficulty labels, prerequisites, and related-topic links for stronger learning paths.',
+    ],
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Router'],
+    tags: ['Full Stack', 'React', 'Learning Platform'],
+    github: 'https://github.com/subhajitlucky/cscosmos',
+    demo: 'https://cscosmos.vercel.app',
+    visual: {
+      title: 'Learning platform map',
+      caption:
+        'The hub turns a large topic catalog into searchable domains, topic detail routes, status badges, and launch paths for live microsites.',
+      steps: ['Browse domain', 'Search topic', 'Inspect status', 'Launch microsite'],
+    },
+    inspectionLinks: [
+      {
+        label: 'Topic catalog',
+        href: 'https://github.com/subhajitlucky/cscosmos/blob/main/src/data/topics.ts',
+      },
+      {
+        label: 'Route tree',
+        href: 'https://github.com/subhajitlucky/cscosmos/blob/main/src/App.tsx',
+      },
+      {
+        label: 'README proof',
+        href: 'https://github.com/subhajitlucky/cscosmos/blob/main/README.md',
+      },
+    ],
+    seoKeywords: [
+      'Subhajit Pradhan React developer',
+      'computer science learning platform',
+      'React TypeScript Vite portfolio project',
+      'CSCosmos visual learning hub',
+    ],
+  },
+  {
     title: 'Tarka Sabha',
     slug: 'tarka-sabha',
     role: 'Full-stack engineer',
@@ -129,8 +199,8 @@ export const projects: Project[] = [
       'Add richer debate history views.',
       'Improve response comparison and citation displays.',
     ],
-    stack: ['React', 'Node.js', 'AI provider APIs'],
-    tags: ['AI', 'React', 'Node.js'],
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma'],
+    tags: ['AI', 'Next.js', 'TypeScript'],
     github: 'https://github.com/subhajitlucky/tarkaSabha',
     demo: 'https://tarkasabha.vercel.app',
     visual: {
@@ -191,8 +261,8 @@ export const projects: Project[] = [
     nextImprovements: [
       'Improve moderation and matching flows for duplicate or related item reports.',
     ],
-    stack: ['React', 'Node.js', 'PostgreSQL'],
-    tags: ['Full Stack', 'PostgreSQL', 'Product'],
+    stack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Supabase'],
+    tags: ['Full Stack', 'Next.js', 'PostgreSQL'],
     github: 'https://github.com/subhajitlucky/campushelper',
     demo: 'https://campushelper.vercel.app',
     visual: {

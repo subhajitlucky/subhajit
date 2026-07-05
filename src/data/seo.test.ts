@@ -32,6 +32,7 @@ describe('portfolio SEO content model', () => {
   it('includes blockchain, full-stack, blog, and FAQ ranking material', () => {
     expect(projects.some((project) => project.tags.includes('Blockchain'))).toBe(true);
     expect(projects.some((project) => project.tags.includes('Full Stack'))).toBe(true);
+    expect(projects.some((project) => project.slug === 'cscosmos')).toBe(true);
     expect(blogPosts).toHaveLength(3);
     expect(faqs.length).toBeGreaterThanOrEqual(3);
   });
