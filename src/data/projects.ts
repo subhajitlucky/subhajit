@@ -255,14 +255,15 @@ export const projects: Project[] = [
     slug: 'tarka-sabha',
     role: 'Full-stack engineer',
     year: '2026',
-    status: 'Active project',
+    status: 'Live platform',
     oneLine:
-      'Multi-agent AI debate platform with provider orchestration and secure credential management.',
+      'Multi-agent AI debate platform with provider routing, persona state, and encrypted credentials.',
     description:
-      'Tarka Sabha is a multi-agent AI debate platform that coordinates prompts, provider access, generated arguments, and debate-state flows.',
+      'Tarka Sabha is a multi-agent AI debate platform that coordinates configurable personas, multiple model providers, and inspectable debate workflows.',
     proof: [
-      'Backend boundary keeps provider credentials out of the browser.',
-      'Debate workflow state is separated from provider-specific logic.',
+      'Supports configurable personas and multiple model providers behind one debate flow.',
+      'Uses sequential and mention-aware orchestration to control speaker turns.',
+      'Encrypts provider API keys at rest with AES-256-GCM.',
     ],
     problem:
       'AI debate workflows need a structured way to coordinate multiple model providers, user prompts, and credentials without mixing product logic with provider-specific details.',
@@ -271,11 +272,11 @@ export const projects: Project[] = [
     workflow:
       'A user defines the debate context, configures model access, starts the debate flow, and reviews generated arguments from participating AI agents.',
     architecture:
-      'React powers the client experience, while a Node.js backend coordinates provider requests, credential handling, and debate workflow state.',
+      'A Next.js App Router application uses PostgreSQL and Prisma for auth-backed workflow records while a provider adapter coordinates model calls and encrypted credentials.',
     decisions: [
       'Separated provider orchestration from the interface so model integrations can change without reshaping the user flow.',
       'Kept credential handling behind backend boundaries instead of exposing provider keys to the browser.',
-      'Structured the project around the debate workflow rather than scattered prompt experiments.',
+      'Structured the project around debate workflow state rather than scattered prompt experiments.',
     ],
     tradeoffs: [
       'Supporting multiple providers increases orchestration complexity compared with a single-model implementation.',
@@ -444,14 +445,14 @@ export const projects: Project[] = [
     slug: 'campushelper',
     role: 'Full-stack engineer',
     year: '2025',
-    status: 'Live demo',
+    status: 'Live platform',
     oneLine:
-      'Full-stack lost-and-found system with authentication, file uploads, and full-text search.',
+      'Full-stack campus lost-and-found platform with authenticated reports, uploads, claims, and search.',
     description:
-      'CampusHelper is a practical campus lost-and-found system with authenticated reporting, image uploads, search, and a live deployment.',
+      'CampusHelper is a full-stack campus lost-and-found system with authenticated reporting, image uploads, searchable records, and a live deployment.',
     proof: [
-      'Ships auth, image uploads, PostgreSQL-backed data, and search.',
-      'Live deployment proves the flow runs beyond a local demo.',
+      'README documents authentication, uploads, search, claims, moderation, and database access controls.',
+      'Source exposes API routes, validation, storage, and Prisma/Supabase data boundaries.',
     ],
     problem:
       'Campus lost-and-found posts need a searchable, authenticated flow where users can report items, add images, and find relevant matches.',
@@ -460,11 +461,11 @@ export const projects: Project[] = [
     workflow:
       'Users sign in, create item reports with details and uploads, search existing posts, and review relevant lost-and-found entries.',
     architecture:
-      'A React frontend connects to a Node.js backend with PostgreSQL-backed data flows for authentication, uploads, and search.',
+      'A Next.js application uses authenticated API routes, Prisma, PostgreSQL/Supabase storage, and server-side validation for item reports and claims.',
     decisions: [
       'Used authenticated flows so item reports can be tied to accountable user actions.',
       'Included uploads and full-text search to make reports easier to identify and retrieve.',
-      'Shipped a live deployment to prove the product can run beyond a local tutorial demo.',
+      'Kept reporting, uploads, search, and claims in one product flow instead of splitting the experience across separate tools.',
     ],
     tradeoffs: [
       'Adding uploads and search increases backend surface area compared with a static listing board.',
@@ -536,9 +537,9 @@ export const projects: Project[] = [
     year: '2026',
     status: 'Prototype',
     oneLine:
-      'AI-driven intent layer that translates natural language into on-chain DeFi transaction workflows.',
+      'AI-assisted Web3 transaction prototype that turns natural language into structured plans before wallet review.',
     description:
-      'IntentPay connects natural-language transaction intent with blockchain execution flows, smart contracts, and wallet confirmation steps.',
+      'IntentPay is an AI-assisted Web3 transaction prototype that separates natural-language planning from wallet confirmation and irreversible execution.',
     proof: [
       'Separates AI interpretation from irreversible contract execution.',
       'Keeps wallet review visible before transaction confirmation.',
@@ -550,7 +551,7 @@ export const projects: Project[] = [
     workflow:
       'A user enters a transaction intent, the application interprets the requested action, prepares the related on-chain interaction, and routes the user through review and wallet execution.',
     architecture:
-      'A TypeScript product layer connects AI intent parsing with Solidity contracts, Ethers.js wallet interactions, and explicit transaction preview states.',
+      'A React client connects to an Express API and LLM adapter, which prepares Ethers.js transaction plans behind a review boundary with encrypted wallet data and security events.',
     decisions: [
       'Modeled the interface around user intent first, then mapped interpreted actions to explicit blockchain transaction steps.',
       'Kept wallet execution visible so users can inspect the operation before confirming an on-chain action.',
@@ -592,7 +593,7 @@ export const projects: Project[] = [
         detail: 'Solidity logic receives the confirmed transaction only after review.',
       },
     ],
-    stack: ['TypeScript', 'Solidity', 'Ethers.js', 'AI workflows'],
+    stack: ['Node.js', 'Express.js', 'React', 'Ethers.js', 'AI workflows'],
     tags: ['Blockchain', 'AI', 'Full Stack'],
     github: 'https://github.com/subhajitlucky/intentpay',
     demo: 'https://github.com/subhajitlucky/intentpay',

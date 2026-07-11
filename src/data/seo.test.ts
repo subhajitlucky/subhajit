@@ -7,6 +7,7 @@ import {
   absoluteUrl,
   faqs,
   machineReadableProfile,
+  profileSummary,
   siteConfig,
   toolFootnotes,
 } from '@/data/site';
@@ -61,6 +62,27 @@ describe('portfolio SEO content model', () => {
       'intentpay',
     ]);
     expect(slugs).not.toContain('quantumticket');
+  });
+
+  it('keeps verified statuses, role copy, and blog relationships aligned', () => {
+    expect(projects.map(({ slug, status }) => [slug, status])).toEqual([
+      ['rls-doctor', 'Published CLI'],
+      ['smritiflow', 'Published CLI'],
+      ['tarka-sabha', 'Live platform'],
+      ['cscosmos', 'Live platform'],
+      ['campushelper', 'Live platform'],
+      ['intentpay', 'Prototype'],
+    ]);
+    expect(siteConfig.role).toBe('Software Engineer - Developer Tools, AI Systems, Full Stack');
+    expect(siteConfig.description).toBe(profileSummary.short);
+
+    const projectSlugs = new Set(projects.map((project) => project.slug));
+    expect(
+      blogPosts.every((post) =>
+        post.relatedProjectSlugs.every((slug) => projectSlugs.has(slug)),
+      ),
+    ).toBe(true);
+    expect(blogPosts[0]?.relatedProjectSlugs).toEqual(['intentpay']);
   });
 
   it('includes full-stack, AI/web3, blog, and FAQ ranking material', () => {

@@ -25,7 +25,7 @@ export const blogPosts: BlogPost[] = [
       'intent driven blockchain UX',
       'full stack blockchain developer',
     ],
-    relatedProjectSlugs: ['intentpay', 'quantumticket'],
+    relatedProjectSlugs: ['intentpay'],
   },
   {
     title: 'Multi-agent apps need workflow state, not just better prompts',

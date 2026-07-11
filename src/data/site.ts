@@ -1,26 +1,27 @@
 import { projects } from '@/data/projects';
 
+const profileDescription =
+  'Software engineer building developer tools, multi-agent systems, and production web apps with inspectable architecture, tests, and shipped releases.';
+
 export const siteConfig = {
   name: 'Subhajit Pradhan',
   headline: 'Subhajit Pradhan',
-  role: 'Software Engineer · Developer Tools · AI Products',
+  role: 'Software Engineer - Developer Tools, AI Systems, Full Stack',
   baseUrl: 'https://subhajitpradhan.vercel.app',
   location: 'Odisha, India',
   email: 'subhajitpradhan310@gmail.com',
-  resumePath: '/assets/Subhajit_ResumeV9.pdf',
-  availability: 'Open to software engineering, full-stack, and AI product engineering roles',
-  description:
-    'Software engineer building developer tools, AI workflows, and production web apps with clear architecture, tests, and shipped deployments.',
+  resumePath: '/assets/Subhajit_Resume.pdf',
+  availability:
+    'Open to software engineering roles across developer tools, full-stack systems, and AI product engineering',
+  description: profileDescription,
   keywords: [
     'Subhajit Pradhan',
-    'Subhajit Pradhan developer',
-    'Subhajit Pradhan full stack developer',
-    'Subhajit Pradhan blockchain developer',
+    'Subhajit Pradhan software engineer',
+    'developer tools engineer',
+    'multi-agent systems',
+    'Postgres RLS',
+    'Next.js TypeScript',
     'full stack developer Odisha',
-    'blockchain developer India',
-    'React developer',
-    'Next.js developer',
-    'Solidity developer',
   ],
   links: {
     github: 'https://github.com/subhajitlucky',
@@ -30,17 +31,34 @@ export const siteConfig = {
   nav: [
     { label: 'Work', href: '/#projects' },
     { label: 'Experience', href: '/#experience' },
-    { label: 'Skills', href: '/#skills' },
+    { label: 'Writing', href: '/blog' },
     { label: 'Contact', href: '/#contact' },
   ],
 } as const;
 
 export const profileSummary = {
-  short:
-    'Software engineer building developer tools, AI workflows, and production web apps with clear architecture, tests, and shipped releases.',
+  short: profileDescription,
   long:
-    'I am a software engineer from Odisha, India building production-ready full-stack products, developer tools, AI workflows, and blockchain interfaces. My work emphasizes inspectable architecture, reliable backend boundaries, practical UX, tests, CI, and deployable systems.',
+    'I am a software engineer from Odisha, India building developer tools, multi-agent workflows, and production full-stack systems. My work emphasizes inspectable architecture, honest tradeoffs, tests, CI, and code peers can review without ceremony.',
 } as const;
+
+export const toolFootnotes = [
+  {
+    title: 'skillscan',
+    oneLine:
+      'Single-skill repo that inspects a project for agent-skills packaging signals.',
+    github: 'https://github.com/subhajitlucky/skillscan',
+  },
+] as const;
+
+export const featuredProjectSlugs = [
+  'rls-doctor',
+  'smritiflow',
+  'tarka-sabha',
+  'cscosmos',
+] as const;
+
+export const selectedProjectSlugs = ['campushelper', 'intentpay'] as const;
 
 export const proofPoints = [
   {
@@ -53,7 +71,7 @@ export const proofPoints = [
   },
   {
     label: 'Production habits',
-    value: 'I prioritize SSR, accessibility, CI, clean data boundaries, and reviewer-friendly proof.',
+    value: 'I prioritize clear data boundaries, accessibility, CI, and reviewer-friendly proof.',
   },
 ] as const;
 
@@ -84,7 +102,7 @@ export const experience = [
     title: 'BCA · 8.9 CGPA',
     period: '2022 – 2025',
     summary:
-      'Studied computer applications while building inspectable full-stack, AI, and blockchain projects with source and demos.',
+      'Studied computer applications while building inspectable full-stack, AI, and systems projects with source and demos.',
   },
 ] as const;
 
@@ -92,22 +110,22 @@ export const faqs = [
   {
     question: 'Who am I?',
     answer:
-      'I am Subhajit Pradhan, a full stack and blockchain developer from Odisha, India.',
+      'I am Subhajit Pradhan, a software engineer from Odisha, India focused on developer tools, multi-agent systems, and production web apps.',
   },
   {
     question: 'What do I build?',
     answer:
-      'I build web applications, APIs, data-backed workflows, smart contract interfaces, and AI-assisted products.',
+      'I build CLIs and agent tooling, multi-agent product surfaces, full-stack web systems, and safer AI-assisted interfaces.',
   },
   {
     question: 'Am I open to roles?',
     answer:
-      'Yes. I am open to full-stack engineering, blockchain, and AI product engineering conversations.',
+      'Yes. I am open to software engineering conversations across developer tools, full-stack systems, and AI product engineering.',
   },
   {
     question: 'Where can you inspect my work?',
     answer:
-      'Start with the selected projects, GitHub repositories, live demos, and short writing notes linked from this site.',
+      'Start with the featured case studies, GitHub repositories, npm packages, live demos, and short writing notes linked from this site.',
   },
 ] as const;
 
@@ -161,6 +179,11 @@ export const machineReadableProfile = {
     stack: project.stack,
     github: project.github,
     demo: project.demo,
+  })),
+  toolingFootnotes: toolFootnotes.map((item) => ({
+    title: item.title,
+    description: item.oneLine,
+    github: item.github,
   })),
   contact: {
     email: siteConfig.email,
