@@ -374,7 +374,8 @@
   .work-row__title > p,
   .work-row__thesis > span,
   .work-row__proof > span,
-  .experience-list p,
+  .experience-list > li > time,
+  .experience-list > li > p,
   .project-card__topline,
   .blog-card__meta,
   .article-page__header div {
@@ -385,6 +386,11 @@
     letter-spacing: 0.06em;
     line-height: 1.45;
     text-transform: uppercase;
+  }
+
+  .experience-list li > div > p {
+    font-size: 0.9rem;
+    line-height: 1.55;
   }
 
   .work-row__thesis p {
