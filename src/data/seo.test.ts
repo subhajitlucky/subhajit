@@ -27,10 +27,24 @@ describe('portfolio SEO content model', () => {
     expect(new Set(blogSlugs).size).toBe(blogSlugs.length);
   });
 
-  it('includes blockchain, full-stack, blog, and FAQ ranking material', () => {
-    expect(projects.some((project) => project.tags.includes('Blockchain'))).toBe(true);
+  it('uses the locked peer-focused project set', () => {
+    const slugs = projects.map((project) => project.slug);
+    expect(slugs).toEqual([
+      'rls-doctor',
+      'smritiflow',
+      'tarka-sabha',
+      'cscosmos',
+      'campushelper',
+      'intentpay',
+    ]);
+    expect(slugs).not.toContain('quantumticket');
+  });
+
+  it('includes full-stack, AI/web3, blog, and FAQ ranking material', () => {
     expect(projects.some((project) => project.tags.includes('Full Stack'))).toBe(true);
     expect(projects.some((project) => project.slug === 'cscosmos')).toBe(true);
+    expect(projects.some((project) => project.slug === 'intentpay')).toBe(true);
+    expect(projects.find((project) => project.slug === 'intentpay')?.status).toBe('Prototype');
     expect(blogPosts).toHaveLength(3);
     expect(faqs.length).toBeGreaterThanOrEqual(3);
   });

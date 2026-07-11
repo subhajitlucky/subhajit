@@ -39,7 +39,7 @@ export type Project = {
 };
 
 export const projects: Project[] = [
-  {
+{
     title: 'RLS Doctor',
     slug: 'rls-doctor',
     role: 'Developer tools and database security engineer',
@@ -147,7 +147,7 @@ export const projects: Project[] = [
       'TypeScript npm CLI project',
     ],
   },
-  {
+{
     title: 'SmritiFlow',
     slug: 'smritiflow',
     role: 'Developer tools and AI workflow engineer',
@@ -250,99 +250,98 @@ export const projects: Project[] = [
       'TypeScript CLI project',
     ],
   },
-  {
-    title: 'IntentPay',
-    slug: 'intentpay',
-    role: 'Full-stack and smart contract engineer',
+{
+    title: 'Tarka Sabha',
+    slug: 'tarka-sabha',
+    role: 'Full-stack engineer',
     year: '2026',
-    status: 'Currently building',
+    status: 'Active project',
     oneLine:
-      'AI-driven intent layer that translates natural language into on-chain DeFi transaction workflows.',
+      'Multi-agent AI debate platform with provider orchestration and secure credential management.',
     description:
-      'IntentPay connects natural-language transaction intent with blockchain execution flows, smart contracts, and wallet confirmation steps.',
+      'Tarka Sabha is a multi-agent AI debate platform that coordinates prompts, provider access, generated arguments, and debate-state flows.',
     proof: [
-      'Separates AI interpretation from irreversible contract execution.',
-      'Keeps wallet review visible before transaction confirmation.',
+      'Backend boundary keeps provider credentials out of the browser.',
+      'Debate workflow state is separated from provider-specific logic.',
     ],
     problem:
-      'On-chain transaction flows can force users to understand protocol actions, contract interactions, wallet steps, and irreversible execution before they can complete a payment or DeFi operation.',
+      'AI debate workflows need a structured way to coordinate multiple model providers, user prompts, and credentials without mixing product logic with provider-specific details.',
     usersOrContext:
-      'Built for crypto users and product teams exploring natural-language transaction intent as a safer interface layer for Web3 workflows.',
+      'Built for users who want to run and compare AI-assisted debate flows through a web interface.',
     workflow:
-      'A user enters a transaction intent, the application interprets the requested action, prepares the related on-chain interaction, and routes the user through review and wallet execution.',
+      'A user defines the debate context, configures model access, starts the debate flow, and reviews generated arguments from participating AI agents.',
     architecture:
-      'A TypeScript product layer connects AI intent parsing with Solidity contracts, Ethers.js wallet interactions, and explicit transaction preview states.',
+      'React powers the client experience, while a Node.js backend coordinates provider requests, credential handling, and debate workflow state.',
     decisions: [
-      'Modeled the interface around user intent first, then mapped interpreted actions to explicit blockchain transaction steps.',
-      'Kept wallet execution visible so users can inspect the operation before confirming an on-chain action.',
-      'Separated AI interpretation from contract execution because natural language output should never directly trigger irreversible transactions.',
+      'Separated provider orchestration from the interface so model integrations can change without reshaping the user flow.',
+      'Kept credential handling behind backend boundaries instead of exposing provider keys to the browser.',
+      'Structured the project around the debate workflow rather than scattered prompt experiments.',
     ],
     tradeoffs: [
-      'Natural-language input improves accessibility but requires stronger validation before transaction preparation.',
-      'Blockchain transparency adds trust, but it also requires clear UX around gas, wallet state, and failure cases.',
+      'Supporting multiple providers increases orchestration complexity compared with a single-model implementation.',
     ],
     nextImprovements: [
-      'Add stricter intent validation and safer transaction previews.',
-      'Document the contract boundaries and supported transaction types.',
+      'Add richer debate history views.',
+      'Improve response comparison and citation displays.',
     ],
     metrics: [
-      { label: 'Safety boundary', value: 'AI drafts, wallet executes' },
-      { label: 'Core layers', value: 'Intent, preview, contract, wallet' },
-      { label: 'Primary risk handled', value: 'Irreversible on-chain actions' },
-      { label: 'Review state', value: 'Before every wallet confirmation' },
+      { label: 'Model boundary', value: 'Provider calls stay server-side' },
+      { label: 'Core workflow', value: 'Topic, roles, turns, output' },
+      { label: 'Primary design goal', value: 'Inspectable multi-agent state' },
+      { label: 'Data layer', value: 'Prisma-backed workflow records' },
     ],
     architectureDiagram: [
       {
-        label: 'User intent',
-        detail: 'Natural-language transaction request starts the flow.',
+        label: 'Debate setup',
+        detail: 'User defines the topic, debate context, and agent roles.',
       },
       {
-        label: 'AI planner',
-        detail: 'Interprets the request and prepares a structured action plan.',
+        label: 'Workflow state',
+        detail: 'Application state tracks agent turns and generated arguments.',
       },
       {
-        label: 'Transaction preview',
-        detail: 'Shows the action, wallet impact, and confirmation context.',
+        label: 'Backend boundary',
+        detail: 'Provider keys and model calls stay outside the browser.',
       },
       {
-        label: 'Wallet execution',
-        detail: 'User approval remains the boundary before on-chain execution.',
+        label: 'AI providers',
+        detail: 'Model-specific responses are coordinated behind the same product flow.',
       },
       {
-        label: 'Smart contract',
-        detail: 'Solidity logic receives the confirmed transaction only after review.',
+        label: 'Review UI',
+        detail: 'The interface presents generated arguments for comparison and inspection.',
       },
     ],
-    stack: ['TypeScript', 'Solidity', 'Ethers.js', 'AI workflows'],
-    tags: ['Blockchain', 'AI', 'Full Stack'],
-    github: 'https://github.com/subhajitlucky/intentpay',
-    demo: 'https://github.com/subhajitlucky/intentpay',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma'],
+    tags: ['AI', 'Next.js', 'TypeScript'],
+    github: 'https://github.com/subhajitlucky/tarkaSabha',
+    demo: 'https://tarkasabha.vercel.app',
     visual: {
-      title: 'Intent review boundary',
-      caption: 'Natural language is converted into an inspectable transaction plan before any wallet action.',
-      steps: ['Intent input', 'AI planning', 'Transaction preview', 'Wallet confirmation'],
+      title: 'Debate workflow state',
+      caption: 'The product separates debate setup, agent turns, provider calls, and generated output.',
+      steps: ['Topic setup', 'Agent roles', 'Provider boundary', 'Debate output'],
     },
     inspectionLinks: [
       {
-        label: 'AI planner',
-        href: 'https://github.com/subhajitlucky/intentpay/blob/main/ai-agent.js',
+        label: 'App source',
+        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/src',
       },
       {
-        label: 'Wallet manager',
-        href: 'https://github.com/subhajitlucky/intentpay/blob/main/wallet-manager.js',
+        label: 'Data model',
+        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/prisma',
       },
       {
-        label: 'Frontend',
-        href: 'https://github.com/subhajitlucky/intentpay/tree/main/frontend',
+        label: 'README',
+        href: 'https://github.com/subhajitlucky/tarkaSabha/blob/main/README.md',
       },
     ],
     seoKeywords: [
-      'Subhajit Pradhan blockchain developer',
-      'intent driven blockchain interface',
-      'Solidity full stack project',
+      'Subhajit Pradhan developer',
+      'multi agent AI debate platform',
+      'React Node AI project',
     ],
   },
-  {
+{
     title: 'CSCosmos',
     slug: 'cscosmos',
     role: 'Product and frontend platform engineer',
@@ -440,98 +439,7 @@ export const projects: Project[] = [
       'CSCosmos visual learning hub',
     ],
   },
-  {
-    title: 'Tarka Sabha',
-    slug: 'tarka-sabha',
-    role: 'Full-stack engineer',
-    year: '2026',
-    status: 'Active project',
-    oneLine:
-      'Multi-agent AI debate platform with provider orchestration and secure credential management.',
-    description:
-      'Tarka Sabha is a multi-agent AI debate platform that coordinates prompts, provider access, generated arguments, and debate-state flows.',
-    proof: [
-      'Backend boundary keeps provider credentials out of the browser.',
-      'Debate workflow state is separated from provider-specific logic.',
-    ],
-    problem:
-      'AI debate workflows need a structured way to coordinate multiple model providers, user prompts, and credentials without mixing product logic with provider-specific details.',
-    usersOrContext:
-      'Built for users who want to run and compare AI-assisted debate flows through a web interface.',
-    workflow:
-      'A user defines the debate context, configures model access, starts the debate flow, and reviews generated arguments from participating AI agents.',
-    architecture:
-      'React powers the client experience, while a Node.js backend coordinates provider requests, credential handling, and debate workflow state.',
-    decisions: [
-      'Separated provider orchestration from the interface so model integrations can change without reshaping the user flow.',
-      'Kept credential handling behind backend boundaries instead of exposing provider keys to the browser.',
-      'Structured the project around the debate workflow rather than scattered prompt experiments.',
-    ],
-    tradeoffs: [
-      'Supporting multiple providers increases orchestration complexity compared with a single-model implementation.',
-    ],
-    nextImprovements: [
-      'Add richer debate history views.',
-      'Improve response comparison and citation displays.',
-    ],
-    metrics: [
-      { label: 'Model boundary', value: 'Provider calls stay server-side' },
-      { label: 'Core workflow', value: 'Topic, roles, turns, output' },
-      { label: 'Primary design goal', value: 'Inspectable multi-agent state' },
-      { label: 'Data layer', value: 'Prisma-backed workflow records' },
-    ],
-    architectureDiagram: [
-      {
-        label: 'Debate setup',
-        detail: 'User defines the topic, debate context, and agent roles.',
-      },
-      {
-        label: 'Workflow state',
-        detail: 'Application state tracks agent turns and generated arguments.',
-      },
-      {
-        label: 'Backend boundary',
-        detail: 'Provider keys and model calls stay outside the browser.',
-      },
-      {
-        label: 'AI providers',
-        detail: 'Model-specific responses are coordinated behind the same product flow.',
-      },
-      {
-        label: 'Review UI',
-        detail: 'The interface presents generated arguments for comparison and inspection.',
-      },
-    ],
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma'],
-    tags: ['AI', 'Next.js', 'TypeScript'],
-    github: 'https://github.com/subhajitlucky/tarkaSabha',
-    demo: 'https://tarkasabha.vercel.app',
-    visual: {
-      title: 'Debate workflow state',
-      caption: 'The product separates debate setup, agent turns, provider calls, and generated output.',
-      steps: ['Topic setup', 'Agent roles', 'Provider boundary', 'Debate output'],
-    },
-    inspectionLinks: [
-      {
-        label: 'App source',
-        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/src',
-      },
-      {
-        label: 'Data model',
-        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/prisma',
-      },
-      {
-        label: 'README',
-        href: 'https://github.com/subhajitlucky/tarkaSabha/blob/main/README.md',
-      },
-    ],
-    seoKeywords: [
-      'Subhajit Pradhan developer',
-      'multi agent AI debate platform',
-      'React Node AI project',
-    ],
-  },
-  {
+{
     title: 'CampusHelper',
     slug: 'campushelper',
     role: 'Full-stack engineer',
@@ -621,93 +529,96 @@ export const projects: Project[] = [
       'full stack lost and found app',
     ],
   },
-  {
-    title: 'QuantumTicket',
-    slug: 'quantumticket',
-    role: 'Blockchain developer',
-    year: '2025',
-    status: 'Live demo',
+{
+    title: 'IntentPay',
+    slug: 'intentpay',
+    role: 'Full-stack and smart contract engineer',
+    year: '2026',
+    status: 'Prototype',
     oneLine:
-      'On-chain NFT ticketing system for minting, transferring, and verifying event tickets.',
+      'AI-driven intent layer that translates natural language into on-chain DeFi transaction workflows.',
     description:
-      'QuantumTicket explores a blockchain ticketing workflow where event tickets can be represented and verified through smart contracts.',
+      'IntentPay connects natural-language transaction intent with blockchain execution flows, smart contracts, and wallet confirmation steps.',
     proof: [
-      'Models ticket ownership and transfer through NFT contract state.',
-      'Treats verification as a first-class user flow, not an afterthought.',
+      'Separates AI interpretation from irreversible contract execution.',
+      'Keeps wallet review visible before transaction confirmation.',
     ],
     problem:
-      'Event tickets need tamper-resistant ownership, transfer history, and a verification path that is harder to fake than static QR screenshots.',
+      'On-chain transaction flows can force users to understand protocol actions, contract interactions, wallet steps, and irreversible execution before they can complete a payment or DeFi operation.',
     usersOrContext:
-      'Built as a blockchain developer project for event organizers and attendees exploring NFT-based ticket ownership.',
+      'Built for crypto users and product teams exploring natural-language transaction intent as a safer interface layer for Web3 workflows.',
     workflow:
-      'An event ticket can be minted, transferred, and verified through a wallet-connected interface backed by smart contract state.',
+      'A user enters a transaction intent, the application interprets the requested action, prepares the related on-chain interaction, and routes the user through review and wallet execution.',
     architecture:
-      'Solidity contracts define ticket behavior, while a React interface and Ethers.js connect users to wallet-based contract interactions.',
+      'A TypeScript product layer connects AI intent parsing with Solidity contracts, Ethers.js wallet interactions, and explicit transaction preview states.',
     decisions: [
-      'Used NFT ticket representation because it naturally models ownership and transferability.',
-      'Kept verification as a first-class flow rather than treating minting as the only important action.',
+      'Modeled the interface around user intent first, then mapped interpreted actions to explicit blockchain transaction steps.',
+      'Kept wallet execution visible so users can inspect the operation before confirming an on-chain action.',
+      'Separated AI interpretation from contract execution because natural language output should never directly trigger irreversible transactions.',
     ],
     tradeoffs: [
-      'Public blockchain verification increases transparency, but user experience depends on wallet readiness and network conditions.',
+      'Natural-language input improves accessibility but requires stronger validation before transaction preparation.',
+      'Blockchain transparency adds trust, but it also requires clear UX around gas, wallet state, and failure cases.',
     ],
     nextImprovements: [
-      'Add event admin tooling and clearer contract deployment documentation.',
+      'Add stricter intent validation and safer transaction previews.',
+      'Document the contract boundaries and supported transaction types.',
     ],
     metrics: [
-      { label: 'Core flows', value: 'Mint, transfer, verify' },
-      { label: 'Ownership model', value: 'NFT-backed ticket state' },
-      { label: 'Verification path', value: 'Wallet-connected contract reads' },
-      { label: 'Primary risk handled', value: 'Fake static ticket screenshots' },
+      { label: 'Safety boundary', value: 'AI drafts, wallet executes' },
+      { label: 'Core layers', value: 'Intent, preview, contract, wallet' },
+      { label: 'Primary risk handled', value: 'Irreversible on-chain actions' },
+      { label: 'Review state', value: 'Before every wallet confirmation' },
     ],
     architectureDiagram: [
       {
-        label: 'Event setup',
-        detail: 'Ticket configuration defines what can be minted and verified.',
+        label: 'User intent',
+        detail: 'Natural-language transaction request starts the flow.',
+      },
+      {
+        label: 'AI planner',
+        detail: 'Interprets the request and prepares a structured action plan.',
+      },
+      {
+        label: 'Transaction preview',
+        detail: 'Shows the action, wallet impact, and confirmation context.',
+      },
+      {
+        label: 'Wallet execution',
+        detail: 'User approval remains the boundary before on-chain execution.',
       },
       {
         label: 'Smart contract',
-        detail: 'Solidity contract owns ticket state and transfer behavior.',
-      },
-      {
-        label: 'Wallet interface',
-        detail: 'React and Ethers.js connect user actions to contract calls.',
-      },
-      {
-        label: 'Ownership transfer',
-        detail: 'Ticket movement is represented through NFT ownership state.',
-      },
-      {
-        label: 'Entry verification',
-        detail: 'Verification checks contract-backed ownership instead of static images.',
+        detail: 'Solidity logic receives the confirmed transaction only after review.',
       },
     ],
-    stack: ['Solidity', 'Ethers.js', 'React'],
-    tags: ['Blockchain', 'Solidity', 'NFT'],
-    github: 'https://github.com/subhajitlucky/quantumTicket',
-    demo: 'https://quantumticket.vercel.app',
+    stack: ['TypeScript', 'Solidity', 'Ethers.js', 'AI workflows'],
+    tags: ['Blockchain', 'AI', 'Full Stack'],
+    github: 'https://github.com/subhajitlucky/intentpay',
+    demo: 'https://github.com/subhajitlucky/intentpay',
     visual: {
-      title: 'NFT ticket lifecycle',
-      caption: 'Tickets are created, transferred, and verified through wallet-connected contract state.',
-      steps: ['Event setup', 'Mint ticket', 'Transfer owner', 'Verify entry'],
+      title: 'Intent review boundary',
+      caption: 'Natural language is converted into an inspectable transaction plan before any wallet action.',
+      steps: ['Intent input', 'AI planning', 'Transaction preview', 'Wallet confirmation'],
     },
     inspectionLinks: [
       {
-        label: 'Smart contracts',
-        href: 'https://github.com/subhajitlucky/quantumTicket/tree/main/blockchain',
+        label: 'AI planner',
+        href: 'https://github.com/subhajitlucky/intentpay/blob/main/ai-agent.js',
+      },
+      {
+        label: 'Wallet manager',
+        href: 'https://github.com/subhajitlucky/intentpay/blob/main/wallet-manager.js',
       },
       {
         label: 'Frontend',
-        href: 'https://github.com/subhajitlucky/quantumTicket/tree/main/frontend',
-      },
-      {
-        label: 'Roadmap',
-        href: 'https://github.com/subhajitlucky/quantumTicket/blob/main/ROADMAP.md',
+        href: 'https://github.com/subhajitlucky/intentpay/tree/main/frontend',
       },
     ],
     seoKeywords: [
       'Subhajit Pradhan blockchain developer',
-      'Solidity NFT ticketing project',
-      'Ethers.js React smart contract app',
+      'intent driven blockchain interface',
+      'Solidity full stack project',
     ],
   },
 ];
