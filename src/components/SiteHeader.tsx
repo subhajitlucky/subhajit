@@ -17,9 +17,11 @@ export default function SiteHeader() {
         ))}
       </nav>
 
-      <div className="site-header__actions" aria-label="Contact links">
+      <div className="site-header__actions" aria-label="Primary actions">
         <Link href={siteConfig.resumePath}>Resume</Link>
-        <a href={siteConfig.links.email}>Email</a>
+        <a href={siteConfig.links.github} rel="noreferrer" target="_blank">
+          GitHub
+        </a>
       </div>
     </header>
   );
