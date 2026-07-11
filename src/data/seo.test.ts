@@ -43,6 +43,18 @@ describe('portfolio SEO content model', () => {
     expect(publicProfile).not.toContain('Subhajit_ResumeV9.pdf');
   });
 
+  it('keeps the canonical resume and root alias byte-for-byte equal to the attached resume', () => {
+    const publicRoot = join(process.cwd(), 'public');
+    const attachedResume = readFileSync(join(publicRoot, 'assets', 'Subhajit_ResumeV9.pdf'));
+    const canonicalResume = readFileSync(
+      join(publicRoot, 'assets', 'Subhajit_Resume.pdf'),
+    );
+    const rootAlias = readFileSync(join(publicRoot, 'resume.pdf'));
+
+    expect(canonicalResume.equals(attachedResume)).toBe(true);
+    expect(rootAlias.equals(attachedResume)).toBe(true);
+  });
+
   it('has unique project and blog slugs for static routes', () => {
     const projectSlugs = projects.map((project) => project.slug);
     const blogSlugs = blogPosts.map((post) => post.slug);

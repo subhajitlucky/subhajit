@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the canonical one-page resume PDF from resume.json."""
+"""Build the unlinked one-page resume redesign draft from resume.json."""
 
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ from reportlab.platypus import Paragraph
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "resume" / "resume.json"
-OUTPUT_PATH = ROOT / "public" / "assets" / "Subhajit_Resume.pdf"
+OUTPUT_PATH = ROOT / "resume" / "drafts" / "Subhajit_Resume_redesign.pdf"
 PAGE_WIDTH, PAGE_HEIGHT = letter
 MARGIN_X = 0.52 * inch
 TOP = PAGE_HEIGHT - 0.42 * inch
