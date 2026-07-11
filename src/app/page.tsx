@@ -86,18 +86,24 @@ function WorkRow({ project }: { project: Project }) {
 export default function HomePage() {
   const featuredProjects = pickProjects(featuredProjectSlugs);
   const selectedProjects = pickProjects(selectedProjectSlugs);
-  const primarySkills = skills
-    .filter((group) =>
-      [
-        'Languages',
-        'Frontend',
-        'Backend & APIs',
-        'AI & Integrations',
-        'Databases',
-        'DevOps & Cloud',
-      ].includes(group.category),
-    )
-    .map((group) => ({ ...group, items: group.items.slice(0, 5) }));
+  const visibleCategories = new Set([
+    'Languages',
+    'Frontend',
+    'Backend & APIs',
+    'AI & Integrations',
+    'Databases',
+    'DevOps & Cloud',
+  ]);
+  const primarySkills = skills.reduce<Array<{ category: string; items: readonly string[] }>>(
+    (selected, group) => {
+      if (visibleCategories.has(group.category)) {
+        selected.push({ ...group, items: group.items.slice(0, 5) });
+      }
+
+      return selected;
+    },
+    [],
+  );
   const recentWriting = blogPosts.slice(0, 3);
   const publishedCliCount = projects.filter((project) => project.status === 'Published CLI').length;
   const sourceBackedCount = projects.filter((project) => project.github).length;

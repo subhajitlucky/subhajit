@@ -60,21 +60,6 @@ export const featuredProjectSlugs = [
 
 export const selectedProjectSlugs = ['campushelper', 'intentpay'] as const;
 
-export const proofPoints = [
-  {
-    label: 'Published tools',
-    value: 'RLS Doctor and SmritiFlow are installable CLIs with agent-facing workflows.',
-  },
-  {
-    label: 'Readable engineering',
-    value: 'Case studies explain architecture, tradeoffs, limitations, tests, and next steps.',
-  },
-  {
-    label: 'Production habits',
-    value: 'I prioritize clear data boundaries, accessibility, CI, and reviewer-friendly proof.',
-  },
-] as const;
-
 export const experience = [
   {
     organization: 'Giakaa Capital',
