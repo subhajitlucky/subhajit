@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/JsonLd';
 import { blogPosts, getBlogPost } from '@/data/blog';
-import { getProject } from '@/data/projects';
+import { getProject, type Project } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 import { BlogContent } from '@/lib/blog-content';
 import { formatDisplayDate } from '@/lib/date-format';
@@ -48,9 +48,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const relatedProjects = post.relatedProjectSlugs
-    .map((projectSlug) => getProject(projectSlug))
-    .filter((project) => Boolean(project));
+  const relatedProjects = post.relatedProjectSlugs.reduce<Project[]>((related, projectSlug) => {
+    const project = getProject(projectSlug);
+
+    if (project) {
+      related.push(project);
+    }
+
+    return related;
+  }, []);
 
   return (
     <>
@@ -76,8 +82,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <h2>Related project proof</h2>
             <ul>
               {relatedProjects.map((project) => (
-                <li key={project!.slug}>
-                  <Link href={`/projects/${project!.slug}`}>{project!.title}</Link>
+                <li key={project.slug}>
+                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
                 </li>
               ))}
             </ul>

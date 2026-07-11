@@ -35,9 +35,15 @@ export const metadata = createMetadata({
 });
 
 function pickProjects(slugs: readonly string[]): Project[] {
-  return slugs
-    .map((slug) => projects.find((project) => project.slug === slug))
-    .filter((project): project is Project => Boolean(project));
+  return slugs.reduce<Project[]>((selected, slug) => {
+    const project = projects.find((candidate) => candidate.slug === slug);
+
+    if (project) {
+      selected.push(project);
+    }
+
+    return selected;
+  }, []);
 }
 
 function WorkRow({ project }: { project: Project }) {
@@ -104,10 +110,7 @@ export default function HomePage() {
       <JsonLd data={websiteJsonLd()} />
       <JsonLd data={itemListJsonLd('Subhajit Pradhan projects', '/projects', projects)} />
       <JsonLd data={itemListJsonLd('Subhajit Pradhan blog posts', '/blog', blogPosts)} />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(machineReadableProfile) }}
-      />
+      <JsonLd data={machineReadableProfile} />
 
       <section id="home" className="home-hero" aria-labelledby="home-heading">
         <div className="home-hero__identity">

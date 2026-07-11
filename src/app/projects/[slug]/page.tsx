@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import ButtonLink from '@/components/ButtonLink';
 import JsonLd from '@/components/JsonLd';
 import { getProject, projects } from '@/data/projects';
-import { siteConfig } from '@/data/site';
+import { featuredProjectSlugs, siteConfig } from '@/data/site';
 import { createMetadata, projectJsonLd } from '@/lib/metadata';
 
 type ProjectPageProps = {
@@ -45,6 +45,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const hasSeparateDemo = project.demo && project.demo !== project.github;
   const demoLabel = project.demo?.includes('npmjs.com') ? 'npm package' : 'Live Demo';
+  const isFeatured = featuredProjectSlugs.some((slug) => slug === project.slug);
 
   return (
     <>
@@ -55,7 +56,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Link>
         <header className="case-study__hero">
           <div>
-            <p className="eyebrow">{project.role}</p>
+            <p className="eyebrow">
+              {isFeatured ? 'Featured case study' : 'Selected work'} / {project.role}
+            </p>
             <h1>{project.title}</h1>
             <p>{project.description}</p>
           </div>
@@ -63,7 +66,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             <dl>
               <div>
                 <dt>Status</dt>
-                <dd>{project.status}</dd>
+                <dd className={project.status === 'Prototype' ? 'status status--prototype' : undefined}>
+                  {project.status}
+                </dd>
               </div>
               <div>
                 <dt>Year</dt>
@@ -114,34 +119,38 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </dl>
         </section>
 
-        <section className="project-visual" aria-labelledby="project-visual-heading">
-          <div>
-            <p className="eyebrow">Workflow proof</p>
-            <h2 id="project-visual-heading">{project.visual.title}</h2>
-            <p>{project.visual.caption}</p>
-          </div>
-          <ol>
-            {project.visual.steps.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-        </section>
+        {isFeatured ? (
+          <>
+            <section className="project-visual" aria-labelledby="project-visual-heading">
+              <div>
+                <p className="eyebrow">Workflow proof</p>
+                <h2 id="project-visual-heading">{project.visual.title}</h2>
+                <p>{project.visual.caption}</p>
+              </div>
+              <ol>
+                {project.visual.steps.map((step) => (
+                  <li key={step}>{step}</li>
+                ))}
+              </ol>
+            </section>
 
-        <section className="architecture-flow" aria-labelledby="architecture-flow-heading">
-          <div>
-            <p className="eyebrow">Architecture</p>
-            <h2 id="architecture-flow-heading">System shape</h2>
-            <p>{project.architecture}</p>
-          </div>
-          <ol>
-            {project.architectureDiagram.map((node) => (
-              <li key={node.label}>
-                <h3>{node.label}</h3>
-                <p>{node.detail}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
+            <section className="architecture-flow" aria-labelledby="architecture-flow-heading">
+              <div>
+                <p className="eyebrow">Architecture</p>
+                <h2 id="architecture-flow-heading">System shape</h2>
+                <p>{project.architecture}</p>
+              </div>
+              <ol>
+                {project.architectureDiagram.map((node) => (
+                  <li key={node.label}>
+                    <h3>{node.label}</h3>
+                    <p>{node.detail}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </>
+        ) : null}
 
         <div className="case-study__sections">
           <section>
