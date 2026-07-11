@@ -26,7 +26,8 @@ describe('sitemap route data', () => {
 
     expect(urls).toContain('https://subhajitpradhan.vercel.app/#projects');
     expect(urls).toContain('https://subhajitpradhan.vercel.app/#experience');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/#about');
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/#skills');
+    expect(urls).toContain('https://subhajitpradhan.vercel.app/#writing');
     expect(urls).toContain('https://subhajitpradhan.vercel.app/#contact');
   });
 

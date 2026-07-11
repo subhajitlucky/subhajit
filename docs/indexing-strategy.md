@@ -15,23 +15,25 @@ Index in this order:
 
 1. `/`
 2. `/projects`
-3. `/projects/intentpay`
-4. `/projects/quantumticket`
-5. `/projects/campushelper`
-6. `/projects/tarka-sabha`
-7. `/blog`
-8. `/blog/intent-driven-blockchain-interfaces`
-9. `/blog/portfolio-seo-architecture`
+3. `/projects/rls-doctor`
+4. `/projects/smritiflow`
+5. `/projects/tarka-sabha`
+6. `/projects/cscosmos`
+7. `/projects/campushelper`
+8. `/projects/intentpay`
+9. `/blog`
 10. `/blog/multi-agent-ai-debate-platforms`
+11. `/blog/intent-driven-blockchain-interfaces`
+12. `/blog/portfolio-seo-architecture`
 
 ## Query Tracking
 
 Track impressions and average position for:
 
 - `Subhajit Pradhan`
-- `Subhajit Pradhan developer`
-- `Subhajit Pradhan full stack developer`
-- `Subhajit Pradhan blockchain developer`
+- `Subhajit Pradhan software engineer`
+- `Subhajit Pradhan developer tools`
+- `Subhajit Pradhan AI systems`
 
 ## Content Expansion
 

@@ -4,23 +4,24 @@ import { projects } from '@/data/projects';
 import { absoluteUrl } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date('2026-07-11');
   const staticRoutes = ['/', '/projects', '/blog', '/llms.txt'].map((path) => ({
     url: absoluteUrl(path),
-    lastModified: new Date('2026-05-27'),
+    lastModified,
     changeFrequency: 'weekly' as const,
     priority: path === '/' ? 1 : 0.8,
   }));
 
-  const homepageSectionRoutes = ['#projects', '#experience', '#about', '#contact'].map((hash) => ({
+  const homepageSectionRoutes = ['#projects', '#experience', '#skills', '#writing', '#contact'].map((hash) => ({
     url: absoluteUrl(`/${hash}`),
-    lastModified: new Date('2026-05-27'),
+    lastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
 
   const projectRoutes = projects.map((project) => ({
     url: absoluteUrl(`/projects/${project.slug}`),
-    lastModified: new Date('2026-05-27'),
+    lastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }));

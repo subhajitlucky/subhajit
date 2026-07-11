@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = createMetadata({
-  title: `${siteConfig.name} – Full Stack & Blockchain Developer`,
+  title: `${siteConfig.name} - ${siteConfig.role}`,
   description: siteConfig.description,
 });
 

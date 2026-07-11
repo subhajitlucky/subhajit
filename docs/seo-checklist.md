@@ -2,7 +2,7 @@
 
 ## On-Page SEO
 
-- Homepage H1 contains `Subhajit Pradhan – Full Stack & Blockchain Developer`.
+- Homepage H1 contains `Subhajit Pradhan` and the role is `Software Engineer - Developer Tools, AI Systems, Full Stack`.
 - Canonical domain is `https://subhajitpradhan.vercel.app`.
 - Title and description are unique for homepage, project pages, blog index, and blog posts.
 - `Subhajit Pradhan` appears naturally in homepage copy, project context, blog descriptions, FAQ answers, and schema.

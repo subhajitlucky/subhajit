@@ -18,23 +18,23 @@ export default function Image() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#090a08',
-          color: '#f7f6ef',
+          background: '#ffffff',
+          color: '#111111',
           padding: 72,
           fontFamily: 'Arial',
         }}
       >
-        <div style={{ color: '#b8ff2c', fontSize: 24, letterSpacing: 6, textTransform: 'uppercase' }}>
-          Portfolio
+        <div style={{ color: '#0b5e55', fontSize: 24, letterSpacing: 6, textTransform: 'uppercase' }}>
+          Engineering profile
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontSize: 78, fontWeight: 800, lineHeight: 1.02 }}>{siteConfig.name}</div>
-          <div style={{ color: '#b8ff2c', fontSize: 44, marginTop: 20 }}>{siteConfig.role}</div>
-          <div style={{ color: '#b9b8ae', fontSize: 28, marginTop: 28, maxWidth: 900 }}>
-            Full-stack products, blockchain workflows, AI orchestration, APIs, data, and deployment.
+          <div style={{ color: '#0b5e55', fontSize: 38, marginTop: 20 }}>{siteConfig.role}</div>
+          <div style={{ color: '#666666', fontSize: 28, marginTop: 28, maxWidth: 900 }}>
+            Developer tools, AI systems, full-stack products, APIs, data, and inspectable workflows.
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 20, color: '#d8d6ca', fontSize: 24 }}>
+        <div style={{ display: 'flex', gap: 20, color: '#666666', fontSize: 24 }}>
           <span>Next.js</span>
           <span>Node.js</span>
           <span>Solidity</span>

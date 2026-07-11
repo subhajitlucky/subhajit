@@ -9,7 +9,7 @@ Build real authority for `Subhajit Pradhan` and related developer queries by con
 - GitHub profile README: link to `https://subhajitpradhan.vercel.app`.
 - LinkedIn profile featured link: use the canonical portfolio.
 - Resume PDF: include the canonical portfolio URL.
-- GitHub repository READMEs: add a portfolio link in serious projects like IntentPay, Tarka Sabha, CampusHelper, and QuantumTicket.
+- GitHub repository READMEs: add a portfolio link in selected projects such as RLS Doctor, SmritiFlow, Tarka Sabha, CSCosmos, CampusHelper, and IntentPay.
 - Live project pages: link back to the portfolio when appropriate.
 
 ## Content Backlinks
