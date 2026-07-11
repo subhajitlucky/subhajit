@@ -1,7 +1,15 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { blogPosts } from '@/data/blog';
 import { projects } from '@/data/projects';
-import { absoluteUrl, faqs, machineReadableProfile, siteConfig } from '@/data/site';
+import {
+  absoluteUrl,
+  faqs,
+  machineReadableProfile,
+  siteConfig,
+  toolFootnotes,
+} from '@/data/site';
 
 describe('portfolio SEO content model', () => {
   it('uses the focused homepage H1 phrase and canonical domain', () => {
@@ -17,6 +25,21 @@ describe('portfolio SEO content model', () => {
     expect(serialized).not.toContain('subhajitlucky.vercel.app');
     expect(serialized).not.toContain('subhajit-pradhan-profile');
     expect(serialized).not.toContain('subhajitlucky/tarka-sabha');
+  });
+
+  it('keeps removed QuantumTicket references out of runtime and public content', () => {
+    const publicProfile = readFileSync(join(process.cwd(), 'public', 'llms.txt'), 'utf8');
+    const runtimeContent = JSON.stringify({ siteConfig, projects, blogPosts, toolFootnotes });
+
+    expect(runtimeContent).not.toMatch(/quantumticket/i);
+    expect(publicProfile).not.toMatch(/quantumticket/i);
+  });
+
+  it('uses the canonical resume path in runtime and public content', () => {
+    const publicProfile = readFileSync(join(process.cwd(), 'public', 'llms.txt'), 'utf8');
+
+    expect(siteConfig.resumePath).toBe('/assets/Subhajit_Resume.pdf');
+    expect(publicProfile).not.toContain('Subhajit_ResumeV9.pdf');
   });
 
   it('has unique project and blog slugs for static routes', () => {
@@ -67,7 +90,18 @@ describe('portfolio SEO content model', () => {
     expect(machineReadableProfile.contact.github).toBe(siteConfig.links.github);
     expect(machineReadableProfile.contact.linkedin).toBe(siteConfig.links.linkedin);
     expect(machineReadableProfile.skills.length).toBeGreaterThan(10);
-    expect(machineReadableProfile.projects.length).toBeGreaterThanOrEqual(4);
+    expect(machineReadableProfile.projects.length).toBe(6);
     expect(machineReadableProfile.experience.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('exposes skillscan as footnote tooling, not a full project', () => {
+    expect(toolFootnotes.some((tool) => tool.title === 'skillscan')).toBe(true);
+    expect(projects.every((project) => project.slug !== 'skillscan')).toBe(true);
+    expect(siteConfig.nav.map((item) => item.label)).toEqual([
+      'Work',
+      'Experience',
+      'Writing',
+      'Contact',
+    ]);
   });
 });

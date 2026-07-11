@@ -29,4 +29,11 @@ describe('sitemap route data', () => {
     expect(urls).toContain('https://subhajitpradhan.vercel.app/#about');
     expect(urls).toContain('https://subhajitpradhan.vercel.app/#contact');
   });
+
+  it('does not publish removed project or legacy homepage routes', () => {
+    const urls = sitemap().map((entry) => entry.url);
+
+    expect(urls).not.toContain('https://subhajitpradhan.vercel.app/projects/quantumticket');
+    expect(urls).not.toContain('https://subhajitpradhan.vercel.app/#about');
+  });
 });
