@@ -1,0 +1,102 @@
+{
+  "name": "Subhajit Pradhan",
+  "role": "Software Engineer - Developer Tools, AI Systems, Full Stack",
+  "location": "Odisha, India",
+  "contact": [
+    { "label": "subhajitpradhan310@gmail.com", "href": "mailto:subhajitpradhan310@gmail.com" },
+    { "label": "github.com/subhajitlucky", "href": "https://github.com/subhajitlucky" },
+    { "label": "linkedin.com/in/subhajitlucky", "href": "https://www.linkedin.com/in/subhajitlucky" },
+    { "label": "subhajitpradhan.vercel.app", "href": "https://subhajitpradhan.vercel.app" }
+  ],
+  "summary": "Software engineer building developer tools, AI workflows, and full-stack systems with clear data boundaries, inspectable architecture, and source-backed tradeoffs.",
+  "experience": [
+    {
+      "organization": "Giakaa Capital",
+      "title": "Full Stack Software Developer",
+      "period": "May 2026 - Present",
+      "bullets": [
+        "Designed and shipped full-stack features with Next.js, TypeScript, and PostgreSQL in a startup product environment.",
+        "Built backend APIs and job-processing systems, then diagnosed production issues and optimized database queries.",
+        "Implemented authentication, role-based access control, caching, and analytics across frontend and backend services."
+      ]
+    },
+    {
+      "organization": "uElement Technologies",
+      "title": "Software Developer Intern",
+      "period": "Jan 2026 - May 2026",
+      "bullets": [
+        "Architected modular Next.js applications with performance-focused rendering and backend API boundaries.",
+        "Built blockchain-integrated workflows with smart contract interactions and transaction monitoring."
+      ]
+    },
+    {
+      "organization": "QuadB Technologies",
+      "title": "Software Engineering Trainee",
+      "period": "Feb 2025 - Mar 2025",
+      "bullets": [
+        "Built and deployed Internet Computer smart contracts with Motoko and Rust, then developed canister-backed applications."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "RLS Doctor",
+      "stack": "TypeScript, Node.js, PostgreSQL",
+      "links": [
+        { "label": "GitHub", "href": "https://github.com/subhajitlucky/rls-doctor" },
+        { "label": "npm", "href": "https://www.npmjs.com/package/rls-doctor" }
+      ],
+      "bullets": [
+        "Built a read-only Postgres/Supabase RLS auditor that reports disabled RLS, broad policies, missing WITH CHECK clauses, and hardening gaps for local and CI review.",
+        "Packaged an installable Agent Skill and added GitHub Actions plus disposable Postgres integration coverage."
+      ]
+    },
+    {
+      "name": "SmritiFlow",
+      "stack": "TypeScript, Node.js, pnpm",
+      "links": [
+        { "label": "GitHub", "href": "https://github.com/subhajitlucky/smritiflow" },
+        { "label": "npm", "href": "https://www.npmjs.com/package/smritiflow" }
+      ],
+      "bullets": [
+        "Built a repository-memory CLI that generates cache, project-map, scan-report, AGENTS.md, and docs/ai artifacts for coding-agent handoffs.",
+        "Implemented init, scan, refresh, status, and resume workflows with tests and repo-hosted Agent Skill packaging."
+      ]
+    },
+    {
+      "name": "Tarka Sabha",
+      "stack": "Next.js, TypeScript, PostgreSQL, Prisma",
+      "links": [
+        { "label": "GitHub", "href": "https://github.com/subhajitlucky/tarkaSabha" },
+        { "label": "Live", "href": "https://tarkasabha.vercel.app" }
+      ],
+      "bullets": [
+        "Built a multi-agent debate platform with configurable personas, multi-provider routing, and sequential or mention-aware orchestration.",
+        "Encrypted provider API keys at rest with AES-256-GCM and separated workflow state from provider-specific calls."
+      ]
+    },
+    {
+      "name": "CSCosmos",
+      "stack": "React, TypeScript, Vite, React Router",
+      "links": [
+        { "label": "GitHub", "href": "https://github.com/subhajitlucky/cscosmos" },
+        { "label": "Live", "href": "https://cscosmos.vercel.app" }
+      ],
+      "bullets": [
+        "Built a typed computer-science learning hub with domain/topic routes, search, live versus coming-soon states, and links to focused microsites."
+      ]
+    }
+  ],
+  "skills": [
+    { "label": "Languages", "value": "TypeScript, JavaScript, Python, Go, Rust, SQL, Java, C++" },
+    { "label": "Web", "value": "React, Next.js, Node.js, Express.js, REST APIs, GraphQL, Tailwind CSS" },
+    { "label": "Data and infra", "value": "PostgreSQL, Prisma, MongoDB, Docker, Git, GitHub Actions, Linux, Vercel" },
+    { "label": "AI and blockchain", "value": "OpenAI, Anthropic, Gemini, AI SDK, Ethereum, ICP, Solidity, Ethers.js" }
+  ],
+  "education": {
+    "organization": "Centurion University of Technology and Management, Bhubaneswar",
+    "degree": "Bachelor of Computer Applications",
+    "period": "Oct 2022 - Apr 2025",
+    "grade": "CGPA: 8.9"
+  }
+}
