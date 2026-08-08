@@ -5,7 +5,7 @@ import { siteConfig } from '@/data/site';
 export const rootMetadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
-    default: `${siteConfig.name} | Developer Tools and AI Systems Engineer`,
+    default: `${siteConfig.name} | Full Stack Software Developer`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,

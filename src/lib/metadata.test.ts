@@ -8,9 +8,12 @@ describe('portfolio discovery metadata', () => {
     expect(siteConfig.baseUrl).toBe('https://subhajitpradhan.vercel.app');
     expect(rootMetadata.metadataBase?.toString()).toBe(`${siteConfig.baseUrl}/`);
     expect(rootMetadata.title).toEqual(
-      expect.objectContaining({ default: expect.stringMatching(/developer tools.*ai systems/i) }),
+      expect.objectContaining({ default: expect.stringMatching(/full stack software developer/i) }),
     );
-    expect(rootMetadata.description).toMatch(/developer tools and ai systems/i);
+    expect(rootMetadata.description).toMatch(/web products, developer tools, and ai systems/i);
+    expect(rootMetadata.openGraph).toEqual(
+      expect.objectContaining({ title: `${siteConfig.name} | Full Stack Software Developer` }),
+    );
     expect(siteConfig.resumePath).toBe('/resume.pdf');
   });
 

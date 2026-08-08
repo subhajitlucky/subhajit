@@ -13,11 +13,11 @@ export default function ProjectsPage() {
   return (
     <div className="projects-index site-frame">
       <header className="projects-index-header">
-        <SectionLabel index="Index">Selected work</SectionLabel>
-        <h1>Tools and systems built for evidence, not theater.</h1>
+        <SectionLabel index="All">Projects</SectionLabel>
+        <h1>Selected projects</h1>
         <p>
-          Six projects across developer tooling, database security, agent infrastructure,
-          multi-agent products, learning systems, and coordination protocols.
+          Public developer tools, AI systems, and full-stack applications. Each project includes
+          direct source and product links.
         </p>
       </header>
       <ol className="projects-index-list">
@@ -44,8 +44,8 @@ export default function ProjectsPage() {
         ))}
       </ol>
       <p className="projects-index-note">
-        {secondaryProjects.length} additional systems are included to show adjacent product and
-        protocol range. Repository creation dates are intentionally not used as a quality signal.
+        {secondaryProjects.length} additional projects are included beyond the four featured on the
+        homepage.
       </p>
     </div>
   );
