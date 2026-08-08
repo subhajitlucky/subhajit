@@ -278,7 +278,7 @@ export const projects: Project[] = [
       { label: 'Source', href: 'https://github.com/subhajitlucky/sutra', kind: 'source' },
       {
         label: 'Language specification',
-        href: 'https://github.com/subhajitlucky/sutra/blob/main/SPEC.md',
+        href: 'https://github.com/subhajitlucky/sutra/blob/main/spec/SUTRA_SPEC.md',
         kind: 'evidence',
       },
     ],
