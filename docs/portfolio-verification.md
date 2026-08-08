@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-08
 
-**Application commit verified:** `2b1b4a7`
+**Application commit verified:** `5729df8`
 
 **Environment:** local Ubuntu workstation, Node.js production build, headless Chromium
 
@@ -19,13 +19,13 @@ npm run build
 
 Results:
 
-- Vitest: 7 test files passed, 18 tests passed.
+- Vitest: 7 test files passed, 19 tests passed.
 - TypeScript: `tsc --noEmit` exited successfully.
 - ESLint: zero warnings and zero errors with `--max-warnings=0`.
 - Next.js 16.3.0 production build: compiled successfully and generated 14 static pages.
 - All six project slugs were emitted through static generation.
 
-React Doctor was run after the React implementation. Its initial 96/100 result identified one maintainability warning in `JsonLd.tsx`. Structured data was moved to `src/lib/structured-data.ts`, focused tests were rerun, and the changed-source scan then returned 100/100 with no findings.
+React Doctor was run after the straightforward one-page redesign and found no issues across 34 scanned files. Its optional score API timed out, so no numeric score is claimed for this run.
 
 ## Resume evidence
 
@@ -60,7 +60,7 @@ Routes checked at both viewports:
 - `/projects/tarka-sabha`
 - `/projects/cscosmos`
 - `/projects/sutra`
-- `/route-that-does-not-exist`
+- `/missing-page`
 
 Browser results:
 
@@ -69,12 +69,14 @@ Browser results:
 - Each route had one main landmark, at least one semantic header, a footer, one `h1`, and no heading-level jumps.
 - No horizontal overflow was present at 320px.
 - The skip link was the first keyboard focus target, became visible when focused, and had a visible outline.
-- Primary navigation and the first hiring action followed in keyboard order.
+- The keyboard order began with the skip link, Subhajit's name, Email, Resume, GitHub, and LinkedIn.
 - External links used a new tab with `noopener` protection.
 - `/resume.pdf` returned 200, `application/pdf`, and a valid PDF signature.
-- Reduced-motion mode shortened the reveal animation to `0.01ms`.
+- The homepage exposed the primary role, all three employers, four featured projects, skills, education, and contact without requiring a route change.
+- No page animations were present.
+- The former proof rail, principles, editorial slogans, and promotional footer copy were absent.
 - No unexpected browser console or page errors were recorded.
-- Full-page screenshots were captured for every HTML route at both viewports and visually inspected for the homepage, project index, and a representative case study.
+- Full-page screenshots were captured for every HTML route at both viewports. The homepage, project index, and representative case study were visually inspected and matched the approved compact white, dark-text, and blue-accent design.
 
 ## Public-link checks
 
@@ -84,7 +86,7 @@ The npm website returned automated-request protection responses (403) for packag
 
 ## Boundaries and remaining verification
 
-- This is local repository and production-build evidence, not proof that commit `2b1b4a7` is deployed.
+- This is local repository and production-build evidence, not proof that commit `5729df8` is deployed.
 - The canonical domain responded during link checking, but its content was not matched to this commit.
 - No deployment, Vercel project mutation, DNS change, analytics setup, or live-domain release was performed.
 - No authenticated GitHub profile changes were made.
