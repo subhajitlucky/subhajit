@@ -9,7 +9,10 @@ import { isExternalUrl } from '@/lib/urls';
 
 describe('portfolio content integrity', () => {
   it('uses the approved role and worldwide remote availability', () => {
-    expect(siteConfig.role).toBe('Developer Tools / AI Systems Engineer');
+    expect(siteConfig.role).toBe('Full Stack Software Developer');
+    expect(siteConfig.summary).toBe(
+      'I build reliable web products, developer tools, and AI systems using TypeScript, Next.js, Python, and PostgreSQL.',
+    );
     expect(siteConfig.availability).toBe('Open to remote roles worldwide');
     expect(siteConfig.availability.toLowerCase()).not.toContain('relocation');
   });

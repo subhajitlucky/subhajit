@@ -4,29 +4,26 @@ import { siteConfig } from '@/data/site';
 import HomePage from './page';
 
 describe('HomePage', () => {
-  it('opens with the approved positioning, availability, and hiring actions', () => {
+  it('opens with direct full-stack positioning and hiring links', () => {
     render(<HomePage />);
 
-    expect(
-      screen.getByRole('heading', {
-        name: /i build developer tools and ai systems that make complex software easier to inspect, operate, and trust/i,
-      }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: siteConfig.role })).toBeInTheDocument();
+    expect(screen.getByText(siteConfig.summary)).toBeInTheDocument();
 
     expect(screen.getByText(siteConfig.availability)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /selected work/i })).toHaveAttribute(
-      'href',
-      '/projects',
-    );
-    expect(screen.getByRole('link', { name: /download resume/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Resume' })).toHaveAttribute(
       'href',
       siteConfig.resumePath,
     );
-    expect(screen.getByRole('link', { name: /github profile/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute(
       'href',
       siteConfig.links.github,
     );
-    expect(screen.getByRole('link', { name: /email subhajit/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
+      'href',
+      siteConfig.links.linkedin,
+    );
+    expect(screen.getByRole('link', { name: 'Email' })).toHaveAttribute(
       'href',
       siteConfig.links.email,
     );
@@ -35,16 +32,20 @@ describe('HomePage', () => {
   it('renders exactly four featured projects in the approved order', () => {
     render(<HomePage />);
 
-    const dossiers = screen.getAllByTestId('featured-project');
-    expect(dossiers).toHaveLength(4);
+    const projectRows = screen.getAllByTestId('featured-project');
+    expect(projectRows).toHaveLength(4);
 
     expect(
-      dossiers.map((dossier) => within(dossier).getByRole('heading').textContent),
+      projectRows.map((project) => within(project).getByRole('heading').textContent),
     ).toEqual(featuredProjects.map((project) => project.title));
   });
 
-  it('keeps current employment minimal and includes education and direct contact', () => {
+  it('keeps all experience in sight and current employment minimal', () => {
     render(<HomePage />);
+
+    for (const organization of ['Giakaa Capital', 'uElement Technologies', 'QuadB Technologies']) {
+      expect(screen.getByText(organization)).toBeInTheDocument();
+    }
 
     const giakaaEntry = screen.getByTestId('experience-giakaa-capital');
     expect(giakaaEntry).toHaveTextContent('Giakaa Capital');
@@ -53,13 +54,22 @@ describe('HomePage', () => {
     expect(giakaaEntry).toHaveTextContent('Remote');
     expect(within(giakaaEntry).queryByRole('paragraph')).not.toBeInTheDocument();
 
+    expect(screen.getByRole('heading', { name: 'Skills' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /education/i })).toBeInTheDocument();
     expect(screen.getByText(/centurion university/i)).toBeInTheDocument();
 
-    const contact = screen.getByRole('region', { name: /work with subhajit/i });
-    expect(within(contact).getByRole('link', { name: siteConfig.email })).toHaveAttribute(
+    const contact = screen.getByRole('region', { name: /contact subhajit/i });
+    expect(within(contact).getByRole('link', { name: /send an email/i })).toHaveAttribute(
       'href',
       siteConfig.links.email,
     );
+  });
+
+  it('does not render the former editorial marketing sections', () => {
+    render(<HomePage />);
+
+    expect(screen.queryByText(/evidence, not adjectives/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/how i engineer/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/let's build the tool that clarifies it/i)).not.toBeInTheDocument();
   });
 });

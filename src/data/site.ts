@@ -1,24 +1,26 @@
 export const siteConfig = {
   name: 'Subhajit Pradhan',
   shortName: 'SP',
-  role: 'Developer Tools / AI Systems Engineer',
+  role: 'Full Stack Software Developer',
+  summary:
+    'I build reliable web products, developer tools, and AI systems using TypeScript, Next.js, Python, and PostgreSQL.',
   location: 'Odisha, India',
   availability: 'Open to remote roles worldwide',
   email: 'subhajitpradhan310@gmail.com',
   baseUrl: 'https://subhajitpradhan.vercel.app',
   resumePath: '/resume.pdf',
   description:
-    'Developer tools and AI systems engineer building inspectable software, reliable workflows, and full-stack products.',
+    'Full stack software developer building reliable web products, developer tools, and AI systems.',
   links: {
     github: 'https://github.com/subhajitlucky',
     linkedin: 'https://www.linkedin.com/in/subhajitlucky',
     email: 'mailto:subhajitpradhan310@gmail.com',
   },
   nav: [
-    { label: 'Work', href: '/projects' },
-    { label: 'Experience', href: '/#experience' },
+    { label: 'Email', href: 'mailto:subhajitpradhan310@gmail.com' },
     { label: 'Resume', href: '/resume.pdf' },
-    { label: 'Contact', href: '/#contact' },
+    { label: 'GitHub', href: 'https://github.com/subhajitlucky' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/subhajitlucky' },
   ],
 } as const;
 
