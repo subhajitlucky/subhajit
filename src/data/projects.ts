@@ -1,628 +1,293 @@
+export type ProjectLink = {
+  label: string;
+  href: string;
+  kind: 'source' | 'package' | 'live' | 'evidence';
+};
+
 export type Project = {
-  title: string;
   slug: string;
-  role: string;
-  year: string;
+  title: string;
+  index: string;
   status: string;
-  oneLine: string;
-  description: string;
-  proof: string[];
+  category: string;
+  summary: string;
   problem: string;
-  usersOrContext: string;
-  workflow: string;
-  architecture: string;
+  system: string;
+  proof: string[];
   decisions: string[];
   tradeoffs: string[];
-  nextImprovements: string[];
-  metrics: {
-    label: string;
-    value: string;
-  }[];
-  architectureDiagram: {
-    label: string;
-    detail: string;
-  }[];
   stack: string[];
-  tags: string[];
-  github: string;
-  demo?: string;
-  visual: {
-    title: string;
-    caption: string;
-    steps: string[];
-  };
-  inspectionLinks: {
-    label: string;
-    href: string;
-  }[];
-  seoKeywords: string[];
+  flow: { label: string; detail: string }[];
+  links: ProjectLink[];
+  featured: boolean;
 };
 
 export const projects: Project[] = [
-{
-    title: 'RLS Doctor',
-    slug: 'rls-doctor',
-    role: 'Developer tools and database security engineer',
-    year: '2026',
+  {
+    slug: 'codebase-doctor',
+    title: 'Codebase Doctor',
+    index: '01',
     status: 'Published CLI',
-    oneLine:
-      'npm-published Postgres and Supabase RLS auditor with an installable Agent Skill for AI-assisted database reviews.',
-    description:
-      'RLS Doctor is a TypeScript CLI and repo-hosted Agent Skill for auditing Postgres and Supabase Row Level Security posture from local development, CI, or AI-assisted review workflows.',
-    proof: [
-      'Published on npm as rls-doctor with npx install-free usage.',
-      'Exposes an installable Agent Skill through npx skills add subhajitlucky/rls-doctor.',
-      'Runs GitHub Actions across Node 20, Node 22, and a disposable Postgres integration database.',
-      'Detects disabled RLS, broad public policies, missing WITH CHECK clauses, and FORCE RLS hardening gaps.',
-    ],
+    category: 'Developer tooling',
+    summary:
+      'A model-independent codebase auditor that turns repository evidence into deterministic findings for humans and coding agents.',
     problem:
-      'Supabase and Postgres applications can leak tenant or user data through small RLS mistakes: disabled row security, broad anon policies, write policies without WITH CHECK, or tables exposed before policies are reviewed.',
-    usersOrContext:
-      'Built for developers and teams using Supabase or Postgres who want a fast local and CI check before shipping database policy changes.',
-    workflow:
-      'A developer runs npx rls-doctor check with a read-only connection string, or installs the rls-doctor Agent Skill so an AI coding agent knows how to audit RLS safely without leaking credentials.',
-    architecture:
-      'A Node.js and TypeScript CLI reads Postgres catalog views through node-postgres, maps table and pg_policies metadata into a typed audit model, scores findings by severity, and renders text or JSON reports for local terminals and CI.',
+      'Repository reviews often depend on opaque model judgment, scattered linters, and one-off commands. That makes coverage difficult to inspect and results difficult to reproduce.',
+    system:
+      'A TypeScript CLI inventories repositories, detects relevant ecosystems, plans validation commands, and produces stable text, JSON, and SARIF reports. Side-effecting checks and database access require separate permission.',
+    proof: [
+      'Published as an npm CLI with clean-package installation checks.',
+      'Emits schema-versioned text, JSON, and SARIF reports with stable finding fingerprints.',
+      'Separates read-only discovery from explicitly permitted validation and database access.',
+      'Ships a provider-neutral Agent Skill and CI-focused exit semantics.',
+    ],
     decisions: [
-      'Kept the tool local-first and read-only so it does not require Supabase management API access or hosted-account permissions.',
-      'Separated catalog loading, risk analysis, and reporters so the scoring logic can be tested without a database connection.',
-      'Added a disposable Postgres integration test because catalog metadata can behave differently from mocked fixtures.',
-      'Published as an npm CLI so developers can run it with npx instead of cloning the repository.',
-      'Packaged the audit workflow as an Agent Skill so compatible AI agents can install the RLS review process from GitHub.',
+      'Keep one public command surface while reporting coverage and limitations per audit domain.',
+      'Treat skipped or unsupported analysis as visible state instead of a clean result.',
+      'Use stable fingerprints so baselines can distinguish new, unchanged, and resolved findings.',
     ],
     tradeoffs: [
-      'Catalog inspection catches common configuration risks, but it cannot prove application-level authorization correctness.',
-      'Suggested SQL is intentionally conservative because ownership columns and tenant models vary across projects.',
-      'RLS and grants are separate layers in Supabase, so the tool focuses on RLS while documenting grant-review expectations.',
+      'Built-in semantic coverage is intentionally narrower than the long-term product map.',
+      'Approved child commands can still execute repository-owned tooling, so permission remains explicit.',
     ],
-    nextImprovements: [
-      'Add grant inspection for exposed schemas and client roles.',
-      'Generate markdown reports for pull request comments.',
-      'Add policy diffing between staging and production snapshots.',
+    stack: ['TypeScript', 'Node.js', 'Vitest', 'PostgreSQL', 'SARIF', 'GitHub Actions'],
+    flow: [
+      { label: 'Discover', detail: 'Bounded inventory maps projects, workspaces, tools, and visible evidence.' },
+      { label: 'Plan', detail: 'Applicable audits and optional checks are selected without executing them.' },
+      { label: 'Inspect', detail: 'Built-in analyzers and approved checks emit structured findings.' },
+      { label: 'Verify', detail: 'Stable reports and baselines make repair outcomes inspectable.' },
     ],
-    metrics: [
-      { label: 'Distribution', value: 'npm CLI + Agent Skill' },
-      { label: 'Install path', value: 'npx rls-doctor' },
-      { label: 'Skill install', value: 'npx skills add' },
-      { label: 'CI coverage', value: 'Node 20, Node 22, Postgres 16' },
-    ],
-    architectureDiagram: [
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/codebase-doctor', kind: 'source' },
+      { label: 'npm package', href: 'https://www.npmjs.com/package/codebase-doctor', kind: 'package' },
       {
-        label: 'CLI command',
-        detail: 'Developers run check or explain with a Postgres connection string.',
-      },
-      {
-        label: 'Catalog loader',
-        detail: 'node-postgres reads pg_class, pg_namespace, and pg_policies metadata.',
-      },
-      {
-        label: 'Audit analyzer',
-        detail: 'Typed rules score RLS-disabled tables, public policies, missing checks, and hardening gaps.',
-      },
-      {
-        label: 'Reporters',
-        detail: 'Text output helps humans, while JSON output supports CI and automation.',
-      },
-      {
-        label: 'Integration tests',
-        detail: 'Disposable Postgres fixtures verify real catalog behavior before release.',
+        label: 'Architecture',
+        href: 'https://github.com/subhajitlucky/codebase-doctor/blob/main/docs/architecture.md',
+        kind: 'evidence',
       },
     ],
-    stack: ['TypeScript', 'Node.js', 'PostgreSQL', 'Supabase RLS', 'GitHub Actions', 'npm'],
-    tags: ['Developer Tools', 'PostgreSQL', 'Security'],
-    github: 'https://github.com/subhajitlucky/rls-doctor',
-    demo: 'https://www.npmjs.com/package/rls-doctor',
-    visual: {
-      title: 'RLS audit pipeline',
-      caption:
-        'The CLI turns Postgres catalog metadata into actionable security findings for local development and CI.',
-      steps: ['Run npx command', 'Load catalog', 'Score RLS risks', 'Explain fixes'],
-    },
-    inspectionLinks: [
-      {
-        label: 'npm package',
-        href: 'https://www.npmjs.com/package/rls-doctor',
-      },
-      {
-        label: 'Analyzer rules',
-        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/src/audit/analyzer.ts',
-      },
-      {
-        label: 'Postgres integration test',
-        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/scripts/run-integration.js',
-      },
-      {
-        label: 'Agent Skill',
-        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/.agents/skills/rls-doctor/SKILL.md',
-      },
-      {
-        label: 'Supabase RLS guide',
-        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/docs/guides/supabase-rls-patterns.md',
-      },
-    ],
-    seoKeywords: [
-      'Subhajit Pradhan developer tools engineer',
-      'Postgres RLS security CLI',
-      'Supabase Row Level Security auditor',
-      'TypeScript npm CLI project',
-    ],
+    featured: true,
   },
-{
-    title: 'SmritiFlow',
-    slug: 'smritiflow',
-    role: 'Developer tools and AI workflow engineer',
-    year: '2026',
+  {
+    slug: 'rls-doctor',
+    title: 'RLS Doctor',
+    index: '02',
     status: 'Published CLI',
-    oneLine:
-      'CLI for maintaining living repository memory so coding agents can resume work with current project context.',
-    description:
-      'SmritiFlow is a CLI for maintaining living repository memory for coding agents. It scans a codebase, writes structured artifacts, and generates concise agent-facing docs so work can resume with current context instead of guesswork.',
-    proof: [
-      'Published as the smritiflow CLI with smritiflow and sf command aliases.',
-      'Generates cache, project map, scan report, AGENTS.md, and AI handoff docs.',
-      'Includes init, scan, refresh, status, and resume workflows for agent handoffs.',
-      'Exposes a repo-hosted Agent Skill through npx skills add subhajitlucky/smritiflow.',
-    ],
+    category: 'Database security',
+    summary:
+      'A read-only PostgreSQL and Supabase Row Level Security auditor for local development, CI, and agent-assisted review.',
     problem:
-      'Long-running codebase work often loses context between sessions. Agents and developers need a current, structured view of files, changes, active areas, and next actions instead of rebuilding context from scratch.',
-    usersOrContext:
-      'Built for developers using coding agents who need repeatable repository scans, freshness checks, and handoff summaries.',
-    workflow:
-      'A developer initializes SmritiFlow in a repo, runs scan or refresh after meaningful changes, checks status before resuming, and uses resume to get focused context for the next work session.',
-    architecture:
-      'A TypeScript monorepo ships a Node.js CLI, repo parser, git utilities, core workflow commands, artifact generators, and shared constants. Generated JSON artifacts feed concise docs and agent instructions.',
+      'Small policy mistakes can expose rows through disabled RLS, broad roles, missing write checks, or overlooked privilege paths. Normal application tests rarely explain the catalog state behind those failures.',
+    system:
+      'The CLI reads PostgreSQL catalog metadata, models policies, roles, memberships, and grants together, then reports specific risks with text or JSON output without mutating the target database.',
+    proof: [
+      'Published on npm with install-free npx usage.',
+      'Runs read-only catalog analysis and sanitizes credentials from connection errors.',
+      'Includes disposable PostgreSQL integration fixtures and CI coverage.',
+      'Packages the review workflow as an installable Agent Skill.',
+    ],
     decisions: [
-      'Split parsing, git inspection, generators, and command workflows into packages so each layer can be tested independently.',
-      'Generated both machine-readable JSON and human-readable docs because agents need structure while developers need quick summaries.',
-      'Added a short sf alias for repeated terminal use without making the primary command ambiguous.',
-      'Packaged a repo-hosted Agent Skill so compatible agents know the scan, status, refresh, and resume workflow.',
+      'Analyze policy composition and reachable roles instead of counting policies in isolation.',
+      'Keep suggested remediation conservative because ownership and tenant models vary.',
+      'Support human-readable output and stable JSON for automation.',
     ],
     tradeoffs: [
-      'Generated summaries can become stale, so the CLI includes status and refresh commands instead of pretending context stays fresh forever.',
-      'Repository scanning is useful for orientation, but it should complement direct code inspection rather than replace it.',
-      'A CLI-first interface is efficient for developers, but future UI or PR-comment output could improve team adoption.',
+      'Catalog inspection cannot prove application-level authorization behavior.',
+      'Hosted platform settings, views, and functions require separate review.',
     ],
-    nextImprovements: [
-      'Add richer stale-signal scoring across branches and uncommitted changes.',
-      'Generate compact PR handoff summaries.',
-      'Add more language-specific route and dependency extraction.',
+    stack: ['TypeScript', 'Node.js', 'PostgreSQL', 'Supabase RLS', 'Vitest', 'GitHub Actions'],
+    flow: [
+      { label: 'Connect', detail: 'Use a read-only PostgreSQL connection for the selected schemas.' },
+      { label: 'Model', detail: 'Load tables, policies, grants, roles, and membership paths.' },
+      { label: 'Analyze', detail: 'Command-aware rules identify structural access risks.' },
+      { label: 'Report', detail: 'Text and JSON outputs explain evidence and safer next steps.' },
     ],
-    metrics: [
-      { label: 'Distribution', value: 'npm CLI + Agent Skill' },
-      { label: 'Commands', value: 'init, scan, refresh, status, resume' },
-      { label: 'Artifacts', value: 'JSON + AGENTS + docs/ai' },
-      { label: 'CLI aliases', value: 'smritiflow, sf' },
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/rls-doctor', kind: 'source' },
+      { label: 'npm package', href: 'https://www.npmjs.com/package/rls-doctor', kind: 'package' },
+      {
+        label: 'Analyzer',
+        href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/src/audit/analyzer.ts',
+        kind: 'evidence',
+      },
     ],
-    architectureDiagram: [
-      {
-        label: 'CLI command',
-        detail: 'Developers run init, scan, refresh, status, or resume from the target repository.',
-      },
-      {
-        label: 'Repo parser',
-        detail: 'The scanner detects project structure, routes, imports, and relevant files.',
-      },
-      {
-        label: 'Git context',
-        detail: 'Git utilities identify changed files and freshness signals.',
-      },
-      {
-        label: 'Artifact generator',
-        detail: 'Structured cache, project map, scan report, AGENTS.md, and docs/ai files are written.',
-      },
-      {
-        label: 'Agent resume',
-        detail: 'Agents read generated artifacts to resume with current context and next actions.',
-      },
+    featured: true,
+  },
+  {
+    slug: 'smritiflow',
+    title: 'SmritiFlow',
+    index: '03',
+    status: 'Published CLI',
+    category: 'Agent infrastructure',
+    summary:
+      'A repository-memory CLI that creates structured, refreshable context for coding-agent handoffs.',
+    problem:
+      'Long-running code work loses decisions and current state between sessions. Rebuilding that context wastes time and encourages agents to act on stale assumptions.',
+    system:
+      'A TypeScript monorepo scans repository structure and Git state, generates machine-readable memory artifacts, and writes concise agent-facing documents for scan, refresh, status, and resume workflows.',
+    proof: [
+      'Published with `smritiflow` and `sf` command aliases.',
+      'Generates cache, project map, scan report, AGENTS.md, and focused handoff documents.',
+      'Includes init, scan, refresh, status, and resume workflows.',
+      'Covers parsers, generators, and end-to-end artifact generation with automated tests.',
+    ],
+    decisions: [
+      'Generate both structured JSON and readable Markdown from the same scan.',
+      'Expose freshness explicitly through status and refresh commands.',
+      'Keep parsing, Git context, generation, and CLI orchestration independently testable.',
+    ],
+    tradeoffs: [
+      'Generated summaries can become stale and must never replace direct source inspection.',
+      'A CLI is efficient for developers but less approachable than a hosted interface.',
     ],
     stack: ['TypeScript', 'Node.js', 'pnpm', 'Vitest', 'Commander', 'Agent Skills'],
-    tags: ['Developer Tools', 'AI Agents', 'TypeScript'],
-    github: 'https://github.com/subhajitlucky/smritiflow',
-    demo: 'https://www.npmjs.com/package/smritiflow',
-    visual: {
-      title: 'Repository memory loop',
-      caption:
-        'SmritiFlow turns repository scans into structured memory and concise agent handoff docs.',
-      steps: ['Initialize', 'Scan repo', 'Refresh changes', 'Resume work'],
-    },
-    inspectionLinks: [
-      {
-        label: 'npm package',
-        href: 'https://www.npmjs.com/package/smritiflow',
-      },
-      {
-        label: 'CLI package',
-        href: 'https://github.com/subhajitlucky/smritiflow/tree/main/apps/cli',
-      },
+    flow: [
+      { label: 'Initialize', detail: 'Create the repository-memory contract and ignored artifacts.' },
+      { label: 'Scan', detail: 'Inspect project structure, routes, imports, and Git context.' },
+      { label: 'Generate', detail: 'Write structured cache and concise agent-facing documents.' },
+      { label: 'Resume', detail: 'Return with current context, freshness signals, and next actions.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/smritiflow', kind: 'source' },
+      { label: 'npm package', href: 'https://www.npmjs.com/package/smritiflow', kind: 'package' },
       {
         label: 'Core workflows',
         href: 'https://github.com/subhajitlucky/smritiflow/tree/main/packages/core/src',
-      },
-      {
-        label: 'Agent Skill',
-        href: 'https://github.com/subhajitlucky/smritiflow/blob/main/.agents/skills/smritiflow/SKILL.md',
+        kind: 'evidence',
       },
     ],
-    seoKeywords: [
-      'Subhajit Pradhan developer tools engineer',
-      'AI agent repository memory CLI',
-      'SmritiFlow coding agent workflow',
-      'TypeScript CLI project',
-    ],
+    featured: true,
   },
-{
-    title: 'Tarka Sabha',
+  {
     slug: 'tarka-sabha',
-    role: 'Full-stack engineer',
-    year: '2026',
-    status: 'Live platform',
-    oneLine:
-      'Multi-agent AI debate platform with provider routing, persona state, and encrypted credentials.',
-    description:
-      'Tarka Sabha is a multi-agent AI debate platform that coordinates configurable personas, multiple model providers, and inspectable debate workflows.',
-    proof: [
-      'Supports configurable personas and multiple model providers behind one debate flow.',
-      'Uses sequential and mention-aware orchestration to control speaker turns.',
-      'Encrypts provider API keys at rest with AES-256-GCM.',
-    ],
+    title: 'Tarka Sabha',
+    index: '04',
+    status: 'Live application',
+    category: 'Multi-agent systems',
+    summary:
+      'A multi-agent debate platform with configurable personas, provider routing, encrypted credentials, and inspectable speaker state.',
     problem:
-      'AI debate workflows need a structured way to coordinate multiple model providers, user prompts, and credentials without mixing product logic with provider-specific details.',
-    usersOrContext:
-      'Built for users who want to run and compare AI-assisted debate flows through a web interface.',
-    workflow:
-      'A user defines the debate context, configures model access, starts the debate flow, and reviews generated arguments from participating AI agents.',
-    architecture:
-      'A Next.js App Router application uses PostgreSQL and Prisma for auth-backed workflow records while a provider adapter coordinates model calls and encrypted credentials.',
+      'Multi-agent conversations need more structure than a loop of prompts: personas, providers, credentials, speaker selection, history, and failure states must remain separable.',
+    system:
+      'A Next.js application stores auth-backed debate state in PostgreSQL while a server-side adapter normalizes model providers and an orchestrator selects sequential or mentioned speakers.',
+    proof: [
+      'Runs as a public web application with a public source repository.',
+      'Models providers, personas, chats, messages, and rate limits as separate persisted concepts.',
+      'Encrypts provider keys at rest and keeps model calls server-side.',
+      'Uses deterministic round-robin selection with mention-aware priority.',
+    ],
     decisions: [
-      'Separated provider orchestration from the interface so model integrations can change without reshaping the user flow.',
-      'Kept credential handling behind backend boundaries instead of exposing provider keys to the browser.',
-      'Structured the project around debate workflow state rather than scattered prompt experiments.',
+      'Separate provider APIs from the product workflow behind one adapter boundary.',
+      'Favor deterministic speaker selection for debuggability.',
+      'Persist conversation and rate-limit state instead of relying on browser memory.',
     ],
     tradeoffs: [
-      'Supporting multiple providers increases orchestration complexity compared with a single-model implementation.',
+      'Supporting many providers increases validation and failure-mode complexity.',
+      'Output quality still depends on persona design, topic framing, and context limits.',
     ],
-    nextImprovements: [
-      'Add richer debate history views.',
-      'Improve response comparison and citation displays.',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'LLM APIs'],
+    flow: [
+      { label: 'Compose', detail: 'Define a topic and select persona participants.' },
+      { label: 'Select', detail: 'Choose the next speaker from deterministic and mention-aware state.' },
+      { label: 'Route', detail: 'Build a provider-specific request behind a shared server boundary.' },
+      { label: 'Persist', detail: 'Store the response and advance inspectable debate state.' },
     ],
-    metrics: [
-      { label: 'Model boundary', value: 'Provider calls stay server-side' },
-      { label: 'Core workflow', value: 'Topic, roles, turns, output' },
-      { label: 'Primary design goal', value: 'Inspectable multi-agent state' },
-      { label: 'Data layer', value: 'Prisma-backed workflow records' },
-    ],
-    architectureDiagram: [
-      {
-        label: 'Debate setup',
-        detail: 'User defines the topic, debate context, and agent roles.',
-      },
-      {
-        label: 'Workflow state',
-        detail: 'Application state tracks agent turns and generated arguments.',
-      },
-      {
-        label: 'Backend boundary',
-        detail: 'Provider keys and model calls stay outside the browser.',
-      },
-      {
-        label: 'AI providers',
-        detail: 'Model-specific responses are coordinated behind the same product flow.',
-      },
-      {
-        label: 'Review UI',
-        detail: 'The interface presents generated arguments for comparison and inspection.',
-      },
-    ],
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma'],
-    tags: ['AI', 'Next.js', 'TypeScript'],
-    github: 'https://github.com/subhajitlucky/tarkaSabha',
-    demo: 'https://tarkasabha.vercel.app',
-    visual: {
-      title: 'Debate workflow state',
-      caption: 'The product separates debate setup, agent turns, provider calls, and generated output.',
-      steps: ['Topic setup', 'Agent roles', 'Provider boundary', 'Debate output'],
-    },
-    inspectionLinks: [
-      {
-        label: 'App source',
-        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/src',
-      },
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
+      { label: 'Live application', href: 'https://tarkasabha.vercel.app', kind: 'live' },
       {
         label: 'Data model',
         href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/prisma',
-      },
-      {
-        label: 'README',
-        href: 'https://github.com/subhajitlucky/tarkaSabha/blob/main/README.md',
+        kind: 'evidence',
       },
     ],
-    seoKeywords: [
-      'Subhajit Pradhan developer',
-      'multi agent AI debate platform',
-      'React Node AI project',
-    ],
+    featured: true,
   },
-{
-    title: 'CSCosmos',
+  {
     slug: 'cscosmos',
-    role: 'Product and frontend platform engineer',
-    year: '2026',
-    status: 'Live platform',
-    oneLine:
-      'Curated computer science learning hub organizing 172 visual microsite modules across eight engineering domains.',
-    description:
-      'CSCosmos is a React and TypeScript learning platform that maps 172 computer science topics, tracks 34 live microsites, and routes learners through domain pages, search, topic details, and live module launches.',
-    proof: [
-      'Models 172 topics across Full Stack, DSA, Web3, Security, AI, Core CS, DevOps, and Advanced Systems.',
-      'Links 34 live microsites from a single searchable hub with active versus coming-soon states.',
-      'Ships metadata, robots.txt, sitemap.xml, and llms.txt to make the platform easier to inspect.',
-    ],
+    title: 'CSCosmos',
+    index: '05',
+    status: 'Live application',
+    category: 'Learning systems',
+    summary:
+      'A searchable computer-science learning hub that organizes visual modules across web, systems, security, AI, and infrastructure topics.',
     problem:
-      'Computer science visualizers are usually scattered across separate demos and articles, which makes it hard for learners to see relationships between fundamentals, system internals, Web3, AI, DevOps, and advanced engineering topics.',
-    usersOrContext:
-      'Built for self-directed developers who want a navigable map of computer science topics and direct links into focused visual learning modules.',
-    workflow:
-      'A learner searches or browses by domain, opens a topic detail page, checks whether the module is live, and launches the related microsite when available.',
-    architecture:
-      'A Vite React SPA uses React Router for domain and topic routes, TypeScript data modules for the topic catalog, Tailwind CSS for the UI, local storage for theme persistence, and Vercel rewrites for deep-link support.',
+      'Interactive computer-science explanations are often isolated across small demos, making it difficult for learners to discover related concepts or understand what is available.',
+    system:
+      'A typed topic catalog drives domain routes, search, active and planned states, native visualizers, external microsite links, and statically generated topic pages.',
+    proof: [
+      'Runs as a public Next.js application with a public topic catalog.',
+      'Uses shared typed data to drive navigation, status, search, and topic routes.',
+      'Combines native visualizers with focused external microsites.',
+    ],
     decisions: [
-      'Kept the topic catalog in TypeScript so counts, badges, routes, and launch links all derive from one source of truth.',
-      'Separated domains from topics to support both high-level browsing and direct topic discovery.',
-      'Used active and coming-soon states so the platform can honestly show live modules while preserving the broader roadmap.',
-      'Added static discovery files around the SPA so reviewers and AI tools can understand the project even before client-side rendering.',
+      'Keep the topic registry in TypeScript so route and status changes remain reviewable.',
+      'Distinguish live modules from planned content instead of presenting placeholders as finished.',
     ],
     tradeoffs: [
-      'The Vite SPA keeps the hub fast to build and easy to deploy, but it does not produce rich per-route HTML before hydration.',
-      'Separate microsite deployments isolate each topic, but they increase maintenance work across many small projects.',
-      'A TypeScript data catalog is simple and reviewable now, but a larger platform may eventually need MDX, generated content, or a CMS.',
+      'Native integration improves continuity but increases the main repository surface.',
+      'External microsites keep experiments isolated but distribute maintenance across deployments.',
     ],
-    nextImprovements: [
-      'Migrate the hub to static or server-rendered routes so each domain and topic page ships crawlable HTML.',
-      'Generate sitemap entries for every active topic and live microsite.',
-      'Add screenshots, difficulty labels, prerequisites, and related-topic links for stronger learning paths.',
+    stack: ['Next.js', 'TypeScript', 'React', 'Static generation', 'Vercel'],
+    flow: [
+      { label: 'Catalog', detail: 'Typed domain and topic data defines the learning map.' },
+      { label: 'Discover', detail: 'Search and domain views surface relevant topics.' },
+      { label: 'Resolve', detail: 'Status routes users to a native module or focused microsite.' },
+      { label: 'Learn', detail: 'Interactive visual systems make abstract concepts observable.' },
     ],
-    metrics: [
-      { label: 'Planned modules', value: '172' },
-      { label: 'Live microsites', value: '34' },
-      { label: 'Domains', value: '8' },
-      { label: 'Core routes', value: 'Home, topics, about, domain, detail' },
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/cscosmos', kind: 'source' },
+      { label: 'Live application', href: 'https://cscosmos.vercel.app', kind: 'live' },
     ],
-    architectureDiagram: [
-      {
-        label: 'Topic catalog',
-        detail: 'TypeScript data source for 172 modules, status, domains, slugs, and URLs.',
-      },
-      {
-        label: 'Domain routes',
-        detail: 'React Router groups modules into Full Stack, DSA, Web3, Security, AI, Core CS, DevOps, and Advanced Systems.',
-      },
-      {
-        label: 'Search and filters',
-        detail: 'Learners can find topics without knowing the domain hierarchy first.',
-      },
-      {
-        label: 'Topic detail',
-        detail: 'Each module exposes status, context, and a launch path when live.',
-      },
-      {
-        label: 'Microsites',
-        detail: 'Live modules run as focused deployments linked from the central hub.',
-      },
-    ],
-    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'React Router'],
-    tags: ['Full Stack', 'React', 'Learning Platform'],
-    github: 'https://github.com/subhajitlucky/cscosmos',
-    demo: 'https://cscosmos.vercel.app',
-    visual: {
-      title: 'Learning platform map',
-      caption:
-        'The hub turns a large topic catalog into searchable domains, topic detail routes, status badges, and launch paths for live microsites.',
-      steps: ['Browse domain', 'Search topic', 'Inspect status', 'Launch microsite'],
-    },
-    inspectionLinks: [
-      {
-        label: 'Topic catalog',
-        href: 'https://github.com/subhajitlucky/cscosmos/blob/main/src/data/topics.ts',
-      },
-      {
-        label: 'Route tree',
-        href: 'https://github.com/subhajitlucky/cscosmos/blob/main/src/App.tsx',
-      },
-      {
-        label: 'README proof',
-        href: 'https://github.com/subhajitlucky/cscosmos/blob/main/README.md',
-      },
-    ],
-    seoKeywords: [
-      'Subhajit Pradhan React developer',
-      'computer science learning platform',
-      'React TypeScript Vite portfolio project',
-      'CSCosmos visual learning hub',
-    ],
+    featured: false,
   },
-{
-    title: 'CampusHelper',
-    slug: 'campushelper',
-    role: 'Full-stack engineer',
-    year: '2025',
-    status: 'Live platform',
-    oneLine:
-      'Full-stack campus lost-and-found platform with authenticated reports, uploads, claims, and search.',
-    description:
-      'CampusHelper is a full-stack campus lost-and-found system with authenticated reporting, image uploads, searchable records, and a live deployment.',
-    proof: [
-      'README documents authentication, uploads, search, claims, moderation, and database access controls.',
-      'Source exposes API routes, validation, storage, and Prisma/Supabase data boundaries.',
-    ],
+  {
+    slug: 'sutra',
+    title: 'SUTRA',
+    index: '06',
+    status: 'Open-source language',
+    category: 'Agent protocols',
+    summary:
+      'A small deterministic language for agent-to-agent intent, negotiation, commitments, and auditable state transitions.',
     problem:
-      'Campus lost-and-found posts need a searchable, authenticated flow where users can report items, add images, and find relevant matches.',
-    usersOrContext:
-      'Built for campus communities that need a practical web flow for reporting and searching lost or found items.',
-    workflow:
-      'Users sign in, create item reports with details and uploads, search existing posts, and review relevant lost-and-found entries.',
-    architecture:
-      'A Next.js application uses authenticated API routes, Prisma, PostgreSQL/Supabase storage, and server-side validation for item reports and claims.',
+      'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two.',
+    system:
+      'A Python lexer, parser, AST, evaluator, and transaction state model implement eight semantic primitives, with local and HTTP-based agent communication paths.',
+    proof: [
+      'Defines a compact grammar and eight documented primitives.',
+      'Includes parser, evaluator, runtime state, and network transport code.',
+      'Provides local and networked buyer/seller demonstrations.',
+    ],
     decisions: [
-      'Used authenticated flows so item reports can be tied to accountable user actions.',
-      'Included uploads and full-text search to make reports easier to identify and retrieve.',
-      'Kept reporting, uploads, search, and claims in one product flow instead of splitting the experience across separate tools.',
+      'Keep the language declarative and intentionally non-general-purpose.',
+      'Make identical input and state produce identical output.',
+      'Isolate mutations within message-level transactions.',
     ],
     tradeoffs: [
-      'Adding uploads and search increases backend surface area compared with a static listing board.',
+      'A formal language reduces ambiguity but requires agents and developers to learn its vocabulary.',
+      'The constrained grammar cannot represent every conversational workflow.',
     ],
-    nextImprovements: [
-      'Improve moderation and matching flows for duplicate or related item reports.',
+    stack: ['Python', 'Lexer and parser', 'AST evaluation', 'HTTP transport'],
+    flow: [
+      { label: 'Express', detail: 'An agent writes intent using a small semantic vocabulary.' },
+      { label: 'Parse', detail: 'The lexer and parser produce a structured syntax tree.' },
+      { label: 'Evaluate', detail: 'Rules apply deterministically against current agent state.' },
+      { label: 'Commit', detail: 'Accepted transitions update auditable transactional state.' },
     ],
-    metrics: [
-      { label: 'Core flows', value: 'Auth, report, upload, search' },
-      { label: 'Data model', value: 'User-owned item reports' },
-      { label: 'Storage surface', value: 'Images plus structured item fields' },
-      { label: 'Primary UX goal', value: 'Find matching lost/found items faster' },
-    ],
-    architectureDiagram: [
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/sutra', kind: 'source' },
       {
-        label: 'Authenticated user',
-        detail: 'Users sign in before creating or managing item reports.',
-      },
-      {
-        label: 'Report form',
-        detail: 'Item metadata and uploaded evidence are captured together.',
-      },
-      {
-        label: 'Application API',
-        detail: 'Backend routes validate requests and coordinate persistence.',
-      },
-      {
-        label: 'Database',
-        detail: 'Structured records support browsing, ownership, and search.',
-      },
-      {
-        label: 'Search results',
-        detail: 'Users review relevant lost-and-found entries from stored reports.',
+        label: 'Language specification',
+        href: 'https://github.com/subhajitlucky/sutra/blob/main/SPEC.md',
+        kind: 'evidence',
       },
     ],
-    stack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Supabase'],
-    tags: ['Full Stack', 'Next.js', 'PostgreSQL'],
-    github: 'https://github.com/subhajitlucky/campushelper',
-    demo: 'https://campushelper.vercel.app',
-    visual: {
-      title: 'Lost-and-found product loop',
-      caption: 'Reports move through authenticated creation, uploaded evidence, searchable records, and review.',
-      steps: ['Sign in', 'Create report', 'Upload image', 'Search records'],
-    },
-    inspectionLinks: [
-      {
-        label: 'App source',
-        href: 'https://github.com/subhajitlucky/campushelper/tree/main/src',
-      },
-      {
-        label: 'Prisma schema',
-        href: 'https://github.com/subhajitlucky/campushelper/tree/main/prisma',
-      },
-      {
-        label: 'README',
-        href: 'https://github.com/subhajitlucky/campushelper/blob/main/README.md',
-      },
-    ],
-    seoKeywords: [
-      'Subhajit Pradhan full stack developer',
-      'React Node PostgreSQL project',
-      'full stack lost and found app',
-    ],
-  },
-{
-    title: 'IntentPay',
-    slug: 'intentpay',
-    role: 'Full-stack and smart contract engineer',
-    year: '2026',
-    status: 'Prototype',
-    oneLine:
-      'AI-assisted Web3 transaction prototype that turns natural language into structured plans before wallet review.',
-    description:
-      'IntentPay is an AI-assisted Web3 transaction prototype that separates natural-language planning from wallet confirmation and irreversible execution.',
-    proof: [
-      'Separates AI interpretation from irreversible contract execution.',
-      'Keeps wallet review visible before transaction confirmation.',
-    ],
-    problem:
-      'On-chain transaction flows can force users to understand protocol actions, contract interactions, wallet steps, and irreversible execution before they can complete a payment or DeFi operation.',
-    usersOrContext:
-      'Built for crypto users and product teams exploring natural-language transaction intent as a safer interface layer for Web3 workflows.',
-    workflow:
-      'A user enters a transaction intent, the application interprets the requested action, prepares the related on-chain interaction, and routes the user through review and wallet execution.',
-    architecture:
-      'A React client connects to an Express API and LLM adapter, which prepares Ethers.js transaction plans behind a review boundary with encrypted wallet data and security events.',
-    decisions: [
-      'Modeled the interface around user intent first, then mapped interpreted actions to explicit blockchain transaction steps.',
-      'Kept wallet execution visible so users can inspect the operation before confirming an on-chain action.',
-      'Separated AI interpretation from contract execution because natural language output should never directly trigger irreversible transactions.',
-    ],
-    tradeoffs: [
-      'Natural-language input improves accessibility but requires stronger validation before transaction preparation.',
-      'Blockchain transparency adds trust, but it also requires clear UX around gas, wallet state, and failure cases.',
-    ],
-    nextImprovements: [
-      'Add stricter intent validation and safer transaction previews.',
-      'Document the contract boundaries and supported transaction types.',
-    ],
-    metrics: [
-      { label: 'Safety boundary', value: 'AI drafts, wallet executes' },
-      { label: 'Core layers', value: 'Intent, preview, contract, wallet' },
-      { label: 'Primary risk handled', value: 'Irreversible on-chain actions' },
-      { label: 'Review state', value: 'Before every wallet confirmation' },
-    ],
-    architectureDiagram: [
-      {
-        label: 'User intent',
-        detail: 'Natural-language transaction request starts the flow.',
-      },
-      {
-        label: 'AI planner',
-        detail: 'Interprets the request and prepares a structured action plan.',
-      },
-      {
-        label: 'Transaction preview',
-        detail: 'Shows the action, wallet impact, and confirmation context.',
-      },
-      {
-        label: 'Wallet execution',
-        detail: 'User approval remains the boundary before on-chain execution.',
-      },
-      {
-        label: 'Smart contract',
-        detail: 'Solidity logic receives the confirmed transaction only after review.',
-      },
-    ],
-    stack: ['Node.js', 'Express.js', 'React', 'Ethers.js', 'AI workflows'],
-    tags: ['Blockchain', 'AI', 'Full Stack'],
-    github: 'https://github.com/subhajitlucky/intentpay',
-    demo: 'https://github.com/subhajitlucky/intentpay',
-    visual: {
-      title: 'Intent review boundary',
-      caption: 'Natural language is converted into an inspectable transaction plan before any wallet action.',
-      steps: ['Intent input', 'AI planning', 'Transaction preview', 'Wallet confirmation'],
-    },
-    inspectionLinks: [
-      {
-        label: 'AI planner',
-        href: 'https://github.com/subhajitlucky/intentpay/blob/main/ai-agent.js',
-      },
-      {
-        label: 'Wallet manager',
-        href: 'https://github.com/subhajitlucky/intentpay/blob/main/wallet-manager.js',
-      },
-      {
-        label: 'Frontend',
-        href: 'https://github.com/subhajitlucky/intentpay/tree/main/frontend',
-      },
-    ],
-    seoKeywords: [
-      'Subhajit Pradhan blockchain developer',
-      'intent driven blockchain interface',
-      'Solidity full stack project',
-    ],
+    featured: false,
   },
 ];
+
+export const featuredProjects = projects.filter((project) => project.featured);
+export const secondaryProjects = projects.filter((project) => !project.featured);
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
