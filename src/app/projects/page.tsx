@@ -1,125 +1,52 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import JsonLd from '@/components/JsonLd';
-import { projects, type Project } from '@/data/projects';
-import {
-  featuredProjectSlugs,
-  selectedProjectSlugs,
-  siteConfig,
-  toolFootnotes,
-} from '@/data/site';
-import { createMetadata, itemListJsonLd } from '@/lib/metadata';
+import { ArrowLink } from '@/components/ArrowLink';
+import { SectionLabel } from '@/components/SectionLabel';
+import { projects, secondaryProjects } from '@/data/projects';
 
-export const metadata = createMetadata({
-  title: `Projects – ${siteConfig.name}`,
-  description:
-    'Case studies of developer tools, multi-agent systems, and production web apps with architecture, tradeoffs, metrics, and source links.',
-  path: '/projects',
-  keywords: [
-    'Subhajit Pradhan projects',
-    'developer tools case studies',
-    'multi-agent systems portfolio',
-  ],
-});
-
-function WorkRow({ project }: { project: Project }) {
-  const hasSeparateDemo = project.demo && project.demo !== project.github;
-
-  return (
-    <article className="work-row">
-      <div>
-        <h3>
-          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-        </h3>
-        <p>
-          {project.status} / {project.year}
-        </p>
-      </div>
-      <p>{project.oneLine}</p>
-      <strong>{project.metrics[0]?.value}</strong>
-      <nav aria-label={`${project.title} links`}>
-        <Link href={`/projects/${project.slug}`}>Case study</Link>
-        <a href={project.github} rel="noreferrer" target="_blank">
-          Source
-        </a>
-        {hasSeparateDemo && project.demo ? (
-          <a href={project.demo} rel="noreferrer" target="_blank">
-            {project.demo.includes('npmjs.com') ? 'npm' : 'Demo'}
-          </a>
-        ) : null}
-      </nav>
-    </article>
-  );
-}
-
-function pick(slugs: readonly string[]) {
-  return slugs
-    .map((slug) => projects.find((project) => project.slug === slug))
-    .filter((project): project is Project => Boolean(project));
-}
+export const metadata: Metadata = {
+  title: 'Selected work | Subhajit Pradhan',
+  description: 'Developer tools, AI systems, and full-stack product work by Subhajit Pradhan.',
+};
 
 export default function ProjectsPage() {
-  const featured = pick(featuredProjectSlugs);
-  const selected = pick(selectedProjectSlugs);
-
   return (
-    <>
-      <JsonLd data={itemListJsonLd('Subhajit Pradhan project case studies', '/projects', projects)} />
-      <section className="page-hero page-hero--compact">
-        <p className="eyebrow">Project index</p>
-        <h1>Selected work</h1>
+    <div className="projects-index site-frame">
+      <header className="projects-index-header">
+        <SectionLabel index="Index">Selected work</SectionLabel>
+        <h1>Tools and systems built for evidence, not theater.</h1>
         <p>
-          Featured systems first, then product case studies. Each entry links to architecture,
-          tradeoffs, metrics, and source.
+          Six projects across developer tooling, database security, agent infrastructure,
+          multi-agent products, learning systems, and coordination protocols.
         </p>
-      </section>
-
-      <section className="home-section" aria-labelledby="featured-index-heading">
-        <div className="home-section__heading">
-          <p className="kicker">Featured</p>
-          <h2 id="featured-index-heading">Systems and tools</h2>
-        </div>
-        <div className="work-list index-grid">
-          {featured.map((project) => (
-            <WorkRow key={project.slug} project={project} />
-          ))}
-        </div>
-      </section>
-
-      <section className="home-section" aria-labelledby="selected-index-heading">
-        <div className="home-section__heading">
-          <p className="kicker">Selected</p>
-          <h2 id="selected-index-heading">Product work</h2>
-        </div>
-        <div className="work-list index-grid">
-          {selected.map((project) => (
-            <WorkRow key={project.slug} project={project} />
-          ))}
-        </div>
-      </section>
-
-      <section className="home-section" aria-labelledby="footnote-index-heading">
-        <div className="home-section__heading">
-          <p className="kicker">Footnote</p>
-          <h2 id="footnote-index-heading">Agent tooling</h2>
-        </div>
-        <div className="work-list">
-          {toolFootnotes.map((tool) => (
-            <article key={tool.title} className="work-row work-row--footnote">
-              <div>
-                <h3>{tool.title}</h3>
-                <p>GitHub only</p>
-              </div>
-              <p>{tool.oneLine}</p>
-              <strong>Agent skill</strong>
-              <nav aria-label={`${tool.title} links`}>
-                <a href={tool.github} rel="noreferrer" target="_blank">
-                  Source
-                </a>
-              </nav>
-            </article>
-          ))}
-        </div>
-      </section>
-    </>
+      </header>
+      <ol className="projects-index-list">
+        {projects.map((project) => (
+          <li data-testid="project-index-item" key={project.slug}>
+            <span className="index-number">{project.index}</span>
+            <div className="index-project-copy">
+              <p>
+                {project.category} · {project.status}
+              </p>
+              <h2>
+                <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+              </h2>
+              <p>{project.summary}</p>
+            </div>
+            <div className="index-project-actions">
+              <ArrowLink href={`/projects/${project.slug}`}>Case study</ArrowLink>
+              {project.links[0] ? (
+                <ArrowLink href={project.links[0].href}>{project.links[0].label}</ArrowLink>
+              ) : null}
+              <span>{project.featured ? 'Featured' : 'Additional work'}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p className="projects-index-note">
+        {secondaryProjects.length} additional systems are included to show adjacent product and
+        protocol range. Repository creation dates are intentionally not used as a quality signal.
+      </p>
+    </div>
   );
 }

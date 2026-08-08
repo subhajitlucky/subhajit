@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ButtonLink from '@/components/ButtonLink';
-import JsonLd from '@/components/JsonLd';
+import { ArchitectureFlow } from '@/components/ArchitectureFlow';
+import { EvidenceLinks } from '@/components/EvidenceLinks';
+import { ProjectNavigation } from '@/components/ProjectNavigation';
+import { SectionLabel } from '@/components/SectionLabel';
 import { getProject, projects } from '@/data/projects';
-import { featuredProjectSlugs, siteConfig } from '@/data/site';
-import { createMetadata, projectJsonLd } from '@/lib/metadata';
+import { siteConfig } from '@/data/site';
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -20,19 +20,14 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const project = getProject(slug);
 
   if (!project) {
-    return createMetadata({
-      title: `Project not found – ${siteConfig.name}`,
-      description: siteConfig.description,
-      path: `/projects/${slug}`,
-    });
+    return { title: 'Project not found' };
   }
 
-  return createMetadata({
-    title: `${project.title} case study – ${siteConfig.name}`,
-    description: project.description,
-    path: `/projects/${project.slug}`,
-    keywords: project.seoKeywords,
-  });
+  return {
+    title: `${project.title} case study | ${siteConfig.name}`,
+    description: project.summary,
+    alternates: { canonical: `/projects/${project.slug}` },
+  };
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -43,162 +38,95 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  const hasSeparateDemo = project.demo && project.demo !== project.github;
-  const demoLabel = project.demo?.includes('npmjs.com') ? 'npm package' : 'Live Demo';
-  const isFeatured = featuredProjectSlugs.some((slug) => slug === project.slug);
-
   return (
-    <>
-      <JsonLd data={projectJsonLd(project)} />
-      <article className="case-study">
-        <Link className="back-link" href="/projects">
-          Projects
-        </Link>
-        <header className="case-study__hero">
-          <div>
-            <p className="eyebrow">
-              {isFeatured ? 'Featured case study' : 'Selected work'} / {project.role}
-            </p>
-            <h1>{project.title}</h1>
-            <p>{project.description}</p>
-          </div>
-          <aside aria-label={`${project.title} metadata`}>
-            <dl>
-              <div>
-                <dt>Status</dt>
-                <dd className={project.status === 'Prototype' ? 'status status--prototype' : undefined}>
-                  {project.status}
-                </dd>
-              </div>
-              <div>
-                <dt>Year</dt>
-                <dd>{project.year}</dd>
-              </div>
-              <div>
-                <dt>Stack</dt>
-                <dd>{project.stack.join(', ')}</dd>
-              </div>
-            </dl>
-            <div className="case-study__actions">
-              <ButtonLink href={project.github} external variant="primary">
-                GitHub
-              </ButtonLink>
-              {hasSeparateDemo && project.demo ? (
-                <ButtonLink href={project.demo} external variant="secondary">
-                  {demoLabel}
-                </ButtonLink>
-              ) : null}
-            </div>
-            <div className="inspection-links">
-              <h2>Inspect the code</h2>
-              <ul>
-                {project.inspectionLinks.map((link) => (
-                  <li key={link.href}>
-                    <a href={link.href} rel="noreferrer" target="_blank">
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </aside>
-        </header>
+    <article className="case-study">
+      <header className="case-study-header site-frame">
+        <div className="case-study-labels">
+          <SectionLabel index={project.index}>{project.category}</SectionLabel>
+          <span>{project.status}</span>
+        </div>
+        <h1>{project.title}</h1>
+        <p>{project.summary}</p>
+        <EvidenceLinks links={project.links} />
+      </header>
 
-        <section className="project-metrics" aria-labelledby="project-metrics-heading">
+      <div className="case-study-body site-frame">
+        <section className="case-study-block" aria-labelledby="problem-title">
+          <SectionLabel index="01">Context</SectionLabel>
           <div>
-            <p className="eyebrow">Metrics</p>
-            <h2 id="project-metrics-heading">Proof in numbers</h2>
+            <h2 id="problem-title">Problem</h2>
+            <p className="case-study-lede">{project.problem}</p>
           </div>
-          <dl>
-            {project.metrics.map((metric) => (
-              <div key={metric.label}>
-                <dt>{metric.label}</dt>
-                <dd>{metric.value}</dd>
-              </div>
-            ))}
-          </dl>
         </section>
 
-        {isFeatured ? (
-          <>
-            <section className="project-visual" aria-labelledby="project-visual-heading">
-              <div>
-                <p className="eyebrow">Workflow proof</p>
-                <h2 id="project-visual-heading">{project.visual.title}</h2>
-                <p>{project.visual.caption}</p>
-              </div>
-              <ol>
-                {project.visual.steps.map((step) => (
-                  <li key={step}>{step}</li>
-                ))}
-              </ol>
-            </section>
+        <section className="case-study-block" aria-labelledby="system-title">
+          <SectionLabel index="02">Approach</SectionLabel>
+          <div>
+            <h2 id="system-title">System</h2>
+            <p className="case-study-lede">{project.system}</p>
+          </div>
+        </section>
 
-            <section className="architecture-flow" aria-labelledby="architecture-flow-heading">
-              <div>
-                <p className="eyebrow">Architecture</p>
-                <h2 id="architecture-flow-heading">System shape</h2>
-                <p>{project.architecture}</p>
-              </div>
-              <ol>
-                {project.architectureDiagram.map((node) => (
-                  <li key={node.label}>
-                    <h3>{node.label}</h3>
-                    <p>{node.detail}</p>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          </>
-        ) : null}
-
-        <div className="case-study__sections">
-          <section>
-            <h2>Proof</h2>
-            <ul>
+        <section className="case-study-block" aria-labelledby="proof-title">
+          <SectionLabel index="03">Evidence</SectionLabel>
+          <div>
+            <h2 id="proof-title">Proof</h2>
+            <ul className="case-study-list">
               {project.proof.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
-          </section>
-          <section>
-            <h2>Problem</h2>
-            <p>{project.problem}</p>
-          </section>
-          <section>
-            <h2>Users and context</h2>
-            <p>{project.usersOrContext}</p>
-          </section>
-          <section>
-            <h2>Product workflow</h2>
-            <p>{project.workflow}</p>
-          </section>
-          <section>
-            <h2>Key engineering decisions</h2>
-            <ul>
+          </div>
+        </section>
+
+        <section className="case-study-block architecture-block" aria-labelledby="architecture-title">
+          <SectionLabel index="04">Workflow</SectionLabel>
+          <div>
+            <h2 id="architecture-title">Architecture</h2>
+            <ArchitectureFlow steps={project.flow} />
+          </div>
+        </section>
+
+        <section className="case-study-block" aria-labelledby="decisions-title">
+          <SectionLabel index="05">Judgment</SectionLabel>
+          <div>
+            <h2 id="decisions-title">Decisions</h2>
+            <ul className="case-study-list">
               {project.decisions.map((decision) => (
                 <li key={decision}>{decision}</li>
               ))}
             </ul>
-          </section>
-          <section>
-            <h2>Tradeoffs and limitations</h2>
-            <ul>
+          </div>
+        </section>
+
+        <section className="case-study-block" aria-labelledby="tradeoffs-title">
+          <SectionLabel index="06">Boundaries</SectionLabel>
+          <div>
+            <h2 id="tradeoffs-title">Tradeoffs and limitations</h2>
+            <ul className="case-study-list">
               {project.tradeoffs.map((tradeoff) => (
                 <li key={tradeoff}>{tradeoff}</li>
               ))}
             </ul>
-          </section>
-          <section>
-            <h2>Next improvements</h2>
+          </div>
+        </section>
+
+        <section className="case-study-block technologies-block" aria-labelledby="technologies-title">
+          <SectionLabel index="07">Stack</SectionLabel>
+          <div>
+            <h2 id="technologies-title">Technologies</h2>
             <ul>
-              {project.nextImprovements.map((improvement) => (
-                <li key={improvement}>{improvement}</li>
+              {project.stack.map((technology) => (
+                <li key={technology}>{technology}</li>
               ))}
             </ul>
-          </section>
-        </div>
-      </article>
-    </>
+          </div>
+        </section>
+      </div>
+
+      <div className="site-frame">
+        <ProjectNavigation slug={project.slug} />
+      </div>
+    </article>
   );
 }
