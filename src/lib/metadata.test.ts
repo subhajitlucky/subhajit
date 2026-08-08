@@ -1,7 +1,7 @@
 import { featuredProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
-import { structuredData } from '@/components/JsonLd';
 import { rootMetadata } from '@/lib/metadata';
+import { structuredData } from '@/lib/structured-data';
 
 describe('portfolio discovery metadata', () => {
   it('uses the canonical portfolio origin and hiring-focused root metadata', () => {
