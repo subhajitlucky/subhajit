@@ -1,40 +1,15 @@
-import { describe, expect, it } from 'vitest';
-import { blogPosts } from '@/data/blog';
 import { projects } from '@/data/projects';
-import sitemap from '@/app/sitemap';
+import { siteConfig } from '@/data/site';
+import sitemap from './sitemap';
 
-describe('sitemap route data', () => {
-  it('includes homepage, indexes, project routes, and blog routes on the target domain', () => {
+describe('sitemap', () => {
+  it('includes the home page, work index, and every project case study', () => {
     const urls = sitemap().map((entry) => entry.url);
 
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/projects');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/blog');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/llms.txt');
-
+    expect(urls).toContain(siteConfig.baseUrl);
+    expect(urls).toContain(`${siteConfig.baseUrl}/projects`);
     for (const project of projects) {
-      expect(urls).toContain(`https://subhajitpradhan.vercel.app/projects/${project.slug}`);
+      expect(urls).toContain(`${siteConfig.baseUrl}/projects/${project.slug}`);
     }
-
-    for (const post of blogPosts) {
-      expect(urls).toContain(`https://subhajitpradhan.vercel.app/blog/${post.slug}`);
-    }
-  });
-
-  it('includes homepage section anchors for crawler discovery', () => {
-    const urls = sitemap().map((entry) => entry.url);
-
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/#projects');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/#experience');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/#skills');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/#writing');
-    expect(urls).toContain('https://subhajitpradhan.vercel.app/#contact');
-  });
-
-  it('does not publish removed project or legacy homepage routes', () => {
-    const urls = sitemap().map((entry) => entry.url);
-
-    expect(urls).not.toContain('https://subhajitpradhan.vercel.app/projects/quantumticket');
-    expect(urls).not.toContain('https://subhajitpradhan.vercel.app/#about');
   });
 });

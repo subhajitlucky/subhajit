@@ -3,13 +3,13 @@ import { siteConfig } from '@/data/site';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${siteConfig.name} Portfolio`,
+    name: `${siteConfig.name} | ${siteConfig.role}`,
     short_name: siteConfig.name,
     description: siteConfig.description,
     start_url: '/',
     display: 'standalone',
-    background_color: '#ffffff',
-    theme_color: '#0b5e55',
+    background_color: '#f2eee4',
+    theme_color: '#171713',
     icons: [
       {
         src: '/favicon.svg',

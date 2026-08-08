@@ -5,7 +5,7 @@ import { EvidenceLinks } from '@/components/EvidenceLinks';
 import { ProjectNavigation } from '@/components/ProjectNavigation';
 import { SectionLabel } from '@/components/SectionLabel';
 import { getProject, projects } from '@/data/projects';
-import { siteConfig } from '@/data/site';
+import { createProjectMetadata } from '@/lib/metadata';
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -23,11 +23,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     return { title: 'Project not found' };
   }
 
-  return {
-    title: `${project.title} case study | ${siteConfig.name}`,
-    description: project.summary,
-    alternates: { canonical: `/projects/${project.slug}` },
-  };
+  return createProjectMetadata(project);
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {

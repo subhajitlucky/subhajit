@@ -1213,6 +1213,39 @@ h1 {
   letter-spacing: -0.04em;
 }
 
+.not-found {
+  display: grid;
+  min-height: 68svh;
+  align-content: center;
+  padding-block: var(--section-space);
+}
+
+.not-found > p:first-child {
+  margin: 0 0 1.5rem;
+  color: var(--signal-dark);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.not-found h1 {
+  max-width: 10ch;
+}
+
+.not-found h1 + p {
+  max-width: 36rem;
+  margin: 2rem 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.not-found > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+}
+
 @media (max-width: 62rem) {
   .header-inner {
     grid-template-columns: 1fr auto;
