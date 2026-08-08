@@ -1,27 +1,32 @@
 import Link from 'next/link';
 import { siteConfig } from '@/data/site';
 
-export default function SiteHeader() {
+export function SiteHeader() {
   return (
     <header className="site-header">
-      <Link className="site-header__brand" href="/" aria-label="Subhajit Pradhan home">
-        <span aria-hidden="true">SP</span>
-        <strong>{siteConfig.name}</strong>
-      </Link>
-
-      <nav className="site-header__nav" aria-label="Primary navigation">
-        {siteConfig.nav.map((item) => (
-          <Link key={item.href} href={item.href}>
-            {item.label}
-          </Link>
-        ))}
-      </nav>
-
-      <div className="site-header__actions" aria-label="Primary actions">
-        <Link href={siteConfig.resumePath}>Resume</Link>
-        <a href={siteConfig.links.github} rel="noreferrer" target="_blank">
-          GitHub
-        </a>
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
+      <div className="site-frame header-inner">
+        <Link className="wordmark" href="/" aria-label={`${siteConfig.name}, home`}>
+          <span className="wordmark-mark" aria-hidden="true">
+            {siteConfig.shortName}
+          </span>
+          <span>{siteConfig.name}</span>
+        </Link>
+        <p className="availability">
+          <span aria-hidden="true" />
+          {siteConfig.availability}
+        </p>
+        <nav aria-label="Primary navigation">
+          <ul className="primary-nav">
+            {siteConfig.nav.map((item) => (
+              <li key={item.label}>
+                <Link href={item.href}>{item.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </header>
   );

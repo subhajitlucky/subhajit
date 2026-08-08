@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { IBM_Plex_Mono, Manrope, Newsreader } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { SiteFooter } from '@/components/SiteFooter';
+import { SiteHeader } from '@/components/SiteHeader';
 import './globals.css';
 
 const editorial = Newsreader({
@@ -31,10 +33,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en" className={`${editorial.variable} ${sans.variable} ${mono.variable}`}>
       <body>
-        <a className="skip-link" href="#main-content">
-          Skip to main content
-        </a>
+        <SiteHeader />
         <main id="main-content">{children}</main>
+        <SiteFooter />
       </body>
     </html>
   );
