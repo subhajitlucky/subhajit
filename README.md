@@ -1,65 +1,53 @@
-# Subhajit Pradhan Portfolio
+# Subhajit Pradhan — Engineering Portfolio
 
-Premium Next.js portfolio for [subhajitpradhan.vercel.app](https://subhajitpradhan.vercel.app), positioned for:
+A hiring-focused Next.js portfolio presenting Subhajit Pradhan as a developer-tools and AI-systems engineer with full-stack product range.
 
-- `Subhajit Pradhan`
-- `Subhajit Pradhan developer`
-- `Subhajit Pradhan full stack developer`
-- `Subhajit Pradhan blockchain developer`
+The site is designed as an engineering dossier: claims are backed by public source repositories, published packages, live applications, documented decisions, and explicit limitations.
 
-The site is built as a server-rendered engineering dossier with project case studies, MDX blog posts, JSON-LD schema, canonical metadata, sitemap, robots, and recruiter-focused calls to action.
+## Local development
 
-## Stack
-
-- Next.js 16 App Router
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- Framer Motion
-- MDX blog content
-- Vitest
-- Vercel Analytics
-
-## Routes
-
-- `/` - homepage with About, Skills, Experience, Projects, Blogs, Currently Building, Contact, Open Source Work, and FAQ.
-- `/projects` - project index.
-- `/projects/[slug]` - static project case studies.
-- `/blog` - MDX blog index.
-- `/blog/[slug]` - static blog articles.
-- `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, `/opengraph-image`, `/twitter-image`.
-
-## Commands
+Requirements: Node.js 20.9 or newer and npm.
 
 ```bash
 npm install
 npm run dev
-npm run lint
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+## Validation
+
+```bash
+npm test
 npm run typecheck
-npm run test -- --run
+npm run lint
 npm run build
 ```
 
-## Content
+## Routes
 
-- Site/profile content: `src/data/site.ts`
-- Project content: `src/data/projects.ts`
-- Blog metadata: `src/data/blog.ts`
-- MDX articles: `content/blog/*.mdx`
-- Metadata/schema helpers: `src/lib/metadata.ts`
+- `/` — positioning, featured work, experience, principles, education, and contact
+- `/projects` — complete six-project index
+- `/projects/[slug]` — statically generated project case studies
+- `/resume.pdf` — stable public resume download
+- `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest` — discovery metadata
+- `/opengraph-image` — generated social preview
 
-## SEO Docs
+## Content model
 
-- [SEO checklist](docs/seo-checklist.md)
-- [Google Search Console setup](docs/google-search-console.md)
-- [Backlink strategy](docs/backlink-strategy.md)
-- [Domain migration strategy](docs/domain-migration-strategy.md)
-- [Indexing strategy](docs/indexing-strategy.md)
-- [Deployment steps](docs/deployment-steps.md)
+- Profile, experience, skills, and education: `src/data/site.ts`
+- Canonical project claims, links, architecture, and limitations: `src/data/projects.ts`
+- Root and project metadata: `src/lib/metadata.ts`
+- Resume source served by the site: `public/resume.pdf`
+
+Current employment is deliberately presented at company, title, date, and location level only. Project creation dates and unsupported adoption, scale, or performance claims are not used.
+
+## Deployment boundary
+
+The canonical URL is [subhajitpradhan.vercel.app](https://subhajitpradhan.vercel.app). Local tests and builds verify the repository, but do not prove that the current commit is deployed. Deployment, domain verification, live analytics, and authenticated GitHub profile changes require separate action.
 
 ## Contact
 
 - Email: [subhajitpradhan310@gmail.com](mailto:subhajitpradhan310@gmail.com)
 - GitHub: [subhajitlucky](https://github.com/subhajitlucky)
 - LinkedIn: [subhajitlucky](https://www.linkedin.com/in/subhajitlucky)
-- Location: Odisha, India
