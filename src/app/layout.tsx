@@ -1,16 +1,10 @@
-import { IBM_Plex_Mono, Manrope, Newsreader } from 'next/font/google';
+import { IBM_Plex_Mono, Manrope } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SiteHeader } from '@/components/SiteHeader';
 import { rootMetadata } from '@/lib/metadata';
 import './globals.css';
-
-const editorial = Newsreader({
-  subsets: ['latin'],
-  variable: '--font-editorial',
-  display: 'swap',
-});
 
 const sans = Manrope({
   subsets: ['latin'],
@@ -29,7 +23,7 @@ export const metadata = rootMetadata;
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={`${editorial.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body>
         <JsonLd />
         <SiteHeader />

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { siteConfig } from '@/data/site';
+import { externalLinkProps, isExternalUrl } from '@/lib/urls';
 
 export function SiteHeader() {
   return (
@@ -7,24 +8,29 @@ export function SiteHeader() {
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <div className="site-frame header-inner">
+      <div className="site-container header-inner">
         <Link className="wordmark" href="/" aria-label={`${siteConfig.name}, home`}>
-          <span className="wordmark-mark" aria-hidden="true">
-            {siteConfig.shortName}
-          </span>
-          <span>{siteConfig.name}</span>
+          {siteConfig.name}
         </Link>
-        <p className="availability">
-          <span aria-hidden="true" />
-          {siteConfig.availability}
-        </p>
-        <nav aria-label="Primary navigation">
-          <ul className="primary-nav">
-            {siteConfig.nav.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
+        <nav aria-label="Direct links">
+          <ul className="direct-links">
+            {siteConfig.nav.map((item) => {
+              const content = item.label;
+
+              return (
+                <li key={item.label}>
+                  {isExternalUrl(item.href) ? (
+                    <a href={item.href} {...externalLinkProps}>
+                      {content}
+                    </a>
+                  ) : item.href.startsWith('/') ? (
+                    <Link href={item.href}>{content}</Link>
+                  ) : (
+                    <a href={item.href}>{content}</a>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </div>

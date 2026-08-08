@@ -57,27 +57,6 @@ export const experience: Experience[] = [
   },
 ];
 
-export const engineeringPrinciples = [
-  {
-    index: '01',
-    title: 'Evidence before claims',
-    description:
-      'Tests, public source, package artifacts, and explicit status labels matter more than inflated adjectives.',
-  },
-  {
-    index: '02',
-    title: 'Permission is architecture',
-    description:
-      'Tools should make side effects visible and require separate authority for checks, network access, and mutation.',
-  },
-  {
-    index: '03',
-    title: 'Failure should be legible',
-    description:
-      'Typed boundaries, deterministic reports, and precise errors make complex systems easier to operate and improve.',
-  },
-] as const;
-
 export const skillGroups = [
   {
     label: 'Core',
