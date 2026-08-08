@@ -36,7 +36,8 @@ The site will not imply US work authorization, relocation availability, unsuppor
 
 The current role will use only the approved minimal presentation:
 
-> Giakaa Capital - Full Stack Software Developer  
+> Giakaa Capital - Full Stack Software Developer
+>
 > May 2026-Present - Remote
 
 The portfolio will not describe Hema AI, company architecture, customers, internal metrics, incidents, providers, roadmaps, screenshots, source code, or unreleased work.
