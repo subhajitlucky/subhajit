@@ -156,7 +156,7 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
-    featured: true,
+    featured: false,
   },
   {
     slug: 'tarka-sabha',
@@ -239,7 +239,7 @@ export const projects: Project[] = [
       { label: 'Source', href: 'https://github.com/subhajitlucky/cscosmos', kind: 'source' },
       { label: 'Live application', href: 'https://cscosmos.vercel.app', kind: 'live' },
     ],
-    featured: false,
+    featured: true,
   },
   {
     slug: 'sutra',

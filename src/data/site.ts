@@ -1,16 +1,16 @@
 export const siteConfig = {
   name: 'Subhajit Pradhan',
   shortName: 'SP',
-  role: 'Full Stack Software Developer',
+  role: 'Full-Stack Product Engineer',
   summary:
-    'I build reliable web products, developer tools, and AI systems using TypeScript, Next.js, Python, and PostgreSQL.',
+    'I build reliable web products and AI-powered systems from interface to infrastructure.',
   location: 'Odisha, India',
-  availability: 'Open to remote roles worldwide',
+  availability: 'Open to remote roles',
   email: 'subhajitpradhan310@gmail.com',
   baseUrl: 'https://subhajitpradhan.vercel.app',
   resumePath: '/resume.pdf',
   description:
-    'Full stack software developer building reliable web products, developer tools, and AI systems.',
+    'Full-Stack Product Engineer building reliable web products and AI-powered systems from interface to infrastructure.',
   links: {
     github: 'https://github.com/subhajitlucky',
     linkedin: 'https://www.linkedin.com/in/subhajitlucky',
@@ -59,20 +59,16 @@ export const experience: Experience[] = [
 
 export const skillGroups = [
   {
-    label: 'Core',
-    items: ['TypeScript', 'JavaScript', 'Python', 'SQL', 'Go', 'Rust'],
+    label: 'Product engineering',
+    items: ['TypeScript', 'React', 'Next.js', 'Node.js'],
   },
   {
-    label: 'Product systems',
-    items: ['React', 'Next.js', 'Node.js', 'REST APIs', 'PostgreSQL', 'Prisma'],
+    label: 'Backend and data',
+    items: ['Python', 'PostgreSQL', 'SQL', 'Prisma'],
   },
   {
-    label: 'Tools and delivery',
-    items: ['CLI design', 'Vitest', 'GitHub Actions', 'Docker', 'Linux', 'Vercel'],
-  },
-  {
-    label: 'AI systems',
-    items: ['Agent workflows', 'Multi-provider routing', 'Structured outputs', 'Prompt systems'],
+    label: 'AI and developer tools',
+    items: ['Agent workflows', 'CLI design', 'Vitest', 'GitHub Actions'],
   },
 ] as const;
 

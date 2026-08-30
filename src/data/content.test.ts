@@ -4,16 +4,21 @@ import {
   projects,
   secondaryProjects,
 } from '@/data/projects';
-import { experience, siteConfig } from '@/data/site';
+import { experience, siteConfig, skillGroups } from '@/data/site';
 import { isExternalUrl } from '@/lib/urls';
 
 describe('portfolio content integrity', () => {
-  it('uses the approved role and worldwide remote availability', () => {
-    expect(siteConfig.role).toBe('Full Stack Software Developer');
+  it('uses the approved product engineer positioning', () => {
+    expect(siteConfig.role).toBe('Full-Stack Product Engineer');
     expect(siteConfig.summary).toBe(
-      'I build reliable web products, developer tools, and AI systems using TypeScript, Next.js, Python, and PostgreSQL.',
+      'I build reliable web products and AI-powered systems from interface to infrastructure.',
     );
-    expect(siteConfig.availability).toBe('Open to remote roles worldwide');
+    expect(siteConfig.availability).toBe('Open to remote roles');
+    expect(skillGroups.map((group) => group.label)).toEqual([
+      'Product engineering',
+      'Backend and data',
+      'AI and developer tools',
+    ]);
     expect(siteConfig.availability.toLowerCase()).not.toContain('relocation');
   });
 
@@ -33,10 +38,17 @@ describe('portfolio content integrity', () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
       'codebase-doctor',
       'rls-doctor',
-      'smritiflow',
       'tarka-sabha',
+      'cscosmos',
     ]);
-    expect(secondaryProjects.map((project) => project.slug)).toEqual(['cscosmos', 'sutra']);
+    expect(secondaryProjects.map((project) => project.slug)).toEqual(['smritiflow', 'sutra']);
+  });
+
+  it('keeps featured summaries concise and linked to source', () => {
+    for (const project of featuredProjects) {
+      expect(project.summary.length).toBeLessThanOrEqual(180);
+      expect(project.links.some((link) => link.kind === 'source')).toBe(true);
+    }
   });
 
   it('gives every selected project inspectable proof and valid links', () => {
