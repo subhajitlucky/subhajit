@@ -39,9 +39,8 @@ export default function OpenGraphImage() {
             {siteConfig.name}
           </span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 22 }}>
+        <div style={{ display: 'flex', fontSize: 22 }}>
           <span>Web products · Developer tools · AI systems</span>
-          <span>{siteConfig.location}</span>
         </div>
       </div>
     ),
