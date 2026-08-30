@@ -1,10 +1,16 @@
 import Link from 'next/link';
-import { featuredProjects } from '@/data/projects';
+import { featuredProjects, type ProjectLink } from '@/data/projects';
 import { education, experience, siteConfig, skillGroups } from '@/data/site';
 import { externalLinkProps } from '@/lib/urls';
 
 function entryId(organization: string) {
   return organization.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+function getProjectActionLinks(links: readonly ProjectLink[]) {
+  return links.filter(
+    (link) => link.kind === 'source' || link.kind === 'package' || link.kind === 'live',
+  );
 }
 
 export default function HomePage() {
@@ -55,16 +61,11 @@ export default function HomePage() {
               <p className="project-description">{project.summary}</p>
               <p className="project-stack">{project.stack.slice(0, 5).join(' · ')}</p>
               <div className="project-links">
-                {project.links
-                  .filter(
-                    (link) =>
-                      link.kind === 'source' || link.kind === 'package' || link.kind === 'live',
-                  )
-                  .map((link) => (
-                    <a href={link.href} key={link.href} {...externalLinkProps}>
-                      {link.label}
-                    </a>
-                  ))}
+                {getProjectActionLinks(project.links).map((link) => (
+                  <a href={link.href} key={link.href} {...externalLinkProps}>
+                    {link.label}
+                  </a>
+                ))}
                 <Link href={`/projects/${project.slug}`}>Details</Link>
               </div>
             </article>
