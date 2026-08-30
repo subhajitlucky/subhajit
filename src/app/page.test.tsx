@@ -41,6 +41,38 @@ describe('HomePage', () => {
     ).toEqual(featuredProjects.map((project) => project.title));
   });
 
+  it('renders useful source and product actions for each featured project', () => {
+    render(<HomePage />);
+
+    const projectRows = screen.getAllByTestId('featured-project');
+    expect(projectRows).toHaveLength(featuredProjects.length);
+    const allowedKinds = new Set(['source', 'package', 'live']);
+
+    for (const [index, project] of featuredProjects.entries()) {
+      const projectRow = projectRows[index];
+      const rowLinks = within(projectRow).getAllByRole('link');
+      const detailsLink = rowLinks.find(
+        (link) =>
+          link.getAttribute('href') === `/projects/${project.slug}` &&
+          link.textContent?.trim() === 'Details',
+      );
+
+      expect(detailsLink?.textContent?.trim()).toBe('Details');
+
+      for (const projectLink of project.links) {
+        const hasLink = rowLinks.some(
+          (link) => link.getAttribute('href') === projectLink.href,
+        );
+
+        if (allowedKinds.has(projectLink.kind)) {
+          expect(hasLink).toBe(true);
+        } else {
+          expect(hasLink).toBe(false);
+        }
+      }
+    }
+  });
+
   it('keeps all experience in sight and current employment minimal', () => {
     render(<HomePage />);
 
