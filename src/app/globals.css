@@ -9,7 +9,6 @@
   --reading-width: 46rem;
 
   --accent-ink: #254735;
-  --page-gutter: clamp(1rem, 3vw, 2.5rem);
   --display-tight: -0.055em;
   --sans-tight: -0.018em;
   --rule: 1px solid var(--line);
@@ -27,7 +26,7 @@ html {
 }
 
 body {
-  min-width: 20rem;
+  min-width: 0;
   overflow-x: clip;
   margin: 0;
   background: var(--canvas);
@@ -485,7 +484,7 @@ a:hover {
 }
 
 .project-links a {
-  min-height: 2.4rem;
+  min-height: 2.75rem;
   font-size: 0.68rem;
 }
 
@@ -824,7 +823,7 @@ a:hover {
 }
 
 .index-project-actions .arrow-link {
-  min-height: 2.4rem;
+  min-height: 2.75rem;
   border-block-end: var(--rule);
   font-size: 0.66rem;
 }
@@ -903,7 +902,7 @@ a:hover {
 }
 
 .evidence-links .arrow-link {
-  min-height: 2.4rem;
+  min-height: 2.75rem;
 }
 
 .case-study-body {
@@ -1247,7 +1246,7 @@ a:hover {
   }
 
   .direct-links a {
-    font-size: 0.62rem;
+    font-size: 0.68rem;
   }
 
   .intro {
@@ -1276,7 +1275,15 @@ a:hover {
   }
 
   .intro-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.15rem 1.1rem;
+    justify-items: start;
     margin-block-start: 1.25rem;
+  }
+
+  .intro-links a {
+    min-width: 0;
   }
 
   .experience-rows li,
@@ -1432,7 +1439,7 @@ a:hover {
 
   .direct-links a {
     min-height: 2.5rem;
-    font-size: 0.58rem;
+    font-size: 0.68rem;
   }
 
   .intro h1,
@@ -1457,7 +1464,7 @@ a:hover {
   *::after {
     animation: none !important;
     transform: none !important;
-    translate: none !important;
+    translate: 0 0 !important;
     transition: none !important;
   }
 }
