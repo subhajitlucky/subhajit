@@ -8,6 +8,7 @@ describe('HomePage', () => {
     render(<HomePage />);
 
     expect(screen.getByRole('heading', { level: 1, name: siteConfig.role })).toBeInTheDocument();
+    expect(screen.getByText(siteConfig.name)).toBeInTheDocument();
     expect(screen.getByText(siteConfig.summary)).toBeInTheDocument();
 
     expect(screen.getByText(siteConfig.availability)).toBeInTheDocument();
@@ -54,15 +55,38 @@ describe('HomePage', () => {
     expect(giakaaEntry).toHaveTextContent('Remote');
     expect(within(giakaaEntry).queryByRole('paragraph')).not.toBeInTheDocument();
 
-    expect(screen.getByRole('heading', { name: 'Skills' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Experience' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Capabilities' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /education/i })).toBeInTheDocument();
     expect(screen.getByText(/centurion university/i)).toBeInTheDocument();
 
-    const contact = screen.getByRole('region', { name: /contact subhajit/i });
+    const contact = screen.getByRole('region', { name: 'Start a conversation' });
     expect(within(contact).getByRole('link', { name: /send an email/i })).toHaveAttribute(
       'href',
       siteConfig.links.email,
     );
+  });
+
+  it('presents selected work before experience and capabilities', () => {
+    render(<HomePage />);
+
+    const selectedWork = screen.getByRole('heading', { name: 'Selected work' });
+    const experience = screen.getByRole('heading', { name: 'Experience' });
+    const capabilities = screen.getByRole('heading', { name: 'Capabilities' });
+
+    expect(
+      selectedWork.compareDocumentPosition(experience) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      experience.compareDocumentPosition(capabilities) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+  });
+
+  it('does not render the former skills or contact headings', () => {
+    render(<HomePage />);
+
+    expect(screen.queryByRole('heading', { name: 'Skills' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Contact Subhajit' })).not.toBeInTheDocument();
   });
 
   it('does not render the former editorial marketing sections', () => {
