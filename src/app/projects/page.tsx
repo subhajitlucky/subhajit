@@ -15,10 +15,7 @@ export default function ProjectsPage() {
       <header className="projects-index-header">
         <SectionLabel index="All">Projects</SectionLabel>
         <h1>Selected projects</h1>
-        <p>
-          Public developer tools, AI systems, and full-stack applications. Each project includes
-          direct source and product links.
-        </p>
+        <p>Six public projects spanning developer tools, AI systems, and full-stack products.</p>
       </header>
       <ol className="projects-index-list">
         {projects.map((project) => (

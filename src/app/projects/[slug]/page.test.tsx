@@ -32,6 +32,10 @@ describe('ProjectPage', () => {
       'href',
       'https://github.com/subhajitlucky/codebase-doctor',
     );
+
+    for (const link of projects[0].links) {
+      expect(screen.getByRole('link', { name: link.label })).toHaveAttribute('href', link.href);
+    }
   });
 
   it('pre-renders every canonical project route', () => {
