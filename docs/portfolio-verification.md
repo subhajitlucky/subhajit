@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-30
 
-**Application commit verified:** `3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d`
+**Application commit verified:** `2092d7a00a8c11fb36d02e9ae17d6185bb8f5305`
 
 **Branch:** `feat/minimal-product-engineer-portfolio`
 
@@ -10,9 +10,9 @@
 
 ## Repository state
 
-Before verification, the worktree was clean on the branch and application commit recorded above. No deployment, push, merge, or external service mutation was performed.
+The worktree was clean on the branch at application commit `2092d7a00a8c11fb36d02e9ae17d6185bb8f5305` before this verification run. No deployment, push, merge, or external service mutation was performed.
 
-The automated gate and production-browser evidence were built and tested at application commit `3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d`. The subsequent evidence-document commit `6189ebfc1daf698a7bca7a5b469efe5e54903452` and environment-clarification commit `487e59d79eb3a06c313c2a50910294e3bfbc7424` were documentation-only. At review, `git diff --name-only 3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d..HEAD` returned only `docs/portfolio-verification.md`, so the application artifact remains the commit recorded above.
+The automated gate and production-browser evidence were built and tested at the application SHA above. The verification document was committed afterward as documentation-only; after that commit, `git diff --name-only 2092d7a00a8c11fb36d02e9ae17d6185bb8f5305..HEAD` returned only `docs/portfolio-verification.md`.
 
 ## Automated gate
 
@@ -28,37 +28,38 @@ npx -y react-doctor@latest . --verbose --diff
 
 Results:
 
-- `npm test`: Vitest reported 7 test files passed and 24 tests passed.
+- `npm test`: Vitest reported 7 test files passed and 24 tests passed; exit code 0.
 - `npm run typecheck`: `tsc --noEmit` exited 0 with no diagnostics.
 - `npm run lint`: ESLint exited 0 with zero warnings or errors under `--max-warnings=0`.
 - `npm run build`: Next.js 16.3.0 compiled successfully, finished TypeScript, generated 14 static pages, and emitted all six project paths through static generation.
-- React Doctor scanned 14 files and reported **100 / 100**, `Great`, with **no issues found**. The command reported that `--diff` is deprecated in favor of `--scope changed`; the requested command still completed successfully.
+- React Doctor scanned 14 files and reported **100 / 100**, `Great`, with **no issues found**; exit code 0. It reported that `--diff` is deprecated in favor of `--scope changed`, but the requested command completed successfully.
 
 ## Local production-browser verification
 
-The production build was served locally with `next start` on the free loopback port `36345`:
+The production build was served locally with `next start` on the free loopback port `44699`:
 
 ```text
-http://127.0.0.1:36345
+http://127.0.0.1:44699
 ```
 
-Real Chromium was driven through the Playwright CLI wrapper. Full-page screenshots were captured outside the repository for every route at both required viewports. The screenshot set contains 18 PNGs under a temporary `/tmp/portfolio-verification.djXXcf` directory and is not tracked.
+Real Chromium was driven through the Playwright CLI wrapper. Full-page screenshots were captured outside the repository for every route at both required viewports. The fresh screenshot set contains 18 PNGs under `/tmp/portfolio-verification.final-IKUrl7` and is not tracked.
 
 ### Reproduction record
 
 The wrapper was used after verifying `npx` was available. The production server and browser-check commands used for the full matrix were:
 
 ```bash
-command -v npx
-npm run start -- --hostname 127.0.0.1 --port 36345
+command -v npx >/dev/null 2>&1 && printf 'npx=%s\n' "$(command -v npx)"
+npm run start -- --hostname 127.0.0.1 --port 44699
 export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 export PWCLI="$CODEX_HOME/skills/playwright/scripts/playwright_cli.sh"
 export PLAYWRIGHT_MCP_EXECUTABLE_PATH=/usr/bin/chromium-browser
-bash "$PWCLI" --session portfolio-verify-20260830 open http://127.0.0.1:36345/
-bash "$PWCLI" --raw --session portfolio-verify-20260830 run-code --filename=/tmp/portfolio-verification.RR1V4M/browser-check.js
+bash "$PWCLI" --session portfolio-verify-final-20260830 open http://127.0.0.1:44699/
+bash "$PWCLI" --raw --session portfolio-verify-final-20260830 run-code --filename=/tmp/portfolio-verification.RR1V4M/browser-check.js
+bash "$PWCLI" --raw --session portfolio-verify-final-20260830 run-code --filename=/tmp/portfolio-verification.RR1V4M/target-check.js
 ```
 
-The observed tool versions were Node `v24.19.0`, npm `11.17.0`, Chromium `151.0.7922.108 snap`, Playwright CLI `0.1.18`, and React Doctor `0.9.12`. The wrapper script was invoked with `bash` because its executable bit was absent; it still ran the documented npx Playwright CLI. The browser-check script and session were temporary, and the JSON results were read from command output; no machine-readable result file was retained. The 18 screenshots remained outside the repository under `/tmp`.
+Observed versions were Node `v24.19.0`, npm `11.17.0`, Chromium `151.0.7922.108 snap`, Playwright CLI `0.1.18`, and React Doctor `0.9.12`. The wrapper script was invoked with `bash` because its executable bit was absent; it still ran the documented npx Playwright CLI. The browser-check scripts and CLI session were temporary. JSON results were read from command output; no machine-readable result file was retained. The 18 screenshots remained outside the repository under `/tmp`.
 
 ### Route matrix
 
@@ -81,9 +82,9 @@ All 18 route/viewport checks reported no horizontal overflow. At 1440px, both do
 - The first keyboard focus target was the skip link, `Skip to main content`, with `#main-content`; after the focus transition it was visible with a `2px solid rgb(49, 92, 69)` outline.
 - Header links appeared in this order on every route and viewport: Email, Resume, GitHub, LinkedIn. GitHub and LinkedIn used `target="_blank"` with `rel="noreferrer noopener"`; Resume remained local at `/resume.pdf` and Email remained a `mailto:` link.
 - The homepage exposed `Full-Stack Product Engineer`, four featured projects, three employers, Capabilities, Education, and Start a conversation without a route change. The intentional Giakaa employment entry retains its historical title; no obsolete availability phrase was rendered.
-- The action-target groups measured at the 44px target were `.wordmark` (18 occurrences), `.direct-links a` (72), `.intro-links a` (8), `.project-links a` (24), `.contact-section > a` (2), `.arrow-link` (60), `.evidence-links a` (32), `.project-navigation > a` (22), and `.not-found a` (4). These selector counts overlap where selectors match the same element; the 18-page action-target union contained 206 unique elements and the full matrix reported no 44px-height violations. Header Email, Resume, GitHub, and LinkedIn targets each measured 44px at both viewports. The 320px navigation remained visible and legible without overflow.
+- The action-target groups measured at the 44px target were `.wordmark` (18 occurrences), `.direct-links a` (72), `.intro-links a` (8), `.project-links a` (24), `.contact-section > a` (2), `.arrow-link` (60), `.evidence-links a` (32), `.project-navigation > a` (22), and `.not-found a` (4). These selector counts overlap where selectors match the same element; the 18-page action-target union contained 206 unique elements. The target probe reported `below44: 0` for every group (with a 0.01 CSS-pixel tolerance); header Email, Resume, GitHub, and LinkedIn targets each measured exactly 44px at both viewports. The 320px navigation remained visible and legible without overflow.
 - The initial homepage focus sequence was: skip link, SP, Email, Resume, GitHub, LinkedIn.
-- With `prefers-reduced-motion: reduce`, the media query matched, `scroll-behavior` was `auto`, and animations and transitions were disabled. The reduced-motion rule forces the skip link's translate to `0 0`, so the link remains visible and keyboard-focusable at rest rather than off-canvas.
+- With `prefers-reduced-motion: reduce`, the media query matched and `scroll-behavior` was `auto`. At rest, the skip link was focusable but off-canvas at `translate: 0px -200%`, with `transition-duration: 0s` and `transition-property: none`; the first Tab focused it and made it visible at `translate: 0px` immediately, still with a 0s transition. Other animation/transform offenders were empty.
 
 ### Browser errors and links
 
@@ -93,12 +94,12 @@ All 18 route/viewport checks reported no horizontal overflow. At 1440px, both do
 
 ### Static assets
 
-- `/resume.pdf`: HTTP 200, `application/pdf`, 127004 bytes, and the first five bytes were `%PDF-`.
-- `/opengraph-image`: HTTP 200, `image/png`, 43245 bytes, valid PNG signature, and valid dimensions of 1200 × 630.
+- `/resume.pdf`: HTTP 200, `application/pdf`, 127004 bytes, and the first five bytes were `%PDF-` (`[37, 80, 68, 70, 45]`).
+- `/opengraph-image`: HTTP 200, `image/png`, 43245 bytes, valid PNG signature (`[137, 80, 78, 71, 13, 10, 26, 10]`), and valid dimensions of 1200 × 630.
 
 ### Visual inspection
 
-The full-page homepage, projects index, Codebase Doctor case study, and 320px homepage screenshots were inspected. They showed the approved warm editorial layout, dark ink typography, green accents, compact responsive rows, and no visible clipping in those representative views.
+The fresh full-page homepage, projects index, Codebase Doctor case study, and 320px homepage screenshots were inspected. They showed the approved warm editorial layout, dark ink typography, green accents, compact responsive rows, and no visible clipping in those representative views.
 
 ## Content and visual-token sanity
 
@@ -119,8 +120,8 @@ No `blue` token or blue color declaration was found in the checked application s
 
 ## Boundaries and limitations
 
-- This document records local production-build evidence for application commit `3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d`; it is not proof that the commit is deployed.
+- This document records local production-build evidence for application commit `2092d7a00a8c11fb36d02e9ae17d6185bb8f5305`; it is not proof that the commit is deployed.
 - No Vercel project mutation, DNS change, deployment, push, merge, analytics setup, or public-domain verification was performed.
 - For external links, URL syntax and DOM target/rel attributes were checked; network availability was not tested.
 - The browser matrix covers real Chromium at 1440 × 1000 and 320 × 800. It does not replace testing with other browser engines, operating systems, screen readers, or physical touch devices.
-- Temporary screenshots and Playwright session artifacts were used for evidence only and are not repository artifacts.
+- Temporary screenshots, scripts, and Playwright session artifacts were used for evidence only and are not repository artifacts.
