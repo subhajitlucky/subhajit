@@ -6,7 +6,7 @@
 
 **Branch:** `feat/minimal-product-engineer-portfolio`
 
-**Evidence scope:** local repository, local production build, and local Chromium only
+**Environment:** local Ubuntu workstation, local production build, and headless Chromium via Playwright CLI only
 
 ## Repository state
 
