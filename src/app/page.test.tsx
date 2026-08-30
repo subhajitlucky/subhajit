@@ -55,6 +55,13 @@ describe('HomePage', () => {
     expect(giakaaEntry).toHaveTextContent('Remote');
     expect(within(giakaaEntry).queryByRole('paragraph')).not.toBeInTheDocument();
 
+    expect(screen.getByTestId('experience-uelement-technologies')).toHaveTextContent(
+      'Software Developer Intern',
+    );
+    expect(screen.getByTestId('experience-quadb-technologies')).toHaveTextContent(
+      'Software Engineering Trainee',
+    );
+
     expect(screen.getByRole('heading', { name: 'Experience' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Capabilities' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /education/i })).toBeInTheDocument();
