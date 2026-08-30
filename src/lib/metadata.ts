@@ -5,7 +5,7 @@ import { siteConfig } from '@/data/site';
 export const rootMetadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
   title: {
-    default: `${siteConfig.name} | Full Stack Software Developer`,
+    default: `${siteConfig.name} | ${siteConfig.role}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -13,9 +13,12 @@ export const rootMetadata: Metadata = {
   authors: [{ name: siteConfig.name, url: siteConfig.baseUrl }],
   creator: siteConfig.name,
   keywords: [
-    'developer tools engineer',
-    'AI systems engineer',
-    'full-stack engineer',
+    'full-stack product engineer',
+    'product engineer',
+    'product engineering',
+    'web product engineer',
+    'AI systems',
+    'developer tools',
     'TypeScript',
     'Next.js',
     'PostgreSQL',
