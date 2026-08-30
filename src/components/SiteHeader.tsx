@@ -9,7 +9,11 @@ export function SiteHeader() {
         Skip to main content
       </a>
       <div className="site-container header-inner">
-        <Link className="wordmark" href="/" aria-label={`${siteConfig.name}, home`}>
+        <Link
+          className="wordmark"
+          href="/"
+          aria-label={`${siteConfig.shortName}, ${siteConfig.name}, home`}
+        >
           {siteConfig.shortName}
         </Link>
         <nav aria-label="Direct links">

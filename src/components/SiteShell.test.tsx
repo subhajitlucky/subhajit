@@ -7,9 +7,12 @@ describe('site shell', () => {
   it('provides skip navigation and direct hiring links', () => {
     render(<SiteHeader />);
 
-    const homeLink = screen.getByRole('link', { name: `${siteConfig.name}, home` });
+    const homeLink = screen.getByRole('link', {
+      name: `${siteConfig.shortName}, ${siteConfig.name}, home`,
+    });
     expect(homeLink).toHaveTextContent(siteConfig.shortName);
     expect(homeLink).not.toHaveTextContent(siteConfig.name);
+    expect(homeLink).toHaveAttribute('href', '/');
 
     expect(screen.getByRole('link', { name: /skip to main content/i })).toHaveAttribute(
       'href',
