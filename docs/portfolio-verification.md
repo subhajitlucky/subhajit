@@ -12,6 +12,8 @@
 
 Before verification, the worktree was clean on the branch and application commit recorded above. No deployment, push, merge, or external service mutation was performed.
 
+The automated gate and production-browser evidence were built and tested at application commit `3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d`. The subsequent evidence-document commit `6189ebfc1daf698a7bca7a5b469efe5e54903452` and environment-clarification commit `487e59d79eb3a06c313c2a50910294e3bfbc7424` were documentation-only. At review, `git diff --name-only 3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d..HEAD` returned only `docs/portfolio-verification.md`, so the application artifact remains the commit recorded above.
+
 ## Automated gate
 
 The following commands were run freshly, in this order, against the application commit:
@@ -42,6 +44,22 @@ http://127.0.0.1:36345
 
 Real Chromium was driven through the Playwright CLI wrapper. Full-page screenshots were captured outside the repository for every route at both required viewports. The screenshot set contains 18 PNGs under a temporary `/tmp/portfolio-verification.djXXcf` directory and is not tracked.
 
+### Reproduction record
+
+The wrapper was used after verifying `npx` was available. The production server and browser-check commands used for the full matrix were:
+
+```bash
+command -v npx
+npm run start -- --hostname 127.0.0.1 --port 36345
+export CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+export PWCLI="$CODEX_HOME/skills/playwright/scripts/playwright_cli.sh"
+export PLAYWRIGHT_MCP_EXECUTABLE_PATH=/usr/bin/chromium-browser
+bash "$PWCLI" --session portfolio-verify-20260830 open http://127.0.0.1:36345/
+bash "$PWCLI" --raw --session portfolio-verify-20260830 run-code --filename=/tmp/portfolio-verification.RR1V4M/browser-check.js
+```
+
+The observed tool versions were Node `v24.19.0`, npm `11.17.0`, Chromium `151.0.7922.108 snap`, Playwright CLI `0.1.18`, and React Doctor `0.9.12`. The wrapper script was invoked with `bash` because its executable bit was absent; it still ran the documented npx Playwright CLI. The browser-check script and session were temporary, and the JSON results were read from command output; no machine-readable result file was retained. The 18 screenshots remained outside the repository under `/tmp`.
+
 ### Route matrix
 
 | Route | 1440 × 1000 | 320 × 800 | Structural result |
@@ -63,9 +81,9 @@ All 18 route/viewport checks reported no horizontal overflow. At 1440px, both do
 - The first keyboard focus target was the skip link, `Skip to main content`, with `#main-content`; after the focus transition it was visible with a `2px solid rgb(49, 92, 69)` outline.
 - Header links appeared in this order on every route and viewport: Email, Resume, GitHub, LinkedIn. GitHub and LinkedIn used `target="_blank"` with `rel="noreferrer noopener"`; Resume remained local at `/resume.pdf` and Email remained a `mailto:` link.
 - The homepage exposed `Full-Stack Product Engineer`, four featured projects, three employers, Capabilities, Education, and Start a conversation without a route change. The intentional Giakaa employment entry retains its historical title; no obsolete availability phrase was rendered.
-- The checked action links had computed heights of at least 44px at both viewports. The 320px navigation remained visible and legible without overflow.
-- Homepage keyboard order was: skip link, SP, Email, Resume, GitHub, LinkedIn.
-- With `prefers-reduced-motion: reduce`, the media query matched, `scroll-behavior` was `auto`, and no animations, transitions, or non-identity transforms were observed. The resting off-canvas skip-link position remains a focus affordance.
+- The action-target groups measured at the 44px target were `.wordmark` (18 occurrences), `.direct-links a` (72), `.intro-links a` (8), `.project-links a` (24), `.contact-section > a` (2), `.arrow-link` (60), `.evidence-links a` (32), `.project-navigation > a` (22), and `.not-found a` (4). These selector counts overlap where selectors match the same element; the 18-page action-target union contained 206 unique elements and the full matrix reported no 44px-height violations. Header Email, Resume, GitHub, and LinkedIn targets each measured 44px at both viewports. The 320px navigation remained visible and legible without overflow.
+- The initial homepage focus sequence was: skip link, SP, Email, Resume, GitHub, LinkedIn.
+- With `prefers-reduced-motion: reduce`, the media query matched, `scroll-behavior` was `auto`, and animations and transitions were disabled. The reduced-motion rule forces the skip link's translate to `0 0`, so the link remains visible and keyboard-focusable at rest rather than off-canvas.
 
 ### Browser errors and links
 
@@ -103,6 +121,6 @@ No `blue` token or blue color declaration was found in the checked application s
 
 - This document records local production-build evidence for application commit `3f6f4cd8c4a8ed4786c6fe3987f9fccc28566b2d`; it is not proof that the commit is deployed.
 - No Vercel project mutation, DNS change, deployment, push, merge, analytics setup, or public-domain verification was performed.
-- External GitHub, npm, LinkedIn, and live-application URLs were syntax/target checked only; their public availability is not claimed here.
+- For external links, URL syntax and DOM target/rel attributes were checked; network availability was not tested.
 - The browser matrix covers real Chromium at 1440 × 1000 and 320 × 800. It does not replace testing with other browser engines, operating systems, screen readers, or physical touch devices.
 - Temporary screenshots and Playwright session artifacts were used for evidence only and are not repository artifacts.
