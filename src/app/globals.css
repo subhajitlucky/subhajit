@@ -1464,7 +1464,6 @@ a:hover {
   *::after {
     animation: none !important;
     transform: none !important;
-    translate: 0 0 !important;
     transition: none !important;
   }
 }
