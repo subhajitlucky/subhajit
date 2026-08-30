@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { notFound } from 'next/navigation';
-import { projects } from '@/data/projects';
+import { getProject, projects } from '@/data/projects';
 import ProjectPage, { generateStaticParams } from './page';
 
 vi.mock('next/navigation', () => ({
@@ -33,7 +33,13 @@ describe('ProjectPage', () => {
       'https://github.com/subhajitlucky/codebase-doctor',
     );
 
-    for (const link of projects[0].links) {
+    const project = getProject('codebase-doctor');
+    expect(project).toBeDefined();
+    if (!project) {
+      throw new Error('Expected codebase-doctor to be present in canonical project data');
+    }
+
+    for (const link of project.links) {
       expect(screen.getByRole('link', { name: link.label })).toHaveAttribute('href', link.href);
     }
   });
