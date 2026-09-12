@@ -1,7 +1,7 @@
 import { projects } from '@/data/projects';
 
 const profileDescription =
-  'Software engineer building developer tools, multi-agent systems, and production web apps with inspectable architecture, tests, and shipped releases.';
+  'Software engineer building developer tools, AI systems, and production full-stack products with inspectable architecture, tests, and shipped releases.';
 
 export const siteConfig = {
   name: 'Subhajit Pradhan',
@@ -18,7 +18,8 @@ export const siteConfig = {
     'Subhajit Pradhan',
     'Subhajit Pradhan software engineer',
     'developer tools engineer',
-    'multi-agent systems',
+    'AI systems engineer',
+    'Codebase Doctor',
     'Postgres RLS',
     'Next.js TypeScript',
     'full stack developer Odisha',
@@ -39,7 +40,7 @@ export const siteConfig = {
 export const profileSummary = {
   short: profileDescription,
   long:
-    'I am a software engineer from Odisha, India building developer tools, multi-agent workflows, and production full-stack systems. My work emphasizes inspectable architecture, honest tradeoffs, tests, CI, and code peers can review without ceremony.',
+    'I am a software engineer from Odisha, India building developer tools, AI systems, and production full-stack products. My work emphasizes inspectable architecture, honest tradeoffs, tests, CI, and code peers can review without ceremony.',
 } as const;
 
 export const toolFootnotes = [
@@ -52,13 +53,13 @@ export const toolFootnotes = [
 ] as const;
 
 export const featuredProjectSlugs = [
+  'codebase-doctor',
   'rls-doctor',
   'smritiflow',
   'tarka-sabha',
-  'cscosmos',
 ] as const;
 
-export const selectedProjectSlugs = ['campushelper', 'intentpay'] as const;
+export const selectedProjectSlugs = ['cscosmos', 'campushelper'] as const;
 
 export const experience = [
   {
@@ -95,12 +96,12 @@ export const faqs = [
   {
     question: 'Who am I?',
     answer:
-      'I am Subhajit Pradhan, a software engineer from Odisha, India focused on developer tools, multi-agent systems, and production web apps.',
+      'I am Subhajit Pradhan, a software engineer from Odisha, India focused on developer tools, AI systems, and production full-stack products.',
   },
   {
     question: 'What do I build?',
     answer:
-      'I build CLIs and agent tooling, multi-agent product surfaces, full-stack web systems, and safer AI-assisted interfaces.',
+      'I build codebase auditing and developer tooling, AI-assisted workflows, full-stack web systems, and safer AI product interfaces.',
   },
   {
     question: 'Am I open to roles?',
@@ -110,14 +111,14 @@ export const faqs = [
   {
     question: 'Where can you inspect my work?',
     answer:
-      'Start with the featured case studies, GitHub repositories, npm packages, live demos, and short writing notes linked from this site.',
+      'Start with Codebase Doctor, RLS Doctor, SmritiFlow, the featured case studies, GitHub repositories, npm packages, live demos, and short writing notes linked from this site.',
   },
 ] as const;
 
 export const skills = [
   {
-    category: 'Languages',
-    items: ['TypeScript', 'JavaScript', 'Python', 'Go', 'Rust', 'SQL', 'Java', 'C++'],
+    category: 'Core',
+    items: ['TypeScript', 'JavaScript', 'Python', 'SQL'],
   },
   {
     category: 'Frontend',
@@ -128,20 +129,20 @@ export const skills = [
     items: ['Node.js', 'Express.js', 'REST APIs', 'GraphQL'],
   },
   {
-    category: 'AI & Integrations',
-    items: ['OpenAI API', 'Anthropic API', 'Google Gemini API', 'AI SDK', 'LLM Integrations'],
+    category: 'AI & Developer Tools',
+    items: ['OpenAI API', 'Anthropic API', 'Google Gemini API', 'AI SDK', 'MCP', 'AI Agents'],
   },
   {
     category: 'Databases',
-    items: ['PostgreSQL', 'MongoDB', 'MySQL', 'Prisma'],
+    items: ['PostgreSQL', 'Prisma', 'MongoDB', 'MySQL'],
   },
   {
-    category: 'DevOps & Cloud',
-    items: ['Docker', 'Git', 'GitHub Actions', 'Linux', 'Vercel', 'Railway', 'Postman'],
+    category: 'Engineering & Cloud',
+    items: ['Docker', 'Git', 'GitHub Actions', 'Linux', 'Vercel', 'Railway', 'Testing', 'CI/CD'],
   },
   {
-    category: 'Blockchain',
-    items: ['Ethereum', 'ICP', 'Solidity', 'Hardhat', 'Ethers.js', 'Web3.js'],
+    category: 'Additional',
+    items: ['Go', 'Rust', 'Java', 'C++', 'Ethereum', 'ICP', 'Solidity', 'Hardhat', 'Ethers.js'],
   },
 ] as const;
 
