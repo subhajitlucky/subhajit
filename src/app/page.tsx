@@ -138,11 +138,20 @@ export default function HomePage() {
       </section>
 
       <section id="contact" className="portfolio-cta" aria-labelledby="contact-heading">
-        <div>
+        <div className="contact-block">
           <p className="kicker">04 / Contact</p>
-          <h2 id="contact-heading">Have a hard problem? Let’s build it.</h2>
+          <h2 id="contact-heading">Let’s build something useful.</h2>
+          <p className="contact-copy">I’m open to software engineering roles, developer-tooling work, and serious product problems.</p>
+          <div className="contact-links">
+            <a href={siteConfig.links.email}>Email me →</a>
+            <a href={siteConfig.links.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href={siteConfig.links.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          </div>
         </div>
-        <ButtonLink href={siteConfig.links.email} variant="primary">Get in touch</ButtonLink>
+        <div className="contact-side">
+          <span>Preferred work</span>
+          <strong>Software engineering · Developer tools · AI systems</strong>
+        </div>
       </section>
     </>
   );
