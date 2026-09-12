@@ -8,10 +8,42 @@ import { experience, featuredProjectSlugs, machineReadableProfile, siteConfig } 
 import { itemListJsonLd, organizationJsonLd, personJsonLd, softwareEngineerJsonLd, websiteJsonLd } from '@/lib/metadata';
 
 export const dynamic = 'force-static';
-export const metadata = { title: `${siteConfig.name} — Software Engineer`, description: siteConfig.description };
+
+export const metadata = {
+  title: `${siteConfig.name} — Software Engineer`,
+  description: siteConfig.description,
+};
 
 function pickProjects(slugs: readonly string[]): Project[] {
-  return slugs.flatMap((slug) => { const project = projects.find((candidate) => candidate.slug === slug); return project ? [project] : []; });
+  return slugs.reduce<Project[]>((selected, slug) => {
+    const project = projects.find((candidate) => candidate.slug === slug);
+    if (project) selected.push(project);
+    return selected;
+  }, []);
+}
+
+function WorkRow({ project }: { project: Project }) {
+  const demo = project.demo && project.demo !== project.github ? project.demo : null;
+
+  return (
+    <article className="work-row">
+      <div className="work-row__title">
+        <h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3>
+        <p>{project.status}</p>
+      </div>
+      <div className="work-row__thesis">
+        <p>{project.oneLine}</p>
+      </div>
+      <div className="work-row__proof">
+        <strong>{project.stack.slice(0, 4).join(' · ')}</strong>
+      </div>
+      <nav className="work-row__links" aria-label={`${project.title} links`}>
+        <Link href={`/projects/${project.slug}`}>Case study</Link>
+        <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
+        {demo ? <a href={demo} target="_blank" rel="noreferrer">{demo.includes('npmjs.com') ? 'npm' : 'Demo'}</a> : null}
+      </nav>
+    </article>
+  );
 }
 
 export default function HomePage() {
@@ -19,54 +51,84 @@ export default function HomePage() {
   const recentWriting = blogPosts.slice(0, 2);
 
   return (
-    <div className="mx-auto w-full max-w-[1180px] px-6 md:px-10">
-      <JsonLd data={personJsonLd()} /><JsonLd data={softwareEngineerJsonLd()} /><JsonLd data={organizationJsonLd()} />
-      <JsonLd data={websiteJsonLd()} /><JsonLd data={itemListJsonLd('Subhajit Pradhan projects', '/projects', projects)} />
-      <JsonLd data={itemListJsonLd('Subhajit Pradhan blog posts', '/blog', blogPosts)} /><JsonLd data={machineReadableProfile} />
+    <>
+      <JsonLd data={personJsonLd()} />
+      <JsonLd data={softwareEngineerJsonLd()} />
+      <JsonLd data={organizationJsonLd()} />
+      <JsonLd data={websiteJsonLd()} />
+      <JsonLd data={itemListJsonLd('Subhajit Pradhan projects', '/projects', projects)} />
+      <JsonLd data={itemListJsonLd('Subhajit Pradhan blog posts', '/blog', blogPosts)} />
+      <JsonLd data={machineReadableProfile} />
 
-      <section id="home" className="border-b border-black/10 py-24 md:py-32" aria-labelledby="home-heading">
-        <p className="mb-6 font-mono text-xs font-bold uppercase tracking-[0.16em] text-black/45">Software Engineer · Odisha, India</p>
-        <h1 id="home-heading" className="max-w-5xl text-[clamp(3.5rem,10vw,8rem)] font-semibold leading-[0.88] tracking-[-0.06em] text-black">Subhajit Pradhan</h1>
-        <p className="mt-8 max-w-2xl text-xl font-medium leading-8 text-black md:text-2xl">Developer tools, AI systems & full-stack products.</p>
-        <p className="mt-4 max-w-xl text-base leading-7 text-black/55">I build software that is useful, inspectable, and ready to ship.</p>
-        <div className="mt-9 flex flex-wrap gap-3">
-          <ButtonLink href={siteConfig.links.email} variant="primary">Email</ButtonLink>
-          <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
-          <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
+      <section id="home" className="home-hero" aria-labelledby="home-heading">
+        <div className="home-hero__identity">
+          <p className="kicker">Software Engineer</p>
+          <h1 id="home-heading">Subhajit Pradhan</h1>
+          <p className="home-hero__role">Developer Tools · AI Systems · Full Stack</p>
+          <p className="home-hero__location">Odisha, India · Open to work</p>
+        </div>
+        <div className="home-hero__pitch">
+          <p>I build developer tools, AI systems, and production web applications.</p>
+          <div className="home-hero__actions">
+            <ButtonLink href={siteConfig.links.email} variant="primary">Email</ButtonLink>
+            <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
+            <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
+          </div>
         </div>
       </section>
 
-      <section id="work" className="border-b border-black/10 py-16 md:py-20" aria-labelledby="work-heading">
-        <div className="mb-10 flex items-end justify-between gap-6"><div><p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.16em] text-black/40">01</p><h2 id="work-heading" className="text-3xl font-semibold tracking-tight md:text-4xl">Selected work</h2></div><Link className="hidden text-sm font-semibold text-black/50 hover:text-black md:block" href="/projects">All projects →</Link></div>
-        <div className="divide-y divide-black/10 border-y border-black/10">
-          {featuredProjects.map((project, index) => (
-            <Link key={project.slug} href={`/projects/${project.slug}`} className="group grid gap-5 py-7 transition-colors md:grid-cols-[48px_minmax(0,1fr)_260px_70px] md:items-center">
-              <span className="font-mono text-xs text-black/30">0{index + 1}</span>
-              <div><h3 className="text-xl font-semibold tracking-tight group-hover:text-black">{project.title}</h3><p className="mt-2 max-w-2xl text-sm leading-6 text-black/50">{project.oneLine}</p></div>
-              <span className="text-xs leading-5 text-black/40">{project.stack.slice(0, 4).join(' · ')}</span>
-              <span className="text-right text-sm font-semibold text-black/40 group-hover:text-black">View →</span>
-            </Link>
+      <section id="work" className="home-section" aria-labelledby="work-heading">
+        <div className="home-section__heading">
+          <p className="kicker">01 Work</p>
+          <h2 id="work-heading">Selected work</h2>
+        </div>
+        <div className="work-list">
+          {featuredProjects.map((project) => <WorkRow key={project.slug} project={project} />)}
+          <Link className="text-link" href="/projects">View all work →</Link>
+        </div>
+      </section>
+
+      <section id="experience" className="home-section" aria-labelledby="experience-heading">
+        <div className="home-section__heading">
+          <p className="kicker">02 Experience</p>
+          <h2 id="experience-heading">Experience</h2>
+        </div>
+        <ol className="experience-list">
+          {experience.slice(0, 3).map((item) => (
+            <li key={`${item.organization}-${item.period}`}>
+              <time>{item.period}</time>
+              <div><h3>{item.organization}</h3><p>{item.summary}</p></div>
+              <p>{item.title}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="writing" className="home-section" aria-labelledby="writing-heading">
+        <div className="home-section__heading">
+          <p className="kicker">03 Writing</p>
+          <h2 id="writing-heading">Notes</h2>
+        </div>
+        <div className="work-list">
+          {recentWriting.map((post) => (
+            <article key={post.slug} className="work-row">
+              <div><h3><Link href={`/blog/${post.slug}`}>{post.title}</Link></h3><p>{formatDisplayDate(post.publishedAt)}</p></div>
+              <div className="work-row__thesis"><p>{post.description}</p></div>
+              <div />
+              <nav><Link href={`/blog/${post.slug}`}>Read →</Link></nav>
+            </article>
           ))}
         </div>
       </section>
 
-      <section id="experience" className="border-b border-black/10 py-16 md:py-20" aria-labelledby="experience-heading">
-        <div className="mb-10"><p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.16em] text-black/40">02</p><h2 id="experience-heading" className="text-3xl font-semibold tracking-tight md:text-4xl">Experience</h2></div>
-        <div className="divide-y divide-black/10 border-y border-black/10">
-          {experience.slice(0, 3).map((item) => <article key={`${item.organization}-${item.period}`} className="grid gap-4 py-7 md:grid-cols-[180px_220px_1fr] md:gap-8"><time className="font-mono text-xs text-black/35">{item.period}</time><div><h3 className="font-semibold">{item.organization}</h3><p className="mt-1 text-sm text-black/45">{item.title}</p></div><p className="max-w-2xl text-sm leading-6 text-black/55">{item.summary}</p></article>)}
+      <section id="contact" className="home-section contact-cta" aria-labelledby="contact-heading">
+        <div><p className="kicker">04 Contact</p><h2 id="contact-heading">Let’s work.</h2></div>
+        <p>Looking for software engineering opportunities in developer tools, AI, and full-stack systems.</p>
+        <div className="contact-cta__actions">
+          <ButtonLink href={siteConfig.links.email} variant="primary">Email</ButtonLink>
+          <ButtonLink href={siteConfig.links.linkedin} external variant="secondary">LinkedIn</ButtonLink>
         </div>
       </section>
-
-      <section id="writing" className="border-b border-black/10 py-16 md:py-20" aria-labelledby="writing-heading">
-        <div className="mb-10"><p className="mb-2 font-mono text-xs font-bold uppercase tracking-[0.16em] text-black/40">03</p><h2 id="writing-heading" className="text-3xl font-semibold tracking-tight md:text-4xl">Writing</h2></div>
-        <div className="divide-y divide-black/10 border-y border-black/10">{recentWriting.map((post) => <Link key={post.slug} href={`/blog/${post.slug}`} className="group grid gap-3 py-6 md:grid-cols-[150px_1fr_80px] md:items-center"><span className="font-mono text-xs text-black/35">{formatDisplayDate(post.publishedAt)}</span><strong className="text-lg font-medium group-hover:text-black">{post.title}</strong><span className="text-sm text-black/35 group-hover:text-black">Read →</span></Link>)}</div>
-      </section>
-
-      <section id="contact" className="py-20 md:py-28" aria-labelledby="contact-heading">
-        <p className="mb-3 font-mono text-xs font-bold uppercase tracking-[0.16em] text-black/40">04</p>
-        <h2 id="contact-heading" className="max-w-3xl text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-6xl">Let’s build something useful.</h2>
-        <div className="mt-8 flex flex-wrap gap-3"><ButtonLink href={siteConfig.links.email} variant="primary">Get in touch</ButtonLink><ButtonLink href={siteConfig.links.linkedin} external variant="secondary">LinkedIn</ButtonLink></div>
-      </section>
-    </div>
+    </>
   );
 }
