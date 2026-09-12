@@ -39,12 +39,12 @@ export default function HomePage() {
         <div className="portfolio-hero__main">
           <div>
             <p className="kicker">Developer tools · AI systems · Full stack</p>
-            <h1 id="hero-heading">I build software that is useful, inspectable, and hard to fake.</h1>
-            <p className="hero-copy">I work on developer infrastructure, database security, agent workflows, and production web systems.</p>
+            <h1 id="hero-heading">I build software that works.</h1>
+            <p className="hero-copy">Developer infrastructure, database security, agent workflows, and production web systems.</p>
             <div className="hero-actions">
-              <ButtonLink href={siteConfig.links.github} external variant="primary">GitHub</ButtonLink>
+              <ButtonLink href="/projects" variant="primary">View work</ButtonLink>
               <ButtonLink href={siteConfig.resumePath} variant="secondary">Resume</ButtonLink>
-              <ButtonLink href={siteConfig.links.email} variant="secondary">Email</ButtonLink>
+              <ButtonLink href={siteConfig.links.github} external variant="secondary">GitHub</ButtonLink>
             </div>
           </div>
           <div className="hero-note">
@@ -55,12 +55,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="portfolio-section" aria-labelledby="projects-heading">
+      <section id="projects" className="portfolio-section" aria-labelledby="projects-heading">
         <div className="section-label">01 / Work</div>
         <div>
           <div className="section-heading">
             <p className="kicker">Selected projects</p>
-            <h2 id="projects-heading">Built, shipped, inspectable.</h2>
+            <h2 id="projects-heading">Things I actually built.</h2>
           </div>
           <div className="project-list">
             {featuredProjects.map((project, index) => (
@@ -89,38 +89,44 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="portfolio-section" aria-labelledby="experience-heading">
+      <section id="experience" className="portfolio-section" aria-labelledby="experience-heading">
         <div className="section-label">02 / Experience</div>
         <div>
           <div className="section-heading">
             <p className="kicker">Production</p>
-            <h2 id="experience-heading">Work that shipped.</h2>
+            <h2 id="experience-heading">Where I’ve worked.</h2>
           </div>
-          <div className="experience-table" role="table" aria-label="Experience">
-            <div className="experience-table__row experience-table__head" role="row">
-              <span role="columnheader">Period</span>
-              <span role="columnheader">Company</span>
-              <span role="columnheader">Role</span>
-              <span role="columnheader">Scope</span>
-            </div>
-            {experience.slice(0, 3).map((item) => (
-              <div className="experience-table__row" role="row" key={`${item.organization}-${item.period}`}>
-                <time role="cell">{item.period}</time>
-                <strong role="cell">{item.organization}</strong>
-                <span role="cell">{item.title}</span>
-                <p role="cell">{item.summary}</p>
-              </div>
-            ))}
+          <div className="experience-table-wrap">
+            <table className="experience-table">
+              <thead>
+                <tr>
+                  <th scope="col">Period</th>
+                  <th scope="col">Company</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Scope</th>
+                </tr>
+              </thead>
+              <tbody>
+                {experience.slice(0, 3).map((item) => (
+                  <tr key={`${item.organization}-${item.period}`}>
+                    <td><time>{item.period}</time></td>
+                    <td><strong>{item.organization}</strong></td>
+                    <td>{item.title}</td>
+                    <td>{item.summary}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      <section className="portfolio-section" aria-labelledby="stack-heading">
+      <section id="stack" className="portfolio-section" aria-labelledby="stack-heading">
         <div className="section-label">03 / Stack</div>
         <div>
           <div className="section-heading">
             <p className="kicker">Tools</p>
-            <h2 id="stack-heading">Small stack. Deep use.</h2>
+            <h2 id="stack-heading">The stack I use to ship.</h2>
           </div>
           <div className="stack-grid">
             <div><span>Languages</span><strong>TypeScript · JavaScript · Python · SQL · Go · Rust</strong></div>
@@ -131,10 +137,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="portfolio-cta" aria-labelledby="contact-heading">
+      <section id="contact" className="portfolio-cta" aria-labelledby="contact-heading">
         <div>
           <p className="kicker">04 / Contact</p>
-          <h2 id="contact-heading">Interested in building serious software?</h2>
+          <h2 id="contact-heading">Have a hard problem? Let’s build it.</h2>
         </div>
         <ButtonLink href={siteConfig.links.email} variant="primary">Get in touch</ButtonLink>
       </section>
