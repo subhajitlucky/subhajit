@@ -12,52 +12,36 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
-    title: 'AI can draft a transaction. It should not execute one.',
+    title: 'AI can plan a transaction. The wallet must approve it.',
     slug: 'intent-driven-blockchain-interfaces',
     description:
-      'The product boundary I use in IntentPay: natural language can prepare a plan, but every wallet action needs visible review.',
+      'A transaction planner can generate intent, but execution stays behind an explicit wallet review boundary.',
     publishedAt: '2026-05-27',
-    updatedAt: '2026-05-27',
-    readingTime: '6 min read',
-    tags: ['Blockchain', 'Product UX', 'Solidity'],
+    updatedAt: '2026-09-12',
+    readingTime: '3 min read',
+    tags: ['Blockchain', 'Security', 'UX'],
     keywords: [
-      'Subhajit Pradhan blockchain developer',
-      'intent driven blockchain UX',
-      'full stack blockchain developer',
+      'transaction planning',
+      'wallet approval boundary',
+      'AI blockchain security',
     ],
     relatedProjectSlugs: ['intentpay'],
   },
   {
-    title: 'Multi-agent apps need workflow state, not just better prompts',
+    title: 'Multi-agent systems need state, not prompt chains.',
     slug: 'multi-agent-ai-debate-platforms',
     description:
-      'What Tarka Sabha taught me about provider boundaries, credential handling, and making AI output inspectable.',
+      'Reliable agent workflows need explicit state, provider boundaries, isolated credentials, and inspectable execution.',
     publishedAt: '2026-05-27',
-    updatedAt: '2026-05-27',
-    readingTime: '5 min read',
-    tags: ['AI', 'Node.js', 'Architecture'],
+    updatedAt: '2026-09-12',
+    readingTime: '3 min read',
+    tags: ['AI', 'Architecture', 'Node.js'],
     keywords: [
-      'Subhajit Pradhan developer',
-      'multi agent AI app architecture',
-      'Node.js AI orchestration',
+      'multi-agent workflow state',
+      'AI provider boundaries',
+      'agent architecture',
     ],
     relatedProjectSlugs: ['tarka-sabha'],
-  },
-  {
-    title: 'A portfolio should behave like a product review surface',
-    slug: 'portfolio-seo-architecture',
-    description:
-      'How I changed this portfolio to reduce scan fatigue and put proof, tradeoffs, and source links before decoration.',
-    publishedAt: '2026-05-27',
-    updatedAt: '2026-05-27',
-    readingTime: '5 min read',
-    tags: ['SEO', 'Next.js', 'Career'],
-    keywords: [
-      'Subhajit Pradhan full stack developer',
-      'developer portfolio SEO',
-      'Next.js portfolio architecture',
-    ],
-    relatedProjectSlugs: [],
   },
 ];
 
