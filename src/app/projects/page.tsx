@@ -1,60 +1,41 @@
 import Link from 'next/link';
 import JsonLd from '@/components/JsonLd';
 import { projects, type Project } from '@/data/projects';
-import {
-  featuredProjectSlugs,
-  selectedProjectSlugs,
-  siteConfig,
-  toolFootnotes,
-} from '@/data/site';
+import { featuredProjectSlugs, selectedProjectSlugs, siteConfig, toolFootnotes } from '@/data/site';
 import { createMetadata, itemListJsonLd } from '@/lib/metadata';
 
 export const metadata = createMetadata({
   title: `Projects – ${siteConfig.name}`,
-  description:
-    'Case studies of developer tools, multi-agent systems, and production web apps with architecture, tradeoffs, metrics, and source links.',
+  description: 'Selected software projects with source, architecture, and engineering proof.',
   path: '/projects',
-  keywords: [
-    'Subhajit Pradhan projects',
-    'developer tools case studies',
-    'multi-agent systems portfolio',
-  ],
+  keywords: ['Subhajit Pradhan projects', 'developer tools', 'software engineering portfolio'],
 });
 
-function WorkRow({ project }: { project: Project }) {
+function WorkRow({ project, featured = false }: { project: Project; featured?: boolean }) {
   const hasSeparateDemo = project.demo && project.demo !== project.github;
 
   return (
-    <article className="work-row">
-      <div>
-        <h3>
-          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-        </h3>
-        <p>
-          {project.status} / {project.year}
-        </p>
+    <article className={`work-row${featured ? ' work-row--featured' : ''}`}>
+      <div className="work-row__identity">
+        <div className="work-row__meta">{project.status} · {project.year}</div>
+        <h3><Link href={`/projects/${project.slug}`}>{project.title}</Link></h3>
+        <p>{project.tags.join(' · ')}</p>
       </div>
-      <p>{project.oneLine}</p>
-      <strong>{project.metrics[0]?.value}</strong>
-      <nav aria-label={`${project.title} links`}>
+      <p className="work-row__summary">{project.oneLine}</p>
+      <div className="work-row__proof">
+        {project.proof.slice(0, 2).map((item) => <span key={item}>{item}</span>)}
+      </div>
+      <nav className="work-row__links" aria-label={`${project.title} links`}>
         <Link href={`/projects/${project.slug}`}>Case study</Link>
-        <a href={project.github} rel="noreferrer" target="_blank">
-          Source
-        </a>
-        {hasSeparateDemo && project.demo ? (
-          <a href={project.demo} rel="noreferrer" target="_blank">
-            {project.demo.includes('npmjs.com') ? 'npm' : 'Demo'}
-          </a>
-        ) : null}
+        <a href={project.github} rel="noreferrer" target="_blank">GitHub</a>
+        {hasSeparateDemo && project.demo ? <a href={project.demo} rel="noreferrer" target="_blank">{project.demo.includes('npmjs.com') ? 'npm' : 'Live'}</a> : null}
       </nav>
     </article>
   );
 }
 
 function pick(slugs: readonly string[]) {
-  return slugs
-    .map((slug) => projects.find((project) => project.slug === slug))
-    .filter((project): project is Project => Boolean(project));
+  return slugs.map((slug) => projects.find((project) => project.slug === slug)).filter((project): project is Project => Boolean(project));
 }
 
 export default function ProjectsPage() {
@@ -64,58 +45,43 @@ export default function ProjectsPage() {
   return (
     <>
       <JsonLd data={itemListJsonLd('Subhajit Pradhan project case studies', '/projects', projects)} />
-      <section className="page-hero page-hero--compact">
-        <p className="eyebrow">Project index</p>
-        <h1>Selected work</h1>
-        <p>
-          Featured systems first, then product case studies. Each entry links to architecture,
-          tradeoffs, metrics, and source.
-        </p>
+      <section className="projects-intro" aria-labelledby="projects-title">
+        <div>
+          <p className="eyebrow">Projects / 2026</p>
+          <h1 id="projects-title">Software I built and shipped.</h1>
+        </div>
+        <p>Developer tools, AI systems, security tooling, and full-stack products. Source and case studies are linked for inspection.</p>
       </section>
 
-      <section className="home-section" aria-labelledby="featured-index-heading">
-        <div className="home-section__heading">
-          <p className="kicker">Featured</p>
-          <h2 id="featured-index-heading">Systems and tools</h2>
+      <section className="projects-section" aria-labelledby="featured-heading">
+        <div className="projects-section__heading">
+          <p className="kicker">01 / Featured</p>
+          <h2 id="featured-heading">Developer tools first.</h2>
+          <p>The projects I would show an engineering interviewer first.</p>
         </div>
-        <div className="work-list index-grid">
-          {featured.map((project) => (
-            <WorkRow key={project.slug} project={project} />
-          ))}
-        </div>
+        <div className="work-list">{featured.map((project) => <WorkRow key={project.slug} project={project} featured />)}</div>
       </section>
 
-      <section className="home-section" aria-labelledby="selected-index-heading">
-        <div className="home-section__heading">
-          <p className="kicker">Selected</p>
-          <h2 id="selected-index-heading">Product work</h2>
+      <section className="projects-section" aria-labelledby="selected-heading">
+        <div className="projects-section__heading">
+          <p className="kicker">02 / Selected</p>
+          <h2 id="selected-heading">Product work.</h2>
+          <p>Full-stack systems that show product delivery beyond tooling.</p>
         </div>
-        <div className="work-list index-grid">
-          {selected.map((project) => (
-            <WorkRow key={project.slug} project={project} />
-          ))}
-        </div>
+        <div className="work-list">{selected.map((project) => <WorkRow key={project.slug} project={project} />)}</div>
       </section>
 
-      <section className="home-section" aria-labelledby="footnote-index-heading">
-        <div className="home-section__heading">
-          <p className="kicker">Footnote</p>
-          <h2 id="footnote-index-heading">Agent tooling</h2>
+      <section className="projects-footnote" aria-labelledby="footnote-heading">
+        <div>
+          <p className="kicker">03 / Other tooling</p>
+          <h2 id="footnote-heading">Small repos, useful ideas.</h2>
         </div>
-        <div className="work-list">
+        <div className="tool-footnotes">
           {toolFootnotes.map((tool) => (
-            <article key={tool.title} className="work-row work-row--footnote">
-              <div>
-                <h3>{tool.title}</h3>
-                <p>GitHub only</p>
-              </div>
+            <article key={tool.title}>
+              <strong>{tool.title}</strong>
               <p>{tool.oneLine}</p>
-              <strong>Agent skill</strong>
-              <nav aria-label={`${tool.title} links`}>
-                <a href={tool.github} rel="noreferrer" target="_blank">
-                  Source
-                </a>
-              </nav>
+              <a href={tool.github} rel="noreferrer" target="_blank">GitHub →</a>
             </article>
           ))}
         </div>
