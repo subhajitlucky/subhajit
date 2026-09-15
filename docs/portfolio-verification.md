@@ -8,6 +8,17 @@
 
 **Environment:** local Ubuntu workstation, local production build, and headless Chromium via Playwright CLI only
 
+## Follow-up pass
+
+The final deslop pass changed four things after the verification below:
+
+- The duplicated "worldwide" availability phrase was removed from the homepage contact section.
+- The project index now publishes route-local metadata (title, description, canonical, Open Graph, Twitter).
+- The favicon and web manifest colors were aligned with the warm editorial tokens.
+- The README was rewritten for the final positioning, the dead `.env.example` was removed, and superseded planning documents were deleted.
+
+`npm test` (26 tests), `npm run typecheck`, `npm run lint`, and `npm run build` (14 static pages) were rerun against this commit and all exited 0. The browser matrix below still applies to application commit `2092d7a00a8c11fb36d02e9ae17d6185bb8f5305`.
+
 ## Repository state
 
 The worktree was clean on the branch at application commit `2092d7a00a8c11fb36d02e9ae17d6185bb8f5305` before this verification run. No deployment, push, merge, or external service mutation was performed.

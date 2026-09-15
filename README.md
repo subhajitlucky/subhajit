@@ -1,8 +1,6 @@
-# Subhajit Pradhan — Engineering Portfolio
+# Subhajit Pradhan — Portfolio
 
-A hiring-focused Next.js portfolio presenting Subhajit Pradhan as a developer-tools and AI-systems engineer with full-stack product range.
-
-The site is designed as an engineering dossier: claims are backed by public source repositories, published packages, live applications, documented decisions, and explicit limitations.
+A one-page hiring portfolio for remote full-stack product engineering roles, built with Next.js. Every public claim is backed by a source repository, a published package, a live application, or a case study that documents decisions and limitations.
 
 ## Local development
 
@@ -26,21 +24,21 @@ npm run build
 
 ## Routes
 
-- `/` — positioning, featured work, experience, principles, education, and contact
+- `/` — positioning, selected work, experience, capabilities, education, and contact
 - `/projects` — complete six-project index
 - `/projects/[slug]` — statically generated project case studies
-- `/resume.pdf` — stable public resume download
+- `/resume.pdf` — public resume download
 - `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest` — discovery metadata
 - `/opengraph-image` — generated social preview
 
 ## Content model
 
-- Profile, experience, skills, and education: `src/data/site.ts`
+- Profile, experience, capabilities, and education: `src/data/site.ts`
 - Canonical project claims, links, architecture, and limitations: `src/data/projects.ts`
-- Root and project metadata: `src/lib/metadata.ts`
-- Resume source served by the site: `public/resume.pdf`
+- Route metadata and structured data: `src/lib/metadata.ts`, `src/lib/structured-data.ts`
+- Resume served by the site: `public/resume.pdf`
 
-Current employment is deliberately presented at company, title, date, and location level only. Project creation dates and unsupported adoption, scale, or performance claims are not used.
+Current employment is presented at company, title, date, and location level only. Project creation dates and unsupported adoption, scale, or performance claims are not used.
 
 ## Deployment boundary
 
