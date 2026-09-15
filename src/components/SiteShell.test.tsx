@@ -8,10 +8,9 @@ describe('site shell', () => {
     render(<SiteHeader />);
 
     const homeLink = screen.getByRole('link', {
-      name: `${siteConfig.shortName}, ${siteConfig.name}, home`,
+      name: `${siteConfig.name}, home`,
     });
-    expect(homeLink).toHaveTextContent(siteConfig.shortName);
-    expect(homeLink).not.toHaveTextContent(siteConfig.name);
+    expect(homeLink).toHaveTextContent(siteConfig.name);
     expect(homeLink).toHaveAttribute('href', '/');
 
     expect(screen.getByRole('link', { name: /skip to main content/i })).toHaveAttribute(
