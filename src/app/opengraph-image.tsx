@@ -15,8 +15,8 @@ export default function OpenGraphImage() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          background: '#f2f0e9',
-          color: '#171815',
+          background: '#ffffff',
+          color: '#111827',
           padding: '64px 72px',
           fontFamily: 'sans-serif',
         }}
@@ -25,22 +25,22 @@ export default function OpenGraphImage() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            borderBottom: '2px solid #cbc9bf',
+            borderBottom: '2px solid #e5e7eb',
             paddingBottom: '22px',
             fontSize: 24,
           }}
         >
           <span>{siteConfig.name}</span>
-          <span style={{ color: '#315c45' }}>{siteConfig.availability}</span>
+          <span style={{ color: '#2563eb' }}>{siteConfig.availability}</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', maxWidth: 980 }}>
-          <span style={{ color: '#315c45', fontSize: 24, marginBottom: 20 }}>{siteConfig.role}</span>
+          <span style={{ color: '#2563eb', fontSize: 24, marginBottom: 20 }}>{siteConfig.role}</span>
           <span style={{ fontSize: 72, fontWeight: 700, letterSpacing: '-4px', lineHeight: 1 }}>
             {siteConfig.name}
           </span>
         </div>
         <div style={{ display: 'flex', fontSize: 22 }}>
-          <span>Web products · Developer tools · AI systems</span>
+          <span>Web products · AI systems · Developer tools</span>
         </div>
       </div>
     ),
