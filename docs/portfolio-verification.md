@@ -8,6 +8,10 @@
 
 **Environment:** local Ubuntu workstation, local production build, and headless Chromium via Playwright CLI only
 
+## Plain professional pass
+
+The plain professional pass replaced the warm editorial theme on branch `feat/plain-professional-portfolio`: white canvas and blue accent, one sans typeface (Geist), project cards, a flattened case-study layout, and removal of the decorative `SectionLabel`, `EvidenceLinks`, `ArchitectureFlow`, `ProjectNavigation`, and `ArrowLink` components. Website copy was rewritten to short plain sentences without changing factual claims. The full gate (30 tests, `tsc --noEmit`, ESLint, production build with 14 static pages) was rerun after the change and all commands exited 0. The browser matrix below applies to the earlier editorial commit only.
+
 ## Follow-up pass
 
 The final deslop pass changed four things after the verification below:

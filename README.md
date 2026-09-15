@@ -1,6 +1,6 @@
 # Subhajit Pradhan — Portfolio
 
-A one-page hiring portfolio for remote full-stack product engineering roles, built with Next.js. Every public claim is backed by a source repository, a published package, a live application, or a case study that documents decisions and limitations.
+A one-page hiring portfolio for remote full-stack product engineering roles, built with Next.js, TypeScript, and plain CSS. Every public claim is backed by a source repository, a published package, a live application, or a case study that documents decisions and limitations.
 
 ## Local development
 
@@ -24,7 +24,7 @@ npm run build
 
 ## Routes
 
-- `/` — positioning, selected work, experience, capabilities, education, and contact
+- `/` — positioning, projects, experience, skills, education, and contact
 - `/projects` — complete six-project index
 - `/projects/[slug]` — statically generated project case studies
 - `/resume.pdf` — public resume download
@@ -33,7 +33,7 @@ npm run build
 
 ## Content model
 
-- Profile, experience, capabilities, and education: `src/data/site.ts`
+- Profile, experience, skills, and education: `src/data/site.ts`
 - Canonical project claims, links, architecture, and limitations: `src/data/projects.ts`
 - Route metadata and structured data: `src/lib/metadata.ts`, `src/lib/structured-data.ts`
 - Resume served by the site: `public/resume.pdf`
