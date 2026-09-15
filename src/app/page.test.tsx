@@ -135,4 +135,10 @@ describe('HomePage', () => {
     expect(screen.queryByText(/how i engineer/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/let's build the tool that clarifies it/i)).not.toBeInTheDocument();
   });
+
+  it('keeps the contact section free of duplicated worldwide positioning', () => {
+    render(<HomePage />);
+
+    expect(screen.queryByText(/worldwide/i)).not.toBeInTheDocument();
+  });
 });

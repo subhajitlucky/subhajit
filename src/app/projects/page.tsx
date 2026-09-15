@@ -3,10 +3,27 @@ import Link from 'next/link';
 import { ArrowLink } from '@/components/ArrowLink';
 import { SectionLabel } from '@/components/SectionLabel';
 import { projects, secondaryProjects } from '@/data/projects';
+import { siteConfig } from '@/data/site';
+
+const description = 'Developer tools, AI systems, and full-stack product work by Subhajit Pradhan.';
 
 export const metadata: Metadata = {
-  title: 'Selected work | Subhajit Pradhan',
-  description: 'Developer tools, AI systems, and full-stack product work by Subhajit Pradhan.',
+  title: 'Selected work',
+  description,
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    type: 'website',
+    url: '/projects',
+    title: `Selected work | ${siteConfig.name}`,
+    description,
+    images: ['/opengraph-image'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Selected work | ${siteConfig.name}`,
+    description,
+    images: ['/opengraph-image'],
+  },
 };
 
 export default function ProjectsPage() {

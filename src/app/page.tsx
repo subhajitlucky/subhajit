@@ -121,7 +121,7 @@ export default function HomePage() {
         <section className="contact-section" aria-labelledby="contact-title">
           <div>
             <h2 id="contact-title">Start a conversation</h2>
-            <p>Open to remote full-stack software opportunities worldwide.</p>
+            <p>Open to remote full-stack software opportunities.</p>
           </div>
           <a href={siteConfig.links.email}>Send an email</a>
         </section>
