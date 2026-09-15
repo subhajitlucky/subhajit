@@ -30,7 +30,7 @@ export const projects: Project[] = [
     status: 'Published CLI',
     category: 'Developer tooling',
     summary:
-      'A model-independent codebase auditor that turns repository evidence into deterministic findings for humans and coding agents.',
+      'A CLI that audits a repository and reports deterministic findings as text, JSON, or SARIF. Works with or without a model in the loop.',
     problem:
       'Repository reviews often depend on opaque model judgment, scattered linters, and one-off commands. That makes coverage difficult to inspect and results difficult to reproduce.',
     system:
@@ -75,7 +75,7 @@ export const projects: Project[] = [
     status: 'Published CLI',
     category: 'Database security',
     summary:
-      'A read-only PostgreSQL and Supabase Row Level Security auditor for local development, CI, and agent-assisted review.',
+      'A read-only Postgres and Supabase RLS auditor. Reports policy, role, and grant risks from catalog metadata without touching data.',
     problem:
       'Small policy mistakes can expose rows through disabled RLS, broad roles, missing write checks, or overlooked privilege paths. Normal application tests rarely explain the catalog state behind those failures.',
     system:
@@ -120,7 +120,7 @@ export const projects: Project[] = [
     status: 'Published CLI',
     category: 'Agent infrastructure',
     summary:
-      'A repository-memory CLI that creates structured, refreshable context for coding-agent handoffs.',
+      'A CLI that keeps repository memory current so coding agents can resume work with accurate project context.',
     problem:
       'Long-running code work loses decisions and current state between sessions. Rebuilding that context wastes time and encourages agents to act on stale assumptions.',
     system:
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     status: 'Live application',
     category: 'Multi-agent systems',
     summary:
-      'A multi-agent debate platform with configurable personas, provider routing, encrypted credentials, and inspectable speaker state.',
+      'A multi-agent debate platform with configurable personas, provider routing, encrypted keys, and inspectable speaker state.',
     problem:
       'Multi-agent conversations need more structure than a loop of prompts: personas, providers, credentials, speaker selection, history, and failure states must remain separable.',
     system:
@@ -210,7 +210,7 @@ export const projects: Project[] = [
     status: 'Live application',
     category: 'Learning systems',
     summary:
-      'A searchable computer-science learning hub that organizes visual modules across web, systems, security, AI, and infrastructure topics.',
+      'A searchable computer-science learning hub with interactive modules across web, systems, security, AI, and infrastructure.',
     problem:
       'Interactive computer-science explanations are often isolated across small demos, making it difficult for learners to discover related concepts or understand what is available.',
     system:
@@ -248,7 +248,7 @@ export const projects: Project[] = [
     status: 'Open-source language',
     category: 'Agent protocols',
     summary:
-      'A small deterministic language for agent-to-agent intent, negotiation, commitments, and auditable state transitions.',
+      'A small deterministic language for agent-to-agent intent, negotiation, and commitments with auditable state transitions.',
     problem:
       'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two.',
     system:

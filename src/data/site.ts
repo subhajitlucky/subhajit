@@ -3,14 +3,14 @@ export const siteConfig = {
   shortName: 'SP',
   role: 'Full-Stack Product Engineer',
   summary:
-    'I build reliable web products and AI-powered systems from interface to infrastructure.',
+    'I build web products and AI systems, from the interface to the infrastructure.',
   location: 'Odisha, India',
   availability: 'Open to remote roles',
   email: 'subhajitpradhan310@gmail.com',
   baseUrl: 'https://subhajitpradhan.vercel.app',
   resumePath: '/resume.pdf',
   description:
-    'Full-Stack Product Engineer building reliable web products and AI-powered systems from interface to infrastructure.',
+    'Full-Stack Product Engineer building web products and AI systems.',
   links: {
     github: 'https://github.com/subhajitlucky',
     linkedin: 'https://www.linkedin.com/in/subhajitlucky',
@@ -45,7 +45,7 @@ export const experience: Experience[] = [
     period: 'Jan 2026-May 2026',
     location: 'Remote',
     summary:
-      'Built modular Next.js applications and blockchain-integrated workflows with clear frontend, backend, and transaction boundaries.',
+      'Built Next.js applications and blockchain-integrated workflows across frontend, backend, and transaction boundaries.',
   },
   {
     organization: 'QuadB Technologies',

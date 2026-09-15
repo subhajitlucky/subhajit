@@ -8,12 +8,15 @@ import { experience, siteConfig, skillGroups } from '@/data/site';
 import { isExternalUrl } from '@/lib/urls';
 
 describe('portfolio content integrity', () => {
-  it('uses the approved product engineer positioning', () => {
+  it('uses the approved plain product engineer positioning', () => {
     expect(siteConfig.role).toBe('Full-Stack Product Engineer');
     expect(siteConfig.summary).toBe(
-      'I build reliable web products and AI-powered systems from interface to infrastructure.',
+      'I build web products and AI systems, from the interface to the infrastructure.',
     );
     expect(siteConfig.availability).toBe('Open to remote roles');
+    expect(siteConfig.description).toBe(
+      'Full-Stack Product Engineer building web products and AI systems.',
+    );
     expect(skillGroups.map((group) => group.label)).toEqual([
       'Product engineering',
       'Backend and data',
