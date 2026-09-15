@@ -4,13 +4,13 @@ import { siteConfig } from '@/data/site';
 import ProjectsPage, { metadata } from './page';
 
 describe('ProjectsPage', () => {
-  it('uses one concise sentence for the project index introduction', () => {
+  it('uses one plain sentence for the project index introduction', () => {
     render(<ProjectsPage />);
 
-    const intro = screen.getByRole('heading', { name: 'Selected projects' }).nextElementSibling;
+    const intro = screen.getByRole('heading', { name: 'Selected work' }).nextElementSibling;
 
     expect(intro?.textContent?.trim()).toBe(
-      'Six public projects spanning developer tools, AI systems, and full-stack products.',
+      'Six public projects across developer tools, AI systems, and full-stack products.',
     );
   });
 
@@ -25,7 +25,7 @@ describe('ProjectsPage', () => {
 
     entries.forEach((entry, index) => {
       const project = projects[index];
-      expect(within(entry).getByRole('link', { name: 'Case study' })).toHaveAttribute(
+      expect(within(entry).getByRole('link', { name: 'Details' })).toHaveAttribute(
         'href',
         `/projects/${project.slug}`,
       );
