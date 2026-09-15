@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { notFound } from 'next/navigation';
 import { getProject, projects } from '@/data/projects';
 import ProjectPage, { generateStaticParams } from './page';
@@ -42,6 +42,11 @@ describe('ProjectPage', () => {
     for (const link of project.links) {
       expect(screen.getByRole('link', { name: link.label })).toHaveAttribute('href', link.href);
     }
+
+    const flow = screen.getByRole('list', { name: 'Architecture flow' });
+    expect(within(flow).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
+      project.flow.map((step) => `${step.label}${step.detail}`),
+    );
   });
 
   it('pre-renders every canonical project route', () => {
