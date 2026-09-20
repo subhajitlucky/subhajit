@@ -44,7 +44,12 @@ describe('portfolio content integrity', () => {
       'tarka-sabha',
       'cscosmos',
     ]);
-    expect(secondaryProjects.map((project) => project.slug)).toEqual(['smritiflow', 'sutra']);
+    expect(secondaryProjects.map((project) => project.slug)).toEqual([
+      'smritiflow',
+      'sutra',
+      'campushelper',
+      'intentpay',
+    ]);
   });
 
   it('keeps featured summaries concise and linked to source', () => {
@@ -55,7 +60,7 @@ describe('portfolio content integrity', () => {
   });
 
   it('gives every selected project inspectable proof and valid links', () => {
-    expect(projects).toHaveLength(6);
+    expect(projects).toHaveLength(8);
 
     for (const project of projects) {
       expect(project.proof.length).toBeGreaterThan(0);

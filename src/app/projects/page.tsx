@@ -30,7 +30,7 @@ export default function ProjectsPage() {
     <div className="projects-index site-frame">
       <header className="projects-index-header">
         <h1>Selected work</h1>
-        <p>Six public projects across developer tools, AI systems, and full-stack products.</p>
+        <p>Eight public projects across developer tools, AI systems, and full-stack products.</p>
       </header>
       <ol className="projects-index-list">
         {projects.map((project) => {

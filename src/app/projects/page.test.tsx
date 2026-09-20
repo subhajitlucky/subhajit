@@ -10,7 +10,7 @@ describe('ProjectsPage', () => {
     const intro = screen.getByRole('heading', { name: 'Selected work' }).nextElementSibling;
 
     expect(intro?.textContent?.trim()).toBe(
-      'Six public projects across developer tools, AI systems, and full-stack products.',
+      'Eight public projects across developer tools, AI systems, and full-stack products.',
     );
   });
 
@@ -18,7 +18,7 @@ describe('ProjectsPage', () => {
     render(<ProjectsPage />);
 
     const entries = screen.getAllByTestId('project-index-item');
-    expect(entries).toHaveLength(6);
+    expect(entries).toHaveLength(8);
     expect(entries.map((entry) => within(entry).getByRole('heading').textContent)).toEqual(
       projects.map((project) => project.title),
     );

@@ -284,6 +284,83 @@ export const projects: Project[] = [
     ],
     featured: false,
   },
+  {
+    slug: 'campushelper',
+    title: 'CampusHelper',
+    index: '07',
+    status: 'Live application',
+    category: 'Full-stack product',
+    summary:
+      'A campus lost-and-found platform with authenticated reports, image uploads, searchable records, claims, and moderation workflows.',
+    problem:
+      'Campus lost-and-found is usually handled in scattered chat groups, so records disappear and ownership claims are difficult to verify or follow up.',
+    system:
+      'A Next.js App Router application with Google sign-in through NextAuth, PostgreSQL via Prisma on Supabase, image storage buckets, Zod-validated APIs, rate limiting, and row-level security, plus an admin moderation dashboard.',
+    proof: [
+      'Live platform with authenticated item reports, image uploads, search, claims, and comments.',
+      'Server-side validation with Zod, CSRF protection, rate limiting, and database-level RLS.',
+      'Admin dashboard backed by moderation and management workflows.',
+    ],
+    decisions: [
+      'Keep authentication, uploads, and claims behind explicit server-side boundaries.',
+      'Enforce access at the database with row-level security instead of relying only on application checks.',
+      'Validate inputs server-side with shared Zod schemas.',
+    ],
+    tradeoffs: [
+      'Managed Supabase storage and auth reduce operational work but tie the stack to one platform.',
+      'Moderation tooling covers review basics without advanced automation.',
+    ],
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Supabase', 'NextAuth'],
+    flow: [
+      { label: 'Report', detail: 'A signed-in user posts a lost or found item with photos and details.' },
+      { label: 'Discover', detail: 'Other users search and filter records by type, location, date, and keywords.' },
+      { label: 'Claim', detail: 'Owners and finders coordinate through claims and comments.' },
+      { label: 'Moderate', detail: 'Admins review reports and manage the listing lifecycle.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/campushelper', kind: 'source' },
+      { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'intentpay',
+    title: 'IntentPay',
+    index: '08',
+    status: 'Prototype',
+    category: 'Web3 and AI',
+    summary:
+      'An AI-assisted Web3 transaction prototype that turns natural-language intent into a structured plan the user reviews before wallet execution.',
+    problem:
+      'Wallets expose irreversible actions through low-level addresses, gas settings, and contract calls, which is difficult for non-technical users and risky for teams that need guardrails.',
+    system:
+      'A React client and Express API resolve payment intent through an LLM adapter into structured transaction plans, with encrypted wallet data, spending guardrails, and the wallet kept as the final execution boundary.',
+    proof: [
+      'Separates AI planning from irreversible on-chain execution; the wallet remains the approval step.',
+      'Handles named recipients, split payments, transaction previews, gas estimation, and transaction history.',
+      'Uses AES-256-GCM encrypted wallet data, bcrypt password hashing, and security event logging.',
+    ],
+    decisions: [
+      'Never let the model silently execute transactions; plans require explicit wallet approval.',
+      'Resolve contacts and handles server-side before building the transaction preview.',
+      'Treat suspicious or failed actions as first-class security events.',
+    ],
+    tradeoffs: [
+      'The review step adds friction in exchange for a clearer safety boundary.',
+      'Prototype scope targets the Sepolia network and a limited set of transaction types.',
+    ],
+    stack: ['React', 'Express', 'Ethers.js', 'LLM adapter', 'Sepolia', 'AES-256-GCM'],
+    flow: [
+      { label: 'Describe', detail: 'The user states a payment intent in natural language.' },
+      { label: 'Resolve', detail: 'The API resolves intent, contacts, balances, and guardrails.' },
+      { label: 'Preview', detail: 'A structured transaction plan is shown for review.' },
+      { label: 'Execute', detail: 'The wallet remains the final execution boundary.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/intentpay', kind: 'source' },
+    ],
+    featured: false,
+  },
 ];
 
 export const featuredProjects = projects.filter((project) => project.featured);
