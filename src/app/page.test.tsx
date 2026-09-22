@@ -30,11 +30,11 @@ describe('HomePage', () => {
     );
   });
 
-  it('renders exactly four featured project cards in the approved order', () => {
+  it('renders featured project cards in the approved order', () => {
     render(<HomePage />);
 
     const cards = screen.getAllByTestId('project-card');
-    expect(cards).toHaveLength(4);
+    expect(cards).toHaveLength(featuredProjects.length);
 
     expect(cards.map((card) => within(card).getByRole('heading').textContent)).toEqual(
       featuredProjects.map((project) => project.title),

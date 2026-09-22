@@ -1,3 +1,18 @@
+export type Role = 'swe' | 'fullstack' | 'frontend' | 'backend' | 'web3';
+
+export const roleLabels: Record<Role, string> = {
+  swe: 'Software Engineering',
+  fullstack: 'Full-stack',
+  frontend: 'Frontend',
+  backend: 'Backend',
+  web3: 'Web3',
+};
+
+export const roleFilters: { value: Role | 'all'; label: string }[] = [
+  { value: 'all', label: 'All' },
+  ...(Object.entries(roleLabels) as [Role, string][]).map(([value, label]) => ({ value, label })),
+];
+
 export type ProjectLink = {
   label: string;
   href: string;
@@ -10,6 +25,7 @@ export type Project = {
   index: string;
   status: string;
   category: string;
+  roles: Role[];
   summary: string;
   problem: string;
   system: string;
@@ -29,6 +45,7 @@ export const projects: Project[] = [
     index: '01',
     status: 'Published CLI',
     category: 'Developer tooling',
+    roles: ['swe', 'backend'],
     summary:
       'A CLI that audits a repository and reports deterministic findings as text, JSON, or SARIF. Works with or without a model in the loop.',
     problem:
@@ -74,6 +91,7 @@ export const projects: Project[] = [
     index: '02',
     status: 'Published CLI',
     category: 'Database security',
+    roles: ['backend', 'swe'],
     summary:
       'A read-only Postgres and Supabase RLS auditor. Reports policy, role, and grant risks from catalog metadata without touching data.',
     problem:
@@ -119,6 +137,7 @@ export const projects: Project[] = [
     index: '03',
     status: 'Published CLI',
     category: 'Agent infrastructure',
+    roles: ['swe', 'backend'],
     summary:
       'A CLI that keeps repository memory current so coding agents can resume work with accurate project context.',
     problem:
@@ -164,6 +183,7 @@ export const projects: Project[] = [
     index: '04',
     status: 'Live application',
     category: 'Multi-agent systems',
+    roles: ['fullstack', 'backend', 'frontend'],
     summary:
       'A multi-agent debate platform with configurable personas, provider routing, encrypted keys, and inspectable speaker state.',
     problem:
@@ -209,6 +229,7 @@ export const projects: Project[] = [
     index: '05',
     status: 'Live application',
     category: 'Learning systems',
+    roles: ['frontend', 'fullstack'],
     summary:
       'A searchable computer-science learning hub with interactive modules across web, systems, security, AI, and infrastructure.',
     problem:
@@ -247,6 +268,7 @@ export const projects: Project[] = [
     index: '06',
     status: 'Open-source language',
     category: 'Agent protocols',
+    roles: ['swe', 'backend'],
     summary:
       'A small deterministic language for agent-to-agent intent, negotiation, and commitments with auditable state transitions.',
     problem:
@@ -290,6 +312,7 @@ export const projects: Project[] = [
     index: '07',
     status: 'Live application',
     category: 'Full-stack product',
+    roles: ['fullstack', 'frontend', 'backend'],
     summary:
       'A campus lost-and-found platform with authenticated reports, image uploads, searchable records, claims, and moderation workflows.',
     problem:
@@ -329,6 +352,7 @@ export const projects: Project[] = [
     index: '08',
     status: 'Prototype',
     category: 'Web3 and AI',
+    roles: ['web3', 'backend', 'fullstack'],
     summary:
       'An AI-assisted Web3 transaction prototype that turns natural-language intent into a structured plan the user reviews before wallet execution.',
     problem:
@@ -358,6 +382,142 @@ export const projects: Project[] = [
     ],
     links: [
       { label: 'Source', href: 'https://github.com/subhajitlucky/intentpay', kind: 'source' },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'chitradata',
+    title: 'ChitraData',
+    index: '09',
+    status: 'Live application',
+    category: 'Data visualization',
+    roles: ['frontend'],
+    summary:
+      'A local-first chart studio and India map maker with template, palette, and export workflows that run entirely in the browser.',
+    problem:
+      'Building presentable charts and regional maps usually means hosted tools, account gates, or uploads. Teams need readable, on-brand visuals without sending data to a server.',
+    system:
+      'A Vite and React single-page app renders charts with Chart.js and maps with D3 and TopoJSON, persists work in localStorage, and exports PNG or PDF from HD to 8K through a client-side render pipeline.',
+    proof: [
+      'Runs fully client-side with no account, no backend, and chart state kept in the browser.',
+      'Ships a template gallery, contrast-aware palette families, and five chart types.',
+      'Renders a state-level India choropleth with a legend and random-data preview.',
+      'Export flow verified from HD to 8K with social, presentation, and A4 presets.',
+    ],
+    decisions: [
+      'Keep rendering and exports in the browser so user data never leaves the device.',
+      'Guide choices with templates and contrast-checked palettes instead of raw styling controls.',
+      'Map export options to real deliverables: slides, dashboards, social posts, and print.',
+    ],
+    tradeoffs: [
+      'Browser-only storage means no cloud sync or multi-user collaboration.',
+      'The chart catalog stays intentionally small compared with full BI suites.',
+    ],
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Chart.js', 'D3'],
+    flow: [
+      { label: 'Compose', detail: 'Paste or edit data directly in the table editor.' },
+      { label: 'Style', detail: 'Pick a template, chart type, and contrast-safe palette.' },
+      { label: 'Preview', detail: 'Live preview renders every change instantly.' },
+      { label: 'Export', detail: 'Download presentation-ready PNG or PDF from HD to 8K.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/chitraData', kind: 'source' },
+      { label: 'Live application', href: 'https://chitradata.vercel.app', kind: 'live' },
+      {
+        label: 'Chart studio',
+        href: 'https://github.com/subhajitlucky/chitraData/tree/main/src',
+        kind: 'evidence',
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: 'astapraharicha',
+    title: 'Asta Praharicha',
+    index: '10',
+    status: 'Live application',
+    category: 'Interactive storytelling',
+    roles: ['frontend'],
+    summary:
+      'An interactive digital mandala for a village 24-hour chanting festival, with eight themed watches and a memory gallery.',
+    problem:
+      'Living cultural traditions are usually documented as static pages, which cannot convey a festival structured across eight watches of a full day and night.',
+    system:
+      'A Next.js application themes each of the eight watches with its own colors, copy, and atmosphere over an animated shader backdrop, with a slideshow gallery, moderated memory uploads, and a responsive watch selector.',
+    proof: [
+      'Runs as a public Next.js application with all eight watches playable and themed.',
+      'Combines a shader-driven mandala backdrop, memory slideshow, and moderated upload flow.',
+      'Responsive layout verified with a compact watch selector on mobile.',
+    ],
+    decisions: [
+      'Keep the interface Odia-first to match the tradition it documents.',
+      'Theme each watch separately so the passage of the day is felt, not just listed.',
+      'Use a single immersive page instead of a multi-route information site.',
+    ],
+    tradeoffs: [
+      'Animation-heavy pages cost more on low-end devices and warrant reduced-motion fallbacks.',
+      'Odia-first labels limit reach for visitors who cannot read the script.',
+    ],
+    stack: ['Next.js', 'TypeScript', 'React', 'Tailwind CSS', 'GSAP', 'Three.js'],
+    flow: [
+      { label: 'Enter', detail: 'A gate screen introduces the village and the festival.' },
+      { label: 'Watch', detail: 'Eight watches switch themes, copy, and atmosphere.' },
+      { label: 'Remember', detail: 'The slideshow gallery surfaces festival memories.' },
+      { label: 'Contribute', detail: 'Visitors upload memories through a moderated gallery flow.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/astapraharicha', kind: 'source' },
+      { label: 'Live application', href: 'https://astapraharicha.vercel.app', kind: 'live' },
+      {
+        label: 'Watch system',
+        href: 'https://github.com/subhajitlucky/astapraharicha/tree/main/src',
+        kind: 'evidence',
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: 'quantumticket',
+    title: 'QuantumTicket',
+    index: '11',
+    status: 'Live application',
+    category: 'Blockchain ticketing',
+    roles: ['web3'],
+    summary:
+      'An NFT event-ticketing dApp where organizers mint events, attendees buy on-chain, and scanners validate entry.',
+    problem:
+      'Conventional ticketing is prone to forgery, scalping, and opaque resale, and organizers lack verifiable ownership and entry control.',
+    system:
+      'A React and Vite client talks to Solidity contracts on Sepolia through wagmi and RainbowKit, with separate attendee, organizer, and scanner routes, plus NFT ticket views and organizer fund management.',
+    proof: [
+      'Reads live event listings and ticket state directly from deployed contracts.',
+      'Supports MetaMask, Rainbow, Base, and WalletConnect with a wallet fallback dialog.',
+      'Separates attendee, organizer, and scanner workflows with wallet-gated routes.',
+    ],
+    decisions: [
+      'Keep the dApp serverless and read contract state directly from the client.',
+      'Separate organizer, scanner, and attendee surfaces by route.',
+      'Gate every write action behind explicit wallet connection.',
+    ],
+    tradeoffs: [
+      'Wallet and testnet requirements limit casual exploration.',
+      'Demo data lives on a testnet and needs periodic refresh.',
+    ],
+    stack: ['React', 'TypeScript', 'Solidity', 'wagmi', 'viem', 'RainbowKit'],
+    flow: [
+      { label: 'Create', detail: 'An organizer mints an event with dates, venue, and ticket supply.' },
+      { label: 'Buy', detail: 'Attendees connect a wallet and purchase tickets on-chain.' },
+      { label: 'Hold', detail: 'Tickets live as NFTs in the attendee wallet.' },
+      { label: 'Validate', detail: 'Scanners verify ownership at the venue entrance.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/quantumTicket', kind: 'source' },
+      { label: 'Live application', href: 'https://quantumticket.vercel.app', kind: 'live' },
+      {
+        label: 'Contracts',
+        href: 'https://github.com/subhajitlucky/quantumTicket/tree/main/blockchain',
+        kind: 'evidence',
+      },
     ],
     featured: false,
   },

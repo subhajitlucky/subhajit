@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { ProjectsExplorer } from '@/components/ProjectsExplorer';
 import { projects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
-import { externalLinkProps } from '@/lib/urls';
 
 const description = 'Developer tools, AI systems, and full-stack product work by Subhajit Pradhan.';
 
@@ -30,35 +29,9 @@ export default function ProjectsPage() {
     <div className="projects-index site-frame">
       <header className="projects-index-header">
         <h1>Selected work</h1>
-        <p>Eight public projects across developer tools, AI systems, and full-stack products.</p>
+        <p>Eleven public projects across developer tools, AI systems, data visualization, and Web3.</p>
       </header>
-      <ol className="projects-index-list">
-        {projects.map((project) => {
-          const source = project.links.find((link) => link.kind === 'source');
-
-          return (
-            <li data-testid="project-index-item" key={project.slug}>
-              <div className="index-project-copy">
-                <p className="index-project-meta">
-                  {project.category} · {project.status}
-                </p>
-                <h2>
-                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-                </h2>
-                <p>{project.summary}</p>
-              </div>
-              <div className="index-project-actions">
-                <Link href={`/projects/${project.slug}`}>Details</Link>
-                {source ? (
-                  <a href={source.href} {...externalLinkProps}>
-                    {source.label}
-                  </a>
-                ) : null}
-              </div>
-            </li>
-          );
-        })}
-      </ol>
+      <ProjectsExplorer projects={projects} />
     </div>
   );
 }

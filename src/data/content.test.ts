@@ -2,6 +2,7 @@ import {
   featuredProjects,
   getProject,
   projects,
+  roleFilters,
   secondaryProjects,
 } from '@/data/projects';
 import { experience, siteConfig, skillGroups } from '@/data/site';
@@ -43,12 +44,15 @@ describe('portfolio content integrity', () => {
       'rls-doctor',
       'tarka-sabha',
       'cscosmos',
+      'chitradata',
     ]);
     expect(secondaryProjects.map((project) => project.slug)).toEqual([
       'smritiflow',
       'sutra',
       'campushelper',
       'intentpay',
+      'astapraharicha',
+      'quantumticket',
     ]);
   });
 
@@ -60,7 +64,7 @@ describe('portfolio content integrity', () => {
   });
 
   it('gives every selected project inspectable proof and valid links', () => {
-    expect(projects).toHaveLength(8);
+    expect(projects).toHaveLength(11);
 
     for (const project of projects) {
       expect(project.proof.length).toBeGreaterThan(0);
@@ -80,6 +84,23 @@ describe('portfolio content integrity', () => {
     expect(serialized).not.toContain('enterprise-grade');
     expect(serialized).not.toContain('production-ready');
     expect(serialized).not.toContain('thousands of users');
+  });
+
+  it('assigns every project an ordered, duplicate-free role fit', () => {
+    const validRoles = roleFilters
+      .filter((filter) => filter.value !== 'all')
+      .map((filter) => filter.value);
+
+    expect(validRoles).toEqual(['swe', 'fullstack', 'frontend', 'backend', 'web3']);
+
+    for (const project of projects) {
+      expect(project.roles.length).toBeGreaterThan(0);
+      expect(new Set(project.roles).size).toBe(project.roles.length);
+
+      for (const role of project.roles) {
+        expect(validRoles).toContain(role);
+      }
+    }
   });
 
   it('looks up projects by slug without manufacturing missing entries', () => {

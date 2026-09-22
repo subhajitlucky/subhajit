@@ -460,6 +460,47 @@ a:focus-visible {
   font-size: 1.05rem;
 }
 
+.role-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 1rem;
+}
+
+.role-filter button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+}
+
+.role-filter button:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.role-filter button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.role-filter button[aria-pressed='true'] {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--background);
+}
+
+.role-filter-status {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
 .projects-index-list {
   margin: 0;
   padding: 0;
