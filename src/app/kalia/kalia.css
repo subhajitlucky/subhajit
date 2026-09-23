@@ -841,6 +841,23 @@ html[data-kalia-theme='light'] .kalia {
   line-height: 1.7;
 }
 
+.kalia-cite {
+  margin-top: 1.4rem;
+  border: 1px solid var(--k-line);
+  background: var(--k-panel);
+  padding: 1rem;
+}
+
+.kalia-cite pre {
+  margin: 0.6rem 0 0;
+  font-family: var(--k-mono);
+  font-size: 0.76rem;
+  line-height: 1.65;
+  color: var(--k-muted);
+  overflow-x: auto;
+  white-space: pre;
+}
+
 .kalia-outro a {
   color: var(--k-muted);
   text-decoration: underline;

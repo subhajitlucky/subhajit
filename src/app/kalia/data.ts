@@ -16,9 +16,9 @@ export const TIMELINE: TimelineDay[] = [
     date: '2026-09-22',
     entries: [
       {
-        time: '07:26',
-        title: 'An empty repository',
-        body: 'The project starts with one rule: no pretrained weights, ever. The architecture is a small decoder-only transformer — 10 layers, 512 dimensions, RoPE, RMSNorm, SwiGLU — chosen to fit two T4s without gradient checkpointing. Thirteen tasks, test-driven: model, data, trainer, sampler, notebooks. First green suite: 20 tests.',
+        time: '06:30',
+        title: 'A repository and a rule',
+        body: 'The first commit lands at 06:30 UTC: a design document, an implementation plan, and a scaffold. The rule is fixed from the start — no pretrained weights, ever. The architecture is a small decoder-only transformer (10 layers, 512 dimensions, RoPE, RMSNorm, SwiGLU) chosen to fit two T4s without gradient checkpointing. The suite grows test-first from the first minute.',
       },
       {
         time: '07:37',
@@ -240,3 +240,14 @@ export const HERO_STATS = [
   { label: 'GPU-hours', value: '~20' },
   { label: 'cost', value: '$0' },
 ];
+
+export const CITATION = `@misc{kalia2026,
+  title        = {KALIA: a 58M-parameter language model trained
+                  from scratch on free GPUs},
+  author       = {Pradhan, Subhajit},
+  year         = {2026},
+  howpublished = {\\url{https://huggingface.co/kalia-lm/kalia-v012}},
+  note         = {v0.1.2; stopped at step 3,478 of 4,770 of the
+                  cosine schedule; all logs, decisions, and
+                  pre-registrations are public}
+}`;
