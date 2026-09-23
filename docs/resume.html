@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Subhajit Pradhan — Resume</title>
+<style>
+  @page { size: letter; margin: 0.7in 0.75in; }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    color: #111;
+    font-family: "Liberation Sans", Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.35;
+  }
+  .name {
+    font-family: "Liberation Serif", "Times New Roman", serif;
+    font-size: 22pt;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.2px;
+    margin: 0 0 4pt;
+  }
+  .contact {
+    text-align: center;
+    font-size: 9pt;
+    margin: 0 0 2pt;
+  }
+  .contact a { color: #111; text-decoration: none; }
+  .location {
+    text-align: center;
+    font-size: 9pt;
+    color: #222;
+    margin: 0 0 14pt;
+  }
+  h2 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    margin: 14pt 0 6pt;
+    padding-bottom: 2pt;
+    border-bottom: 1px solid #111;
+  }
+  .entry { margin: 0 0 8pt; }
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+  .org { font-weight: 700; font-size: 10.5pt; }
+  .period { white-space: nowrap; font-size: 9.5pt; }
+  .role-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+  .title { font-style: italic; font-size: 9.5pt; }
+  .place { white-space: nowrap; font-size: 9.5pt; }
+  ul { margin: 3pt 0 0; padding-left: 14pt; }
+  li { margin: 0 0 2pt; }
+
+  .project { margin: 0 0 7pt; }
+  .project-title { font-weight: 700; font-size: 10pt; }
+  .project-stack { font-size: 9pt; color: #222; margin: 1pt 0 2pt; }
+  .project-stack a { color: #111; }
+
+  .skills p { margin: 0 0 2pt; }
+
+  .edu-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1 class="name">Subhajit Pradhan</h1>
+    <p class="contact">
+      +91 8093555348 &nbsp;|&nbsp;
+      <a href="mailto:subhajitpradhan310@gmail.com">subhajitpradhan310@gmail.com</a> &nbsp;|&nbsp;
+      <a href="https://www.linkedin.com/in/subhajitlucky">LinkedIn</a> &nbsp;|&nbsp;
+      <a href="https://github.com/subhajitlucky">GitHub</a> &nbsp;|&nbsp;
+      <a href="https://subhajitpradhan.vercel.app">Portfolio</a>
+    </p>
+    <p class="location">Bhubaneswar, India</p>
+  </header>
+
+  <h2>Experience</h2>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="org">Giakaa Capital</span>
+      <span class="period">May 2026 – Present</span>
+    </div>
+    <div class="role-row">
+      <span class="title">Full Stack Software Developer</span>
+      <span class="place">Remote</span>
+    </div>
+    <ul>
+      <li>Build and ship full-stack features in Next.js, TypeScript, and PostgreSQL.</li>
+      <li>Develop backend APIs and background job processing, with authentication, RBAC, caching, and analytics.</li>
+      <li>Debug production incidents, optimize SQL queries, and remove performance bottlenecks in live services.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="org">uElement Technologies</span>
+      <span class="period">Jan 2026 – May 2026</span>
+    </div>
+    <div class="role-row">
+      <span class="title">Software Developer Intern</span>
+      <span class="place">Remote</span>
+    </div>
+    <ul>
+      <li>Built Next.js applications with modular backend design and performance-focused rendering.</li>
+      <li>Integrated smart contract interactions and transaction monitoring into production systems.</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-head">
+      <span class="org">QuadB Technologies</span>
+      <span class="period">Feb 2025 – Mar 2025</span>
+    </div>
+    <div class="role-row">
+      <span class="title">Software Engineering Trainee</span>
+      <span class="place">Remote</span>
+    </div>
+    <ul>
+      <li>Built and deployed Internet Computer (ICP) smart contracts in Motoko and Rust; developed canister-backed dApps.</li>
+    </ul>
+  </div>
+
+  <h2>Projects</h2>
+
+  <div class="project">
+    <div class="project-title">Codebase Doctor – Repository Auditor for Humans and Coding Agents</div>
+    <div class="project-stack">TypeScript, Node.js, MCP, SARIF &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/codebase-doctor">npm</a> | <a href="https://github.com/subhajitlucky/codebase-doctor">GitHub</a></div>
+    <ul>
+      <li>npm CLI and MCP server (v0.1.9, ~530 downloads/month) with 898 tests; CI installs the packed tarball to verify each release.</li>
+      <li>Audits secrets (working tree and Git history), dependencies (npm/pnpm/Yarn/Bun + OSV advisories), PostgreSQL RLS, Dockerfiles, and GitHub Actions.</li>
+      <li>Builds a multi-language source graph across JS/TS, Python, Go, Java, and Rust for impact analysis and missing-target detection.</li>
+      <li>Reports findings with stable fingerprints and baselines so CI separates new issues from known ones; outputs text, JSON, or SARIF.</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-title">RLS Doctor – Postgres and Supabase Row Level Security Auditor</div>
+    <div class="project-stack">TypeScript, PostgreSQL, Supabase &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/rls-doctor">npm</a> | <a href="https://github.com/subhajitlucky/rls-doctor">GitHub</a></div>
+    <ul>
+      <li>npm CLI (v0.2.3, ~190 downloads/month, 98 tests, PostgreSQL 15/16) that audits RLS policies, grants, and role-membership paths from catalog metadata.</li>
+      <li>Probe mode impersonates application roles in rolled-back read-only transactions, including simulated JWT users, to prove cross-tenant row reads without changing the database.</li>
+      <li>Ships SARIF output, baselines, and a GitHub Action for pull-request checks.</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-title">CSCosmos – Interactive Computer-Science Learning Hub</div>
+    <div class="project-stack">Next.js, TypeScript, React &nbsp;·&nbsp; <a href="https://cscosmos.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/cscosmos">GitHub</a></div>
+    <ul>
+      <li>Searchable learning hub with interactive modules across web, systems, security, AI, and infrastructure.</li>
+      <li>Typed topic catalog drives search, domain routes, and live/planned module states from one source.</li>
+      <li>Combines native visualizers with focused external microsites; topic pages are statically generated.</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-title">Tarka Sabha – Multi-Agent AI Debate Platform</div>
+    <div class="project-stack">Next.js, TypeScript, PostgreSQL, Prisma &nbsp;·&nbsp; <a href="https://tarkasabha.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/tarkaSabha">GitHub</a></div>
+    <ul>
+      <li>Multi-agent debate platform that routes multiple LLM providers with configurable personas; API keys encrypted with AES-256-GCM.</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-title">CampusHelper – Campus Lost-and-Found Platform</div>
+    <div class="project-stack">Next.js, TypeScript, Prisma, PostgreSQL, Supabase &nbsp;·&nbsp; <a href="https://campushelper.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/campushelper">GitHub</a></div>
+    <ul>
+      <li>Full-stack lost-and-found platform with authentication, image uploads, and searchable item reports; designed Prisma schemas and optimized PostgreSQL queries.</li>
+    </ul>
+  </div>
+
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <p><strong>Languages:</strong> TypeScript, JavaScript, Python, SQL, Java, C++, Rust, Solidity</p>
+    <p><strong>Frontend &amp; Backend:</strong> React, Next.js, Tailwind CSS, Node.js, Express, REST APIs, PostgreSQL, Prisma, MongoDB</p>
+    <p><strong>AI &amp; LLM:</strong> OpenAI, Anthropic, and Gemini APIs, AI SDK, LLM tool-calling, MCP (Model Context Protocol)</p>
+    <p><strong>DevOps &amp; Cloud:</strong> Docker, GitHub Actions, Linux, CI/CD, Vercel, Railway</p>
+    <p><strong>Blockchain &amp; Web3:</strong> Ethereum, Solidity, Hardhat, Ethers.js, Internet Computer (Motoko)</p>
+  </div>
+
+  <h2>Education</h2>
+  <div class="entry">
+    <div class="edu-head">
+      <span class="org">Centurion University of Technology and Management, Bhubaneswar</span>
+      <span class="period">Oct 2022 – Apr 2025</span>
+    </div>
+    <div class="role-row">
+      <span class="title">Bachelor of Computer Applications</span>
+      <span class="place">CGPA: 8.9</span>
+    </div>
+  </div>
+</body>
+</html>
