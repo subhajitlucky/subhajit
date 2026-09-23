@@ -1,10 +1,22 @@
-# Subhajit Pradhan — Portfolio
+# subhajitpradhan.vercel.app
 
-A one-page hiring portfolio for remote full-stack product engineering roles, built with Next.js, TypeScript, and plain CSS. Every public claim is backed by a source repository, a published package, a live application, or a case study that documents decisions and limitations.
+This is my portfolio. It is where I keep the work I can point at: shipped CLIs, live products, and a language model I trained from scratch on free GPUs.
+
+I only publish claims I can back with a link — source code, an npm package, a live URL, or a case study that states its decisions, tradeoffs, and limitations.
+
+## What is here
+
+- `/` — who I am, featured work, experience, skills, education, contact
+- `/projects` — all twelve projects, filterable by role
+- `/projects/[slug]` — project case studies, statically generated
+- `/writing` — long-form technical writing
+- `/writing/kalia-build-log` — the two-day build log of training KALIA: micro-ablations, the optimizer I rejected, the plateau, and the quota wall
+- `/kalia` — the dedicated KALIA page: a replayable console built from the real training logs, every decision (D1–D41), every incident (I1–I12), benchmarks, samples, and the full recipe
+- `/resume.pdf`, `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`, `/opengraph-image` — resume and discovery metadata
 
 ## Local development
 
-Requirements: Node.js 20.9 or newer and npm.
+Requires Node.js 20.9 or newer and npm.
 
 ```bash
 npm install
@@ -22,27 +34,19 @@ npm run lint
 npm run build
 ```
 
-## Routes
+## Where the content lives
 
-- `/` — positioning, projects, experience, skills, education, and contact
-- `/projects` — complete six-project index
-- `/projects/[slug]` — statically generated project case studies
-- `/resume.pdf` — public resume download
-- `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest` — discovery metadata
-- `/opengraph-image` — generated social preview
+- Profile, experience, skills, education, nav: `src/data/site.ts`
+- Projects — claims, links, architecture, limitations: `src/data/projects.ts`
+- Writing posts: `src/data/posts.ts`
+- KALIA page: `src/app/kalia/data.ts`, with the training log generated into `src/app/kalia/train-log.ts` from the real logs served at `public/kalia/logs/`
+- Metadata and structured data: `src/lib/metadata.ts`, `src/lib/structured-data.ts`
 
-## Content model
+My current job is listed at company, title, date, and location level only. I do not publish project creation dates or adoption, scale, or performance claims I cannot support.
 
-- Profile, experience, skills, and education: `src/data/site.ts`
-- Canonical project claims, links, architecture, and limitations: `src/data/projects.ts`
-- Route metadata and structured data: `src/lib/metadata.ts`, `src/lib/structured-data.ts`
-- Resume served by the site: `public/resume.pdf`
+## Deployment
 
-Current employment is presented at company, title, date, and location level only. Project creation dates and unsupported adoption, scale, or performance claims are not used.
-
-## Deployment boundary
-
-The canonical URL is [subhajitpradhan.vercel.app](https://subhajitpradhan.vercel.app). Local tests and builds verify the repository, but do not prove that the current commit is deployed. Deployment, domain verification, live analytics, and authenticated GitHub profile changes require separate action.
+The canonical URL is [subhajitpradhan.vercel.app](https://subhajitpradhan.vercel.app). Pushes to `main` deploy through Vercel. The test suite proves the repository, not the deployment — those are separate checks.
 
 ## Contact
 
