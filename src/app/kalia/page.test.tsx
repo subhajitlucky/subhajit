@@ -74,6 +74,18 @@ describe('KaliaPage', () => {
     expect(screen.getAllByText('I12').length).toBeGreaterThan(0);
   });
 
+  it('shows the decisive comparisons as figures in the day-by-day log', () => {
+    render(<KaliaPage />);
+
+    expect(
+      screen.getByAltText(/Bar chart of step-700 validation loss for AdamW/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByAltText(/control architecture \(3.4924\), looped depth/),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Figure A3 — the plateau band/)).toBeInTheDocument();
+  });
+
   it('offers verification links and a citation block', () => {
     render(<KaliaPage />);
 

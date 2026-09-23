@@ -1,7 +1,14 @@
+export type TimelineFigure = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
 export type TimelineEntry = {
   time: string;
   title: string;
   body: string;
+  figure?: TimelineFigure;
 };
 
 export type TimelineDay = {
@@ -27,13 +34,18 @@ export const TIMELINE: TimelineDay[] = [
       },
       {
         time: '08:52',
-        title: 'First GPU run, first crash',
-        body: 'The first training run dies at step one: OutOfMemoryError. Batch 32 at context 1024 does not fit a T4. The fix is the standard move — micro-batch 8 with 32 gradient-accumulation steps, same effective batch — plus expandable memory segments. Three more incidents land in the same hour: API runs cannot read secrets, the dataset uploader drops subdirectories, and a failed subprocess is silently marked complete. All four are fixed and written down.',
+        title: 'First GPU run: out-of-memory at step one',
+        body: 'The first training run fails at step one with an OutOfMemoryError. Batch 32 at context 1024 does not fit a T4. The fix is the standard one — micro-batch 8 with 32 gradient-accumulation steps, the same effective batch — plus expandable memory segments. Three further incidents land in the same hour: API runs cannot read secrets, the dataset uploader drops subdirectories, and a failed subprocess is silently marked complete. All four are fixed and recorded.',
       },
       {
         time: 'morning',
-        title: 'Measure before you spend',
-        body: 'Micro-ablations run at 30M parameters on 50M tokens, about 30 minutes per arm. AdamW scores 3.8041 step-700 validation loss. Muon scores 3.5937. Muon with QK-Norm and logit soft-capping scores 3.5103. The ordering holds at every checkpoint, so it is not noise. Only the winner gets full-scale quota.',
+        title: 'Micro-ablations before full runs',
+        body: 'Micro-ablations run at 30M parameters on 50M tokens, about 30 minutes per arm. AdamW scores 3.8041 step-700 validation loss; Muon scores 3.5937; Muon with QK-Norm and logit soft-capping scores 3.5103. The ordering holds at every checkpoint, so it is not noise. Only the winner receives full-scale quota.',
+        figure: {
+          src: '/kalia/optimizer-ablation.svg',
+          alt: 'Bar chart of step-700 validation loss for AdamW (3.8041), Muon (3.5937), and Muon with QK-Norm and logit soft-capping (3.5103); lower is better.',
+          caption: 'Figure A1 — the optimizer screen: each change measured at 30M parameters before any full run.',
+        },
       },
       {
         time: 'evening',
@@ -53,8 +65,8 @@ export const TIMELINE: TimelineDay[] = [
       },
       {
         time: 'morning',
-        title: 'The result we rejected',
-        body: 'Muon+ — one post-polar normalization step — beats plain Muon on 7 of 7 checkpoints, by 0.015 nats. The promotion threshold, written down before the run, was 0.02. It does not ship. The full-scale model keeps plain Muon.',
+        title: 'Muon+ validated, not promoted',
+        body: 'Muon+ — one post-polar normalization step — beats plain Muon on 7 of 7 checkpoints, by 0.015 nats. The promotion threshold, fixed before the run, was 0.02. It is not promoted. The full-scale model keeps plain Muon, and the result is recorded as validated but below the bar.',
       },
       {
         time: 'morning',
@@ -69,17 +81,27 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: '08:40',
         title: 'Architecture ablation',
-        body: 'Four arms, same data, same seed: control, looped depth (the same weights twice), thin-and-deep, and grouped-query attention. Control wins at 3.4924. Looped and GQA are quality-neutral; thin-and-deep loses 0.2 nats. One finding survives: the looped model runs 1.35x slower per step, not 2x, because reused weights stay hot in cache.',
+        body: 'Four arms, same data, same seed: control, looped depth (the same weights applied twice), thin-and-deep, and grouped-query attention. Control wins at 3.4924. Looped and GQA are quality-neutral; thin-and-deep loses 0.2 nats. One finding survives: the looped model runs 1.35x slower per step, not 2x, because reused weights stay hot in cache.',
+        figure: {
+          src: '/kalia/architecture-ablation.svg',
+          alt: 'Bar chart of step-700 validation loss for the control architecture (3.4924), looped depth (3.5012), thin-and-deep (3.6969), and grouped-query attention (3.5031).',
+          caption: 'Figure A2 — the architecture screen: no variant beats control by the pre-set 0.02 margin.',
+        },
       },
       {
         time: '10:22',
-        title: 'The plateau',
-        body: 'Validation loss has not moved for a thousand steps — flat between 2.53 and 2.63 — while training loss keeps falling. It is impossible to tell a noisy eval from a real plateau from a single point, so both possibilities are written down and the run continues.',
+        title: 'A validation plateau',
+        body: 'Validation loss has not moved for a thousand steps — flat between 2.53 and 2.63 — while training loss keeps falling. A noisy evaluation and a real plateau are indistinguishable from a single point, so both possibilities are recorded and the run continues.',
+        figure: {
+          src: '/kalia/val-loss.svg',
+          alt: 'Line chart of validation loss from step 1750 to 3250 showing a flat plateau band between 2.53 and 2.63, a drop to 2.3986, and a separate deterministic evaluation point at step 3478 with loss 2.4366.',
+          caption: 'Figure A3 — the plateau band, the decay, and the deterministic evaluation that resolved the ambiguity.',
+        },
       },
       {
         time: '11:06',
-        title: 'The wall',
-        body: 'Two things land in the same minute. The architecture verdict: nothing beats control by the pre-set margin, so nothing changes. And the quota push fails: 30 GPU-hours for the week are exhausted. Experiments stop; the plan changes.',
+        title: 'Quota exhausted',
+        body: 'Two events land in the same minute. The architecture verdict: nothing beats control by the pre-set margin, so the recipe is unchanged. Then the quota push fails — the week\u2019s 30 GPU-hours are exhausted. Experiments stop and the plan is revised.',
       },
       {
         time: '13:11',

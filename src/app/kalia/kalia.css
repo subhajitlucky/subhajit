@@ -601,6 +601,27 @@ html[data-kalia-theme='light'] .kalia {
   font-size: 0.95rem;
 }
 
+.kalia-timeline-figure {
+  margin: 0.9rem 0 0;
+  max-width: 46rem;
+}
+
+.kalia-timeline-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--k-line);
+  border-radius: 0.4rem;
+  background: #ffffff;
+}
+
+.kalia-timeline-figure figcaption {
+  margin-top: 0.45rem;
+  font-family: var(--k-mono);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: var(--k-dim);
+}
+
 /* ---------- benchmarks ---------- */
 
 .kalia-bench {

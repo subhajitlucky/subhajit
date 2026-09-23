@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { KaliaConsole } from './KaliaConsole';
@@ -107,11 +108,14 @@ export default function KaliaPage() {
               अथ शब्दानुशासनम् — <strong>&ldquo;Now begins the discipline of words.&rdquo;</strong>
             </p>
             <p className="kalia-lead">
-              Hey stranger. Two days ago this was an empty repository. This page is the paper for
-              what came out of it: first the permanent record — the model, its recipe, its
-              evaluation — then the day-by-day log, in the order things actually happened. Every
-              experiment was pre-registered before it ran; every incident is published. Nothing
-              here is a screenshot of a claim; it is the log.
+              This page documents a 58M-parameter language model trained from random
+              initialization to coherent story generation in two days, on free-tier Kaggle GPUs,
+              at zero compute cost. Section&nbsp;1 fixes the model specification; Section&nbsp;2
+              reports the evaluation; Sections&nbsp;3 and&nbsp;4 present unedited samples and an
+              interactive replay of the training log. The appendices record the day-by-day log,
+              all 41 numbered decisions, and all 12 incidents. Every experiment was pre-registered
+              before it ran, and no claim on this page is a screenshot — each links to the
+              primary log.
             </p>
 
             <div className="kalia-stats">
@@ -195,7 +199,7 @@ export default function KaliaPage() {
               <strong>2.4366</strong> (819,200 tokens, fixed seed) — <strong>0.8184
               bits-per-byte</strong>. A 58M storyteller at <strong>61.4% PIQA</strong> and{' '}
               <strong>45.8% ARC-Easy</strong> is competitive with 125M-class models trained on
-              roughly 160x more tokens, and hopeless at the one task that needs long-range
+              roughly 160x more tokens, and weakest on the one task that requires long-range
               narrative memory (LAMBADA, 23%). The custom metric is the one that matters next: the{' '}
               <strong>Abhimanyu gap</strong> — reversed-text loss (9.29) minus forward loss (3.23)
               — is <strong>6.06 nats</strong>. The model can enter fluent text but cannot exit it.
@@ -223,15 +227,13 @@ export default function KaliaPage() {
           <section className="kalia-section" id="run">
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">4. The run, replayed</h2>
-              <p className="kalia-section-note">Figure 1 &middot; 174 logged checkpoints, real data</p>
+              <p className="kalia-section-note">Figure 1 &middot; replayed from the primary log</p>
             </div>
             <p className="kalia-prose">
-              Press play and the console replays the surviving training log — session three, steps
-              1,740 to 3,470, every tenth step. The earlier sessions&apos; rows were lost to a
-              resume incident (I8 in Appendix C); the rest is exactly as written. The{' '}
-              <strong>blue dots</strong> are the validation evals that looked like a plateau; the{' '}
-              <strong>blue square</strong> is the deterministic evaluation that proved the model
-              had never regressed.
+              The console replays the surviving training log — session three, steps 1,740 to
+              3,470, at every tenth step. Earlier sessions&apos; rows were lost to a resume
+              incident (I8, Appendix C). Blue markers are validation evaluations; the square is
+              the deterministic evaluation that established the model had not regressed.
             </p>
             <KaliaConsole />
           </section>
@@ -242,9 +244,9 @@ export default function KaliaPage() {
               <p className="kalia-section-note">times in UTC, from the kernel run logs</p>
             </div>
             <p className="kalia-prose">
-              No plan survived first contact with the GPUs. What follows is the real order of
-              events: first this algorithm, then that one, each one measured before the next was
-              tried.
+              The plan changed several times as measurements arrived. The entries below are the
+              real order of events — each algorithm measured before the next was attempted — with
+              the three decisive comparisons shown as figures.
             </p>
             {TIMELINE.map((day) => (
               <div className="kalia-day" key={day.label}>
@@ -257,6 +259,18 @@ export default function KaliaPage() {
                       <time>{entry.time}</time>
                       <h3>{entry.title}</h3>
                       <p>{entry.body}</p>
+                      {entry.figure ? (
+                        <figure className="kalia-timeline-figure">
+                          <Image
+                            src={entry.figure.src}
+                            alt={entry.figure.alt}
+                            width={720}
+                            height={400}
+                            unoptimized
+                          />
+                          <figcaption>{entry.figure.caption}</figcaption>
+                        </figure>
+                      ) : null}
                     </li>
                   ))}
                 </ol>
@@ -283,7 +297,7 @@ export default function KaliaPage() {
           <section className="kalia-section" id="incidents">
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">Appendix C. Every incident</h2>
-              <p className="kalia-section-note">12 published, because this is the useful part</p>
+              <p className="kalia-section-note">12 published in full</p>
             </div>
             <div className="kalia-incidents">
               {INCIDENTS.map((incident) => (
@@ -301,7 +315,7 @@ export default function KaliaPage() {
           <section className="kalia-section" id="links">
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">Verification and citation</h2>
-              <p className="kalia-section-note">the receipts, in public</p>
+              <p className="kalia-section-note">primary sources, in public</p>
             </div>
             <div className="kalia-links">
               <a
