@@ -39,10 +39,58 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+
+  {
+    slug: 'kalia',
+    title: 'KALIA',
+    index: '01',
+    status: 'Open model release',
+    category: 'Language models',
+    roles: ['swe', 'backend'],
+    summary:
+      'A 58M-parameter language model trained from scratch on free Kaggle GPUs in two days, with every experiment pre-registered and every incident published.',
+    problem:
+      'Training a language model usually means renting GPUs or fine-tuning someone else\'s weights. I wanted an artifact where every weight, every byte of data, and every decision was mine, and a process that could be audited rather than taken on trust.',
+    system:
+      'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
+    proof: [
+      'Public release: weights, model card, and the full engineering record (41 numbered decisions, 12 incidents, two hash-anchored pre-registrations).',
+      'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval; zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
+      'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
+      'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
+    ],
+    decisions: [
+      'Screen every recipe change at 30M parameters before spending full-run quota on it.',
+      'Enforce promotion thresholds even against our own best result: Muon+ won 7 of 7 checkpoints and still did not ship at 0.015 nats below the bar.',
+      'Stop on a pre-registered rule when the curve flattens, and publish the plateau instead of smoothing it over.',
+    ],
+    tradeoffs: [
+      'A 58M storyteller, not an assistant: no instruction following, weak factual recall, and entity drift over long outputs.',
+      'Training stopped at 73% of the cosine schedule when the weekly quota ran out; the plateau and the stop are documented rather than hidden.',
+    ],
+    stack: ['Python', 'PyTorch', 'Muon', 'tiktoken', 'Kaggle T4 x2', 'HuggingFace Hub', 'pytest'],
+    flow: [
+      { label: 'Corpus', detail: 'License-filtered tokenization of TinyStories and FineWeb-Edu into memory-mapped shards.' },
+      { label: 'Pretrain', detail: 'Resumable DDP sessions with checkpoint sync and pre-registered stopping rules.' },
+      { label: 'Evaluate', detail: 'Probe suite, bits-per-byte, Abhimanyu gap, and zero-shot benchmarks on every candidate.' },
+      { label: 'Release', detail: 'Weights and model card on HuggingFace; decisions, incidents, and pre-registrations in the repository.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/kalia', kind: 'source' },
+      { label: 'Weights and model card', href: 'https://huggingface.co/kalia-lm/kalia-v012', kind: 'live' },
+      {
+        label: 'Pre-registration ledger',
+        href: 'https://github.com/subhajitlucky/kalia/blob/main/docs/preregistrations/LEDGER.md',
+        kind: 'evidence',
+      },
+    ],
+    featured: true,
+  },
+
   {
     slug: 'codebase-doctor',
     title: 'Codebase Doctor',
-    index: '01',
+    index: '02',
     status: 'Published CLI',
     category: 'Developer tooling',
     roles: ['swe', 'backend'],
@@ -85,10 +133,11 @@ export const projects: Project[] = [
     ],
     featured: true,
   },
+
   {
     slug: 'rls-doctor',
     title: 'RLS Doctor',
-    index: '02',
+    index: '03',
     status: 'Published CLI',
     category: 'Database security',
     roles: ['backend', 'swe'],
@@ -131,52 +180,7 @@ export const projects: Project[] = [
     ],
     featured: true,
   },
-  {
-    slug: 'smritiflow',
-    title: 'SmritiFlow',
-    index: '03',
-    status: 'Published CLI',
-    category: 'Agent infrastructure',
-    roles: ['swe', 'backend'],
-    summary:
-      'A CLI that keeps repository memory current so coding agents can resume work with accurate project context.',
-    problem:
-      'Long-running code work loses decisions and current state between sessions. Rebuilding that context wastes time and encourages agents to act on stale assumptions.',
-    system:
-      'A TypeScript monorepo scans repository structure and Git state, generates machine-readable memory artifacts, and writes concise agent-facing documents for scan, refresh, status, and resume workflows.',
-    proof: [
-      'Published with `smritiflow` and `sf` command aliases.',
-      'Generates cache, project map, scan report, AGENTS.md, and focused handoff documents.',
-      'Includes init, scan, refresh, status, and resume workflows.',
-      'Covers parsers, generators, and end-to-end artifact generation with automated tests.',
-    ],
-    decisions: [
-      'Generate both structured JSON and readable Markdown from the same scan.',
-      'Expose freshness explicitly through status and refresh commands.',
-      'Keep parsing, Git context, generation, and CLI orchestration independently testable.',
-    ],
-    tradeoffs: [
-      'Generated summaries can become stale and must never replace direct source inspection.',
-      'A CLI is efficient for developers but less approachable than a hosted interface.',
-    ],
-    stack: ['TypeScript', 'Node.js', 'pnpm', 'Vitest', 'Commander', 'Agent Skills'],
-    flow: [
-      { label: 'Initialize', detail: 'Create the repository-memory contract and ignored artifacts.' },
-      { label: 'Scan', detail: 'Inspect project structure, routes, imports, and Git context.' },
-      { label: 'Generate', detail: 'Write structured cache and concise agent-facing documents.' },
-      { label: 'Resume', detail: 'Return with current context, freshness signals, and next actions.' },
-    ],
-    links: [
-      { label: 'Source', href: 'https://github.com/subhajitlucky/smritiflow', kind: 'source' },
-      { label: 'npm package', href: 'https://www.npmjs.com/package/smritiflow', kind: 'package' },
-      {
-        label: 'Core workflows',
-        href: 'https://github.com/subhajitlucky/smritiflow/tree/main/packages/core/src',
-        kind: 'evidence',
-      },
-    ],
-    featured: false,
-  },
+
   {
     slug: 'tarka-sabha',
     title: 'Tarka Sabha',
@@ -223,6 +227,7 @@ export const projects: Project[] = [
     ],
     featured: true,
   },
+
   {
     slug: 'cscosmos',
     title: 'CSCosmos',
@@ -262,133 +267,11 @@ export const projects: Project[] = [
     ],
     featured: true,
   },
-  {
-    slug: 'sutra',
-    title: 'SUTRA',
-    index: '06',
-    status: 'Open-source language',
-    category: 'Agent protocols',
-    roles: ['swe', 'backend'],
-    summary:
-      'A small deterministic language for agent-to-agent intent, negotiation, and commitments with auditable state transitions.',
-    problem:
-      'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two.',
-    system:
-      'A Python lexer, parser, AST, evaluator, and transaction state model implement eight semantic primitives, with local and HTTP-based agent communication paths.',
-    proof: [
-      'Defines a compact grammar and eight documented primitives.',
-      'Includes parser, evaluator, runtime state, and network transport code.',
-      'Provides local and networked buyer/seller demonstrations.',
-    ],
-    decisions: [
-      'Keep the language declarative and intentionally non-general-purpose.',
-      'Make identical input and state produce identical output.',
-      'Isolate mutations within message-level transactions.',
-    ],
-    tradeoffs: [
-      'A formal language reduces ambiguity but requires agents and developers to learn its vocabulary.',
-      'The constrained grammar cannot represent every conversational workflow.',
-    ],
-    stack: ['Python', 'Lexer and parser', 'AST evaluation', 'HTTP transport'],
-    flow: [
-      { label: 'Express', detail: 'An agent writes intent using a small semantic vocabulary.' },
-      { label: 'Parse', detail: 'The lexer and parser produce a structured syntax tree.' },
-      { label: 'Evaluate', detail: 'Rules apply deterministically against current agent state.' },
-      { label: 'Commit', detail: 'Accepted transitions update auditable transactional state.' },
-    ],
-    links: [
-      { label: 'Source', href: 'https://github.com/subhajitlucky/sutra', kind: 'source' },
-      {
-        label: 'Language specification',
-        href: 'https://github.com/subhajitlucky/sutra/blob/main/spec/SUTRA_SPEC.md',
-        kind: 'evidence',
-      },
-    ],
-    featured: false,
-  },
-  {
-    slug: 'campushelper',
-    title: 'CampusHelper',
-    index: '07',
-    status: 'Live application',
-    category: 'Full-stack product',
-    roles: ['fullstack', 'frontend', 'backend'],
-    summary:
-      'A campus lost-and-found platform with authenticated reports, image uploads, searchable records, claims, and moderation workflows.',
-    problem:
-      'Campus lost-and-found is usually handled in scattered chat groups, so records disappear and ownership claims are difficult to verify or follow up.',
-    system:
-      'A Next.js App Router application with Google sign-in through NextAuth, PostgreSQL via Prisma on Supabase, image storage buckets, Zod-validated APIs, rate limiting, and row-level security, plus an admin moderation dashboard.',
-    proof: [
-      'Live platform with authenticated item reports, image uploads, search, claims, and comments.',
-      'Server-side validation with Zod, CSRF protection, rate limiting, and database-level RLS.',
-      'Admin dashboard backed by moderation and management workflows.',
-    ],
-    decisions: [
-      'Keep authentication, uploads, and claims behind explicit server-side boundaries.',
-      'Enforce access at the database with row-level security instead of relying only on application checks.',
-      'Validate inputs server-side with shared Zod schemas.',
-    ],
-    tradeoffs: [
-      'Managed Supabase storage and auth reduce operational work but tie the stack to one platform.',
-      'Moderation tooling covers review basics without advanced automation.',
-    ],
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Supabase', 'NextAuth'],
-    flow: [
-      { label: 'Report', detail: 'A signed-in user posts a lost or found item with photos and details.' },
-      { label: 'Discover', detail: 'Other users search and filter records by type, location, date, and keywords.' },
-      { label: 'Claim', detail: 'Owners and finders coordinate through claims and comments.' },
-      { label: 'Moderate', detail: 'Admins review reports and manage the listing lifecycle.' },
-    ],
-    links: [
-      { label: 'Source', href: 'https://github.com/subhajitlucky/campushelper', kind: 'source' },
-      { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
-    ],
-    featured: false,
-  },
-  {
-    slug: 'intentpay',
-    title: 'IntentPay',
-    index: '08',
-    status: 'Prototype',
-    category: 'Web3 and AI',
-    roles: ['web3', 'backend', 'fullstack'],
-    summary:
-      'An AI-assisted Web3 transaction prototype that turns natural-language intent into a structured plan the user reviews before wallet execution.',
-    problem:
-      'Wallets expose irreversible actions through low-level addresses, gas settings, and contract calls, which is difficult for non-technical users and risky for teams that need guardrails.',
-    system:
-      'A React client and Express API resolve payment intent through an LLM adapter into structured transaction plans, with encrypted wallet data, spending guardrails, and the wallet kept as the final execution boundary.',
-    proof: [
-      'Separates AI planning from irreversible on-chain execution; the wallet remains the approval step.',
-      'Handles named recipients, split payments, transaction previews, gas estimation, and transaction history.',
-      'Uses AES-256-GCM encrypted wallet data, bcrypt password hashing, and security event logging.',
-    ],
-    decisions: [
-      'Never let the model silently execute transactions; plans require explicit wallet approval.',
-      'Resolve contacts and handles server-side before building the transaction preview.',
-      'Treat suspicious or failed actions as first-class security events.',
-    ],
-    tradeoffs: [
-      'The review step adds friction in exchange for a clearer safety boundary.',
-      'Prototype scope targets the Sepolia network and a limited set of transaction types.',
-    ],
-    stack: ['React', 'Express', 'Ethers.js', 'LLM adapter', 'Sepolia', 'AES-256-GCM'],
-    flow: [
-      { label: 'Describe', detail: 'The user states a payment intent in natural language.' },
-      { label: 'Resolve', detail: 'The API resolves intent, contacts, balances, and guardrails.' },
-      { label: 'Preview', detail: 'A structured transaction plan is shown for review.' },
-      { label: 'Execute', detail: 'The wallet remains the final execution boundary.' },
-    ],
-    links: [
-      { label: 'Source', href: 'https://github.com/subhajitlucky/intentpay', kind: 'source' },
-    ],
-    featured: false,
-  },
+
   {
     slug: 'chitradata',
     title: 'ChitraData',
-    index: '09',
+    index: '06',
     status: 'Live application',
     category: 'Data visualization',
     roles: ['frontend'],
@@ -431,10 +314,184 @@ export const projects: Project[] = [
     ],
     featured: true,
   },
+
+  {
+    slug: 'smritiflow',
+    title: 'SmritiFlow',
+    index: '07',
+    status: 'Published CLI',
+    category: 'Agent infrastructure',
+    roles: ['swe', 'backend'],
+    summary:
+      'A CLI that keeps repository memory current so coding agents can resume work with accurate project context.',
+    problem:
+      'Long-running code work loses decisions and current state between sessions. Rebuilding that context wastes time and encourages agents to act on stale assumptions.',
+    system:
+      'A TypeScript monorepo scans repository structure and Git state, generates machine-readable memory artifacts, and writes concise agent-facing documents for scan, refresh, status, and resume workflows.',
+    proof: [
+      'Published with `smritiflow` and `sf` command aliases.',
+      'Generates cache, project map, scan report, AGENTS.md, and focused handoff documents.',
+      'Includes init, scan, refresh, status, and resume workflows.',
+      'Covers parsers, generators, and end-to-end artifact generation with automated tests.',
+    ],
+    decisions: [
+      'Generate both structured JSON and readable Markdown from the same scan.',
+      'Expose freshness explicitly through status and refresh commands.',
+      'Keep parsing, Git context, generation, and CLI orchestration independently testable.',
+    ],
+    tradeoffs: [
+      'Generated summaries can become stale and must never replace direct source inspection.',
+      'A CLI is efficient for developers but less approachable than a hosted interface.',
+    ],
+    stack: ['TypeScript', 'Node.js', 'pnpm', 'Vitest', 'Commander', 'Agent Skills'],
+    flow: [
+      { label: 'Initialize', detail: 'Create the repository-memory contract and ignored artifacts.' },
+      { label: 'Scan', detail: 'Inspect project structure, routes, imports, and Git context.' },
+      { label: 'Generate', detail: 'Write structured cache and concise agent-facing documents.' },
+      { label: 'Resume', detail: 'Return with current context, freshness signals, and next actions.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/smritiflow', kind: 'source' },
+      { label: 'npm package', href: 'https://www.npmjs.com/package/smritiflow', kind: 'package' },
+      {
+        label: 'Core workflows',
+        href: 'https://github.com/subhajitlucky/smritiflow/tree/main/packages/core/src',
+        kind: 'evidence',
+      },
+    ],
+    featured: false,
+  },
+
+  {
+    slug: 'sutra',
+    title: 'SUTRA',
+    index: '08',
+    status: 'Open-source language',
+    category: 'Agent protocols',
+    roles: ['swe', 'backend'],
+    summary:
+      'A small deterministic language for agent-to-agent intent, negotiation, and commitments with auditable state transitions.',
+    problem:
+      'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two.',
+    system:
+      'A Python lexer, parser, AST, evaluator, and transaction state model implement eight semantic primitives, with local and HTTP-based agent communication paths.',
+    proof: [
+      'Defines a compact grammar and eight documented primitives.',
+      'Includes parser, evaluator, runtime state, and network transport code.',
+      'Provides local and networked buyer/seller demonstrations.',
+    ],
+    decisions: [
+      'Keep the language declarative and intentionally non-general-purpose.',
+      'Make identical input and state produce identical output.',
+      'Isolate mutations within message-level transactions.',
+    ],
+    tradeoffs: [
+      'A formal language reduces ambiguity but requires agents and developers to learn its vocabulary.',
+      'The constrained grammar cannot represent every conversational workflow.',
+    ],
+    stack: ['Python', 'Lexer and parser', 'AST evaluation', 'HTTP transport'],
+    flow: [
+      { label: 'Express', detail: 'An agent writes intent using a small semantic vocabulary.' },
+      { label: 'Parse', detail: 'The lexer and parser produce a structured syntax tree.' },
+      { label: 'Evaluate', detail: 'Rules apply deterministically against current agent state.' },
+      { label: 'Commit', detail: 'Accepted transitions update auditable transactional state.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/sutra', kind: 'source' },
+      {
+        label: 'Language specification',
+        href: 'https://github.com/subhajitlucky/sutra/blob/main/spec/SUTRA_SPEC.md',
+        kind: 'evidence',
+      },
+    ],
+    featured: false,
+  },
+
+  {
+    slug: 'campushelper',
+    title: 'CampusHelper',
+    index: '09',
+    status: 'Live application',
+    category: 'Full-stack product',
+    roles: ['fullstack', 'frontend', 'backend'],
+    summary:
+      'A campus lost-and-found platform with authenticated reports, image uploads, searchable records, claims, and moderation workflows.',
+    problem:
+      'Campus lost-and-found is usually handled in scattered chat groups, so records disappear and ownership claims are difficult to verify or follow up.',
+    system:
+      'A Next.js App Router application with Google sign-in through NextAuth, PostgreSQL via Prisma on Supabase, image storage buckets, Zod-validated APIs, rate limiting, and row-level security, plus an admin moderation dashboard.',
+    proof: [
+      'Live platform with authenticated item reports, image uploads, search, claims, and comments.',
+      'Server-side validation with Zod, CSRF protection, rate limiting, and database-level RLS.',
+      'Admin dashboard backed by moderation and management workflows.',
+    ],
+    decisions: [
+      'Keep authentication, uploads, and claims behind explicit server-side boundaries.',
+      'Enforce access at the database with row-level security instead of relying only on application checks.',
+      'Validate inputs server-side with shared Zod schemas.',
+    ],
+    tradeoffs: [
+      'Managed Supabase storage and auth reduce operational work but tie the stack to one platform.',
+      'Moderation tooling covers review basics without advanced automation.',
+    ],
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Supabase', 'NextAuth'],
+    flow: [
+      { label: 'Report', detail: 'A signed-in user posts a lost or found item with photos and details.' },
+      { label: 'Discover', detail: 'Other users search and filter records by type, location, date, and keywords.' },
+      { label: 'Claim', detail: 'Owners and finders coordinate through claims and comments.' },
+      { label: 'Moderate', detail: 'Admins review reports and manage the listing lifecycle.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/campushelper', kind: 'source' },
+      { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
+    ],
+    featured: false,
+  },
+
+  {
+    slug: 'intentpay',
+    title: 'IntentPay',
+    index: '10',
+    status: 'Prototype',
+    category: 'Web3 and AI',
+    roles: ['web3', 'backend', 'fullstack'],
+    summary:
+      'An AI-assisted Web3 transaction prototype that turns natural-language intent into a structured plan the user reviews before wallet execution.',
+    problem:
+      'Wallets expose irreversible actions through low-level addresses, gas settings, and contract calls, which is difficult for non-technical users and risky for teams that need guardrails.',
+    system:
+      'A React client and Express API resolve payment intent through an LLM adapter into structured transaction plans, with encrypted wallet data, spending guardrails, and the wallet kept as the final execution boundary.',
+    proof: [
+      'Separates AI planning from irreversible on-chain execution; the wallet remains the approval step.',
+      'Handles named recipients, split payments, transaction previews, gas estimation, and transaction history.',
+      'Uses AES-256-GCM encrypted wallet data, bcrypt password hashing, and security event logging.',
+    ],
+    decisions: [
+      'Never let the model silently execute transactions; plans require explicit wallet approval.',
+      'Resolve contacts and handles server-side before building the transaction preview.',
+      'Treat suspicious or failed actions as first-class security events.',
+    ],
+    tradeoffs: [
+      'The review step adds friction in exchange for a clearer safety boundary.',
+      'Prototype scope targets the Sepolia network and a limited set of transaction types.',
+    ],
+    stack: ['React', 'Express', 'Ethers.js', 'LLM adapter', 'Sepolia', 'AES-256-GCM'],
+    flow: [
+      { label: 'Describe', detail: 'The user states a payment intent in natural language.' },
+      { label: 'Resolve', detail: 'The API resolves intent, contacts, balances, and guardrails.' },
+      { label: 'Preview', detail: 'A structured transaction plan is shown for review.' },
+      { label: 'Execute', detail: 'The wallet remains the final execution boundary.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/intentpay', kind: 'source' },
+    ],
+    featured: false,
+  },
+
   {
     slug: 'astapraharicha',
     title: 'Asta Praharicha',
-    index: '10',
+    index: '11',
     status: 'Live application',
     category: 'Interactive storytelling',
     roles: ['frontend'],
@@ -476,10 +533,11 @@ export const projects: Project[] = [
     ],
     featured: false,
   },
+
   {
     slug: 'quantumticket',
     title: 'QuantumTicket',
-    index: '11',
+    index: '12',
     status: 'Live application',
     category: 'Blockchain ticketing',
     roles: ['web3'],
@@ -520,53 +578,7 @@ export const projects: Project[] = [
       },
     ],
     featured: false,
-  },
-  {
-    slug: 'kalia',
-    title: 'KALIA',
-    index: '12',
-    status: 'Open model release',
-    category: 'Language models',
-    roles: ['swe', 'backend'],
-    summary:
-      'A 58M-parameter language model trained from scratch on free Kaggle GPUs in two days, with every experiment pre-registered and every incident published.',
-    problem:
-      'Training a language model usually means renting GPUs or fine-tuning someone else\'s weights. I wanted an artifact where every weight, every byte of data, and every decision was mine, and a process that could be audited rather than taken on trust.',
-    system:
-      'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
-    proof: [
-      'Public release: weights, model card, and the full engineering record (41 numbered decisions, 12 incidents, two hash-anchored pre-registrations).',
-      'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval; zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
-      'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
-      'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
-    ],
-    decisions: [
-      'Screen every recipe change at 30M parameters before spending full-run quota on it.',
-      'Enforce promotion thresholds even against our own best result: Muon+ won 7 of 7 checkpoints and still did not ship at 0.015 nats below the bar.',
-      'Stop on a pre-registered rule when the curve flattens, and publish the plateau instead of smoothing it over.',
-    ],
-    tradeoffs: [
-      'A 58M storyteller, not an assistant: no instruction following, weak factual recall, and entity drift over long outputs.',
-      'Training stopped at 73% of the cosine schedule when the weekly quota ran out; the plateau and the stop are documented rather than hidden.',
-    ],
-    stack: ['Python', 'PyTorch', 'Muon', 'tiktoken', 'Kaggle T4 x2', 'HuggingFace Hub', 'pytest'],
-    flow: [
-      { label: 'Corpus', detail: 'License-filtered tokenization of TinyStories and FineWeb-Edu into memory-mapped shards.' },
-      { label: 'Pretrain', detail: 'Resumable DDP sessions with checkpoint sync and pre-registered stopping rules.' },
-      { label: 'Evaluate', detail: 'Probe suite, bits-per-byte, Abhimanyu gap, and zero-shot benchmarks on every candidate.' },
-      { label: 'Release', detail: 'Weights and model card on HuggingFace; decisions, incidents, and pre-registrations in the repository.' },
-    ],
-    links: [
-      { label: 'Source', href: 'https://github.com/subhajitlucky/kalia', kind: 'source' },
-      { label: 'Weights and model card', href: 'https://huggingface.co/kalia-lm/kalia-v012', kind: 'live' },
-      {
-        label: 'Pre-registration ledger',
-        href: 'https://github.com/subhajitlucky/kalia/blob/main/docs/preregistrations/LEDGER.md',
-        kind: 'evidence',
-      },
-    ],
-    featured: true,
-  },
+  }
 ];
 
 export const featuredProjects = projects.filter((project) => project.featured);

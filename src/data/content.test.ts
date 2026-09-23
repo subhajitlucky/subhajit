@@ -40,12 +40,12 @@ describe('portfolio content integrity', () => {
 
   it('preserves the approved featured and secondary project order', () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
+      'kalia',
       'codebase-doctor',
       'rls-doctor',
       'tarka-sabha',
       'cscosmos',
       'chitradata',
-      'kalia',
     ]);
     expect(secondaryProjects.map((project) => project.slug)).toEqual([
       'smritiflow',
