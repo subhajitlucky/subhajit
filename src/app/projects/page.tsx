@@ -29,7 +29,7 @@ export default function ProjectsPage() {
     <div className="projects-index site-frame">
       <header className="projects-index-header">
         <h1>Selected work</h1>
-        <p>Eleven public projects across developer tools, AI systems, data visualization, and Web3.</p>
+        <p>Twelve public projects across developer tools, AI systems, language models, data visualization, and Web3.</p>
       </header>
       <ProjectsExplorer projects={projects} />
     </div>

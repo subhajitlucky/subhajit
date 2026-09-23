@@ -521,6 +521,52 @@ export const projects: Project[] = [
     ],
     featured: false,
   },
+  {
+    slug: 'kalia',
+    title: 'KALIA',
+    index: '12',
+    status: 'Open model release',
+    category: 'Language models',
+    roles: ['swe', 'backend'],
+    summary:
+      'A 58M-parameter language model trained from scratch on free Kaggle GPUs in two days, with every experiment pre-registered and every incident published.',
+    problem:
+      'Training a language model usually means renting GPUs or fine-tuning someone else\'s weights. I wanted an artifact where every weight, every byte of data, and every decision was mine, and a process that could be audited rather than taken on trust.',
+    system:
+      'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
+    proof: [
+      'Public release: weights, model card, and the full engineering record (41 numbered decisions, 12 incidents, two hash-anchored pre-registrations).',
+      'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval; zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
+      'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
+      'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
+    ],
+    decisions: [
+      'Screen every recipe change at 30M parameters before spending full-run quota on it.',
+      'Enforce promotion thresholds even against our own best result: Muon+ won 7 of 7 checkpoints and still did not ship at 0.015 nats below the bar.',
+      'Stop on a pre-registered rule when the curve flattens, and publish the plateau instead of smoothing it over.',
+    ],
+    tradeoffs: [
+      'A 58M storyteller, not an assistant: no instruction following, weak factual recall, and entity drift over long outputs.',
+      'Training stopped at 73% of the cosine schedule when the weekly quota ran out; the plateau and the stop are documented rather than hidden.',
+    ],
+    stack: ['Python', 'PyTorch', 'Muon', 'tiktoken', 'Kaggle T4 x2', 'HuggingFace Hub', 'pytest'],
+    flow: [
+      { label: 'Corpus', detail: 'License-filtered tokenization of TinyStories and FineWeb-Edu into memory-mapped shards.' },
+      { label: 'Pretrain', detail: 'Resumable DDP sessions with checkpoint sync and pre-registered stopping rules.' },
+      { label: 'Evaluate', detail: 'Probe suite, bits-per-byte, Abhimanyu gap, and zero-shot benchmarks on every candidate.' },
+      { label: 'Release', detail: 'Weights and model card on HuggingFace; decisions, incidents, and pre-registrations in the repository.' },
+    ],
+    links: [
+      { label: 'Source', href: 'https://github.com/subhajitlucky/kalia', kind: 'source' },
+      { label: 'Weights and model card', href: 'https://huggingface.co/kalia-lm/kalia-v012', kind: 'live' },
+      {
+        label: 'Pre-registration ledger',
+        href: 'https://github.com/subhajitlucky/kalia/blob/main/docs/preregistrations/LEDGER.md',
+        kind: 'evidence',
+      },
+    ],
+    featured: true,
+  },
 ];
 
 export const featuredProjects = projects.filter((project) => project.featured);

@@ -1,11 +1,12 @@
 import { getPost, posts } from '@/data/posts';
 
 describe('writing content integrity', () => {
-  it('publishes two long-form technical posts', () => {
-    expect(posts).toHaveLength(2);
+  it('publishes the long-form technical posts', () => {
+    expect(posts).toHaveLength(3);
     expect(posts.map((post) => post.slug)).toEqual([
       'five-postgres-rls-mistakes',
       'what-breaks-if-i-change-this-file',
+      'kalia-build-log',
     ]);
   });
 
@@ -54,6 +55,10 @@ describe('writing content integrity', () => {
             expect(block.lang.length).toBeGreaterThan(0);
           }
           if (block.kind === 'list') expect(block.items.length).toBeGreaterThan(0);
+          if (block.kind === 'image') {
+            expect(block.src.length).toBeGreaterThan(0);
+            expect(block.alt.length).toBeGreaterThan(0);
+          }
         }
       }
     }

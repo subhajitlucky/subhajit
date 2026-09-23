@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getPost, posts, type PostBlock } from '@/data/posts';
@@ -52,6 +53,15 @@ function Block({ block }: { block: PostBlock }) {
           <li key={item}>{item}</li>
         ))}
       </ul>
+    );
+  }
+
+  if (block.kind === 'image') {
+    return (
+      <figure className="post-figure">
+        <Image src={block.src} alt={block.alt} width={720} height={400} unoptimized />
+        {block.caption ? <figcaption>{block.caption}</figcaption> : null}
+      </figure>
     );
   }
 

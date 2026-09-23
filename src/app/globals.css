@@ -919,6 +919,24 @@ a:focus-visible {
   font-size: 0.85rem;
 }
 
+.post-figure {
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.post-figure img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+}
+
+.post-figure figcaption {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 .post-footer {
   margin-block-start: clamp(2rem, 4vw, 3rem);
 }

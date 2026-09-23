@@ -45,6 +45,7 @@ describe('portfolio content integrity', () => {
       'tarka-sabha',
       'cscosmos',
       'chitradata',
+      'kalia',
     ]);
     expect(secondaryProjects.map((project) => project.slug)).toEqual([
       'smritiflow',
@@ -64,7 +65,7 @@ describe('portfolio content integrity', () => {
   });
 
   it('gives every selected project inspectable proof and valid links', () => {
-    expect(projects).toHaveLength(11);
+    expect(projects).toHaveLength(12);
 
     for (const project of projects) {
       expect(project.proof.length).toBeGreaterThan(0);
