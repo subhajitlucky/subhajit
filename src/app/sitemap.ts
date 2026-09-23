@@ -20,6 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${siteConfig.baseUrl}/kalia`,
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
     ...projects.map((project) => ({
       url: `${siteConfig.baseUrl}/projects/${project.slug}`,
       changeFrequency: 'monthly' as const,
