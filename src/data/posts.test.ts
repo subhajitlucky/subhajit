@@ -59,6 +59,10 @@ describe('writing content integrity', () => {
             expect(block.src.length).toBeGreaterThan(0);
             expect(block.alt.length).toBeGreaterThan(0);
           }
+          if (block.kind === 'link') {
+            expect(block.href.length).toBeGreaterThan(0);
+            expect(block.label.length).toBeGreaterThan(0);
+          }
         }
       }
     }

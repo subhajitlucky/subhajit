@@ -3,7 +3,8 @@ export type PostBlock =
   | { kind: 'code'; lang: string; code: string; caption?: string }
   | { kind: 'list'; items: string[] }
   | { kind: 'h3'; text: string }
-  | { kind: 'image'; src: string; alt: string; caption?: string };
+  | { kind: 'image'; src: string; alt: string; caption?: string }
+  | { kind: 'link'; href: string; label: string; note?: string };
 
 export type PostSection = {
   id: string;
@@ -522,7 +523,7 @@ codebase-doctor audit . --changed --baseline baseline.json --fail-on high`,
     slug: 'kalia-build-log',
     title: 'Training a 58M language model from scratch on free GPUs',
     summary:
-      'Two days, zero dollars, and a full public record: micro-ablations before full runs, an optimizer that won 7 of 7 checkpoints and was still rejected, a validation plateau resolved by a deterministic eval, and the quota wall that ended training at 73% of the schedule.',
+      'Two days, zero dollars, and a full public record: micro-ablations before full runs, an optimizer that won 7 of 7 checkpoints and was still not promoted, a validation plateau resolved by a deterministic evaluation, and the quota exhaustion that ended training at 73% of the schedule.',
     date: '2026-09-23',
     readingMinutes: 17,
     tags: ['language models', 'training', 'Muon', 'Kaggle', 'from scratch'],
@@ -531,6 +532,12 @@ codebase-doctor audit . --changed --baseline baseline.json --fail-on high`,
         id: 'goal',
         title: 'The goal and the constraint',
         blocks: [
+          {
+            kind: 'link',
+            href: '/kalia',
+            label: 'Dedicated page: KALIA 0.1.2',
+            note: 'The full paper-style record — model specification, evaluation, a replayable training console, and every decision and incident.',
+          },
           {
             kind: 'p',
             text: "I trained KALIA, a 58M-parameter language model, from random initialization to coherent story generation in two days, using only free-tier Kaggle GPUs. No pretrained weights, no distillation, no fine-tuning, and zero dollars of compute. It writes short stories, scores 61.4% on PIQA, and every weight in it exists nowhere else.",
@@ -587,16 +594,16 @@ python ablate.py --arms micro-base,micro-muon,micro-muon-qk --steps 500`,
         ],
       },
       {
-        id: 'rejected',
-        title: 'The result we rejected',
+        id: 'not-promoted',
+        title: 'Muon+ validated, not promoted',
         blocks: [
           {
             kind: 'p',
-            text: "Muon+ adds one post-polar normalization step to Muon, and the papers say it wins from 60M parameters upward. In our ablation it beat plain Muon on 7 of 7 checkpoints. It did not ship.",
+            text: "Muon+ adds one post-polar normalization step to Muon, and the papers report gains from 60M parameters upward. In our ablation it beat plain Muon on 7 of 7 checkpoints. It was not promoted to the full-scale recipe.",
           },
           {
             kind: 'p',
-            text: "The gain was 0.015 nats. Our promotion threshold, written down before the experiment ran, was 0.02. A threshold you bend for your favorite result is not a threshold, so the full-scale model kept plain Muon and the 0.015 result stayed in the record as a validated-but-not-promoted option.",
+            text: "The gain was 0.015 nats. The promotion threshold, fixed before the experiment ran, was 0.02. A threshold that is bent for a favored result is not a threshold, so the full-scale model kept plain Muon and the 0.015 result remains in the record as validated but below the bar.",
           },
         ],
       },

@@ -937,6 +937,32 @@ a:focus-visible {
   font-size: 0.85rem;
 }
 
+.post-link {
+  display: grid;
+  gap: 0.35rem;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0.5rem;
+  padding: 0.9rem 1rem;
+  text-decoration: none;
+  background: #f8fafc;
+}
+
+.post-link strong {
+  color: var(--text);
+}
+
+.post-link span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.post-link:hover,
+.post-link:focus-visible {
+  border-color: var(--accent);
+}
+
 .post-footer {
   margin-block-start: clamp(2rem, 4vw, 3rem);
 }

@@ -65,6 +65,15 @@ function Block({ block }: { block: PostBlock }) {
     );
   }
 
+  if (block.kind === 'link') {
+    return (
+      <Link className="post-link" href={block.href}>
+        <strong>{block.label}</strong>
+        {block.note ? <span>{block.note}</span> : null}
+      </Link>
+    );
+  }
+
   return (
     <figure className="code-block">
       <pre tabIndex={0}>
