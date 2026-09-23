@@ -17,6 +17,7 @@ export const siteConfig = {
     email: 'mailto:subhajitpradhan310@gmail.com',
   },
   nav: [
+    { label: 'Writing', href: '/writing' },
     { label: 'Email', href: 'mailto:subhajitpradhan310@gmail.com' },
     { label: 'Resume', href: '/resume.pdf' },
     { label: 'GitHub', href: 'https://github.com/subhajitlucky' },
