@@ -56,6 +56,12 @@ describe('KaliaPage', () => {
     expect(screen.getByText(/session 3 replay, steps 1,740/)).toBeInTheDocument();
   });
 
+  it('offers a light/dark theme toggle', () => {
+    render(<KaliaPage />);
+
+    expect(screen.getByRole('button', { name: /switch to (light|dark) mode/i })).toBeInTheDocument();
+  });
+
   it('includes the timeline, decisions, incidents, and verification links', () => {
     render(<KaliaPage />);
 

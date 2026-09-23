@@ -16,7 +16,7 @@ export const metadata = rootMetadata;
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={sans.variable}>
+    <html lang="en" className={sans.variable} suppressHydrationWarning>
       <body>
         <JsonLd />
         <SiteHeader />

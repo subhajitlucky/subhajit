@@ -10,10 +10,21 @@
   --k-muted: #a1a1aa;
   --k-dim: #71717a;
   --k-accent: #f59e0b;
+  --k-accent-bright: #fbbf24;
   --k-accent-soft: rgba(245, 158, 11, 0.14);
+  --k-on-accent: #1a1204;
   --k-cyan: #38bdf8;
   --k-good: #34d399;
   --k-bad: #f87171;
+  --k-nav-bg: rgba(7, 7, 10, 0.82);
+  --k-terminal-bg: #050508;
+  --k-console-end: #0a0a0f;
+  --k-grid: rgba(255, 255, 255, 0.025);
+  --k-gridline: rgba(255, 255, 255, 0.06);
+  --k-track: rgba(255, 255, 255, 0.05);
+  --k-area: rgba(245, 158, 11, 0.08);
+  --k-fill-a: rgba(245, 158, 11, 0.85);
+  --k-fill-b: rgba(245, 158, 11, 0.55);
   --k-display: var(--font-kalia-display), 'Space Grotesk', system-ui, sans-serif;
   --k-mono: var(--font-kalia-mono), 'JetBrains Mono', ui-monospace, monospace;
 
@@ -24,13 +35,40 @@
   padding-block: 0 clamp(4rem, 8vw, 7rem);
 }
 
+html[data-kalia-theme='light'] .kalia {
+  --k-bg: #f6f4ef;
+  --k-panel: #ffffff;
+  --k-panel-2: #fbfaf7;
+  --k-line: rgba(24, 24, 27, 0.10);
+  --k-line-strong: rgba(24, 24, 27, 0.24);
+  --k-text: #18181b;
+  --k-muted: #52525b;
+  --k-dim: #6b7280;
+  --k-accent: #b45309;
+  --k-accent-bright: #92400e;
+  --k-accent-soft: rgba(180, 83, 9, 0.10);
+  --k-on-accent: #fffaf0;
+  --k-cyan: #0369a1;
+  --k-good: #047857;
+  --k-bad: #b91c1c;
+  --k-nav-bg: rgba(246, 244, 239, 0.86);
+  --k-terminal-bg: #f1efe9;
+  --k-console-end: #f1efe9;
+  --k-grid: rgba(24, 24, 27, 0.04);
+  --k-gridline: rgba(24, 24, 27, 0.08);
+  --k-track: rgba(24, 24, 27, 0.06);
+  --k-area: rgba(180, 83, 9, 0.10);
+  --k-fill-a: rgba(180, 83, 9, 0.85);
+  --k-fill-b: rgba(180, 83, 9, 0.55);
+}
+
 .kalia::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(var(--k-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--k-grid) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 70%);
   pointer-events: none;
@@ -77,7 +115,7 @@
   top: 0;
   z-index: 5;
   backdrop-filter: blur(12px);
-  background: rgba(7, 7, 10, 0.82);
+  background: var(--k-nav-bg);
   border-bottom: 1px solid var(--k-line);
 }
 
@@ -107,6 +145,26 @@
 .kalia-nav .kalia-nav-brand {
   color: var(--k-text);
   font-weight: 600;
+}
+
+.kalia-theme {
+  margin-left: auto;
+  border: 1px solid var(--k-line-strong);
+  background: transparent;
+  color: var(--k-muted);
+  font-family: var(--k-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.kalia-theme:hover,
+.kalia-theme:focus-visible {
+  border-color: var(--k-accent);
+  color: var(--k-accent);
 }
 
 /* ---------- hero ---------- */
@@ -209,14 +267,14 @@
 .kalia-cta-primary {
   background: var(--k-accent);
   border-color: var(--k-accent);
-  color: #1a1204;
+  color: var(--k-on-accent);
   font-weight: 600;
 }
 
 .kalia-cta-primary:hover,
 .kalia-cta-primary:focus-visible {
-  background: #fbbf24;
-  color: #1a1204;
+  background: var(--k-accent-bright);
+  color: var(--k-on-accent);
 }
 
 /* ---------- sections ---------- */
@@ -224,6 +282,7 @@
 .kalia-section {
   padding-block: clamp(2.5rem, 6vw, 4.5rem);
   border-top: 1px solid var(--k-line);
+  scroll-margin-top: 3.2rem;
 }
 
 .kalia-section-head {
@@ -264,7 +323,7 @@
 
 .kalia-console {
   border: 1px solid var(--k-line);
-  background: linear-gradient(180deg, var(--k-panel), #0a0a0f);
+  background: linear-gradient(180deg, var(--k-panel), var(--k-console-end));
 }
 
 .kalia-console-head {
@@ -315,7 +374,7 @@
 }
 
 .kalia-gridline {
-  stroke: rgba(255, 255, 255, 0.06);
+  stroke: var(--k-gridline);
   stroke-width: 1;
 }
 
@@ -355,7 +414,7 @@
 }
 
 .kalia-area {
-  fill: rgba(245, 158, 11, 0.08);
+  fill: var(--k-area);
 }
 
 .kalia-valdot {
@@ -405,7 +464,7 @@
 
 .kalia-terminal {
   border: 1px solid var(--k-line);
-  background: #050508;
+  background: var(--k-terminal-bg);
   padding: 0.7rem 0.8rem;
   font-size: 0.68rem;
   line-height: 1.7;
@@ -565,14 +624,14 @@
 .kalia-bench-track {
   position: relative;
   height: 14px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--k-track);
   border: 1px solid var(--k-line);
 }
 
 .kalia-bench-fill {
   position: absolute;
   inset: 0 auto 0 0;
-  background: linear-gradient(90deg, rgba(245, 158, 11, 0.85), rgba(245, 158, 11, 0.55));
+  background: linear-gradient(90deg, var(--k-fill-a), var(--k-fill-b));
 }
 
 .kalia-bench-chance {

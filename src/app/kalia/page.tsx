@@ -3,6 +3,7 @@ import { JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import Link from 'next/link';
 
 import { KaliaConsole } from './KaliaConsole';
+import { KaliaThemeToggle } from './KaliaThemeToggle';
 import {
   BENCHMARKS,
   DECISIONS,
@@ -68,25 +69,33 @@ function pillClass(outcome: string): string {
 
 export default function KaliaPage() {
   return (
-    <div className={`kalia ${display.variable} ${mono.variable}`}>
-      <nav className="kalia-nav" aria-label="KALIA page sections">
-        <div className="kalia-inner kalia-nav-inner">
-          <Link className="kalia-nav-brand" href="/kalia">
-            KALIA
-          </Link>
-          {NAV.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.label}
+    <>
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            "try{var s=localStorage.getItem('kalia-theme');var t=(s==='light'||s==='dark')?s:(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.kaliaTheme=t;}catch(e){}",
+        }}
+      />
+      <div className={`kalia ${display.variable} ${mono.variable}`}>
+        <nav className="kalia-nav" aria-label="KALIA page sections">
+          <div className="kalia-inner kalia-nav-inner">
+            <Link className="kalia-nav-brand" href="/kalia">
+              KALIA
+            </Link>
+            {NAV.map((item) => (
+              <a key={item.href} href={item.href}>
+                {item.label}
+              </a>
+            ))}
+            <a href="https://github.com/subhajitlucky/kalia" target="_blank" rel="noopener noreferrer">
+              github
             </a>
-          ))}
-          <a href="https://github.com/subhajitlucky/kalia" target="_blank" rel="noopener noreferrer">
-            github
-          </a>
-          <a href="https://huggingface.co/kalia-lm/kalia-v012" target="_blank" rel="noopener noreferrer">
-            weights
-          </a>
-        </div>
-      </nav>
+            <a href="https://huggingface.co/kalia-lm/kalia-v012" target="_blank" rel="noopener noreferrer">
+              weights
+            </a>
+            <KaliaThemeToggle />
+          </div>
+        </nav>
 
       <div className="kalia-inner">
         <header className="kalia-hero">
@@ -338,5 +347,6 @@ export default function KaliaPage() {
         </footer>
       </div>
     </div>
+    </>
   );
 }
