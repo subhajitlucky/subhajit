@@ -111,7 +111,7 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: 'afternoon',
         title: 'The deterministic eval',
-        body: 'A CPU evaluation — free, no GPU quota — runs 100 fixed-seed batches over 819,200 tokens: 2.4366 loss, 0.8184 bits-per-byte. The model never regressed; the swings were sampling noise. Under the pre-registered stopping rule, the plateau plus the quota wall make the stop final at step 3,478.',
+        body: 'A CPU evaluation — free, no GPU quota — runs 100 fixed-seed batches over 819,200 tokens: 2.4366 loss, 0.8184 bits-per-byte, on the held-out set of the corpus as it then stood. The model never regressed; the swings were sampling noise. Under the pre-registered stopping rule, the plateau plus the quota wall make the stop final at step 3,478.',
       },
       {
         time: 'afternoon',

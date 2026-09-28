@@ -197,8 +197,11 @@ export default function KaliaPage() {
             <p className="kalia-prose" style={{ marginTop: '1.6rem' }}>
               Held-out loss on the deterministic 100-batch evaluation is{' '}
               <strong>2.4366</strong> (819,200 tokens, fixed seed) — <strong>0.8184
-              bits-per-byte</strong>. A 58M storyteller at <strong>61.4% PIQA</strong> and{' '}
-              <strong>45.8% ARC-Easy</strong> is competitive with 125M-class models trained on
+              bits-per-byte</strong>, measured on the original corpus&rsquo;s held-out set. That set was
+              later rebuilt for licence compliance; the rebuilt one is 0.62 nats harder for these
+              same weights (3.0533), which is why v0.2.0 is scored against the rebuilt set and the
+              two figures are never tabulated together. A 58M storyteller at <strong>61.4% PIQA</strong>{' '}
+              and <strong>45.8% ARC-Easy</strong> is competitive with 125M-class models trained on
               roughly 160x more tokens, and weakest on the one task that requires long-range
               narrative memory (LAMBADA, 23%). The custom metric is the one that matters next: the{' '}
               <strong>Abhimanyu gap</strong> — reversed-text loss (9.29) minus forward loss (3.23)

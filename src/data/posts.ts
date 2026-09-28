@@ -655,12 +655,12 @@ python ablate.py --arms micro-base,micro-muon,micro-muon-qk --steps 500`,
           {
             kind: 'image',
             src: '/kalia/val-loss.svg',
-            alt: 'Line chart of validation loss from step 1750 to 3250, showing a flat plateau band around 2.53 to 2.63, then a drop, plus a separate deterministic evaluation point at step 3478 with loss 2.4366.',
-            caption: 'The plateau band, the decay, and the deterministic eval that resolved the noise question. The chart starts at step 1750 because the session-1 log rows were lost to a resume incident.',
+            alt: 'Line chart of validation loss from step 250 to 3250: a steep descent from 4.0881 to 2.5270 by step 1500, then a plateau band between 2.40 and 2.63 for the remaining 1,750 steps, plus a separate deterministic evaluation point at step 3478 with loss 2.4366.',
+            caption: 'The full curve: the descent finishes by step 1,500 and everything after it oscillates inside 0.23 nats. The first half was missing from the published log — a mid-run code change dropped it — and was rebuilt from the model repository commit history.',
           },
           {
             kind: 'p',
-            text: "A deterministic evaluation settled the question the noisy training evals could not: 100 fixed-seed batches over 819,200 tokens returned 2.4366 loss and 0.8184 bits-per-byte. The model had not regressed; the swings were sampling noise. Under the pre-registered stopping rule, the plateau plus the quota wall made the stop final, and the plateau is documented rather than smoothed over.",
+            text: "A deterministic evaluation settled the question the noisy training evals could not: 100 fixed-seed batches over 819,200 tokens returned 2.4366 loss and 0.8184 bits-per-byte, on the original corpus's held-out set. That set was later rebuilt for licence compliance and the rebuilt one is 0.62 nats harder for identical weights, so the figure is not comparable to anything measured afterwards — a lesson that arrived as incident D43.",
           },
         ],
       },
@@ -703,7 +703,7 @@ python eval_val.py --ckpt ckpt.pt --val-bin val.bin --batches 100`,
         blocks: [
           {
             kind: 'p',
-            text: "Any training run produces a loss curve. What makes this one auditable is everything around it: 41 numbered decisions, 12 published incidents, two hash-anchored pre-registrations, and a dated journal. The incidents are the useful part.",
+            text: "Any training run produces a loss curve. What makes this one auditable is everything around it: 43 numbered decisions, 14 published incidents, three hash-anchored pre-registrations (plus two amendments), and a dated journal. The incidents are the useful part.",
           },
           {
             kind: 'list',
@@ -769,11 +769,11 @@ python -m pytest tests/ -v          # 64 tests, all green`,
         blocks: [
           {
             kind: 'p',
-            text: "The Abhimanyu gap is the thread I want to pull. A pre-registered experiment tests whether chunk-preserving reversal training — reversing the order of short chunks while keeping tokens inside each chunk readable — closes the gap without hurting forward loss. The prediction, threshold, and analysis plan were hashed before the run.",
+            text: "The Abhimanyu gap was the thread I wanted to pull. The pre-registered experiment tested whether chunk-preserving reversal training — reversing the order of short chunks while keeping tokens inside each chunk readable — closes the gap without hurting forward loss. The prediction, threshold, and analysis plan were hashed before the run. It failed: the gap came out 0.14 nats worse than the control, on both seeds, on both metrics, and the transform was rejected by the rule that had already decided what would count as success.",
           },
           {
             kind: 'p',
-            text: "After that comes v0.2.0: a new compliance-clean corpus of 2.4B tokens, plus only those changes that pass promotion rules that were hashed before any result existed. Same discipline, bigger data, and a model that will be compared against this one on the same frozen evaluations.",
+            text: "Then came v0.2.0, now training: a compliance-clean corpus of 2.4B tokens, with only those changes that pass promotion rules hashed before any result existed. The reversal transform was not one of them. Its final evaluation — yardstick, thresholds, and the claims it is forbidden to make — was registered while it was still training.",
           },
         ],
       },
