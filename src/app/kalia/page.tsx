@@ -113,7 +113,7 @@ export default function KaliaPage() {
               at zero compute cost. Section&nbsp;1 fixes the model specification; Section&nbsp;2
               reports the evaluation; Sections&nbsp;3 and&nbsp;4 present unedited samples and an
               interactive replay of the training log. The appendices record the day-by-day log,
-              all 42 numbered decisions, and all 14 incidents. Every experiment was pre-registered
+              all 43 numbered decisions, and all 15 incidents. Every experiment was pre-registered
               before it ran, and no claim on this page is a screenshot — each links to the
               primary log.
             </p>
