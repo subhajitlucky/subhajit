@@ -76,7 +76,7 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: '07:18',
         title: 'The v2 corpus, then the compliance rebuild',
-        body: 'A new mixture is built for v0.2.0: FineWeb-Edu, TinyStories, Cosmopedia, and permissively licensed Python. Then the audit finds the first code shard carried no license metadata at all. It is rebuilt with a per-file filter — MIT, Apache, BSD, ISC, Unlicense, CC0 only. Nothing unclear-licensed will ever train a public model.',
+        body: 'A new mixture is built for v0.2.0: FineWeb-Edu, TinyStories, Cosmopedia, and permissively licensed Python. Git history shows why the first code shard was never filtered — the corpus that built v0.1.2 was created 40 minutes before the per-file license filter existed, so the shard streamed with no licence check at all. It is rebuilt with that filter — MIT, Apache, BSD, ISC, Unlicense, CC0 only. Nothing unclear-licensed will ever train a public model.',
       },
       {
         time: '08:40',
@@ -149,6 +149,31 @@ export const TIMELINE: TimelineDay[] = [
         title: 'v0.2.0 starts',
         body: 'The next run begins on a compliance-clean corpus rebuilt shard by shard (2.4B tokens; the code shard is now Apache/MIT-licensed only) with the frozen recipe, since the experiment changed nothing about the recipe. Session one is running, checkpoints syncing to Hugging Face every 30 minutes. And a scheduling lesson, published as incident I13: the account cap is two batch GPU sessions counting the queued ones, so a second push during peak capacity fails outright.',
       },
+      {
+        time: '11:38',
+        title: 'Session two ends at step 3,470',
+        body: '1.82B tokens consumed, 1,746 steps in 8.5 hours on the two T4s. The resumed log arrives intact this time — steps 10 through 3,470, no gaps — because the log-restore fix from I14 is doing its job. Validation on the canonical v2b set is still descending at the cut: 4.8272 at step 250 down to 3.1014 at 1,500. One session of roughly 1,300 steps remains.',
+      },
+      {
+        time: '10:34',
+        title: 'The benchmarks disagree with the loss curve',
+        body: 'An interim evaluation at the step-3,470 checkpoint splits the two signals we have trusted to agree. Deterministic validation loss improves by 0.169 nats on identical weights and an identical 100-batch protocol. But four of five zero-shot tasks fall: PIQA 61.4 to 61.2, ARC-Easy 45.8 to 41.2, HellaSwag 36.8 to 38.6, WinoGrande 50.2 to 49.4, LAMBADA 23.0 to 18.4. The stability bar S-A fails, so the run is not promotable as it stands. It is also not a clean regression signal: the corpus changed underneath it, which is the confound D43 was created to handle, and the final evaluation waits for session three either way.',
+      },
+      {
+        time: '18:40',
+        title: 'Windows were crossing documents',
+        body: 'Auditing the data path finds that the corpus is EOS-delimited and training never used that fact. Documents run about 200 tokens against a 1,024-token context, so nearly every window crossed a boundary with an unmasked causal attention, and 0.3% spliced two corpora outright because the mixer writes in million-token round-robin blocks. The defect is invisible to every metric we optimise — it is only visible by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, and pre-registered as X17 at the same 0.010-nat bar that once rejected Muon+.',
+      },
+      {
+        time: '17:20',
+        title: '41.7% of the code corpus is copyleft',
+        body: 'Eleven minutes of CPU and a 20,000-file sample answer the question the git timestamps had already framed: the licence filter was written and tested, it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. 41.7% of characters are non-permissive, 39.5% of files GPL-family — about 50M copyleft tokens, 2% of v0.1.2. The published card had listed three of four sources and omitted the code slice entirely, the one dataset that needed disclosing. Now it discloses it, and publishing training data means publishing the filtered corpus plus the filter, never the raw corpus.',
+      },
+      {
+        time: '19:00',
+        title: 'Continual learning, and a warning about it',
+        body: 'Three pieces land: a frozen forgetting probe that splits the canonical validation set into regression and forget halves, a replay mixture that samples from a growing shard list, and a checkpoint merge tool. The baseline forgetting number is recorded before any of it is switched on. Then the literature delivers a warning we needed — replay-based continual learning degrades sharply as the backbone shrinks, and the smallest backbone anyone has tested it on is 0.6B. KALIA is 0.058B, an order of magnitude below the published evidence, so the 10% replay ratio is a hypothesis to measure at our scale rather than a number to inherit.',
+      },
     ],
   },
 ];
@@ -202,6 +227,8 @@ export const DECISIONS: Decision[] = [
   { id: 'D40', decision: 'Quota-exhaustion response: defer the experiment, publish assets now', outcome: 'superseded' },
   { id: 'D41', decision: 'Stop v0.1.2 at step 3,478: converged within noise, quota to v0.2.0', outcome: 'done' },
   { id: 'D42', decision: 'X16 rejected: reversal made the gap worse on both seeds; frozen recipe to v0.2.0', outcome: 'enforced' },
+  { id: 'D43', decision: 'The rebuilt corpus redefines the yardstick: v2b val is canonical, v0.1.2 re-baselined on it', outcome: 'active' },
+  { id: 'D44', decision: 'Licence finding disclosed; publish the filtered corpus plus the filter, never the raw corpus', outcome: 'active' },
 ];
 
 export type Incident = {
@@ -226,6 +253,7 @@ export const INCIDENTS: Incident[] = [
   { id: 'I13', title: 'A queue, not a bug', detail: 'Two kernels sat QUEUED for 45 minutes at Sunday peak capacity, and a retry loop pushed the account past its limit — the cap of two batch GPU sessions counts queued ones, so a retry that assumes a failure can consume the retry\'s own budget. Deleting the duplicate and pushing once started the run immediately.' },
   { id: 'I14', title: 'The published loss curve was missing its first half', detail: 'The v0.1.2 training log on Hugging Face began at step 1740: a code change adding log-restore-on-resume landed at 06:00 UTC, one session after that session had already started with the old code, so 347 logged steps vanished from the public record. Rebuilt from the repository\'s own commit history, verified contiguous (steps 10 to 3470, no gaps) and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 steps oscillate inside noise.' },
   { id: 'I15', title: 'Training windows ignored document boundaries', detail: 'The corpus is EOS-delimited — all four sources, median document ~200 tokens — but windows were sampled with no document awareness and attention ran unmasked, so nearly every 1,024-token window crossed a boundary. Worse, the mixer writes the four corpora in million-token round-robin blocks, so 0.3% of windows splice two corpora with no separator at all. Invisible to loss and to every benchmark we tracked: found by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, and pre-registered as an experiment (X17) at the same 0.010-nat bar that once rejected Muon+.' },
+  { id: 'I16', title: '41.7% of the code corpus is copyleft, and it shipped', detail: 'A 20,000-file sample of the code corpus measures 41.7% of characters under non-permissive licences, with GPL-family terms covering 39.5% of all files. The licence filter was written, tested, and correct — it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. v0.1.2 therefore trained on roughly 50M copyleft tokens, about 2% of its training set, and its published card had listed three of the four sources while omitting the code slice entirely. Eleven minutes of CPU and one random sample found what no loss curve could. The v0.1.2 card now discloses it, and publishing training data is redefined as publishing the filtered corpus plus the filter — never the raw corpus, because redistributing copyleft text is the step that actually triggers the obligation.' },
 ];
 
 export type Benchmark = {
