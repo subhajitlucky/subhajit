@@ -94,8 +94,8 @@ export const TIMELINE: TimelineDay[] = [
         body: 'Validation loss has not moved for a thousand steps — flat between 2.53 and 2.63 — while training loss keeps falling. A noisy evaluation and a real plateau are indistinguishable from a single point, so both possibilities are recorded and the run continues.',
         figure: {
           src: '/kalia/val-loss.svg',
-          alt: 'Line chart of validation loss from step 1750 to 3250 showing a flat plateau band between 2.53 and 2.63, a drop to 2.3986, and a separate deterministic evaluation point at step 3478 with loss 2.4366.',
-          caption: 'Figure A3 — the plateau band, the decay, and the deterministic evaluation that resolved the ambiguity.',
+          alt: 'Line chart of validation loss from step 250 to 3250: a steep descent from 4.0881 to 2.5270 by step 1500, then a plateau band between 2.40 and 2.63 for the remaining 1,750 steps, and a separate deterministic evaluation point at step 3478 with loss 2.4366.',
+          caption: 'Figure A3 — the full curve: the descent finishes by step 1,500, and everything after it oscillates inside 0.23 nats. The first half was recovered from the model repository commit history (incident I14).',
         },
       },
       {
@@ -122,6 +122,32 @@ export const TIMELINE: TimelineDay[] = [
         time: '14:00',
         title: 'Release',
         body: 'Decision D41: stop, document the plateau, save the remaining quota for v0.2.0. Within the hour the repository and the model weights are public: 41 numbered decisions, 12 published incidents, two hash-anchored pre-registrations, and every evaluation log. Total compute: about 20 GPU-hours on the free tier. Cost: zero dollars.',
+      },
+    ],
+  },
+  {
+    label: 'Day 3',
+    date: '2026-09-27',
+    entries: [
+      {
+        time: 'Sunday',
+        title: 'The experiment that was supposed to work',
+        body: 'X16 tests the one hypothesis that could explain the 6.06-nat gap: that a model can only learn to exit a sequence, never to enter one reversed. Four arms, two seeds, 500 steps each — control against 50% chunk-preserving reversal training. The prediction was registered with a hash before the run: close the gap by at least 0.10 nats, at no more than 0.02 nats of forward-loss cost.',
+      },
+      {
+        time: '14:56',
+        title: 'It failed',
+        body: 'Control gap 5.11 nats, treatment 5.25 — the gap got 0.14 nats worse, and forward loss rose 0.08. Both bars missed, on both seeds, in the same direction. The prediction that did hold is the more useful one: the gap is already 5.1 nats at 30M parameters, so it is a property of the architecture, not a symptom of undertraining.',
+      },
+      {
+        time: '15:00',
+        title: 'The rule does the deciding',
+        body: 'The promotion rule was hashed before the results existed, so there is nothing to renegotiate: the transform is rejected and never enters v0.2.0 (decision D42). A 50% reversed training mixture is not the same problem as reversing tokens, and the honest reading is that the chunk-order transform teaches nothing about entry into a reversed sequence. Token-level reversal stays on the list as a separate hypothesis, not a quiet retry.',
+      },
+      {
+        time: '17:25',
+        title: 'v0.2.0 starts',
+        body: 'The next run begins on a compliance-clean corpus rebuilt shard by shard (2.4B tokens; the code shard is now Apache/MIT-licensed only) with the frozen recipe, since the experiment changed nothing about the recipe. Session one is running, checkpoints syncing to Hugging Face every 30 minutes. And a scheduling lesson, published as incident I13: the account cap is two batch GPU sessions counting the queued ones, so a second push during peak capacity fails outright.',
       },
     ],
   },
@@ -175,6 +201,7 @@ export const DECISIONS: Decision[] = [
   { id: 'D39', decision: 'Strategic audit: finish, test, publish, then v0.2.0; freeze the queue', outcome: 'held' },
   { id: 'D40', decision: 'Quota-exhaustion response: defer the experiment, publish assets now', outcome: 'superseded' },
   { id: 'D41', decision: 'Stop v0.1.2 at step 3,478: converged within noise, quota to v0.2.0', outcome: 'done' },
+  { id: 'D42', decision: 'X16 rejected: reversal made the gap worse on both seeds; frozen recipe to v0.2.0', outcome: 'enforced' },
 ];
 
 export type Incident = {
@@ -196,6 +223,8 @@ export const INCIDENTS: Incident[] = [
   { id: 'I10', title: 'Wrong mount path and stale code', detail: 'Dataset mounts live under /kaggle/input/datasets/<owner>/<slug>/, and the dataset had not been re-versioned. Both corrected.' },
   { id: 'I11', title: 'A misreported duration', detail: 'I described a 44-minute ablation as having run five hours, trusting my sense of time over the run-start timestamp. The correction is in the journal.' },
   { id: 'I12', title: 'Weekly GPU quota exhausted', detail: 'The push failed with 30 of 30 GPU-hours used; the UI earlier read "24 hours remaining". Only the push attempt is authoritative. Experiments deferred to the weekly reset.' },
+  { id: 'I13', title: 'A queue, not a bug', detail: 'Two kernels sat QUEUED for 45 minutes at Sunday peak capacity, and a retry loop pushed the account past its limit — the cap of two batch GPU sessions counts queued ones, so a retry that assumes a failure can consume the retry\'s own budget. Deleting the duplicate and pushing once started the run immediately.' },
+  { id: 'I14', title: 'The published loss curve was missing its first half', detail: 'The v0.1.2 training log on Hugging Face began at step 1740: a code change adding log-restore-on-resume landed at 06:00 UTC, one session after that session had already started with the old code, so 347 logged steps vanished from the public record. Rebuilt from the repository\'s own commit history, verified contiguous (steps 10 to 3470, no gaps) and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 steps oscillate inside noise.' },
 ];
 
 export type Benchmark = {

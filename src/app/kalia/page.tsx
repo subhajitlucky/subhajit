@@ -113,7 +113,7 @@ export default function KaliaPage() {
               at zero compute cost. Section&nbsp;1 fixes the model specification; Section&nbsp;2
               reports the evaluation; Sections&nbsp;3 and&nbsp;4 present unedited samples and an
               interactive replay of the training log. The appendices record the day-by-day log,
-              all 41 numbered decisions, and all 12 incidents. Every experiment was pre-registered
+              all 42 numbered decisions, and all 14 incidents. Every experiment was pre-registered
               before it ran, and no claim on this page is a screenshot — each links to the
               primary log.
             </p>
@@ -203,8 +203,18 @@ export default function KaliaPage() {
               narrative memory (LAMBADA, 23%). The custom metric is the one that matters next: the{' '}
               <strong>Abhimanyu gap</strong> — reversed-text loss (9.29) minus forward loss (3.23)
               — is <strong>6.06 nats</strong>. The model can enter fluent text but cannot exit it.
-              A pre-registered experiment tests whether chunk-preserving reversal training closes
-              that gap.
+            </p>
+            <p className="kalia-prose" style={{ marginTop: '1rem' }}>
+              The pre-registered experiment that tested whether training on chunk-preserving
+              reversal closes that gap has now run, and it <strong>failed</strong> — reported here
+              with the same prominence a win would have had. At 30M parameters, control models showed
+              a <strong>5.11-nat</strong> gap (confirming the effect is architectural, not an
+              artifact of scale), and the treatment trained on 50% reversed chunks made it{' '}
+              <strong>worse</strong>: gap 5.25 (+0.14) and forward loss +0.08, missing both
+              pre-registered bars on both seeds. Reversing chunk <em>order</em> while preserving
+              intra-chunk order does not teach token-level reversal. The transform was rejected by
+              the hashed promotion rule and never shipped, and a stronger form is now a separate
+              hypothesis rather than a quiet retry.{' '}
             </p>
           </section>
 

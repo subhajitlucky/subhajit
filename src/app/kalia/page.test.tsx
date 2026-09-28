@@ -83,7 +83,8 @@ describe('KaliaPage', () => {
     expect(
       screen.getByAltText(/control architecture \(3.4924\), looped depth/),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Figure A3 — the plateau band/)).toBeInTheDocument();
+    expect(screen.getByAltText(/descent from 4.0881 to 2.5270 by step 1500/)).toBeInTheDocument();
+    expect(screen.getByText(/Figure A3 — the full curve/)).toBeInTheDocument();
   });
 
   it('offers verification links and a citation block', () => {
