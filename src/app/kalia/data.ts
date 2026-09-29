@@ -140,39 +140,19 @@ export const TIMELINE: TimelineDay[] = [
         body: 'Control gap 5.11 nats, treatment 5.25 — the gap got 0.14 nats worse, and forward loss rose 0.08. Both bars missed, on both seeds, in the same direction. The prediction that did hold is the more useful one: the gap is already 5.1 nats at 30M parameters, so it is a property of the architecture, not a symptom of undertraining.',
       },
       {
+        time: '16:20',
+        title: 'The published loss curve was missing its first half',
+        body: 'The training log on Hugging Face began at step 1,740, because a fix that restores logs on resume landed one session after that session had already started with the old code. 347 logged steps \u2014 the whole descent from 10.7 down to the plateau \u2014 were gone from the public record. Rebuilt from the repository\u2019s own commit history, checked for gaps, and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 oscillate inside noise.',
+      },
+      {
+        time: '19:05',
+        title: 'The rebuilt corpus quietly replaced the measuring stick',
+        body: 'The new run\u2019s first validation point reads 0.74 nats worse than the previous version\u2019s while its training loss is better, which looks exactly like a catastrophic regression. It is not. The corpus rebuild replaced the held-out set, and the old weights score 2.3915 on the old set and 3.1070 on the new one \u2014 the set alone explains the entire gap. Both versions were re-measured on the rebuilt set so that anything crossing the rebuild boundary is believed only after being checked on both sides. A yardstick that moves silently is indistinguishable from a model that does.',
+      },
+      {
         time: '15:00',
         title: 'The rule does the deciding',
         body: 'The promotion rule was hashed before the results existed, so there is nothing to renegotiate: the transform is rejected and never enters v0.2.0 (decision D42). A 50% reversed training mixture is not the same problem as reversing tokens, and the honest reading is that the chunk-order transform teaches nothing about entry into a reversed sequence. Token-level reversal stays on the list as a separate hypothesis, not a quiet retry.',
-      },
-      {
-        time: '17:25',
-        title: 'v0.2.0 starts',
-        body: 'The next run begins on a compliance-clean corpus rebuilt shard by shard (2.4B tokens; the code shard is now Apache/MIT-licensed only) with the frozen recipe, since the experiment changed nothing about the recipe. Session one is running, checkpoints syncing to Hugging Face every 30 minutes. And a scheduling lesson, published as incident I13: the account cap is two batch GPU sessions counting the queued ones, so a second push during peak capacity fails outright.',
-      },
-      {
-        time: '11:38',
-        title: 'Session two ends at step 3,470',
-        body: '1.82B tokens consumed, 1,746 steps in 8.5 hours on the two T4s. The resumed log arrives intact this time — steps 10 through 3,470, no gaps — because the log-restore fix from I14 is doing its job. Validation on the canonical v2b set is still descending at the cut: 4.8272 at step 250 down to 3.1014 at 1,500. One session of roughly 1,300 steps remains.',
-      },
-      {
-        time: '10:34',
-        title: 'The benchmarks disagree with the loss curve',
-        body: 'An interim evaluation at the step-3,470 checkpoint splits the two signals we have trusted to agree. Deterministic validation loss improves by 0.169 nats on identical weights and an identical 100-batch protocol. But four of five zero-shot tasks fall: PIQA 61.4 to 61.2, ARC-Easy 45.8 to 41.2, HellaSwag 36.8 to 38.6, WinoGrande 50.2 to 49.4, LAMBADA 23.0 to 18.4. The stability bar S-A fails, so the run is not promotable as it stands. It is also not a clean regression signal: the corpus changed underneath it, which is the confound D43 was created to handle, and the final evaluation waits for session three either way.',
-      },
-      {
-        time: '18:40',
-        title: 'Windows were crossing documents',
-        body: 'Auditing the data path finds that the corpus is EOS-delimited and training never used that fact. Documents run about 200 tokens against a 1,024-token context, so nearly every window crossed a boundary with an unmasked causal attention, and 0.3% spliced two corpora outright because the mixer writes in million-token round-robin blocks. The defect is invisible to every metric we optimise — it is only visible by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, and pre-registered as X17 at the same 0.010-nat bar that once rejected Muon+.',
-      },
-      {
-        time: '17:20',
-        title: '41.7% of the code corpus is copyleft',
-        body: 'Eleven minutes of CPU and a 20,000-file sample answer the question the git timestamps had already framed: the licence filter was written and tested, it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. 41.7% of characters are non-permissive, 39.5% of files GPL-family — about 50M copyleft tokens, 2% of v0.1.2. The published card had listed three of four sources and omitted the code slice entirely, the one dataset that needed disclosing. Now it discloses it, and publishing training data means publishing the filtered corpus plus the filter, never the raw corpus.',
-      },
-      {
-        time: '19:00',
-        title: 'Continual learning, and a warning about it',
-        body: 'Three pieces land: a frozen forgetting probe that splits the canonical validation set into regression and forget halves, a replay mixture that samples from a growing shard list, and a checkpoint merge tool. The baseline forgetting number is recorded before any of it is switched on. Then the literature delivers a warning we needed — replay-based continual learning degrades sharply as the backbone shrinks, and the smallest backbone anyone has tested it on is 0.6B. KALIA is 0.058B, an order of magnitude below the published evidence, so the 10% replay ratio is a hypothesis to measure at our scale rather than a number to inherit.',
       },
     ],
   },
@@ -181,39 +161,204 @@ export const TIMELINE: TimelineDay[] = [
     date: '2026-09-28',
     entries: [
       {
-        time: '11:20',
-        title: 'Session three ends, and the run is over',
-        body: 'All 4,770 steps. 2.50B tokens, 6.33 hours, 477 contiguous log rows, no gaps. Final train loss 2.7451. But the val curve has been flat since step 3,250 — 2.874 to 2.940 across the last 1,500 steps. The same plateau that stopped v0.1.2 at 73% of its schedule, except this time we paid for the whole thing and the last 31% bought nothing measurable.',
+        time: '02:06',
+        title: 'v0.2.0 starts',
+        body: 'The next run begins on a compliance-clean corpus rebuilt shard by shard (2.4B tokens; the code slice is now filtered to permissive licences only) with the frozen recipe, since the rejected experiment changed nothing about the recipe. Checkpoints sync to Hugging Face every 30 minutes so sessions can be interrupted safely.',
       },
       {
-        time: '11:38',
+        time: '10:34',
+        title: 'The benchmarks disagree with the loss curve',
+        body: 'An evaluation at the step-3,470 checkpoint splits the two signals we had trusted to agree. Deterministic loss improves by 0.169 nats on identical weights and an identical protocol, but ARC-Easy falls 4.6 points and LAMBADA 4.6. Read alone this looks like a catastrophic corpus regression. It is a mid-run reading, recorded here precisely because it turned out to be the wrong one.',
+      },
+      {
+        time: '11:03',
+        title: 'A frontier architecture arm',
+        body: 'Two 2026 changes screened against control at 30M parameters: rotary embeddings dropped on some layers, and a gated residual stream borrowed from a 125B model. Both pre-registered with hashed thresholds before the run, including an honest prior that the more interesting one was the likelier to be noise. Three arms, 500 steps, one seed.',
+      },
+      {
+        time: '11:50',
         title: '41.7% of the code corpus is copyleft',
-        body: 'Twenty thousand files, 197 million characters, eleven minutes of CPU. 58.1% permissive, 41.7% not, and GPL-family licences alone cover 39.5% of all files. The v0.1.2 code slice was 5% of a 2.4B-token mixture built with no licence check, so that checkpoint trained on roughly 50M copyleft tokens. The interpretation had been fixed before the number was known: material share means the rebuild is the remediation. The published card had been listing three of four sources and omitting the code slice entirely — the one dataset that needed disclosing. It discloses now.',
+        body: 'Twenty thousand files, 197 million characters, eleven minutes of CPU. 58.1% permissive, 41.7% not, and GPL-family licences alone cover 39.5% of all files. The published card had been listing three of the four training sources and omitting the code slice entirely — the one dataset that needed disclosing. The interpretation had been fixed before the number was known: a material share means the rebuild is the remediation, and the rebuild was already under way.',
       },
       {
-        time: '14:00',
-        title: 'The gate never opened',
-        body: 'The frontier architecture arm beat control by 0.0436 nats, 4.4 times its bar, and nobody could say why. Measured on a hundred real validation batches, the learned gate sits at 0.0192 against a 0.018 floor and a 0.05 threshold — it never opened. I had concluded that from a single average, which is not a safe inference, so it was pre-registered as a test against my own conclusion. It held: variation in response to input is 5e-06. The mechanism is not inert on average, it is inert everywhere.',
+        time: '12:20',
+        title: 'Windows were crossing documents',
+        body: 'Auditing the data path finds the corpus is EOS-delimited and training never used that fact. Documents run about 200 tokens against a 1,024-token context, so nearly every window crossed a boundary with unmasked attention, and 0.3% spliced two corpora outright because the mixer writes in million-token round-robin blocks. Invisible to every metric being optimised — visible only by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, pre-registered as an experiment at the same 0.010-nat bar that once rejected a loss-saving change.',
       },
       {
-        time: '16:20',
-        title: 'Our accuracy bars were below our own noise',
-        body: 'The gated arm also passed its accuracy prediction, 1.2 points on WinoGrande against a half-point bar — and that pass was worthless. The standard errors on these benchmarks at 500 samples are about two points. The bar sat four and a half times under the noise, and the result was 0.54 sigma: the expected size of nothing. The same flaw is in the promotion rule for v0.2.0, which allows one point of regression. The thresholds stay exactly as written and the noise floor is published beside the verdict rather than used to rescue it — but the interim regressions now split cleanly. ARC-Easy and LAMBADA at minus 4.6 are real. The other three are inside the noise.',
+        time: '13:11',
+        title: 'A long-form probe, and a source that cannot be loaded',
+        body: 'The LAMBADA hypothesis gets measured properly: what share of each source\u2019s documents is at least as long as the context. The first source tried, a famous book corpus, turns out to ship a loading script that modern tooling refuses to execute, and the two obvious parquet mirrors of it declare no licence at all. Only one candidate passes both tests, at 99.3% long documents — but its median document is 104,719 tokens, one hundred times the context, so the passing number is also a warning.',
       },
       {
-        time: '18:40',
-        title: 'Four kernels died behind a green upload',
-        body: 'The dataset publisher defaults to skipping directories, so the code dataset had been shipping without its config folder, its eval folder, and every JSON file in it — which is why the reversibility gap had never been measurable despite the code supporting it. Each failed upload still returned success. Then four kernels in a row died on unchecked assumptions: a missing file, an import used before it was defined, a directory that was never there, and a parser handed markdown where it expected JSON. The publisher now stages one layout, always zips it, refuses an incomplete payload, and then downloads the result back to check seventeen files really are there.',
-      },
-      {
-        time: '20:00',
-        title: 'Reading the licence changed the answer',
-        body: 'I had assumed the sharing licence on the children stories blocked redistribution and said publish the recipe, not the data. Reading it, that was wrong. It explicitly places results — the outputs of training, our weights — beyond any obligation, and grants the right to train outright. So all three text sources permit both training and weight release, and this version corpus is shippable under three cheap attribution conditions. The asymmetry is unflattering: the licence-clean checkpoint is the one that scores worse. The earlier version, with copyleft in its training data, is the one whose bytes we will never publish.',
+        time: '19:23',
+        title: 'Session three, and the run finishes',
+        body: 'The final session runs 6.35 hours to complete all 4,770 steps — 2.50 billion tokens, 477 contiguous log rows, no gaps. Validation loss reaches 2.8248 against 3.0533 for the previous version on the identical 100-batch protocol: 0.2285 nats better, 4.6 times the pre-registered bar. But the curve has been flat since step 3,250, so the last 31% of training bought nothing, exactly as the first version\u2019s curve did.',
       },
     ],
   },
-
+  {
+    label: 'Day 5',
+    date: '2026-09-29',
+    entries: [
+      {
+        time: '03:46',
+        title: 'The gate never opened',
+        body: 'The architecture arm finished 0.0436 nats ahead of control \u2014 4.4 times its bar, the largest effect any architecture arm has produced here \u2014 and nobody could say why. Measured on a hundred real validation batches, the learned gate sits at 0.0192 against a 0.018 floor and a 0.05 threshold. It never opened. That conclusion came from a single average, which is not a safe inference, so it was pre-registered as a test aimed at my own reading before any GPU time was spent; variation in response to input turned out to be 5e-06. The mechanism is not inert on average, it is inert everywhere.',
+      },
+      {
+        time: '04:10',
+        title: 'Our accuracy bars were below our own noise',
+        body: 'The same arm passed its accuracy prediction \u2014 1.2 points on WinoGrande against a half-point bar \u2014 and the pass was worthless. The standard errors on these benchmarks at 500 samples are about two points, so the bar sat four and a half times under the noise and the result was 0.54 sigma: the expected size of nothing. The same flaw was in the promotion rule for the version that had just finished, which allowed one point of regression. The thresholds stay exactly as registered and the noise floor is published beside the verdict rather than used to rescue it. But the interim regressions now split cleanly: ARC-Easy and LAMBADA are real, and the other three were inside the noise all along.',
+      },
+      {
+        time: '05:20',
+        title: 'Reading the licence changed the answer',
+        body: 'I had assumed the sharing licence on the children\u2019s stories blocked redistribution, and said publish the recipe rather than the data. Reading it, that was wrong. It explicitly places results \u2014 the outputs of training, our weights \u2014 beyond any obligation, and grants the right to train outright. So all three text sources permit both training and weight release, and this version\u2019s corpus is shippable under three cheap attribution conditions. The asymmetry is unflattering: the licence-clean checkpoint is the one that scores worse, and the earlier version, with copyleft in its training data, is the one whose bytes will never be published.',
+      },
+      {
+        time: '06:30',
+        title: 'The missing fifth task',
+        body: 'The registered evaluation came back with four of five benchmarks. LAMBADA had silently failed to load: the dataset still ships a loading script and modern tooling refuses to run those. The data was never missing \u2014 six parquet files, the standard 5,153 examples \u2014 only the loader path the harness requested was dead. Fixing it took five attempts and four different wrong turns, each an assumption I had not checked, and the fix now lives in the repository with tests rather than inside a notebook. Final answer: 20.8, a 2.2 point drop.',
+      },
+      {
+        time: '07:00',
+        title: 'Four kernels died behind green uploads',
+        body: 'The dataset publisher defaults to skipping directories, so the code dataset had been shipping with no config folder, no eval folder, and no JSON at all \u2014 which is why a measurement had never been reachable even though the code supported it. Every upload reported success. Then four kernels in a row failed on unchecked assumptions: a missing file, an import used before it was defined, a directory that was never there, and a parser handed markdown where it expected JSON. The publisher now stages one layout, always zips it, refuses an incomplete payload, and then downloads the result back to check seventeen files really are there. Assert the interface, then trust it.',
+      },
+    ],
+  },
 ];
+
+/* ---------------------------------------------------------------- versions */
+
+export type Version = {
+  id: string;
+  label: string;
+  status: 'released' | 'experiment';
+  tokens: string;
+  valLoss: number;
+  bitsPerByte: number;
+  note: string;
+};
+
+/**
+ * Two checkpoints, one yardstick. v0.1.2 was re-measured on the rebuilt (v2b)
+ * held-out set at 3.0533 so the two are comparable at all; the 2.4366 that
+ * appears elsewhere in this project is v0.1.2 on the *original* set and is never
+ * tabulated next to a rebuilt one.
+ */
+export const VERSIONS: Version[] = [
+  {
+    id: 'v0.1.2',
+    label: '0.1.2',
+    status: 'released',
+    tokens: '1.82B',
+    valLoss: 3.0533,
+    bitsPerByte: 0.9992,
+    note: 'stopped at 73% of its schedule; the first public release',
+  },
+  {
+    id: 'v0.2.0',
+    label: '0.2.0',
+    status: 'experiment',
+    tokens: '2.50B',
+    valLoss: 2.8248,
+    bitsPerByte: 0.9244,
+    note: 'same recipe, compliance-rebuilt corpus; full 4,770-step schedule',
+  },
+];
+
+export type BenchComparison = {
+  task: string;
+  chance: number;
+  note: string;
+  v012: number;
+  v020: number;
+  /** lm-eval standard error at limit=500, in points. See D45. */
+  stderr: number;
+};
+
+/**
+ * 0-shot, 500 samples, lm-evaluation-harness 0.4.9.
+ *
+ * `stderr` is carried because it changes how the table must be read: at this
+ * sample size three of these five movements are smaller than the measurement's
+ * own standard error and are not separable from v0.1.2 at all. The table is
+ * directional; the loss number above it is the result.
+ */
+export const BENCH_COMPARISON: BenchComparison[] = [
+  { task: 'PIQA', chance: 50, note: 'physical commonsense', v012: 61.4, v020: 63.8, stderr: 2.15 },
+  {
+    task: 'HellaSwag',
+    chance: 25,
+    note: 'sentence completion (normalized)',
+    v012: 36.8,
+    v020: 39.8,
+    stderr: 1.99,
+  },
+  { task: 'WinoGrande', chance: 50, note: 'coreference', v012: 50.2, v020: 50.8, stderr: 2.24 },
+  { task: 'LAMBADA', chance: 0, note: 'long-range cloze', v012: 23.0, v020: 20.8, stderr: 1.82 },
+  { task: 'ARC-Easy', chance: 25, note: 'science questions', v012: 45.8, v020: 42.0, stderr: 2.21 },
+];
+
+/* ----------------------------------------------------------- training data */
+
+export type TrainingSource = {
+  name: string;
+  share: number;
+  license: string;
+  /** Share of that source's documents at least as long as the 1,024-token context. */
+  longDocShare: number | null;
+  note: string;
+};
+
+/**
+ * The 2.4B-token mixture, and the measurement that explains the LAMBADA
+ * regression: `longDocShare` is the share of each source's documents at least as
+ * long as the model's context window. Token-weighted only 17.7% of the corpus
+ * qualifies, and TinyStories - a fifth of the mixture - supplies 0.03% of it.
+ */
+export const TRAINING_DATA: TrainingSource[] = [
+  {
+    name: 'FineWeb-Edu (dedup)',
+    share: 60,
+    license: 'ODC-By-1.0',
+    longDocShare: 26.2,
+    note: 'educational web text',
+  },
+  {
+    name: 'TinyStories',
+    share: 20,
+    license: 'CDLA-Sharing-1.0',
+    longDocShare: 0.03,
+    note: "children's stories; almost nothing long enough to matter",
+  },
+  {
+    name: 'Cosmopedia v2',
+    share: 15,
+    license: 'Apache-2.0',
+    longDocShare: 13.2,
+    note: 'synthetic textbooks',
+  },
+  {
+    name: 'Python (per-file filtered)',
+    share: 5,
+    license: '7 permissive licences',
+    longDocShare: null,
+    note: 'audited: the earlier unfiltered slice was 41.7% copyleft',
+  },
+];
+
+export const TRAINING_MIXTURE = {
+  trainTokens: 2_400_000_000,
+  valTokens: 10_000_000,
+  contextLen: 1024,
+  /** Token-weighted share of training tokens inside a document >= contextLen. */
+  longDocShare: 17.7,
+  /** The source the probe found at 99.3%, i.e. the measured remedy. */
+  candidate: { name: 'Gutenberg (MIT)', longDocShare: 99.3 },
+};
 
 export type Decision = {
   id: string;

@@ -9,8 +9,8 @@ describe('kalia page data', () => {
     expect(new Set(INCIDENTS.map((entry) => entry.id)).size).toBe(INCIDENTS.length);
   });
 
-  it('tells the story across all four days with real timestamps', () => {
-    expect(TIMELINE.map((day) => day.label)).toEqual(['Day 1', 'Day 2', 'Day 3', 'Day 4']);
+  it('tells the story across all five days with real timestamps', () => {
+    expect(TIMELINE.map((day) => day.label)).toEqual(['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5']);
     for (const day of TIMELINE) {
       expect(day.entries.length).toBeGreaterThan(4);
       for (const entry of day.entries) {

@@ -6,10 +6,14 @@ import Link from 'next/link';
 import { KaliaConsole } from './KaliaConsole';
 import { KaliaThemeToggle } from './KaliaThemeToggle';
 import {
+  BENCH_COMPARISON,
   BENCHMARKS,
   CITATION,
   DECISIONS,
   HERO_STATS,
+  TRAINING_DATA,
+  TRAINING_MIXTURE,
+  VERSIONS,
   INCIDENTS,
   RECIPE,
   SAMPLES,
@@ -174,9 +178,141 @@ export default function KaliaPage() {
             </div>
           </section>
 
+          <section className="kalia-section" id="versions">
+            <div className="kalia-section-head">
+              <h2 className="kalia-section-title">2. Two checkpoints, one yardstick</h2>
+              <p className="kalia-section-note">
+                Table 2 &middot; deterministic 100-batch evaluation, 819,200 tokens, fixed seed
+              </p>
+            </div>
+            <p className="kalia-prose">
+              The corpus was rebuilt for licence compliance, which replaced a held-out set and
+              made it <strong>0.62 nats harder for identical weights</strong>. So v0.1.2 was
+              re-measured on the rebuilt set before anything could be compared, and the older
+              figure of 2.4366 is never tabulated next to a rebuilt one. Both versions below are
+              scored the same way, by the same code path, on the same data.
+            </p>
+            <div className="kalia-recipe">
+              {VERSIONS.map((v) => (
+                <div className="kalia-recipe-row" key={v.id}>
+                  <span>
+                    KALIA {v.label}{' '}
+                    <strong>{v.status === 'released' ? 'released' : 'experiment'}</strong>
+                  </span>
+                  <span>
+                    val {v.valLoss.toFixed(4)} &middot; {v.bitsPerByte.toFixed(4)} bpB &middot;{' '}
+                    {v.tokens} tokens &middot; {v.note}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <p className="kalia-prose" style={{ marginTop: '1.4rem' }}>
+              That is <strong>0.2285 nats</strong> better &mdash; 4.6&times; the pre-registered
+              0.05 bar &mdash; from changing nothing but the data.
+            </p>
+
+            <h3 className="kalia-section-title" style={{ marginTop: '2.4rem', fontSize: '1.05rem' }}>
+              Zero-shot accuracy, and why the loss gain is not the whole story
+            </h3>
+            <div className="kalia-bench" style={{ marginTop: '1rem' }}>
+              {BENCH_COMPARISON.map((row) => {
+                const delta = row.v020 - row.v012;
+                const sigma = Math.abs(delta) / row.stderr;
+                const flat = sigma < 1;
+                return (
+                  <div className="kalia-bench-row" key={row.task}>
+                    <span className="kalia-bench-name">{row.task}</span>
+                    <span className="kalia-bench-track">
+                      <span className="kalia-bench-fill" style={{ width: `${row.v020}%` }} />
+                      {row.chance > 0 ? (
+                        <span className="kalia-bench-chance" style={{ left: `${row.chance}%` }} />
+                      ) : null}
+                    </span>
+                    <span className="kalia-bench-score">{row.v020.toFixed(1)}%</span>
+                    <span className="kalia-bench-note">
+                      was {row.v012.toFixed(1)} &middot;{' '}
+                      <strong style={{ color: delta < 0 ? '#b91c1c' : '#15803d' }}>
+                        {delta >= 0 ? '+' : ''}
+                        {delta.toFixed(2)}
+                      </strong>
+                      {flat ? ' (inside noise)' : ` (${sigma.toFixed(1)}σ)`} &middot; {row.note}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="kalia-prose" style={{ marginTop: '1.6rem' }}>
+              Read that table with the error bars attached. At 500 samples these benchmarks carry
+              a standard error of roughly <strong>2 points</strong>, so{' '}
+              <strong>three of the five movements are smaller than the measurement&rsquo;s own
+              noise</strong> and cannot be called improvements. The two that fell &mdash; ARC-Easy
+              at 1.7&sigma; and LAMBADA at 1.2&sigma; &mdash; are the honest signal, and they are
+              why v0.2.0 is published as an experiment rather than as a release.
+            </p>
+            <p className="kalia-prose" style={{ marginTop: '1rem' }}>
+              The pre-registered rule was that no task may regress by more than 1.0 point.
+              <strong> v0.2.0 fails it on two.</strong> The thresholds were not moved afterwards,
+              and the noise floor was published beside the verdict rather than used to rescue it.
+            </p>
+          </section>
+
+          <section className="kalia-section" id="data">
+            <div className="kalia-section-head">
+              <h2 className="kalia-section-title">3. Where the tokens came from</h2>
+              <p className="kalia-section-note">
+                Table 3 &middot; 2.4B training tokens, 10M held out
+              </p>
+            </div>
+            <div className="kalia-recipe">
+              {TRAINING_DATA.map((src) => (
+                <div className="kalia-recipe-row" key={src.name}>
+                  <span>
+                    {src.name} &middot; {src.share}%
+                  </span>
+                  <span>
+                    {src.license} &middot; {src.note}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <figure className="kalia-figure" style={{ marginTop: '1.8rem' }}>
+              <Image
+                src="/kalia/training-data.svg"
+                alt="The training mixture as a stacked bar, beside the share of each source whose documents are at least as long as the 1,024-token context: 26.2% for FineWeb-Edu, 0.03% for TinyStories, 13.2% for Cosmopedia, and 17.7% for the mixture overall."
+                width={720}
+                height={380}
+              />
+              <figcaption>
+                Left: the mixture. Right: how much of each source is long enough for the model to
+                actually see a whole document. The second bar is the one that matters, and it is
+                invisible without the picture &mdash; a reader who sees only the mixture cannot
+                tell that a fifth of the corpus supplies essentially none of the long documents.
+              </figcaption>
+            </figure>
+            <p className="kalia-prose">
+              Only <strong>{TRAINING_MIXTURE.longDocShare}%</strong> of training tokens sit inside
+              a document at least as long as the {TRAINING_MIXTURE.contextLen}-token context.
+              TinyStories &mdash; a fifth of the mixture &mdash; supplies{' '}
+              <strong>0.03%</strong> of them. LAMBADA asks a model to hold a discourse and recall
+              its final word, so its regression is the predicted direction for this corpus rather
+              than a mystery. The same probe found a candidate source at{' '}
+              <strong>{TRAINING_MIXTURE.candidate.longDocShare}%</strong>, which makes the remedy
+              measured rather than guessed.
+            </p>
+            <p className="kalia-prose" style={{ marginTop: '1rem' }}>
+              One thing was found here that nobody was looking for. The Python slice of the{' '}
+              <em>previous</em> corpus was built without a licence check, and sampling 20,000
+              source files measured{' '}
+              <strong>41.7% of characters under copyleft licences</strong> &mdash; about 2% of
+              that training set. The filter that prevents this existed, was tested, and was simply
+              written 40 minutes after the corpus that needed it. It is disclosed on the released
+              model card rather than quietly fixed.
+            </p>
+          </section>
+
           <section className="kalia-section" id="results">
             <div className="kalia-section-head">
-              <h2 className="kalia-section-title">2. Evaluation — KALIA 0.1.2</h2>
+              <h2 className="kalia-section-title">4. Evaluation — KALIA 0.1.2, first release</h2>
               <p className="kalia-section-note">Table 2 &middot; 0-shot, 500 samples, lm-evaluation-harness</p>
             </div>
             <div className="kalia-bench">
@@ -223,7 +359,7 @@ export default function KaliaPage() {
 
           <section className="kalia-section" id="samples">
             <div className="kalia-section-head">
-              <h2 className="kalia-section-title">3. Unedited samples</h2>
+              <h2 className="kalia-section-title">5. Unedited samples</h2>
               <p className="kalia-section-note">temperature 0.8, top-k 200, checkpoint step 3,478</p>
             </div>
             <div className="kalia-samples">
@@ -239,7 +375,7 @@ export default function KaliaPage() {
 
           <section className="kalia-section" id="run">
             <div className="kalia-section-head">
-              <h2 className="kalia-section-title">4. The run, replayed</h2>
+              <h2 className="kalia-section-title">6. The run, replayed</h2>
               <p className="kalia-section-note">Figure 1 &middot; replayed from the primary log</p>
             </div>
             <p className="kalia-prose">
