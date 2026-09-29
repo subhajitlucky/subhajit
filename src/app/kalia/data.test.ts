@@ -3,8 +3,8 @@ import { DETERMINISTIC_EVAL, PLANNED_STEPS, STOP_STEP, TRAIN_LOG, VAL_POINTS } f
 
 describe('kalia page data', () => {
   it('carries the full record: every decision and every incident', () => {
-    expect(DECISIONS).toHaveLength(45);
-    expect(INCIDENTS).toHaveLength(17);
+    expect(DECISIONS).toHaveLength(46);
+    expect(INCIDENTS).toHaveLength(18);
     expect(new Set(DECISIONS.map((entry) => entry.id)).size).toBe(DECISIONS.length);
     expect(new Set(INCIDENTS.map((entry) => entry.id)).size).toBe(INCIDENTS.length);
   });

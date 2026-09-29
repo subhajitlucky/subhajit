@@ -182,6 +182,21 @@ export const TIMELINE: TimelineDay[] = [
         body: 'Two 2026 changes screened against control at 30M parameters: rotary embeddings dropped on some layers, and a gated residual stream borrowed from a 125B model. Both pre-registered with hashed thresholds before the run, including an honest prior that the more interesting one was the likelier to be noise. Three arms, 500 steps, one seed.',
       },
       {
+        time: '11:20',
+        title: 'The best result in the project was one seed',
+        body: 'That gated residual looked like a win, so it was pushed further — a static learned per-channel modulation that never reads its input. It scored 4.6304 against control 4.7662, beating the data-dependent gate it was supposed to be a cheaper cousin of, and clearing its pre-registered bar by 0.1240. It was the largest effect any architecture arm had produced here, and it was real for exactly as long as it took to check. Replicated at two fresh seeds it inverted to +0.0516 — worse than control — so the sign flipped, not just the size.',
+        figure: {
+          src: '/kalia/replication-collapse.svg',
+          alt: 'Paired bar chart. The static gate scores 4.6304 at seed 1337 but 4.9623 and 4.9087 at seeds 1338 and 1339, while control stays near 4.77 to 4.89. The effect reverses sign.',
+          caption: 'Figure A3 — X20 and its replication. The bar that looked like the project’s best result.',
+        },
+      },
+      {
+        time: '11:35',
+        title: 'We had never measured the baseline',
+        body: 'The replication also returned a number the project did not have: how much the control moves when nothing about it changes. Two independent sessions at seed 1337 agree to 0.0018, so the machine is not the variable — but fresh seeds come in about 0.11 nats higher. That spread is larger than the entire −0.0436 the gated residual was credited with, and larger than the branch-norm null by an order of magnitude. Every single-seed delta in this project was read against a baseline nobody had measured. They were all noise, and the ordering between them was an artefact of ranking noise against noise.',
+      },
+      {
         time: '11:50',
         title: '41.7% of the code corpus is copyleft',
         body: 'Twenty thousand files, 197 million characters, eleven minutes of CPU. 58.1% permissive, 41.7% not, and GPL-family licences alone cover 39.5% of all files. The published card had been listing three of the four training sources and omitting the code slice entirely — the one dataset that needed disclosing. The interpretation had been fixed before the number was known: a material share means the rebuild is the remediation, and the rebuild was already under way.',
@@ -430,6 +445,7 @@ export const DECISIONS: Decision[] = [
   { id: 'D43', decision: 'The rebuilt corpus redefines the yardstick: v2b val is canonical, v0.1.2 re-baselined on it', outcome: 'active' },
   { id: 'D44', decision: 'Licence finding disclosed; publish the filtered corpus plus the filter, never the raw corpus', outcome: 'active' },
   { id: 'D45', decision: 'Accuracy thresholds must sit above the benchmark noise floor; X18 and S-A were both under-powered', outcome: 'active' },
+  { id: 'D48', decision: 'No architecture arm from a single seed; the gated-residual line is closed as a null result', outcome: 'active' },
 ];
 
 export type Incident = {
@@ -456,6 +472,7 @@ export const INCIDENTS: Incident[] = [
   { id: 'I15', title: 'Training windows ignored document boundaries', detail: 'The corpus is EOS-delimited — all four sources, median document ~200 tokens — but windows were sampled with no document awareness and attention ran unmasked, so nearly every 1,024-token window crossed a boundary. Worse, the mixer writes the four corpora in million-token round-robin blocks, so 0.3% of windows splice two corpora with no separator at all. Invisible to loss and to every benchmark we tracked: found by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, and pre-registered as an experiment (X17) at the same 0.010-nat bar that once rejected Muon+.' },
   { id: 'I16', title: '41.7% of the code corpus is copyleft, and it shipped', detail: 'A 20,000-file sample of the code corpus measures 41.7% of characters under non-permissive licences, with GPL-family terms covering 39.5% of all files. The licence filter was written, tested, and correct — it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. v0.1.2 therefore trained on roughly 50M copyleft tokens, about 2% of its training set, and its published card had listed three of the four sources while omitting the code slice entirely. Eleven minutes of CPU and one random sample found what no loss curve could. The v0.1.2 card now discloses it, and publishing training data is redefined as publishing the filtered corpus plus the filter — never the raw corpus, because redistributing copyleft text is the step that actually triggers the obligation.' },
   { id: 'I17', title: 'The dataset was silently dropping two directories', detail: 'kaggle datasets version defaults to --dir-mode skip, which ignores subdirectories entirely. The code dataset had been published flat, so configs/ and eval/ were both absent and it contained zero JSON files — meaning no kernel could resolve eval/probe_sentences.json, which is the real reason the Abhimanyu gap was never measurable even though the code supported it. The upload reported success every time. Four kernels failed in a row behind a green upload, each from one unchecked assumption: a missing file, an import used before it was defined, a missing directory, and a parser handed markdown where it expected JSON. The dataset publisher now stages one layout, always uses -r zip, refuses to publish an incomplete payload, then downloads the result back and asserts seventeen required files resolve. Assert the interface, then trust it.' },
+  { id: 'I18', title: 'A lint gate that had never run', detail: 'The notebook check ran pyflakes via subprocess and printed its output or the word clean. pyflakes was not installed, so the error went to stderr, stdout was empty, and the fallback printed clean — an absent checker reporting success, recorded in several commit messages as a result. It cost a kernel run to expose. The replacement probes for the checker first and refuses to emit a verdict without it, and both of its own failure paths are tested by deliberately breaking them.' },
 ];
 
 export type Benchmark = {

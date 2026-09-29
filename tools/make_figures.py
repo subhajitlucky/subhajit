@@ -286,10 +286,73 @@ def training_data_svg() -> str:
                "".join(p))
 
 
+REPLICATION = [
+    # seed, control, staticgate, note
+    (1337, 4.7662, 4.6304, "X20 \u2014 the result as first seen"),
+    (1338, 4.8769, 4.9623, "X21 \u2014 replication"),
+    (1339, 4.8908, 4.9087, "X21 \u2014 replication"),
+]
+
+# The control's own spread across those configs. Everything measured on one seed
+# was read against a baseline of this size that nobody had measured.
+BASELINE_SPREAD = 0.11
+
+
+def replication_collapse_svg() -> str:
+    W, H = 720, 430
+    L, R = 78, 560
+    T, rowh = 112, 62
+    lo, hi = 4.55, 5.05
+    scale = (R - L) / (hi - lo)
+
+    def x(v: float) -> float:
+        return L + (v - lo) * scale
+
+    p = [txt(40, 26, "The project's best result, and what two fresh seeds did to it", 15, INK, weight="600"),
+         txt(40, 42, "30M parameters, 500 steps, paired control and treatment in the same kernel.", 11, MUTED),
+         txt(40, 56, "Lower is better. The treatment bar is below the control at seed 1337 and above it at both others.", 11, MUTED)]
+    p.append(f'<rect x="{L}" y="{T - 26}" width="10" height="10" fill="{MUTED}"/>')
+    p.append(txt(L + 15, T - 17, "control", 11, MUTED))
+    p.append(f'<rect x="{L + 72}" y="{T - 26}" width="10" height="10" fill="{VIOLET}"/>')
+    p.append(txt(L + 87, T - 17, "static gate", 11, MUTED))
+
+    for g in [4.6, 4.7, 4.8, 4.9, 5.0]:
+        p.append(f'<line x1="{x(g):.1f}" y1="{T - 10}" x2="{x(g):.1f}" y2="{T + rowh * 3 - 14}" stroke="{RULE}"/>')
+        p.append(txt(x(g), T - 16, f"{g:.1f}", 10, MUTED, anchor="middle"))
+
+    y = T + 6
+    for seed, ctl, arm, note in REPLICATION:
+        p.append(txt(40, y + 13, f"seed {seed}", 11, INK, weight="600"))
+        p.append(txt(40, y + 27, note, 10, MUTED))
+        for off, val, col in ((0, ctl, MUTED), (17, arm, VIOLET)):
+            w = max((val - lo) * scale, 2)
+            p.append(f'<rect x="{L}" y="{y + off}" width="{w:.1f}" height="14" fill="{col}" rx="2"/>')
+            p.append(txt(L + w + 7, y + off + 12, f"{val:.4f}", 11, INK if col == VIOLET else MUTED,
+                         weight="600" if col == VIOLET else "400"))
+        d = arm - ctl
+        p.append(txt(R + 24, y + 20, f"{d:+.4f}", 12, GREEN if d < 0 else RED, weight="600"))
+        y += rowh
+
+    p.append(txt(R + 24, T + 4, "\u0394", 11, MUTED))
+    ay = y + 14
+    p.append(f'<line x1="40" y1="{ay}" x2="{W - 40}" y2="{ay}" stroke="{RULE}"/>')
+    p.append(txt(40, ay + 22, "The control is not seed-invariant, and nobody had measured that.", 12, INK, weight="600"))
+    p.append(txt(40, ay + 42, f"Two independent sessions at seed 1337 agree to 0.0018, so the machine is not the variable.", 11, MUTED))
+    p.append(txt(40, ay + 58, f"Fresh seeds land about {BASELINE_SPREAD:.2f} nats higher \u2014 larger than the \u22120.0436 the gated residual was", 11, MUTED))
+    p.append(txt(40, ay + 74, "credited with, and larger than the branch-norm null by an order of magnitude.", 11, MUTED))
+    p.append(txt(40, ay + 96, "Every single-seed delta in this project was read against a baseline that was never measured.", 12, INK, weight="600"))
+    return svg(W, H, "KALIA static-gate result and its two-seed replication",
+               "Grouped bars of control and static-gate validation loss at seeds 1337, 1338 and 1339. "
+               "The treatment is 0.1358 nats better at seed 1337 and 0.0854 and 0.0179 nats worse at "
+               "seeds 1338 and 1339, so the effect reverses sign under replication.",
+               "".join(p))
+
+
 FIGURES = {
     "val-loss.svg": val_loss_svg,
     "bench-compare.svg": bench_svg,
     "training-data.svg": training_data_svg,
+    "replication-collapse.svg": replication_collapse_svg,
 }
 
 
