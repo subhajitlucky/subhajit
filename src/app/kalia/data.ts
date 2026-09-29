@@ -176,6 +176,43 @@ export const TIMELINE: TimelineDay[] = [
       },
     ],
   },
+  {
+    label: 'Day 4',
+    date: '2026-09-28',
+    entries: [
+      {
+        time: '11:20',
+        title: 'Session three ends, and the run is over',
+        body: 'All 4,770 steps. 2.50B tokens, 6.33 hours, 477 contiguous log rows, no gaps. Final train loss 2.7451. But the val curve has been flat since step 3,250 — 2.874 to 2.940 across the last 1,500 steps. The same plateau that stopped v0.1.2 at 73% of its schedule, except this time we paid for the whole thing and the last 31% bought nothing measurable.',
+      },
+      {
+        time: '11:38',
+        title: '41.7% of the code corpus is copyleft',
+        body: 'Twenty thousand files, 197 million characters, eleven minutes of CPU. 58.1% permissive, 41.7% not, and GPL-family licences alone cover 39.5% of all files. The v0.1.2 code slice was 5% of a 2.4B-token mixture built with no licence check, so that checkpoint trained on roughly 50M copyleft tokens. The interpretation had been fixed before the number was known: material share means the rebuild is the remediation. The published card had been listing three of four sources and omitting the code slice entirely — the one dataset that needed disclosing. It discloses now.',
+      },
+      {
+        time: '14:00',
+        title: 'The gate never opened',
+        body: 'The frontier architecture arm beat control by 0.0436 nats, 4.4 times its bar, and nobody could say why. Measured on a hundred real validation batches, the learned gate sits at 0.0192 against a 0.018 floor and a 0.05 threshold — it never opened. I had concluded that from a single average, which is not a safe inference, so it was pre-registered as a test against my own conclusion. It held: variation in response to input is 5e-06. The mechanism is not inert on average, it is inert everywhere.',
+      },
+      {
+        time: '16:20',
+        title: 'Our accuracy bars were below our own noise',
+        body: 'The gated arm also passed its accuracy prediction, 1.2 points on WinoGrande against a half-point bar — and that pass was worthless. The standard errors on these benchmarks at 500 samples are about two points. The bar sat four and a half times under the noise, and the result was 0.54 sigma: the expected size of nothing. The same flaw is in the promotion rule for v0.2.0, which allows one point of regression. The thresholds stay exactly as written and the noise floor is published beside the verdict rather than used to rescue it — but the interim regressions now split cleanly. ARC-Easy and LAMBADA at minus 4.6 are real. The other three are inside the noise.',
+      },
+      {
+        time: '18:40',
+        title: 'Four kernels died behind a green upload',
+        body: 'The dataset publisher defaults to skipping directories, so the code dataset had been shipping without its config folder, its eval folder, and every JSON file in it — which is why the reversibility gap had never been measurable despite the code supporting it. Each failed upload still returned success. Then four kernels in a row died on unchecked assumptions: a missing file, an import used before it was defined, a directory that was never there, and a parser handed markdown where it expected JSON. The publisher now stages one layout, always zips it, refuses an incomplete payload, and then downloads the result back to check seventeen files really are there.',
+      },
+      {
+        time: '20:00',
+        title: 'Reading the licence changed the answer',
+        body: 'I had assumed the sharing licence on the children stories blocked redistribution and said publish the recipe, not the data. Reading it, that was wrong. It explicitly places results — the outputs of training, our weights — beyond any obligation, and grants the right to train outright. So all three text sources permit both training and weight release, and this version corpus is shippable under three cheap attribution conditions. The asymmetry is unflattering: the licence-clean checkpoint is the one that scores worse. The earlier version, with copyleft in its training data, is the one whose bytes we will never publish.',
+      },
+    ],
+  },
+
 ];
 
 export type Decision = {
@@ -229,6 +266,7 @@ export const DECISIONS: Decision[] = [
   { id: 'D42', decision: 'X16 rejected: reversal made the gap worse on both seeds; frozen recipe to v0.2.0', outcome: 'enforced' },
   { id: 'D43', decision: 'The rebuilt corpus redefines the yardstick: v2b val is canonical, v0.1.2 re-baselined on it', outcome: 'active' },
   { id: 'D44', decision: 'Licence finding disclosed; publish the filtered corpus plus the filter, never the raw corpus', outcome: 'active' },
+  { id: 'D45', decision: 'Accuracy thresholds must sit above the benchmark noise floor; X18 and S-A were both under-powered', outcome: 'active' },
 ];
 
 export type Incident = {
@@ -254,6 +292,7 @@ export const INCIDENTS: Incident[] = [
   { id: 'I14', title: 'The published loss curve was missing its first half', detail: 'The v0.1.2 training log on Hugging Face began at step 1740: a code change adding log-restore-on-resume landed at 06:00 UTC, one session after that session had already started with the old code, so 347 logged steps vanished from the public record. Rebuilt from the repository\'s own commit history, verified contiguous (steps 10 to 3470, no gaps) and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 steps oscillate inside noise.' },
   { id: 'I15', title: 'Training windows ignored document boundaries', detail: 'The corpus is EOS-delimited — all four sources, median document ~200 tokens — but windows were sampled with no document awareness and attention ran unmasked, so nearly every 1,024-token window crossed a boundary. Worse, the mixer writes the four corpora in million-token round-robin blocks, so 0.3% of windows splice two corpora with no separator at all. Invisible to loss and to every benchmark we tracked: found by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, and pre-registered as an experiment (X17) at the same 0.010-nat bar that once rejected Muon+.' },
   { id: 'I16', title: '41.7% of the code corpus is copyleft, and it shipped', detail: 'A 20,000-file sample of the code corpus measures 41.7% of characters under non-permissive licences, with GPL-family terms covering 39.5% of all files. The licence filter was written, tested, and correct — it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. v0.1.2 therefore trained on roughly 50M copyleft tokens, about 2% of its training set, and its published card had listed three of the four sources while omitting the code slice entirely. Eleven minutes of CPU and one random sample found what no loss curve could. The v0.1.2 card now discloses it, and publishing training data is redefined as publishing the filtered corpus plus the filter — never the raw corpus, because redistributing copyleft text is the step that actually triggers the obligation.' },
+  { id: 'I17', title: 'The dataset was silently dropping two directories', detail: 'kaggle datasets version defaults to --dir-mode skip, which ignores subdirectories entirely. The code dataset had been published flat, so configs/ and eval/ were both absent and it contained zero JSON files — meaning no kernel could resolve eval/probe_sentences.json, which is the real reason the Abhimanyu gap was never measurable even though the code supported it. The upload reported success every time. Four kernels failed in a row behind a green upload, each from one unchecked assumption: a missing file, an import used before it was defined, a missing directory, and a parser handed markdown where it expected JSON. The dataset publisher now stages one layout, always uses -r zip, refuses to publish an incomplete payload, then downloads the result back and asserts seventeen required files resolve. Assert the interface, then trust it.' },
 ];
 
 export type Benchmark = {

@@ -3,14 +3,14 @@ import { DETERMINISTIC_EVAL, PLANNED_STEPS, STOP_STEP, TRAIN_LOG, VAL_POINTS } f
 
 describe('kalia page data', () => {
   it('carries the full record: every decision and every incident', () => {
-    expect(DECISIONS).toHaveLength(44);
-    expect(INCIDENTS).toHaveLength(16);
+    expect(DECISIONS).toHaveLength(45);
+    expect(INCIDENTS).toHaveLength(17);
     expect(new Set(DECISIONS.map((entry) => entry.id)).size).toBe(DECISIONS.length);
     expect(new Set(INCIDENTS.map((entry) => entry.id)).size).toBe(INCIDENTS.length);
   });
 
-  it('tells the story across all three days with real timestamps', () => {
-    expect(TIMELINE.map((day) => day.label)).toEqual(['Day 1', 'Day 2', 'Day 3']);
+  it('tells the story across all four days with real timestamps', () => {
+    expect(TIMELINE.map((day) => day.label)).toEqual(['Day 1', 'Day 2', 'Day 3', 'Day 4']);
     for (const day of TIMELINE) {
       expect(day.entries.length).toBeGreaterThan(4);
       for (const entry of day.entries) {
