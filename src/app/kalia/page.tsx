@@ -211,8 +211,21 @@ export default function KaliaPage() {
               0.05 bar &mdash; from changing nothing but the data.
             </p>
 
-            <h3 className="kalia-section-title" style={{ marginTop: '2.4rem', fontSize: '1.05rem' }}>
-              Zero-shot accuracy, and why the loss gain is not the whole story
+            <figure className="kalia-figure" style={{ marginTop: '2.2rem' }}>
+              <Image
+                src="/kalia/bench-compare.svg"
+                alt="Grouped bars for five zero-shot tasks, both versions side by side, each over a grey band showing plus or minus one standard error of about two points. PIQA, HellaSwag and WinoGrande move up but sit inside their own error bands; LAMBADA and ARC-Easy move down by more than one band."
+                width={720}
+                height={424}
+              />
+              <figcaption>
+                Both versions, same harness, same 500 samples, same code path. The grey band is
+                the measurement&rsquo;s own uncertainty, so a reader can see which bars actually
+                separate and which merely look like they do.
+              </figcaption>
+            </figure>
+            <h3 className="kalia-section-title" style={{ marginTop: '2.2rem', fontSize: '1.05rem' }}>
+              The same five tasks as exact numbers
             </h3>
             <div className="kalia-bench" style={{ marginTop: '1rem' }}>
               {BENCH_COMPARISON.map((row) => {
@@ -260,7 +273,7 @@ export default function KaliaPage() {
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">3. Where the tokens came from</h2>
               <p className="kalia-section-note">
-                Table 3 &middot; 2.4B training tokens, 10M held out
+                Table 3 &middot; 2.4B tokens
               </p>
             </div>
             <div className="kalia-recipe">
@@ -283,10 +296,11 @@ export default function KaliaPage() {
                 height={380}
               />
               <figcaption>
-                Left: the mixture. Right: how much of each source is long enough for the model to
-                actually see a whole document. The second bar is the one that matters, and it is
-                invisible without the picture &mdash; a reader who sees only the mixture cannot
-                tell that a fifth of the corpus supplies essentially none of the long documents.
+                The mixture on the left looks balanced. The panel on the right is why it
+                isn&rsquo;t: a fifth of the tokens supply <strong>0.03%</strong> of the documents
+                long enough for the model to see even one whole document, and only{' '}
+                <strong>17.7%</strong> of the corpus clears the bar at all. That number is
+                invisible in a table of proportions.
               </figcaption>
             </figure>
             <p className="kalia-prose">

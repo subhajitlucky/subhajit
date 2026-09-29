@@ -148,6 +148,12 @@ export const TIMELINE: TimelineDay[] = [
         time: '19:05',
         title: 'The rebuilt corpus quietly replaced the measuring stick',
         body: 'The new run\u2019s first validation point reads 0.74 nats worse than the previous version\u2019s while its training loss is better, which looks exactly like a catastrophic regression. It is not. The corpus rebuild replaced the held-out set, and the old weights score 2.3915 on the old set and 3.1070 on the new one \u2014 the set alone explains the entire gap. Both versions were re-measured on the rebuilt set so that anything crossing the rebuild boundary is believed only after being checked on both sides. A yardstick that moves silently is indistinguishable from a model that does.',
+        figure: {
+          src: '/kalia/val-loss.svg',
+          alt: 'Validation loss for v0.2.0 falling from 4.83 to 2.88 over 4,770 steps, flat from step 3,250, with deterministic reference points of 3.0533 for v0.1.2 and 2.8248 for v0.2.0 on the same rebuilt yardstick.',
+          caption:
+            'The answer to that question, once both versions were re-measured on the same set. The shaded band is the 1,500 steps at the end that bought nothing measurable.',
+        },
       },
       {
         time: '15:00',
@@ -189,6 +195,12 @@ export const TIMELINE: TimelineDay[] = [
         time: '13:11',
         title: 'A long-form probe, and a source that cannot be loaded',
         body: 'The LAMBADA hypothesis gets measured properly: what share of each source\u2019s documents is at least as long as the context. The first source tried, a famous book corpus, turns out to ship a loading script that modern tooling refuses to execute, and the two obvious parquet mirrors of it declare no licence at all. Only one candidate passes both tests, at 99.3% long documents — but its median document is 104,719 tokens, one hundred times the context, so the passing number is also a warning.',
+        figure: {
+          src: '/kalia/training-data.svg',
+          alt: 'The training mixture as a stacked bar, beside the share of each source whose documents reach the 1,024-token context: 26.2% for FineWeb-Edu, 0.03% for TinyStories, 13.2% for Cosmopedia, and 17.7% for the mixture overall.',
+          caption:
+            'What that probe found, and it is the reason LAMBADA moved: a fifth of the corpus supplies 0.03% of its long documents.',
+        },
       },
       {
         time: '19:23',
@@ -220,6 +232,12 @@ export const TIMELINE: TimelineDay[] = [
         time: '06:30',
         title: 'The missing fifth task',
         body: 'The registered evaluation came back with four of five benchmarks. LAMBADA had silently failed to load: the dataset still ships a loading script and modern tooling refuses to run those. The data was never missing \u2014 six parquet files, the standard 5,153 examples \u2014 only the loader path the harness requested was dead. Fixing it took five attempts and four different wrong turns, each an assumption I had not checked, and the fix now lives in the repository with tests rather than inside a notebook. Final answer: 20.8, a 2.2 point drop.',
+        figure: {
+          src: '/kalia/bench-compare.svg',
+          alt: 'Grouped bars for five zero-shot tasks, both versions, each with a grey band showing plus or minus one standard error of about two points. Three movements fall inside their own band.',
+          caption:
+            'The completed evaluation. The grey band is the measurement\u2019s own uncertainty, which is why three of the five movements cannot be called a change.',
+        },
       },
       {
         time: '07:00',
@@ -332,7 +350,7 @@ export const TRAINING_DATA: TrainingSource[] = [
     share: 20,
     license: 'CDLA-Sharing-1.0',
     longDocShare: 0.03,
-    note: "children's stories; almost nothing long enough to matter",
+    note: "children's stories; almost none long enough to matter",
   },
   {
     name: 'Cosmopedia v2',
@@ -346,7 +364,7 @@ export const TRAINING_DATA: TrainingSource[] = [
     share: 5,
     license: '7 permissive licences',
     longDocShare: null,
-    note: 'audited: the earlier unfiltered slice was 41.7% copyleft',
+    note: 'the earlier unfiltered slice was 41.7% copyleft',
   },
 ];
 
