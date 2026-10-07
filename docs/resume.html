@@ -101,9 +101,9 @@
       <span class="place">Remote</span>
     </div>
     <ul>
-      <li>Build and ship full-stack features in Next.js, TypeScript, and PostgreSQL.</li>
-      <li>Develop backend APIs and background job processing, with authentication, RBAC, caching, and analytics.</li>
-      <li>Debug production incidents, optimize SQL queries, and remove performance bottlenecks in live services.</li>
+      <li>Build and ship full-stack features in Next.js, TypeScript, PostgreSQL/Supabase, and ClickHouse across web, API, and analytics layers.</li>
+      <li>Develop backend APIs and background job processing on Google Cloud Platform, with authentication, role-based access control, caching, and dashboard data pipelines.</li>
+      <li>Debug production incidents, optimize SQL queries, and clear performance bottlenecks in live services, verifying fixes with tests and staged rollouts.</li>
     </ul>
   </div>
 
@@ -142,7 +142,7 @@
     <div class="project-title">Codebase Doctor – Repository Auditor for Humans and Coding Agents</div>
     <div class="project-stack">TypeScript, Node.js, MCP, SARIF &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/codebase-doctor">npm</a> | <a href="https://github.com/subhajitlucky/codebase-doctor">GitHub</a></div>
     <ul>
-      <li>npm CLI and MCP server (v0.1.9, ~530 downloads/month) with 898 tests; CI installs the packed tarball to verify each release.</li>
+      <li>Published npm CLI and MCP server with a full test suite; CI installs the packed tarball to verify each release.</li>
       <li>Audits secrets (working tree and Git history), dependencies (npm/pnpm/Yarn/Bun + OSV advisories), PostgreSQL RLS, Dockerfiles, and GitHub Actions.</li>
       <li>Builds a multi-language source graph across JS/TS, Python, Go, Java, and Rust for impact analysis and missing-target detection.</li>
       <li>Reports findings with stable fingerprints and baselines so CI separates new issues from known ones; outputs text, JSON, or SARIF.</li>
@@ -153,7 +153,7 @@
     <div class="project-title">RLS Doctor – Postgres and Supabase Row Level Security Auditor</div>
     <div class="project-stack">TypeScript, PostgreSQL, Supabase &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/rls-doctor">npm</a> | <a href="https://github.com/subhajitlucky/rls-doctor">GitHub</a></div>
     <ul>
-      <li>npm CLI (v0.2.3, ~190 downloads/month, 98 tests, PostgreSQL 15/16) that audits RLS policies, grants, and role-membership paths from catalog metadata.</li>
+      <li>Published npm CLI that audits RLS policies, grants, and role-membership paths from live catalog metadata.</li>
       <li>Probe mode impersonates application roles in rolled-back read-only transactions, including simulated JWT users, to prove cross-tenant row reads without changing the database.</li>
       <li>Ships SARIF output, baselines, and a GitHub Action for pull-request checks.</li>
     </ul>
