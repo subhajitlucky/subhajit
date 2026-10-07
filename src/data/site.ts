@@ -40,6 +40,8 @@ export const experience: Experience[] = [
     title: 'Full Stack Software Developer',
     period: 'May 2026-Present',
     location: 'Remote',
+    summary:
+      'Full-stack features in Next.js, TypeScript, PostgreSQL and ClickHouse; backend APIs and background processing on GCP.',
   },
   {
     organization: 'uElement Technologies',

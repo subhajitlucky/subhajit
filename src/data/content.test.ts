@@ -34,6 +34,8 @@ describe('portfolio content integrity', () => {
       title: 'Full Stack Software Developer',
       period: 'May 2026-Present',
       location: 'Remote',
+      summary:
+        'Full-stack features in Next.js, TypeScript, PostgreSQL and ClickHouse; backend APIs and background processing on GCP.',
     });
     expect(JSON.stringify(currentRole).toLowerCase()).not.toContain('hema');
   });

@@ -70,7 +70,7 @@ describe('HomePage', () => {
     }
   });
 
-  it('keeps all experience in sight and current employment minimal', () => {
+  it('keeps all experience in sight and current employment concise', () => {
     render(<HomePage />);
 
     for (const organization of ['Giakaa Capital', 'uElement Technologies', 'QuadB Technologies']) {
@@ -82,7 +82,8 @@ describe('HomePage', () => {
     expect(giakaaEntry).toHaveTextContent('Full Stack Software Developer');
     expect(giakaaEntry).toHaveTextContent('May 2026-Present');
     expect(giakaaEntry).toHaveTextContent('Remote');
-    expect(within(giakaaEntry).queryByRole('paragraph')).not.toBeInTheDocument();
+    expect(within(giakaaEntry).getByRole('paragraph')).toHaveTextContent('ClickHouse');
+    expect(giakaaEntry.textContent?.toLowerCase()).not.toContain('hema');
 
     expect(screen.getByTestId('experience-uelement-technologies')).toHaveTextContent(
       'Software Developer Intern',
