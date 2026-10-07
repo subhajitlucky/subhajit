@@ -22,6 +22,7 @@ describe('portfolio content integrity', () => {
       'Product engineering',
       'Backend and data',
       'AI and developer tools',
+      'Cloud and Web3',
     ]);
     expect(siteConfig.availability.toLowerCase()).not.toContain('relocation');
   });

@@ -68,11 +68,15 @@ export const skillGroups = [
   },
   {
     label: 'Backend and data',
-    items: ['Python', 'PostgreSQL', 'SQL', 'Prisma'],
+    items: ['Python', 'PostgreSQL', 'SQL', 'Prisma', 'Express'],
   },
   {
     label: 'AI and developer tools',
     items: ['Agent workflows', 'CLI design', 'Vitest', 'GitHub Actions'],
+  },
+  {
+    label: 'Cloud and Web3',
+    items: ['GCP', 'Docker', 'MCP', 'Ethers.js'],
   },
 ] as const;
 
