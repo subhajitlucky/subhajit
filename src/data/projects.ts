@@ -54,7 +54,7 @@ export const projects: Project[] = [
     system:
       'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
     proof: [
-      'Public release: weights, model card, and the full engineering record (41 numbered decisions, 12 incidents, two hash-anchored pre-registrations).',
+      'Public release: weights, model card, and the full engineering record (every numbered decision and incident, and hash-anchored pre-registrations).',
       'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval; zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
       'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
       'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',

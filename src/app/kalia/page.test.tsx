@@ -69,7 +69,7 @@ describe('KaliaPage', () => {
     expect(screen.getByRole('heading', { name: /2\. Two checkpoints, one yardstick/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /3\. Where the tokens came from/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /4\. Evaluation — KALIA 0\.1\.2/ })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Appendix A\. Day-by-day log/ })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Appendix A\. Chapter-by-chapter log/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Appendix B\. Every decision/ })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: /Appendix C\. Every incident/ })).toBeInTheDocument();
     expect(screen.getAllByText('D41').length).toBeGreaterThan(0);

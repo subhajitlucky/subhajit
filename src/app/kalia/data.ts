@@ -13,13 +13,15 @@ export type TimelineEntry = {
 
 export type TimelineDay = {
   label: string;
+  title: string;
   date: string;
   entries: TimelineEntry[];
 };
 
 export const TIMELINE: TimelineDay[] = [
   {
-    label: 'Day 1',
+    label: 'Chapter 1',
+    title: 'The first brain',
     date: '2026-09-22',
     entries: [
       {
@@ -55,7 +57,8 @@ export const TIMELINE: TimelineDay[] = [
     ],
   },
   {
-    label: 'Day 2',
+    label: 'Chapter 2',
+    title: 'The plateau and the release',
     date: '2026-09-23',
     entries: [
       {
@@ -126,7 +129,8 @@ export const TIMELINE: TimelineDay[] = [
     ],
   },
   {
-    label: 'Day 3',
+    label: 'Chapter 3',
+    title: 'The experiment that was supposed to work',
     date: '2026-09-27',
     entries: [
       {
@@ -163,7 +167,8 @@ export const TIMELINE: TimelineDay[] = [
     ],
   },
   {
-    label: 'Day 4',
+    label: 'Chapter 4',
+    title: 'The best result that was not',
     date: '2026-09-28',
     entries: [
       {
@@ -225,7 +230,8 @@ export const TIMELINE: TimelineDay[] = [
     ],
   },
   {
-    label: 'Day 5',
+    label: 'Chapter 5',
+    title: 'Reading the fine print',
     date: '2026-09-29',
     entries: [
       {
@@ -258,6 +264,75 @@ export const TIMELINE: TimelineDay[] = [
         time: '07:00',
         title: 'Four kernels died behind green uploads',
         body: 'The dataset publisher defaults to skipping directories, so the code dataset had been shipping with no config folder, no eval folder, and no JSON at all \u2014 which is why a measurement had never been reachable even though the code supported it. Every upload reported success. Then four kernels in a row failed on unchecked assumptions: a missing file, an import used before it was defined, a directory that was never there, and a parser handed markdown where it expected JSON. The publisher now stages one layout, always zips it, refuses an incomplete payload, and then downloads the result back to check seventeen files really are there. Assert the interface, then trust it.',
+      },
+    ],
+  },
+  {
+    label: 'Chapter 6',
+    title: 'The last null, and the gates',
+    date: '2026-10-05',
+    entries: [
+      {
+        time: 'morning',
+        title: 'The memory trick returns null, twice',
+        body: 'X25 tests test-time training: the model takes a small self-supervised step while it reads, trying to remember the characters of a story. Stage one runs 20 stories and two arms \u2014 the updates execute, four per arm, and change not a single sampled token; the measured delta is 0.0000. Stage two sweeps a 40x strength range: four times the steps, ten times the learning rate, twice the cadence. Every arm lands negative, zero of twenty stories improved. The mechanism is closed as a null result, not a tuning invitation.',
+      },
+      {
+        time: 'afternoon',
+        title: 'Six launch gates, each named for a failure',
+        body: 'The v0.3.0 sequence cannot start casually, so six binary gates with named checkers stand in front of it: artifacts published, suite and ledger verified, the measuring stick hashed, licences recorded, document masking left off so the control stays a control, and the forgetting probe executed against the real checkpoint before anything else. A gate that cannot pass is amended in writing first \u2014 never waived on launch day.',
+      },
+      {
+        time: 'afternoon',
+        title: 'Five silent-null defects caught before any GPU hour',
+        body: 'An audit of the execution notebooks finds five ways an arm could have reported a plausible null after spending quota: a resumed run whose step budget made the training loop exit on entry; a replay sweep that hard-coded the schedule instead of reading Step 2\u2019s verdict; arms that never resumed from the checkpoint at all. Each defect is the same shape \u2014 a mechanism never switched on \u2014 and each now has a test that reads the notebook itself.',
+      },
+      {
+        time: 'evening',
+        title: 'The corpus rebuild moves off Kaggle',
+        body: 'The preparation kernel runs ten hours and produces nothing, while a local two-million-token benchmark of the same code finishes in twenty-seven seconds. The worker pipe is roughly fifty times slower than the machine. The rebuild moves local, four shards in parallel, and the Kaggle kernel is left running as a spare.',
+      },
+      {
+        time: 'night',
+        title: 'Two citations come out',
+        body: 'Every arXiv identifier in the research notes is checked against the papers themselves. One load-bearing citation claimed findings that are not in the paper it named \u2014 the paper is real, the attributed result is not \u2014 and the replay default\u2019s justification could not be located at all. Both are removed in place and recorded as retractions. The replay sweep survives on a weaker, honest ground: nothing verified covers 58M, so the ratio must be measured, not adopted.',
+      },
+    ],
+  },
+  {
+    label: 'Chapter 7',
+    title: 'The ruler at 58M',
+    date: '2026-10-08',
+    entries: [
+      {
+        time: 'morning',
+        title: 'The corpus reaches the public shelf',
+        body: 'The publishing kernel finally completes: the frozen probe slice and four per-source shards \u2014 124,500,691 tokens each, cut equal so the runtime mixture can sample them \u2014 plus a manifest, all to the public model repository. Each source\u2019s validation head is skipped so the held-out set cannot leak into training, and every artifact\u2019s fingerprint is recorded before any measurement reads it. The unlock was routing the upload key through a private input dataset, because API-started runs cannot read notebook secrets.',
+      },
+      {
+        time: 'morning',
+        title: 'Kaggle changes the homework rule overnight',
+        body: 'A platform update makes missing cell IDs a hard validation error. Six runs in a row die with a blank error and zero log lines \u2014 the notebook never executes, so there is nothing to read. The bisection: script kernels run, notebook kernels fail, and a one-cell notebook with proper id fields runs. All thirty notebooks are normalized, and the static checker now refuses to pass an id-less one, so the next regeneration cannot break silently.',
+      },
+      {
+        time: 'afternoon',
+        title: 'Step 0: the instrument wakes up',
+        body: 'The forgetting probe has never seen a real checkpoint. CL-0 runs it against v0.2.0: probe loss 2.7989, 0.9330 bits per byte, on 204,800 frozen tokens taken from the training stream \u2014 deliberately not a held-out set, because the probe measures forgetting of what was learned. The probe\u2019s fingerprint is verified against the recorded yardstick before scoring. The ledger now has its first real point.',
+      },
+      {
+        time: 'afternoon',
+        title: 'Step 1: the ruler at 58M',
+        body: 'Three control twins, same recipe, same data, 500 steps each, seeds 1401/1402/1403: 3.8045, 3.7388, 4.0280. The spread is 0.2892 nats \u2014 2.5 times the 0.1139 measured at 30M, and nearly twice the 0.15 line the pre-registration treats as the measurement floor. The notebook\u2019s verdict text was fixed before the run, so there is nothing to renegotiate: stop the programme.',
+      },
+      {
+        time: 'evening',
+        title: 'The second measurement confirms, and the project obeys',
+        body: 'The whole thing runs again in a fresh session. Every twin re-lands within 0.004 nats of itself \u2014 the machine is not the variable \u2014 and the spread returns at 0.2912. The registered rule: a spread above 0.15 confirmed by a second measurement means 58M is below this budget\u2019s measurement floor, and micro-scale architecture and data claims stop. Steps 2\u20134 are cancelled, both sessions archived. The pivot: things that show up without a microscope \u2014 a lookup helper and best-of-N at inference, and full-scale data levers where effects are large enough to clear the noise.',
+        figure: {
+          src: '/kalia/seed-spread.svg',
+          alt: 'Horizontal dot plot of the 58M control re-run in two sessions: seed 1401 scores 3.8045 and 3.8086, seed 1402 scores 3.7388 and 3.7367, seed 1403 scores 4.0280 and 4.0279. Each pair overlaps almost exactly while the seeds sit 0.29 nats apart.',
+          caption: 'Figure A4 \u2014 the wobble, measured twice. Sessions agree to 0.004 nats; the seeds do not.',
+        },
       },
     ],
   },
@@ -446,6 +521,9 @@ export const DECISIONS: Decision[] = [
   { id: 'D44', decision: 'Licence finding disclosed; publish the filtered corpus plus the filter, never the raw corpus', outcome: 'active' },
   { id: 'D45', decision: 'Accuracy thresholds must sit above the benchmark noise floor; X18 and S-A were both under-powered', outcome: 'active' },
   { id: 'D48', decision: 'No architecture arm from a single seed; the gated-residual line is closed as a null result', outcome: 'active' },
+  { id: 'D49', decision: 'A load-bearing citation claimed findings not in the paper it named; retracted, decision kept', outcome: 'active' },
+  { id: 'D50', decision: 'The replay default\u2019s justification was unlocatable; removed rather than restated', outcome: 'enforced' },
+  { id: 'D51', decision: '--resume silently continued the source schedule; update_budget and opt-in re-warm', outcome: 'fixed' },
 ];
 
 export type Incident = {
@@ -473,6 +551,11 @@ export const INCIDENTS: Incident[] = [
   { id: 'I16', title: '41.7% of the code corpus is copyleft, and it shipped', detail: 'A 20,000-file sample of the code corpus measures 41.7% of characters under non-permissive licences, with GPL-family terms covering 39.5% of all files. The licence filter was written, tested, and correct — it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. v0.1.2 therefore trained on roughly 50M copyleft tokens, about 2% of its training set, and its published card had listed three of the four sources while omitting the code slice entirely. Eleven minutes of CPU and one random sample found what no loss curve could. The v0.1.2 card now discloses it, and publishing training data is redefined as publishing the filtered corpus plus the filter — never the raw corpus, because redistributing copyleft text is the step that actually triggers the obligation.' },
   { id: 'I17', title: 'The dataset was silently dropping two directories', detail: 'kaggle datasets version defaults to --dir-mode skip, which ignores subdirectories entirely. The code dataset had been published flat, so configs/ and eval/ were both absent and it contained zero JSON files — meaning no kernel could resolve eval/probe_sentences.json, which is the real reason the Abhimanyu gap was never measurable even though the code supported it. The upload reported success every time. Four kernels failed in a row behind a green upload, each from one unchecked assumption: a missing file, an import used before it was defined, a missing directory, and a parser handed markdown where it expected JSON. The dataset publisher now stages one layout, always uses -r zip, refuses to publish an incomplete payload, then downloads the result back and asserts seventeen required files resolve. Assert the interface, then trust it.' },
   { id: 'I18', title: 'A lint gate that had never run', detail: 'The notebook check ran pyflakes via subprocess and printed its output or the word clean. pyflakes was not installed, so the error went to stderr, stdout was empty, and the fallback printed clean — an absent checker reporting success, recorded in several commit messages as a result. It cost a kernel run to expose. The replacement probes for the checker first and refuses to emit a verdict without it, and both of its own failure paths are tested by deliberately breaking them.' },
+  { id: 'I19', title: 'The Kautilya arms would have trained zero steps', detail: 'A resumed run at step 4,770 with max_steps 1,000 trains nothing: the loop condition is false on entry, the process exits zero, no rows are written, and the quota is spent. The step budget now has two explicit meanings \u2014 max_steps stays an absolute ceiling, update_budget means more steps from the resume point \u2014 and a test pins each.' },
+  { id: 'I20', title: 'Step 3 ignored Step 2', detail: 'The replay sweep is registered as using the schedule from Step 2\u2019s outcome, but its arms hard-coded re-warming and the notebook never read the verdict. Had Step 2 concluded against re-warming, the sweep would have measured the wrong schedule and said nothing about it. The notebook now reads the verdict file and patches the in-kernel config copy.' },
+  { id: 'I21', title: 'The corpus rebuild moves off Kaggle', detail: 'The preparation kernel runs ten hours with no outputs while a two-million-token local benchmark of the same code finishes in twenty-seven seconds: the worker pipe is roughly fifty times slower than the machine. The rebuild moves local, four shards in parallel; the Kaggle kernel is left running as a spare.' },
+  { id: 'I22', title: 'Kaggle made cell IDs a hard error overnight', detail: 'Six runs die instantly with a blank error, zero log lines, and no outputs \u2014 the artifact never executed. Bisection found it: script kernels run, notebook kernels fail, a one-cell notebook with id fields runs. All thirty notebooks now carry ids, and the static checker refuses to pass an id-less one. A blank pre-flight error plus zero logs means the artifact never ran; bisect the artifact type before touching the code.' },
+  { id: 'I23', title: 'The code dataset was truncated again, and kernels copied an old bundle', detail: 'kalia-code-dev had been re-published flat \u2014 no train.py, no tools/ \u2014 and the setup cell fell back to any train.py under /kaggle/input, silently copying a September 23 repo bundled inside an old kernel output. The staging tool also flattened tools/ to the dataset root while recording it as tools/<name>. Fixed: the tool preserves the directory, the dataset is republished and round-trip verified, and the kernels prefer the dataset and assert every file they invoke.' },
 ];
 
 export type Benchmark = {

@@ -116,8 +116,8 @@ export default function KaliaPage() {
               initialization to coherent story generation in two days, on free-tier Kaggle GPUs,
               at zero compute cost. Section&nbsp;1 fixes the model specification; Section&nbsp;2
               reports the evaluation; Sections&nbsp;3 and&nbsp;4 present unedited samples and an
-              interactive replay of the training log. The appendices record the day-by-day log,
-              all 43 numbered decisions, and all 15 incidents. Every experiment was pre-registered
+              interactive replay of the training log.               The appendices record the chapter-by-chapter log, every numbered decision, and
+              every incident. Every experiment was pre-registered
               before it ran, and no claim on this page is a screenshot — each links to the
               primary log.
             </p>
@@ -403,7 +403,7 @@ export default function KaliaPage() {
 
           <section className="kalia-section" id="timeline">
             <div className="kalia-section-head">
-              <h2 className="kalia-section-title">Appendix A. Day-by-day log</h2>
+              <h2 className="kalia-section-title">Appendix A. Chapter-by-chapter log</h2>
               <p className="kalia-section-note">times in UTC, from the kernel run logs</p>
             </div>
             <p className="kalia-prose">
@@ -414,7 +414,7 @@ export default function KaliaPage() {
             {TIMELINE.map((day) => (
               <div className="kalia-day" key={day.label}>
                 <p className="kalia-day-label">
-                  {day.label} <span>{day.date}</span>
+                  {day.label} — {day.title} <span>{day.date}</span>
                 </p>
                 <ol className="kalia-timeline">
                   {day.entries.map((entry) => (
@@ -444,7 +444,7 @@ export default function KaliaPage() {
           <section className="kalia-section" id="decisions">
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">Appendix B. Every decision</h2>
-              <p className="kalia-section-note">41 numbered entries, including the rejected ones</p>
+              <p className="kalia-section-note">every numbered entry, including the rejected ones</p>
             </div>
             <div className="kalia-decisions">
               {DECISIONS.map((item) => (
