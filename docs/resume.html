@@ -130,30 +130,14 @@
     </ul>
   </div>
 
-  <div class="entry">
-    <div class="entry-head">
-      <span class="org">QuadB Technologies</span>
-      <span class="period">Feb 2025 – Mar 2025</span>
-    </div>
-    <div class="role-row">
-      <span class="title">Software Engineering Trainee</span>
-      <span class="place">Remote</span>
-    </div>
-    <ul>
-      <li>Built and deployed Internet Computer (ICP) smart contracts in Motoko and Rust; developed canister-backed dApps.</li>
-    </ul>
-  </div>
-
   <h2>Projects</h2>
 
   <div class="project">
     <div class="project-title">Codebase Doctor – Repository Auditor for Humans and Coding Agents</div>
     <div class="project-stack">TypeScript, Node.js, MCP, SARIF &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/codebase-doctor">npm</a> | <a href="https://github.com/subhajitlucky/codebase-doctor">GitHub</a></div>
     <ul>
-      <li>Published npm CLI and MCP server with a full test suite; CI installs the packed tarball to verify each release.</li>
-      <li>Audits secrets (working tree and Git history), dependencies (npm/pnpm/Yarn/Bun + OSV advisories), PostgreSQL RLS, Dockerfiles, and GitHub Actions.</li>
-      <li>Builds a multi-language source graph across JS/TS, Python, Go, Java, and Rust for impact analysis and missing-target detection.</li>
-      <li>Reports findings with stable fingerprints and baselines so CI separates new issues from known ones; outputs text, JSON, or SARIF.</li>
+      <li>Published npm CLI and MCP server with a full test suite; CI verifies each release from the packed tarball. Audits secrets (working tree and Git history), dependencies (npm/pnpm/Yarn/Bun + OSV advisories), PostgreSQL RLS, Dockerfiles, and GitHub Actions.</li>
+      <li>Builds a multi-language source graph across JS/TS, Python, Go, Java, and Rust for impact analysis; reports stable fingerprints with baselines in text, JSON, or SARIF so CI separates new issues from known ones.</li>
     </ul>
   </div>
 
@@ -161,9 +145,8 @@
     <div class="project-title">RLS Doctor – Postgres and Supabase Row Level Security Auditor</div>
     <div class="project-stack">TypeScript, PostgreSQL, Supabase &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/rls-doctor">npm</a> | <a href="https://github.com/subhajitlucky/rls-doctor">GitHub</a></div>
     <ul>
-      <li>Published npm CLI that audits RLS policies, grants, and role-membership paths from live catalog metadata.</li>
+      <li>Published npm CLI that audits RLS policies, grants, and role-membership paths from live catalog metadata; ships SARIF output, baselines, and a GitHub Action for pull-request checks.</li>
       <li>Probe mode impersonates application roles in rolled-back read-only transactions, including simulated JWT users, to prove cross-tenant row reads without changing the database.</li>
-      <li>Ships SARIF output, baselines, and a GitHub Action for pull-request checks.</li>
     </ul>
   </div>
 
@@ -171,9 +154,8 @@
     <div class="project-title">CSCosmos – Interactive Computer-Science Learning Hub</div>
     <div class="project-stack">Next.js, TypeScript, React &nbsp;·&nbsp; <a href="https://cscosmos.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/cscosmos">GitHub</a></div>
     <ul>
-      <li>Searchable learning hub with interactive modules across web, systems, security, AI, and infrastructure.</li>
-      <li>Typed topic catalog drives search, domain routes, and live/planned module states from one source.</li>
-      <li>Combines native visualizers with focused external microsites; topic pages are statically generated.</li>
+      <li>Searchable learning hub with interactive modules across web, systems, security, AI, and infrastructure; combines native visualizers with focused external microsites.</li>
+      <li>Typed topic catalog drives search, domain routes, and live/planned module states from one source; topic pages are statically generated.</li>
     </ul>
   </div>
 
@@ -181,16 +163,8 @@
     <div class="project-title">Tarka Sabha – Multi-Agent AI Debate Platform</div>
     <div class="project-stack">Next.js, TypeScript, PostgreSQL, Prisma &nbsp;·&nbsp; <a href="https://tarkasabha.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/tarkaSabha">GitHub</a></div>
     <ul>
-      <li>Multi-agent debate platform that routes multiple LLM providers with configurable personas; API keys encrypted with AES-256-GCM.</li>
-    </ul>
-  </div>
-
-  <div class="project">
-    <div class="project-title">SmritiFlow – Living Repository Memory for Coding Agents</div>
-    <div class="project-stack">TypeScript, Node.js, pnpm monorepo &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/smritiflow">npm</a> | <a href="https://github.com/subhajitlucky/smritiflow">GitHub</a></div>
-    <ul>
-      <li>Published CLI that keeps agent-facing project memory current with commit-aware refresh, gitignore-aware scanning, and merge-safe AGENTS.md updates.</li>
-      <li>Verified by an automated test suite with CI on every change.</li>
+      <li>Multi-agent debate platform routing multiple LLM providers with configurable personas; API keys encrypted with AES-256-GCM with model calls kept server-side.</li>
+      <li>Persists auth-backed debate state (chats, messages, rate limits) in PostgreSQL/Prisma with deterministic round-robin and mention-aware speaker selection.</li>
     </ul>
   </div>
 
