@@ -334,6 +334,48 @@ export const TIMELINE: TimelineDay[] = [
           caption: 'Figure A4 \u2014 the wobble, measured twice. Sessions agree to 0.004 nats; the seeds do not.',
         },
       },
+      {
+        time: 'night',
+        title: 'The corpus is scanned against its own exams',
+        body: 'Before the new corpus ships, a 13-gram gate scans all 2.41B training tokens against the five scored benchmarks and finds 2,903 verified windows \u2014 about 1.2 per million: wikiHow-style instructions, book prose, and science phrasing that the benchmarks also use. WinoGrande: zero. The count goes into the model card as a bounded optimism note on four scores, well under 0.001% of tokens, instead of claiming a perfectly clean corpus.',
+      },
+    ],
+  },
+  {
+    label: 'Chapter 8',
+    title: 'The experiment week',
+    date: '2026-10-12',
+    entries: [
+      {
+        time: 'Oct 9',
+        title: 'The adaptive mixture runs, and eats dessert',
+        body: 'Six weeks after the idea was logged, the Kautilya policy runs for real: two paired arms, 1,000 update steps from the same checkpoint, identical except whether the mixture policy re-weights its data sources from per-source loss. The policy arm\u2019s training loss dives from 2.63 to 1.79 while held-out loss ends 0.018 nats worse \u2014 and the diary shows why: FineWeb-Edu, the hardest source, falls from a 60% share to 22.7%; TinyStories, the easiest, climbs from 20% to 56.3%. The policy did not learn faster; it changed the test it was measured on. Two rank-asymmetric DDP bugs die first, both visible only on two GPUs.',
+      },
+      {
+        time: 'Oct 9',
+        title: 'An experiment is killed before it costs a GPU-hour',
+        body: 'X27 is registered, reviewed, and withdrawn the same day: the design would have let the model read future tokens during training \u2014 a leak into its own objective. The withdrawal and its amendment stay public, and the flag is now a tripwire that raises if anyone ever switches it on.',
+      },
+      {
+        time: 'Oct 11',
+        title: 'The dessert replicates, and the machine turns out to be exact',
+        body: 'The whole pilot re-runs in new sessions. The control arm lands 0.0001 nats from its first run at the final checkpoint; the policy arm lands 0.0007 from its first, with a diary identical to four decimals. Run-to-run noise is now measured rather than assumed: 0.0001\u20130.003 nats per checkpoint. Then a third arm tests the fix \u2014 judge each source by whether it is improving, not by whether its loss is low. It halves the drift and halves the damage (+0.0076) but does not stop it, falsifying the pre-registered prediction that its weights would stay level. Three arms, three drift sizes, three costs, ordered: that dose-response is the finding.',
+      },
+      {
+        time: 'Oct 11',
+        title: 'The model keeps its characters',
+        body: 'Entity drift \u2014 Max becoming Tim within two sentences \u2014 is measured, then attacked at decoding time. Eight samples per prompt, ranked three ways: greedy, the model\u2019s own log-probability, and a rule that prefers the continuation that keeps its entities. On 20 frozen stories the rule triples character retention over greedy (0.030 to 0.091; +0.061, 95% CI +0.039 to +0.086) and lands within noise of the real book text (0.098). The model\u2019s own confidence adds nothing \u2014 again. The honest cost: the rule prefers less-likely text, and whether the stories feel better is the unmeasured next question.',
+      },
+      {
+        time: 'Oct 12',
+        title: 'The recitation orders, first measurement',
+        body: 'The p\u0101\u1E6Dha experiment \u2014 the first known test of a 3,000-year-old oral-memory technology as a training schedule \u2014 finishes its first two arms. Same windows, same 10% replay budget; only the order changes. Shuffled (uniform) replay ends at 2.8076 on held-out val; jata, the forward-reverse-forward recitation, trails at 2.8510 and is worse at every checkpoint past 5,100. On the frozen forgetting probe, uniform ends 0.0237 nats better than the pretrain itself while jata ends 0.0181 worse \u2014 both metrics order the arms identically. One seed, two of four arms: krama and ghana are queued, and nothing ships before a second seed.',
+      },
+      {
+        time: 'Oct 12',
+        title: 'The instrument refuses to lie',
+        body: 'The forgetting ledger gets its first arm-level readings only after three guards fire. A GPU-only bug \u2014 one dataset piped slow-CPU rows into a device batch, invisible to every local test \u2014 is found, fixed, and pinned by a contract test. Then the probe itself: three versions score the wrong frozen file, and the built-in self-check refuses them with a +0.11-nat discrepancy \u2014 exactly the fake regression a silent substitution would have published. On the correct, hash-pinned file, the self-check re-scores the original baseline to 0.000001 of its October 7 value. The lesson lands in the record: at this scale the instrument matters as much as the model.',
+      },
     ],
   },
 ];
@@ -556,6 +598,7 @@ export const INCIDENTS: Incident[] = [
   { id: 'I21', title: 'The corpus rebuild moves off Kaggle', detail: 'The preparation kernel runs ten hours with no outputs while a two-million-token local benchmark of the same code finishes in twenty-seven seconds: the worker pipe is roughly fifty times slower than the machine. The rebuild moves local, four shards in parallel; the Kaggle kernel is left running as a spare.' },
   { id: 'I22', title: 'Kaggle made cell IDs a hard error overnight', detail: 'Six runs die instantly with a blank error, zero log lines, and no outputs \u2014 the artifact never executed. Bisection found it: script kernels run, notebook kernels fail, a one-cell notebook with id fields runs. All thirty notebooks now carry ids, and the static checker refuses to pass an id-less one. A blank pre-flight error plus zero logs means the artifact never ran; bisect the artifact type before touching the code.' },
   { id: 'I23', title: 'The code dataset was truncated again, and kernels copied an old bundle', detail: 'kalia-code-dev had been re-published flat \u2014 no train.py, no tools/ \u2014 and the setup cell fell back to any train.py under /kaggle/input, silently copying a September 23 repo bundled inside an old kernel output. The staging tool also flattened tools/ to the dataset root while recording it as tools/<name>. Fixed: the tool preserves the directory, the dataset is republished and round-trip verified, and the kernels prefer the dataset and assert every file they invoke.' },
+  { id: 'I24', title: 'The contamination gate reported 63,491,977 hits, and every one was whitespace', detail: 'A 13-gram overlap scan against the five scored benchmarks returned 63 million PIQA hits. All of them were runs of spaces: 120 benchmark rows carry copied web text with long whitespace runs, and a 13-space window matches Python indentation millions of times. Patterns now require at least six distinct tokens. A second artifact \u2014 an ARC choices dict stringified into Python-repr patterns \u2014 matched quiz-like code 601 times and was caught the same way. A gate that reports 63M hits is broken, and the count says so before a human reads the matches.' },
 ];
 
 export type Benchmark = {
