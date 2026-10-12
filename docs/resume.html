@@ -4,23 +4,23 @@
 <meta charset="utf-8" />
 <title>Subhajit Pradhan — Resume</title>
 <style>
-  @page { size: letter; margin: 0.7in 0.75in; }
+  @page { size: letter; margin: 0.5in 0.75in; }
   * { box-sizing: border-box; }
   html, body {
     margin: 0;
     padding: 0;
     color: #111;
     font-family: "Liberation Sans", Arial, sans-serif;
-    font-size: 9.5pt;
-    line-height: 1.35;
+    font-size: 9.2pt;
+    line-height: 1.25;
   }
   .name {
     font-family: "Liberation Serif", "Times New Roman", serif;
-    font-size: 22pt;
+    font-size: 20pt;
     font-weight: 700;
     text-align: center;
     letter-spacing: 0.2px;
-    margin: 0 0 4pt;
+    margin: 0 0 2pt;
   }
   .contact {
     text-align: center;
@@ -32,10 +32,10 @@
     text-align: center;
     font-size: 9pt;
     color: #222;
-    margin: 0 0 8pt;
+    margin: 0 0 4pt;
   }
   .summary-title {
-    margin-top: 8pt;
+    margin-top: 4pt;
   }
   .summary {
     margin: 0;
@@ -43,36 +43,36 @@
   h2 {
     font-size: 11.5pt;
     font-weight: 700;
-    margin: 14pt 0 6pt;
+    margin: 9pt 0 4pt;
     padding-bottom: 2pt;
     border-bottom: 1px solid #111;
   }
-  .entry { margin: 0 0 8pt; }
+  .entry { margin: 0 0 5pt; }
   .entry-head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 12pt;
   }
-  .org { font-weight: 700; font-size: 10.5pt; }
-  .period { white-space: nowrap; font-size: 9.5pt; }
+  .org { font-weight: 700; font-size: 10.2pt; }
+  .period { white-space: nowrap; font-size: 9.2pt; }
   .role-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 12pt;
   }
-  .title { font-style: italic; font-size: 9.5pt; }
-  .place { white-space: nowrap; font-size: 9.5pt; }
-  ul { margin: 3pt 0 0; padding-left: 14pt; }
-  li { margin: 0 0 2pt; }
+  .title { font-style: italic; font-size: 9.2pt; }
+  .place { white-space: nowrap; font-size: 9.2pt; }
+  ul { margin: 2pt 0 0; padding-left: 14pt; }
+  li { margin: 0 0 1pt; }
 
-  .project { margin: 0 0 7pt; }
-  .project-title { font-weight: 700; font-size: 10pt; }
-  .project-stack { font-size: 9pt; color: #222; margin: 1pt 0 2pt; }
+  .project { margin: 0 0 5pt; }
+  .project-title { font-weight: 700; font-size: 9.8pt; }
+  .project-stack { font-size: 8.8pt; color: #222; margin: 1pt 0 1pt; }
   .project-stack a { color: #111; }
 
-  .skills p { margin: 0 0 2pt; }
+  .skills p { margin: 0 0 1pt; }
 
   .edu-head {
     display: flex;
@@ -94,7 +94,7 @@
     </p>
     <p class="location">Bhubaneswar, India</p>
     <h2 class="summary-title">Summary</h2>
-    <p class="summary">Full-Stack Developer building web products, backend systems, and AI-powered applications with TypeScript, Next.js, and PostgreSQL.</p>
+    <p class="summary">Full-stack developer shipping production web and data systems in TypeScript, Next.js, and PostgreSQL. Published npm CLIs for code auditing and Postgres RLS verification.</p>
   </header>
 
   <h2>Experience</h2>
@@ -147,15 +147,6 @@
     <ul>
       <li>Published npm CLI that audits RLS policies, grants, and role-membership paths from live catalog metadata; ships SARIF output, baselines, and a GitHub Action for pull-request checks.</li>
       <li>Probe mode impersonates application roles in rolled-back read-only transactions, including simulated JWT users, to prove cross-tenant row reads without changing the database.</li>
-    </ul>
-  </div>
-
-  <div class="project">
-    <div class="project-title">CSCosmos – Interactive Computer-Science Learning Hub</div>
-    <div class="project-stack">Next.js, TypeScript, React &nbsp;·&nbsp; <a href="https://cscosmos.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/cscosmos">GitHub</a></div>
-    <ul>
-      <li>Searchable learning hub with interactive modules across web, systems, security, AI, and infrastructure; combines native visualizers with focused external microsites.</li>
-      <li>Typed topic catalog drives search, domain routes, and live/planned module states from one source; topic pages are statically generated.</li>
     </ul>
   </div>
 
