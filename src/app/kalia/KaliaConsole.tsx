@@ -130,8 +130,13 @@ export function KaliaConsole() {
       </div>
 
       <div className="kalia-console-grid">
-        <div className="kalia-chart" aria-hidden="true">
-          <svg viewBox={`0 0 ${CHART.width} ${CHART.height}`} role="img" aria-label="Training loss replayed from the real log">
+        <div className="kalia-chart">
+          <p className="kalia-sr-only">
+            Training loss replay, steps 1,740 to 3,470. Loss descends then plateaus; blue dots are
+            validation evals; square marker is the deterministic eval at 2.4366. Use the scrub
+            slider for exact step values.
+          </p>
+          <svg viewBox={`0 0 ${CHART.width} ${CHART.height}`} role="img" aria-label="Line chart of training loss from step 1,740 to 3,470 with validation points and deterministic eval 2.4366">
             {[2.4, 2.6, 2.8, 3.0, 3.2, 3.4].map((value) => (
               <g key={value}>
                 <line
@@ -203,9 +208,9 @@ export function KaliaConsole() {
             ) : null}
           </svg>
           <div className="kalia-legend kalia-mono">
-            <span><i className="kalia-swatch kalia-swatch-line" /> train loss</span>
-            <span><i className="kalia-swatch kalia-swatch-val" /> val evals</span>
-            <span><i className="kalia-swatch kalia-swatch-det" /> deterministic eval</span>
+            <span><i className="kalia-swatch kalia-swatch-line" aria-hidden="true" /> train loss</span>
+            <span><i className="kalia-swatch kalia-swatch-val" aria-hidden="true" /> val evals</span>
+            <span><i className="kalia-swatch kalia-swatch-det" aria-hidden="true" /> deterministic eval</span>
           </div>
         </div>
 
@@ -241,6 +246,7 @@ export function KaliaConsole() {
             <button
               type="button"
               className="kalia-button"
+              aria-pressed={playing}
               onClick={() => {
                 markInteracted();
                 if (finished) setCursor(0);
@@ -266,6 +272,7 @@ export function KaliaConsole() {
                   key={speed.label}
                   type="button"
                   className={index === speedIndex ? 'kalia-speed kalia-speed-active' : 'kalia-speed'}
+                  aria-pressed={index === speedIndex}
                   onClick={() => {
                     markInteracted();
                     setSpeedIndex(index);
@@ -284,6 +291,8 @@ export function KaliaConsole() {
               min={0}
               max={total - 1}
               value={cursor}
+              aria-label="Scrub training log"
+              aria-valuetext={`Step ${formatNumber(row[0])}, loss ${row[1].toFixed(4)}`}
               onChange={(event) => {
                 markInteracted();
                 setPlaying(false);

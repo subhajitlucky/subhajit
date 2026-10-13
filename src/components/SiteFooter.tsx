@@ -8,7 +8,7 @@ export function SiteFooter() {
           <span>{siteConfig.location}</span>
           <span>{siteConfig.availability}</span>
         </p>
-        <p>© 2026 {siteConfig.name}</p>
+        <p>© {new Date().getFullYear()} {siteConfig.name}</p>
       </div>
     </footer>
   );

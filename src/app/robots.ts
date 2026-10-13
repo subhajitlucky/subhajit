@@ -8,6 +8,5 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
     },
     sitemap: `${siteConfig.baseUrl}/sitemap.xml`,
-    host: siteConfig.baseUrl,
   };
 }

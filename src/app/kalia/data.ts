@@ -367,9 +367,9 @@ export const TIMELINE: TimelineDay[] = [
         body: 'Entity drift \u2014 Max becoming Tim within two sentences \u2014 is measured, then attacked at decoding time. Eight samples per prompt, ranked three ways: greedy, the model\u2019s own log-probability, and a rule that prefers the continuation that keeps its entities. On 20 frozen stories the rule triples character retention over greedy (0.030 to 0.091; +0.061, 95% CI +0.039 to +0.086) and lands within noise of the real book text (0.098). The model\u2019s own confidence adds nothing \u2014 again. The honest cost: the rule prefers less-likely text, and whether the stories feel better is the unmeasured next question.',
       },
       {
-        time: 'Oct 12',
-        title: 'The recitation orders, first measurement',
-        body: 'The p\u0101\u1E6Dha experiment \u2014 the first known test of a 3,000-year-old oral-memory technology as a training schedule \u2014 finishes its first two arms. Same windows, same 10% replay budget; only the order changes. Shuffled (uniform) replay ends at 2.8076 on held-out val; jata, the forward-reverse-forward recitation, trails at 2.8510 and is worse at every checkpoint past 5,100. On the frozen forgetting probe, uniform ends 0.0237 nats better than the pretrain itself while jata ends 0.0181 worse \u2014 both metrics order the arms identically. One seed, two of four arms: krama and ghana are queued, and nothing ships before a second seed.',
+        time: 'Oct 12\u201313',
+        title: 'The recitation orders, all four arms',
+        body: 'The p\u0101\u1E6Dha experiment \u2014 the first known test of a 3,000-year-old oral-memory technology as a training schedule \u2014 completes: four arms, same windows, same 10% replay budget, only the order changes. And the answer is a clean staircase. Held-out loss: plain shuffle 2.8076 < adjacent pairs 2.8314 < the two-word braid 2.8510 < nested triples 2.8752. The frozen forgetting probe ranks them identically, and even the rung sizes match across the two instruments (about 0.02 nats each): shuffle ends 0.0237 nats better than the pretrain itself; the braid and the nested triples end 0.0181 and 0.0446 worse. The recitation engineering that preserved a corpus orally for three millennia does not transfer to gradient descent \u2014 structure costs, in proportion to its depth. One seed, no claims; the second seed is queued.',
       },
       {
         time: 'Oct 12',

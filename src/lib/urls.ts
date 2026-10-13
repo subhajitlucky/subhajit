@@ -1,7 +1,7 @@
 export function isExternalUrl(href: string) {
   try {
     const url = new URL(href);
-    return url.protocol === 'https:';
+    return url.protocol === 'https:' || url.protocol === 'http:';
   } catch {
     return false;
   }

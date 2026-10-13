@@ -108,6 +108,18 @@ html[data-kalia-theme='light'] .kalia {
   color: var(--k-dim);
 }
 
+.kalia-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- in-page nav ---------- */
 
 .kalia-nav {

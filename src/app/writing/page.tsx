@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { posts } from '@/data/posts';
+import { getPostsByDateDesc } from '@/data/posts';
 import { siteConfig } from '@/data/site';
 
 const description =
@@ -9,7 +9,10 @@ const description =
 export const metadata: Metadata = {
   title: 'Writing',
   description,
-  alternates: { canonical: '/writing' },
+  alternates: {
+    canonical: '/writing',
+    types: { 'application/rss+xml': '/writing/rss.xml' },
+  },
   openGraph: {
     type: 'website',
     url: '/writing',
@@ -26,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 export default function WritingPage() {
-  const ordered = [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const ordered = getPostsByDateDesc();
 
   return (
     <div className="writing-index site-frame">

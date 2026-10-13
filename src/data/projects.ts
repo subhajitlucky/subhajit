@@ -58,6 +58,7 @@ export const projects: Project[] = [
       'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval; zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
       'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
       'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
+      'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency decoder that triples character retention (+0.061, 95% CI), and the first known test of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
     ],
     decisions: [
       'Screen every recipe change at 30M parameters before spending full-run quota on it.',

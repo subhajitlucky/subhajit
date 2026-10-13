@@ -784,3 +784,7 @@ python -m pytest tests/ -v          # 64 tests, all green`,
 export function getPost(slug: string) {
   return posts.find((post) => post.slug === slug);
 }
+
+export function getPostsByDateDesc() {
+  return [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
