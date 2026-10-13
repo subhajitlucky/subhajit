@@ -24,7 +24,7 @@ npm run dev
 ```
 
 ```bash
-npm test        # 48 tests
+npm test        # 57 tests
 npm run typecheck
 npm run lint
 npm run build

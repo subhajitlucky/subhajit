@@ -1,5 +1,16 @@
 # Portfolio release verification
 
+## Current: 2026-10-13 post-review fixes
+
+The fixes below were applied after an external review of the repository and verified on the working tree with the full gate:
+
+- `npm test` (15 files, 57 tests), `npm run typecheck`, `npm run lint`, and `npm run build` (27 static pages) all exited 0.
+- Changes covered: `isExternalUrl` accepts `http:` and `https:`; the KALIA console exposes its chart and controls to assistive technology (`aria-pressed` play/speed controls, valued scrub slider, screen-reader chart summary); `/llms.txt` lists all twelve case studies plus the KALIA sources; the footer year is dynamic; `robots.txt` drops the deprecated `host` directive; `themeColor` matches the manifest; the skills grid is 2×2; and `/writing/rss.xml` serves a static RSS 2.0 feed (verified: HTTP 200, `application/rss+xml`, `force-static` prerender, escaped entities, RFC 822 dates) with a discovery `link rel="alternate"` on `/writing`.
+
+The sections below are the earlier 2026-08-30 snapshot and are kept as history; the counts and page totals in them describe that commit, not the current tree.
+
+## Historical: 2026-08-30 snapshot
+
 **Date:** 2026-08-30
 
 **Application commit verified:** `2092d7a00a8c11fb36d02e9ae17d6185bb8f5305`
