@@ -523,7 +523,7 @@ codebase-doctor audit . --changed --baseline baseline.json --fail-on high`,
     slug: 'kalia-build-log',
     title: 'Training a 58M language model from scratch on free GPUs',
     summary:
-      'Two days, zero dollars, and a full public record: micro-ablations before full runs, an optimizer that won 7 of 7 checkpoints and was still not promoted, a validation plateau resolved by a deterministic evaluation, and the quota exhaustion that ended training at 73% of the schedule.',
+      'Zero dollars and a full public record: micro-ablations before full runs, an optimizer that won 7 of 7 checkpoints and was still not promoted, a validation plateau resolved by a deterministic evaluation, and the quota exhaustion that ended training at 73% of the schedule.',
     date: '2026-09-23',
     readingMinutes: 17,
     tags: ['language models', 'training', 'Muon', 'Kaggle', 'from scratch'],
@@ -540,7 +540,7 @@ codebase-doctor audit . --changed --baseline baseline.json --fail-on high`,
           },
           {
             kind: 'p',
-            text: "I trained KALIA, a 58M-parameter language model, from random initialization to coherent story generation in two days, using only free-tier Kaggle GPUs. No pretrained weights, no distillation, no fine-tuning, and zero dollars of compute. It writes short stories, scores 61.4% on PIQA, and every weight in it exists nowhere else.",
+            text: "I trained KALIA, a 58M-parameter language model, from random initialization to coherent story generation using only free-tier Kaggle GPUs. No pretrained weights, no distillation, no fine-tuning, and zero dollars of compute. It writes short stories, scores 61.4% on PIQA, and every weight in it exists nowhere else.",
           },
           {
             kind: 'p',

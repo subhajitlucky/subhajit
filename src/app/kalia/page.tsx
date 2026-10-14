@@ -35,7 +35,7 @@ const mono = JetBrains_Mono({
 
 const title = 'KALIA — a 58M language model trained from scratch on free GPUs';
 const description =
-  'Two days, zero dollars, every experiment pre-registered: the full record of training a 58M-parameter language model on free Kaggle GPUs — model specification, evaluation, real logs, every decision, every incident.';
+  'Zero dollars, every experiment pre-registered: the full record of training KALIA from scratch on free Kaggle GPUs — model specification, evaluation, real logs, every decision, and ongoing research.';
 
 export const metadata: Metadata = {
   title,
@@ -112,14 +112,16 @@ export default function KaliaPage() {
               अथ शब्दानुशासनम् — <strong>&ldquo;Now begins the discipline of words.&rdquo;</strong>
             </p>
             <p className="kalia-lead">
-              This page documents a 58M-parameter language model trained from random
-              initialization to coherent story generation in two days, on free-tier Kaggle GPUs,
-              at zero compute cost. Section&nbsp;1 fixes the model specification; Section&nbsp;2
-              reports the evaluation; Sections&nbsp;3 and&nbsp;4 present unedited samples and an
-              interactive replay of the training log.               The appendices record the chapter-by-chapter log, every numbered decision, and
-              every incident. Every experiment was pre-registered
-              before it ran, and no claim on this page is a screenshot — each links to the
-              primary log.
+              This page documents KALIA, a 58M-parameter language model trained from random
+              initialization to coherent story generation on free-tier Kaggle GPUs at zero compute
+              cost, with training continuing in public. Section&nbsp;1 fixes the model
+              specification;
+              Section&nbsp;2 compares the two checkpoints on one yardstick; Section&nbsp;3
+              documents the corpus; Section&nbsp;4 reports the release evaluation;
+              Sections&nbsp;5 and&nbsp;6 present unedited samples and an interactive replay of
+              the training log. The appendices record the chapter-by-chapter log, every numbered
+              decision, and every incident. Every experiment was pre-registered before it ran,
+              and no claim on this page is a screenshot — each links to the primary log.
             </p>
 
             <div className="kalia-stats">

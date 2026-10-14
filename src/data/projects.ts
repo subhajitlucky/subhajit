@@ -48,7 +48,7 @@ export const projects: Project[] = [
     category: 'Language models',
     roles: ['swe', 'backend'],
     summary:
-      'A 58M-parameter language model trained from scratch on free Kaggle GPUs in two days, with every experiment pre-registered and every incident published.',
+      'A 58M-parameter language model trained from scratch on free Kaggle GPUs, with every experiment pre-registered and every incident published.',
     problem:
       'Training a language model usually means renting GPUs or fine-tuning someone else\'s weights. I wanted an artifact where every weight, every byte of data, and every decision was mine, and a process that could be audited rather than taken on trust.',
     system:
