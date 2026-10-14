@@ -281,7 +281,7 @@ export const projects: Project[] = [
     problem:
       'Building presentable charts and regional maps usually means hosted tools, account gates, or uploads. Teams need readable, on-brand visuals without sending data to a server.',
     system:
-      'A Vite and React single-page app renders charts with Chart.js and maps with D3 and TopoJSON, persists work in localStorage, and exports PNG or PDF from HD to 8K through a client-side render pipeline.',
+      'A Vite and React single-page app renders charts with Chart.js and maps with D3 from bundled GeoJSON, persists work in localStorage, and exports PNG or PDF from HD to 8K through a client-side render pipeline.',
     proof: [
       'Runs fully client-side with no account, no backend, and chart state kept in the browser.',
       'Ships a template gallery, contrast-aware palette families, and five chart types.',
@@ -420,7 +420,7 @@ export const projects: Project[] = [
     problem:
       'Campus lost-and-found is usually handled in scattered chat groups, so records disappear and ownership claims are difficult to verify or follow up.',
     system:
-      'A Next.js App Router application with Google sign-in through NextAuth, PostgreSQL via Prisma on Supabase, image storage buckets, Zod-validated APIs, rate limiting, and row-level security, plus an admin moderation dashboard.',
+      'A Next.js App Router application with Google sign-in through NextAuth, PostgreSQL via Prisma on Supabase, image uploads to Vercel Blob, Zod-validated APIs, rate limiting, and row-level security, plus an admin moderation dashboard.',
     proof: [
       'Live platform with authenticated item reports, image uploads, search, claims, and comments.',
       'Server-side validation with Zod, CSRF protection, rate limiting, and database-level RLS.',
