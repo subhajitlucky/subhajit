@@ -63,20 +63,36 @@ export const experience: Experience[] = [
 
 export const skillGroups = [
   {
+    label: 'Languages',
+    items: ['TypeScript', 'JavaScript', 'Python', 'SQL', 'Java', 'C++', 'Rust', 'Solidity'],
+  },
+  {
     label: 'Product engineering',
-    items: ['TypeScript', 'React', 'Next.js', 'Node.js'],
+    items: ['React', 'Next.js', 'Tailwind CSS', 'Node.js', 'Express', 'REST APIs'],
   },
   {
     label: 'Backend and data',
-    items: ['Python', 'PostgreSQL', 'SQL', 'Prisma', 'Express'],
+    items: ['PostgreSQL', 'Supabase', 'Prisma', 'ClickHouse', 'MongoDB'],
   },
   {
     label: 'AI and developer tools',
-    items: ['Agent workflows', 'CLI design', 'Vitest', 'GitHub Actions'],
+    items: [
+      'OpenAI / Anthropic / Gemini APIs',
+      'AI SDK',
+      'LLM tool-calling',
+      'MCP',
+      'Agent workflows',
+      'CLI design',
+      'Vitest',
+    ],
   },
   {
-    label: 'Cloud and Web3',
-    items: ['GCP', 'Docker', 'MCP', 'Ethers.js'],
+    label: 'Cloud and DevOps',
+    items: ['Docker', 'GCP', 'GitHub Actions', 'Linux', 'CI/CD', 'Vercel', 'Railway'],
+  },
+  {
+    label: 'Blockchain',
+    items: ['Ethereum', 'Solidity', 'Hardhat', 'Ethers.js', 'Internet Computer (Motoko)'],
   },
 ] as const;
 

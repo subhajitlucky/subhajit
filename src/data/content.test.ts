@@ -19,10 +19,12 @@ describe('portfolio content integrity', () => {
       'Full-Stack Product Engineer building web products and AI systems.',
     );
     expect(skillGroups.map((group) => group.label)).toEqual([
+      'Languages',
       'Product engineering',
       'Backend and data',
       'AI and developer tools',
-      'Cloud and Web3',
+      'Cloud and DevOps',
+      'Blockchain',
     ]);
     expect(siteConfig.availability.toLowerCase()).not.toContain('relocation');
   });
