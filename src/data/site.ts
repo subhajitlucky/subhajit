@@ -36,16 +36,16 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    organization: 'Giakaa Capital',
+    organization: 'Giakaa (Kailanchal Technologies Pvt Ltd)',
     title: 'Full Stack Software Developer',
-    period: 'May 2026-Present',
+    period: 'May 2026-Nov 2026',
     location: 'Remote',
     summary:
       'Full-stack features in Next.js, TypeScript, PostgreSQL and ClickHouse; backend APIs and background processing on GCP.',
   },
   {
     organization: 'uElement Technologies',
-    title: 'Software Developer Intern',
+    title: 'Associate Blockchain Developer',
     period: 'Jan 2026-May 2026',
     location: 'Remote',
     summary:
@@ -84,6 +84,6 @@ export const education = {
   organization: 'Centurion University of Technology and Management',
   location: 'Bhubaneswar, India',
   degree: 'Bachelor of Computer Applications',
-  period: 'Oct 2022-Apr 2025',
+  period: '2022-2025',
   grade: 'CGPA 8.9',
 } as const;

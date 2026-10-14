@@ -31,9 +31,9 @@ describe('portfolio content integrity', () => {
     const currentRole = experience[0];
 
     expect(currentRole).toEqual({
-      organization: 'Giakaa Capital',
+      organization: 'Giakaa (Kailanchal Technologies Pvt Ltd)',
       title: 'Full Stack Software Developer',
-      period: 'May 2026-Present',
+      period: 'May 2026-Nov 2026',
       location: 'Remote',
       summary:
         'Full-stack features in Next.js, TypeScript, PostgreSQL and ClickHouse; backend APIs and background processing on GCP.',

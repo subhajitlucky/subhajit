@@ -73,20 +73,26 @@ describe('HomePage', () => {
   it('keeps all experience in sight and current employment concise', () => {
     render(<HomePage />);
 
-    for (const organization of ['Giakaa Capital', 'uElement Technologies', 'QuadB Technologies']) {
+    for (const organization of [
+      'Giakaa (Kailanchal Technologies Pvt Ltd)',
+      'uElement Technologies',
+      'QuadB Technologies',
+    ]) {
       expect(screen.getByText(organization)).toBeInTheDocument();
     }
 
-    const giakaaEntry = screen.getByTestId('experience-giakaa-capital');
-    expect(giakaaEntry).toHaveTextContent('Giakaa Capital');
+    const giakaaEntry = screen.getByTestId(
+      'experience-giakaa-kailanchal-technologies-pvt-ltd',
+    );
+    expect(giakaaEntry).toHaveTextContent('Giakaa (Kailanchal Technologies Pvt Ltd)');
     expect(giakaaEntry).toHaveTextContent('Full Stack Software Developer');
-    expect(giakaaEntry).toHaveTextContent('May 2026-Present');
+    expect(giakaaEntry).toHaveTextContent('May 2026-Nov 2026');
     expect(giakaaEntry).toHaveTextContent('Remote');
     expect(within(giakaaEntry).getByRole('paragraph')).toHaveTextContent('ClickHouse');
     expect(giakaaEntry.textContent?.toLowerCase()).not.toContain('hema');
 
     expect(screen.getByTestId('experience-uelement-technologies')).toHaveTextContent(
-      'Software Developer Intern',
+      'Associate Blockchain Developer',
     );
     expect(screen.getByTestId('experience-quadb-technologies')).toHaveTextContent(
       'Software Engineering Trainee',
