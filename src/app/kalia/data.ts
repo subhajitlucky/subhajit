@@ -96,7 +96,7 @@ export const TIMELINE: TimelineDay[] = [
         title: 'A validation plateau',
         body: 'Validation loss has not moved for a thousand steps — flat between 2.53 and 2.63 — while training loss keeps falling. A noisy evaluation and a real plateau are indistinguishable from a single point, so both possibilities are recorded and the run continues.',
         figure: {
-          src: '/kalia/val-loss.svg',
+          src: '/kalia/val-loss-v012.svg',
           alt: 'Line chart of validation loss from step 250 to 3250: a steep descent from 4.0881 to 2.5270 by step 1500, then a plateau band between 2.40 and 2.63 for the remaining 1,750 steps, and a separate deterministic evaluation point at step 3478 with loss 2.4366.',
           caption: 'Figure A3 — the full curve: the descent finishes by step 1,500, and everything after it oscillates inside 0.23 nats. The first half was recovered from the model repository commit history (incident I14).',
         },
@@ -124,7 +124,7 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: '14:00',
         title: 'Release',
-        body: 'Decision D41: stop, document the plateau, save the remaining quota for v0.2.0. Within the hour the repository and the model weights are public: 41 numbered decisions, 12 published incidents, two hash-anchored pre-registrations, and every evaluation log. Total compute: about 20 GPU-hours on the free tier. Cost: zero dollars.',
+        body: 'Decision D41: stop, document the plateau, save the remaining quota for v0.2.0. Within the hour the repository and the model weights are public: the numbered decisions, the published incidents, the hash-anchored pre-registrations, and every evaluation log. Total compute: about 20 GPU-hours on the free tier. Cost: zero dollars.',
       },
     ],
   },
@@ -156,7 +156,7 @@ export const TIMELINE: TimelineDay[] = [
           src: '/kalia/val-loss.svg',
           alt: 'Validation loss for v0.2.0 falling from 4.83 to 2.88 over 4,770 steps, flat from step 3,250, with deterministic reference points of 3.0533 for v0.1.2 and 2.8248 for v0.2.0 on the same rebuilt yardstick.',
           caption:
-            'The answer to that question, once both versions were re-measured on the same set. The shaded band is the 1,500 steps at the end that bought nothing measurable.',
+            'Figure A4 — the same question, answered once both versions were re-measured on the same set. The shaded band is the 1,500 steps at the end that bought nothing measurable.',
         },
       },
       {
@@ -193,7 +193,7 @@ export const TIMELINE: TimelineDay[] = [
         figure: {
           src: '/kalia/replication-collapse.svg',
           alt: 'Paired bar chart. The static gate scores 4.6304 at seed 1337 but 4.9623 and 4.9087 at seeds 1338 and 1339, while control stays near 4.77 to 4.89. The effect reverses sign.',
-          caption: 'Figure A3 — X20 and its replication. The bar that looked like the project’s best result.',
+          caption: 'Figure A5 — X20 and its replication. The bar that looked like the project’s best result.',
         },
       },
       {
@@ -255,9 +255,9 @@ export const TIMELINE: TimelineDay[] = [
         body: 'The registered evaluation came back with four of five benchmarks. LAMBADA had silently failed to load: the dataset still ships a loading script and modern tooling refuses to run those. The data was never missing \u2014 six parquet files, the standard 5,153 examples \u2014 only the loader path the harness requested was dead. Fixing it took five attempts and four different wrong turns, each an assumption I had not checked, and the fix now lives in the repository with tests rather than inside a notebook. Final answer: 20.8, a 2.2 point drop.',
         figure: {
           src: '/kalia/bench-compare.svg',
-          alt: 'Grouped bars for five zero-shot tasks, both versions, each with a grey band showing plus or minus one standard error of about two points. Three movements fall inside their own band.',
+          alt: 'Grouped bars for five zero-shot tasks, both versions, each with a grey band showing plus or minus one standard error of about two points. The two tasks that moved down fail the pre-registered regression rule.',
           caption:
-            'The completed evaluation. The grey band is the measurement\u2019s own uncertainty, which is why three of the five movements cannot be called a change.',
+            'Figure A6 \u2014 the completed evaluation. The grey band is the measurement\u2019s own uncertainty; the two that moved down fail the pre-registered regression rule.',
         },
       },
       {
@@ -331,7 +331,7 @@ export const TIMELINE: TimelineDay[] = [
         figure: {
           src: '/kalia/seed-spread.svg',
           alt: 'Horizontal dot plot of the 58M control re-run in two sessions: seed 1401 scores 3.8045 and 3.8086, seed 1402 scores 3.7388 and 3.7367, seed 1403 scores 4.0280 and 4.0279. Each pair overlaps almost exactly while the seeds sit 0.29 nats apart.',
-          caption: 'Figure A4 \u2014 the wobble, measured twice. Sessions agree to 0.004 nats; the seeds do not.',
+          caption: 'Figure A7 \u2014 the wobble, measured twice. Sessions agree to 0.004 nats; the seeds do not.',
         },
       },
       {
@@ -562,6 +562,8 @@ export const DECISIONS: Decision[] = [
   { id: 'D43', decision: 'The rebuilt corpus redefines the yardstick: v2b val is canonical, v0.1.2 re-baselined on it', outcome: 'active' },
   { id: 'D44', decision: 'Licence finding disclosed; publish the filtered corpus plus the filter, never the raw corpus', outcome: 'active' },
   { id: 'D45', decision: 'Accuracy thresholds must sit above the benchmark noise floor; X18 and S-A were both under-powered', outcome: 'active' },
+  { id: 'D46', decision: 'The gated-residual gain is real but not a gate: removing the branch normalisation keeps it, so the mechanism is a static modulation', outcome: 'active' },
+  { id: 'D47', decision: 'X20: a static per-channel modulation beats the published gate by 0.0922 nats with 73,728 fewer parameters; one seed, replication pre-registered', outcome: 'active' },
   { id: 'D48', decision: 'No architecture arm from a single seed; the gated-residual line is closed as a null result', outcome: 'active' },
   { id: 'D49', decision: 'A load-bearing citation claimed findings not in the paper it named; retracted, decision kept', outcome: 'active' },
   { id: 'D50', decision: 'The replay default\u2019s justification was unlocatable; removed rather than restated', outcome: 'enforced' },

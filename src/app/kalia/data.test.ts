@@ -2,11 +2,15 @@ import { DECISIONS, HERO_STATS, INCIDENTS, RECIPE, SAMPLES, TIMELINE } from './d
 import { DETERMINISTIC_EVAL, PLANNED_STEPS, STOP_STEP, TRAIN_LOG, VAL_POINTS } from './train-log';
 
 describe('kalia page data', () => {
-  it('carries the full record: every decision and every incident', () => {
-    expect(DECISIONS).toHaveLength(49);
+  it('carries the full record: every decision and every incident, with no gaps', () => {
+    expect(DECISIONS).toHaveLength(51);
     expect(INCIDENTS).toHaveLength(24);
-    expect(new Set(DECISIONS.map((entry) => entry.id)).size).toBe(DECISIONS.length);
-    expect(new Set(INCIDENTS.map((entry) => entry.id)).size).toBe(INCIDENTS.length);
+    expect(DECISIONS.map((entry) => Number(entry.id.slice(1)))).toEqual(
+      Array.from({ length: 51 }, (_, index) => index + 1),
+    );
+    expect(INCIDENTS.map((entry) => Number(entry.id.slice(1)))).toEqual(
+      Array.from({ length: 24 }, (_, index) => index + 1),
+    );
   });
 
   it('tells the story across all eight chapters with real timestamps', () => {

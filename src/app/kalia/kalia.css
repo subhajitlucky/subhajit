@@ -179,6 +179,13 @@ html[data-kalia-theme='light'] .kalia {
   color: var(--k-accent);
 }
 
+.kalia-theme:focus-visible,
+.kalia-button:focus-visible,
+.kalia-speed:focus-visible {
+  outline: 2px solid var(--k-accent);
+  outline-offset: 2px;
+}
+
 /* ---------- hero ---------- */
 
 .kalia-hero {

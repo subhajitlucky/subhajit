@@ -654,13 +654,13 @@ python ablate.py --arms micro-base,micro-muon,micro-muon-qk --steps 500`,
           },
           {
             kind: 'image',
-            src: '/kalia/val-loss.svg',
+            src: '/kalia/val-loss-v012.svg',
             alt: 'Line chart of validation loss from step 250 to 3250: a steep descent from 4.0881 to 2.5270 by step 1500, then a plateau band between 2.40 and 2.63 for the remaining 1,750 steps, plus a separate deterministic evaluation point at step 3478 with loss 2.4366.',
             caption: 'The full curve: the descent finishes by step 1,500 and everything after it oscillates inside 0.23 nats. The first half was missing from the published log — a mid-run code change dropped it — and was rebuilt from the model repository commit history.',
           },
           {
             kind: 'p',
-            text: "A deterministic evaluation settled the question the noisy training evals could not: 100 fixed-seed batches over 819,200 tokens returned 2.4366 loss and 0.8184 bits-per-byte, on the original corpus's held-out set. That set was later rebuilt for licence compliance and the rebuilt one is 0.62 nats harder for identical weights, so the figure is not comparable to anything measured afterwards — a lesson that arrived as incident D43.",
+            text: "A deterministic evaluation settled the question the noisy training evals could not: 100 fixed-seed batches over 819,200 tokens returned 2.4366 loss and 0.8184 bits-per-byte, on the original corpus's held-out set. That set was later rebuilt for licence compliance and the rebuilt one is 0.62 nats harder for identical weights, so the figure is not comparable to anything measured afterwards — a lesson that arrived as decision D43.",
           },
         ],
       },
@@ -703,7 +703,7 @@ python eval_val.py --ckpt ckpt.pt --val-bin val.bin --batches 100`,
         blocks: [
           {
             kind: 'p',
-            text: "Any training run produces a loss curve. What makes this one auditable is everything around it: 43 numbered decisions, 14 published incidents, three hash-anchored pre-registrations (plus two amendments), and a dated journal. The incidents are the useful part.",
+            text: "Any training run produces a loss curve. What makes this one auditable is everything around it: the numbered decisions, the published incidents, the hash-anchored pre-registrations and their registered amendments, and a dated journal. The incidents are the useful part.",
           },
           {
             kind: 'list',
@@ -754,8 +754,8 @@ path = hf_hub_download("kalia-lm/kalia-v012", "checkpoints/ckpt.pt")
             lang: 'bash',
             code: `git clone https://github.com/subhajitlucky/kalia && cd kalia
 python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
-python -m pytest tests/ -v          # 64 tests, all green`,
-            caption: 'The full test suite runs on CPU in about 16 seconds.',
+python -m pytest tests/ -v`,
+            caption: 'The full test suite runs on CPU.',
           },
           {
             kind: 'p',

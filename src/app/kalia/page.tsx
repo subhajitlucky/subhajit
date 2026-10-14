@@ -214,7 +214,7 @@ export default function KaliaPage() {
             <figure className="kalia-figure" style={{ marginTop: '2.2rem' }}>
               <Image
                 src="/kalia/bench-compare.svg"
-                alt="Grouped bars for five zero-shot tasks, both versions side by side, each over a grey band showing plus or minus one standard error of about two points. PIQA, HellaSwag and WinoGrande move up but sit inside their own error bands; LAMBADA and ARC-Easy move down by more than one band."
+                alt="Grouped bars for five zero-shot tasks, both versions side by side, each over a grey band showing plus or minus one standard error of about two points. The three gains sit within 1.5 standard errors; the two that fell — LAMBADA and ARC-Easy — fail the pre-registered regression rule."
                 width={720}
                 height={424}
               />
@@ -256,11 +256,12 @@ export default function KaliaPage() {
             </div>
             <p className="kalia-prose" style={{ marginTop: '1.6rem' }}>
               Read that table with the error bars attached. At 500 samples these benchmarks carry
-              a standard error of roughly <strong>2 points</strong>, so{' '}
-              <strong>three of the five movements are smaller than the measurement&rsquo;s own
-              noise</strong> and cannot be called improvements. The two that fell &mdash; ARC-Easy
-              at 1.7&sigma; and LAMBADA at 1.2&sigma; &mdash; are the honest signal, and they are
-              why v0.2.0 is published as an experiment rather than as a release.
+              a standard error of roughly <strong>2 points</strong>, and the{' '}
+              <strong>three gains &mdash; PIQA, HellaSwag, WinoGrande &mdash; all sit within
+              1.5&sigma;</strong>: none of them can be called an improvement. The two that fell
+              &mdash; ARC-Easy at 1.7&sigma; and LAMBADA at 1.2&sigma; &mdash; are the honest
+              signal, and they are why v0.2.0 is published as an experiment rather than as a
+              release.
             </p>
             <p className="kalia-prose" style={{ marginTop: '1rem' }}>
               The pre-registered rule was that no task may regress by more than 1.0 point.
@@ -327,7 +328,7 @@ export default function KaliaPage() {
           <section className="kalia-section" id="results">
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">4. Evaluation — KALIA 0.1.2, first release</h2>
-              <p className="kalia-section-note">Table 2 &middot; 0-shot, 500 samples, lm-evaluation-harness</p>
+              <p className="kalia-section-note">Table 4 &middot; 0-shot, 500 samples, lm-evaluation-harness</p>
             </div>
             <div className="kalia-bench">
               {BENCHMARKS.map((bench) => (
@@ -460,7 +461,7 @@ export default function KaliaPage() {
           <section className="kalia-section" id="incidents">
             <div className="kalia-section-head">
               <h2 className="kalia-section-title">Appendix C. Every incident</h2>
-              <p className="kalia-section-note">12 published in full</p>
+              <p className="kalia-section-note">every incident, in full</p>
             </div>
             <div className="kalia-incidents">
               {INCIDENTS.map((incident) => (
@@ -488,7 +489,7 @@ export default function KaliaPage() {
                 rel="noopener noreferrer"
               >
                 <strong>Source + journal</strong>
-                <span>Training code, 64 tests, the dated journal, and the full incident record.</span>
+                <span>Training code, the dated journal, and the full incident record.</span>
               </a>
               <a
                 className="kalia-link-card"

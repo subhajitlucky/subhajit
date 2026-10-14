@@ -26,7 +26,6 @@ export const rootMetadata: Metadata = {
   ],
   alternates: { canonical: '/' },
   icons: { icon: '/favicon.svg' },
-  themeColor: '#2563eb',
   openGraph: {
     type: 'website',
     url: siteConfig.baseUrl,

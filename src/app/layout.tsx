@@ -1,4 +1,5 @@
 import { Geist } from 'next/font/google';
+import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteFooter } from '@/components/SiteFooter';
@@ -13,6 +14,10 @@ const sans = Geist({
 });
 
 export const metadata = rootMetadata;
+
+export const viewport: Viewport = {
+  themeColor: '#2563eb',
+};
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (

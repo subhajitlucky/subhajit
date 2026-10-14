@@ -17,8 +17,8 @@ Three figures:
 
 ``bench-compare.svg``
     Grouped bars, both versions, per task, with the ~2 point standard error drawn
-    as a whisker. A reader can see that three of the five movements are inside
-    their own error bars, which a table of deltas invites them to miss.
+    as a whisker. A reader can see that none of the movements clears two standard
+    errors, which a table of deltas invites them to miss.
 
 ``training-data.svg``
     The mixture, and beside it the share of each source whose documents are at
@@ -183,7 +183,7 @@ def bench_svg() -> str:
 
     p = [txt(40, 26, "Zero-shot accuracy, both versions, with the measurement noise drawn in", 15, INK, weight="600"),
          txt(40, 42, "0-shot, 500 samples. The grey band is +/-1 standard error, about 2 points.", 11, MUTED),
-         txt(40, 56, "Where both bars reach into the same band, the change is not real.", 11, MUTED)]
+         txt(40, 56, "No movement here clears two standard errors; the three gains are not called improvements.", 11, MUTED)]
     p.append(f'<rect x="{L}" y="{T - 14}" width="10" height="10" fill="{AMBER}"/>')
     p.append(txt(L + 15, T - 5, "0.1.2", 11, MUTED))
     p.append(f'<rect x="{L + 66}" y="{T - 14}" width="10" height="10" fill="{BLUE}"/>')
@@ -217,13 +217,13 @@ def bench_svg() -> str:
         y += rowh
 
     p.append(f'<line x1="{L}" y1="{y - 4}" x2="{R + 200}" y2="{y - 4}" stroke="{RULE}"/>')
-    p.append(txt(40, y + 20, "Three of five movements are inside their own error bars, so the honest summary is no measurable change in most", 11, MUTED))
-    p.append(txt(40, y + 35, "accuracy. The two that moved down are the signal. The registered rule allows 1.0 point of regression and v0.2.0", 11, MUTED))
-    p.append(txt(40, y + 50, "fails it on two, which is why it is published as an experiment and not a release.", 11, MUTED))
+    p.append(txt(40, y + 20, "No movement here clears two standard errors, so no single gain is measurable. The two that moved down are the", 11, MUTED))
+    p.append(txt(40, y + 35, "signal: the registered rule allows 1.0 point of regression and v0.2.0 fails it on two, which is why it is", 11, MUTED))
+    p.append(txt(40, y + 50, "published as an experiment and not a release.", 11, MUTED))
     return svg(W, H, "Zero-shot benchmark comparison, KALIA 0.1.2 against 0.2.0",
                "Grouped bars for five zero-shot tasks, both versions, each with a grey band showing "
-               "plus or minus one standard error of about two points. Three movements fall inside "
-               "their own band.",
+               "plus or minus one standard error of about two points. The two tasks that moved down "
+               "fail the pre-registered regression rule.",
                "".join(p))
 
 
