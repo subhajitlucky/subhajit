@@ -2,11 +2,12 @@ import { getPost, posts } from '@/data/posts';
 
 describe('writing content integrity', () => {
   it('publishes the long-form technical posts', () => {
-    expect(posts).toHaveLength(3);
+    expect(posts).toHaveLength(4);
     expect(posts.map((post) => post.slug)).toEqual([
       'five-postgres-rls-mistakes',
       'what-breaks-if-i-change-this-file',
       'kalia-build-log',
+      'how-paninis-grammar-made-agent-messages-25x-cheaper',
     ]);
   });
 

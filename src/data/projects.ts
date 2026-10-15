@@ -371,26 +371,27 @@ export const projects: Project[] = [
     category: 'Agent protocols',
     roles: ['swe', 'backend'],
     summary:
-      'A small deterministic language for agent-to-agent intent, negotiation, and commitments with auditable state transitions.',
+      'A deterministic agent protocol with a measured compact wire format: 2.8-7.5 tokens per message, 10-25x cheaper than deployed JSON-RPC protocols.',
     problem:
-      'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two.',
+      'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two — and almost nobody measures what messages actually cost.',
     system:
-      'A Python lexer, parser, AST, evaluator, and transaction state model implement eight semantic primitives, with local and HTTP-based agent communication paths.',
+      'A Python lexer, parser, AST, evaluator, and transaction state model implement nine semantic primitives. A measured compact wire format (SUTRA-C) encodes the same semantics in a fraction of the tokens, with a token-cost lab that verifies every encoding by decoder round-trip.',
     proof: [
-      'Defines a compact grammar and eight documented primitives.',
-      'Includes parser, evaluator, runtime state, and network transport code.',
-      'Provides local and networked buyer/seller demonstrations.',
+      'A 384-encoding sweep and a 162-configuration round selected the wire format by measurement; every variant is decoder-verified lossless.',
+      'SUTRA-C costs 7.5 tokens/message (2.8 in agreed-template mode) versus 72.5 for deployed JSON-RPC envelopes, counted with production tokenizers.',
+      'Two model families read and write the compact form at 12/12 in comprehension tests; the densest template form reaches 6/6 reads on one.',
+      '17 unit tests, a frozen specification, and an end-to-end deal demo that re-validates every decoded message with the parser.',
     ],
     decisions: [
-      'Keep the language declarative and intentionally non-general-purpose.',
+      'Select encodings by measurement — token counts, decoder round-trips, model comprehension — not by taste.',
       'Make identical input and state produce identical output.',
       'Isolate mutations within message-level transactions.',
     ],
     tradeoffs: [
-      'A formal language reduces ambiguity but requires agents and developers to learn its vocabulary.',
+      'The densest template form depends on a negotiated message sequence and a shared dictionary; surprises pay a resync marker.',
       'The constrained grammar cannot represent every conversational workflow.',
     ],
-    stack: ['Python', 'Lexer and parser', 'AST evaluation', 'HTTP transport'],
+    stack: ['Python', 'Compact wire codec', 'Lexer and parser', 'AST evaluation', 'HTTP transport'],
     flow: [
       { label: 'Express', detail: 'An agent writes intent using a small semantic vocabulary.' },
       { label: 'Parse', detail: 'The lexer and parser produce a structured syntax tree.' },
@@ -402,6 +403,11 @@ export const projects: Project[] = [
       {
         label: 'Language specification',
         href: 'https://github.com/subhajitlucky/sutra/blob/main/spec/SUTRA_SPEC.md',
+        kind: 'evidence',
+      },
+      {
+        label: 'Compact wire format',
+        href: 'https://github.com/subhajitlucky/sutra/blob/main/spec/SUTRA_C.md',
         kind: 'evidence',
       },
     ],

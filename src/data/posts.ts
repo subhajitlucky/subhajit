@@ -779,6 +779,244 @@ python -m pytest tests/ -v`,
       },
     ],
   },
+  {
+    slug: 'how-paninis-grammar-made-agent-messages-25x-cheaper',
+    title: "How Panini's grammar made agent messages 25x cheaper",
+    summary:
+      'Agent-to-agent JSON-RPC envelopes cost about 72 tokens per message. A measured compact wire format, built with five compression devices from the Ashtadhyayi, brings the same semantics down to 2.8-7.5 tokens - verified lossless, and read and written by two model families.',
+    date: '2026-10-15',
+    readingMinutes: 13,
+    tags: ['protocols', 'tokenization', 'agents', 'Panini', 'compact encoding'],
+    sections: [
+      {
+        id: 'the-bill',
+        title: 'The bill nobody reads',
+        blocks: [
+          {
+            kind: 'p',
+            text: "Every message an agent sends is billed twice: once in dollars, once in latency. And almost nobody measures the format itself. A tool call in the style agents actually use today - a JSON-RPC envelope around a payload - costs this much for one simple acceptance:",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `{"jsonrpc":"2.0","id":3,"method":"tools/call",
+ "params":{"name":"sutra","arguments":{
+   "primitive":"ACCEPT","args":{"id":"off-001"},
+   "from":"buyer@home","to":"seller@store"}}}`,
+            caption: '72.5 tokens per message (o200k_base), measured. The baseline to beat.',
+          },
+          {
+            kind: 'p',
+            text: "This post is the story of measuring that number down. The short version: the same information fits in 7.5 tokens, and in agreed-session mode, 2.8.",
+          },
+        ],
+      },
+      {
+        id: 'machine',
+        title: 'Build the measuring machine first',
+        blocks: [
+          {
+            kind: 'p',
+            text: "Before optimizing anything, make the number honest. Twelve canonical messages model one buyer/seller negotiation. Every representation renders from a single structured form, so nothing can be silently dropped; the readable SUTRA baseline is validated against the project's own parser before any count is reported. Then everything is counted with the production tokenizer.",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `representation        tokens / 12 messages    per message
+english                       263               21.9
+readable SUTRA                330               27.5   <- ours!
+lean JSON                     514               42.8`,
+            caption: 'v1 baselines. Our own format cost 25% MORE than plain English.',
+          },
+          {
+            kind: 'p',
+            text: "The first lesson hurt. BPE tokenizers are trained on natural text: they read English cheaply and charge extra for every bracket, quote, and equals sign. Syntax is not free - punctuation is the enemy.",
+          },
+        ],
+      },
+      {
+        id: 'where',
+        title: 'Where the tokens actually were',
+        blocks: [
+          {
+            kind: 'p',
+            text: "Attribution before cleverness. Counting the best candidate by region found the single biggest line item: the routing string repeated on every message.",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `routing (buyer@home>seller@store)   6.2 tokens/message   34% of all tokens
+body (predicate + values + syntax)   ~8 tokens/message`,
+            caption: 'Attribution of the then-champion. Routing first, values second, syntax everywhere.',
+          },
+        ],
+      },
+      {
+        id: 'panini',
+        title: 'Five devices from the Ashtadhyayi',
+        blocks: [
+          {
+            kind: 'p',
+            text: "Sanskrit has the most compressed grammar ever written. Panini's Ashtadhyayi - 3,981 rules - is built explicitly on minimum description length: the shortest possible description of the whole language. Kiparsky's analysis isolates five compression devices, and we implemented all five:",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `device       in Panini's grammar        on our wire
+ordering     rule order carries info    message type implied by sequence
+blocking     specific beats general     repeat-ellipsis precedence
+pratyahara   list + marker names a set  bD = items b..d
+anuvrtti     systematic dittoing        '.' repeats the last value
+adhikara     heading governs a domain   session dictionary / template`,
+            caption: "Panini's five devices, mapped one to one.",
+          },
+          {
+            kind: 'p',
+            text: "Two more structural ideas came from the tradition: karaka slots (the position of an argument carries its role, so keys and equals signs disappear) and chandas (Vedic meter is fixed-width syllables; with fixed-width fields the payload concatenates into one separator-free string). Two number systems from Indian mathematics were also tested: katapayadi (digits as consonants) and bhutasankhya (numbers as words).",
+          },
+          {
+            kind: 'p',
+            text: "The measurements kept us honest: both number systems LOST to plain digits (83 vs 76 tokens on the corpus). Modern BPE already reads digit strings well; cleverness that the tokenizer cannot see is just extra characters. That result is published with the same prominence as every win.",
+          },
+        ],
+      },
+      {
+        id: 'sweeps',
+        title: '384 ways, then 162 more',
+        blocks: [
+          {
+            kind: 'p',
+            text: "The design space was swept combinatorially - keyword styles, routing schemes, argument layouts, dictionaries, number alphabets - and every configuration had to survive a decoder round-trip first. decode(encode(message)) must reproduce the original exactly. Lossless first, then count.",
+          },
+          {
+            kind: 'p',
+            text: "The winning family: single-letter primitives, direction folded into the letter's case (lowercase = buyer to seller, uppercase = the reverse - two bits of routing for zero tokens), positional karaka slots, and a session dictionary that turns repeated values into single-letter handles.",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `q availability a      a QUERY in 3 tokens ('a' = SmartTV)
+a o                   ACCEPT in 2 tokens
+o48000am              a whole OFFER: id, money, item, brand
+48000739676           COMMIT amount + deadline, concatenated`,
+            caption: 'The frozen vocabulary, after the sweeps.',
+          },
+          {
+            kind: 'p',
+            text: "The losers matter as much as the winners. Binary wires (base85/base64 over packed bytes) LOSE to tuned text: BPE is trained on text, and short messages pay tag overhead. Devanagari primitives are neutral against ASCII letters. Every one of the roughly six hundred encodings tested is logged in the repository, losers included.",
+          },
+        ],
+      },
+      {
+        id: 'models',
+        title: 'The pop quiz: models in the loop',
+        blocks: [
+          {
+            kind: 'p',
+            text: "A cheap encoding is worthless if models cannot read or write it. So the compact forms were put in front of models: batched emit/parse tests through local CLIs, scored with the real decoders, every raw output saved.",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `cell                gpt-6-luna        deepseek-v4.1-flash
+compact read          12/12             12/12
+compact write         12/12             12/12
+template read          2/6               6/6
+template write         4/6               5/6`,
+            caption: 'Round 7 comprehension. The Gemini-family CLI hung on long prompts and is logged as blocked - another published failure.',
+          },
+          {
+            kind: 'p',
+            text: "The compact form is perfectly cross-comprehensible - two unrelated model families read AND write it, for a format that costs 7.5 tokens per message. The denser template form is model-dependent. Ultra-compactness trades against robustness, so the shipped default is the form everyone can read.",
+          },
+          {
+            kind: 'p',
+            text: "The tests caught what the sweeps never could. Readable SUTRA requires a semicolon after every statement; over three runs the model dropped it twice, producing 12/12 undecodable messages, then 11/12 perfect in the run where it remembered. One character. The compact form has no terminator at all - message boundary is statement boundary - so that failure mode cannot exist.",
+          },
+          {
+            kind: 'p',
+            text: "And in a small moment of beauty, the model taught the format a trick: it wrote 'sF' instead of 's F', gluing the broadcast prefix into a single token. We adopted it. The champion dropped from 75 to 73 tokens on the corpus.",
+          },
+        ],
+      },
+      {
+        id: 'shipped',
+        title: 'What shipped: SUTRA-C v0.7',
+        blocks: [
+          {
+            kind: 'p',
+            text: "The wire format is frozen in the package with a specification, 17 unit tests, and an end-to-end demo that runs the full six-message deal through the codec, renders every decoded message back into readable SUTRA, and validates it with the project's own parser:",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `readable SUTRA       134 tok    22.3/message
+SUTRA-C               45 tok     7.5/message    (9.7x vs JSON-RPC)
+SUTRA-C meter         17 tok     2.8/message    (25.6x vs JSON-RPC)
+JSON-RPC envelope    435 tok    72.5/message`,
+            caption: 'One six-message deal, measured end to end.',
+          },
+          {
+            kind: 'p',
+            text: "The template mode assumes both sides agreed on the message sequence. When reality deviates, a resync marker handles it: one surprise message costs its compact form plus a single marker token, and the session continues compact immediately after.",
+          },
+          {
+            kind: 'code',
+            lang: 'python',
+            code: `from sutra.compact import Session, encode, decode
+
+session = Session()
+session.register("SmartTV", "a")
+wire = encode(message, session)   # 'q availability a'
+back = decode(wire, session)      # == the original message`,
+            caption: 'The whole API surface for the fast path.',
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/sutra',
+            label: 'SUTRA on GitHub',
+            note: 'Source, the frozen wire spec, the token-cost lab, and every logged experiment, commit by commit.',
+          },
+        ],
+      },
+      {
+        id: 'honest',
+        title: 'What it costs to be honest',
+        blocks: [
+          {
+            kind: 'list',
+            items: [
+              'Template mode is stateful: both sides must agree on the sequence, and a deviation pays the resync cost. The compact form needs no such agreement.',
+              'The meter form is model-dependent; the shipped default is the 7.5 tok/message form because two unrelated model families read and write it perfectly.',
+              'The session dictionary caps at 52 handles; beyond that, values travel quoted.',
+              'The comprehension evidence is two model families, one message corpus, and small runs per cell. The error bars are real but small-n.',
+              'Six hundred encodings were tested against a twelve-message corpus; a larger corpus would move the margins, not the mechanisms.',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'why',
+        title: 'The right kind of optimization',
+        blocks: [
+          {
+            kind: 'p',
+            text: "None of this was invented at a whiteboard. Every mechanism was read out of grammars and reckonings that were solving a related problem: fitting the most meaning into the fewest syllables, memorizably, in an oral tradition. The structures transferred - case slots, dittoing, headings, fixed meter, range names. The vocabulary did not: a BPE tokenizer cares about frequency, not etymology.",
+          },
+          {
+            kind: 'p',
+            text: "What transferred most of all is the discipline: pick a metric, count it with real tools, keep every variant lossless, put models in the loop, and publish the losers. The repository is the argument - roughly six hundred encodings, all logged.",
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/sutra/blob/main/experiments/token-cost/README.md',
+            label: 'The token-cost lab',
+            note: 'Method, results, and every negative result, round by round.',
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export function getPost(slug: string) {
