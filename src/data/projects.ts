@@ -313,7 +313,7 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
-    featured: true,
+    featured: false,
   },
 
   {

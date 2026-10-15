@@ -50,10 +50,10 @@ describe('portfolio content integrity', () => {
       'rls-doctor',
       'tarka-sabha',
       'cscosmos',
-      'chitradata',
       'campushelper',
     ]);
     expect(secondaryProjects.map((project) => project.slug)).toEqual([
+      'chitradata',
       'smritiflow',
       'sutra',
       'intentpay',
