@@ -10,7 +10,7 @@ describe('ProjectsPage', () => {
     const intro = screen.getByRole('heading', { name: 'Selected work' }).nextElementSibling;
 
     expect(intro?.textContent?.trim()).toBe(
-      'Twelve public projects across developer tools, AI systems, language models, data visualization, and Web3.',
+      'Twelve public projects across developer tools, AI systems, language models, full-stack products, data visualization, and Web3.',
     );
   });
 

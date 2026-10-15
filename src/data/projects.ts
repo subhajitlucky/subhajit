@@ -446,7 +446,7 @@ export const projects: Project[] = [
       { label: 'Source', href: 'https://github.com/subhajitlucky/campushelper', kind: 'source' },
       { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
     ],
-    featured: false,
+    featured: true,
   },
 
   {

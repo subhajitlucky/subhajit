@@ -51,11 +51,11 @@ describe('portfolio content integrity', () => {
       'tarka-sabha',
       'cscosmos',
       'chitradata',
+      'campushelper',
     ]);
     expect(secondaryProjects.map((project) => project.slug)).toEqual([
       'smritiflow',
       'sutra',
-      'campushelper',
       'intentpay',
       'astapraharicha',
       'quantumticket',
