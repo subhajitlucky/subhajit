@@ -1,4 +1,5 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 
 import {
   BENCH_COMPARISON,
@@ -13,6 +14,19 @@ import {
   VERSIONS,
 } from './data';
 import { DETERMINISTIC_EVAL, PLANNED_STEPS, STOP_STEP, TRAIN_LOG, VAL_POINTS } from './train-log';
+
+function repoFile(relativePath: string) {
+  let directory = process.cwd();
+
+  while (true) {
+    const candidate = join(directory, relativePath);
+    if (existsSync(candidate)) return candidate;
+
+    const parent = dirname(directory);
+    if (parent === directory) throw new Error(`Could not find ${relativePath}`);
+    directory = parent;
+  }
+}
 
 describe('kalia page data', () => {
   it('carries the full record: every decision and every incident, with no gaps', () => {
@@ -103,7 +117,7 @@ describe('kalia page data', () => {
   });
 
   it('keeps the replay CSV and TypeScript log in sync', () => {
-    const trainCsv = readFileSync('public/kalia/logs/train_log.csv', 'utf8')
+    const trainCsv = readFileSync(repoFile('public/kalia/logs/train_log.csv'), 'utf8')
       .trim()
       .split('\n')
       .slice(1)
@@ -118,7 +132,7 @@ describe('kalia page data', () => {
 
     expect(trainCsv).toEqual(TRAIN_LOG);
 
-    const valCsv = readFileSync('public/kalia/logs/val_log.csv', 'utf8')
+    const valCsv = readFileSync(repoFile('public/kalia/logs/val_log.csv'), 'utf8')
       .trim()
       .split('\n')
       .slice(1)
