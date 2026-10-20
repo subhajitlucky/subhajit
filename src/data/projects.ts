@@ -92,7 +92,7 @@ export const projects: Project[] = [
       'v0.1.2 released; every numbered decision, incident, and pre-registered experiment is public.',
       'The v0.2.0 experiment is 0.2285 nats better on the rebuilt set, but regressed on two benchmarks and was not released.',
     ],
-    featured: false,
+    featured: true,
   },
 
   {
@@ -345,7 +345,7 @@ export const projects: Project[] = [
       'No account, no backend, and no uploads; chart state stays on the device.',
       'Client-side PNG and PDF export from HD through 8K.',
     ],
-    featured: true,
+    featured: false,
   },
 
   {
@@ -653,12 +653,12 @@ export const projects: Project[] = [
 ];
 
 const featuredOrder = [
-  'tarka-sabha',
-  'campushelper',
+  'kalia',
   'codebase-doctor',
   'rls-doctor',
-  'chitradata',
+  'tarka-sabha',
   'cscosmos',
+  'campushelper',
 ];
 
 export const listedProjects = projects.filter((project) => !project.hidden);

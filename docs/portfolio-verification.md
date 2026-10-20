@@ -7,7 +7,7 @@
 - Fixed the KALIA mobile figure clipping and decision-row overflow at 320px, restored the stored light theme on client-side navigation, and corrected the CTA, dim-text, and benchmark-delta contrast ratios.
 - Added native table and list semantics to the KALIA appendices, per-page Twitter metadata, per-page Open Graph images, and BlogPosting structured data, project-specific link names, PWA icons, a 404 title, a production CSP, accurate image dimensions, and a CI workflow.
 - Corrected the long-document statistic wording, the Chapter 3 timeline order, and the missing-log count; removed literal backticks from rendered copy.
-- Curated the project index to six full-stack featured projects and ten listed case studies; the two Web3 prototypes are hidden from the index, sitemap, and llms.txt.
+- Curated the project index to ten listed case studies while keeping KALIA in its original featured slot; the two Web3 prototypes are hidden from the index, sitemap, and llms.txt.
 - Added case-study TL;DRs, a 60-second KALIA summary, project structured data, the Tarka Sabha council post, and simplified the availability line.
 - Added Playwright + axe, internal link checks, Lighthouse budgets, and content-integrity tests.
 
