@@ -1,5 +1,6 @@
 import { Geist } from 'next/font/google';
 import Script from 'next/script';
+import { Analytics } from '@vercel/analytics/next';
 import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { JsonLd } from '@/components/JsonLd';
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           {children}
         </main>
         <SiteFooter />
+        <Analytics />
       </body>
     </html>
   );
