@@ -35,7 +35,7 @@ export function GET() {
     '  <channel>',
     `    <title>${escapeXml(`Writing | ${siteConfig.name}`)}</title>`,
     `    <link>${siteConfig.baseUrl}/writing</link>`,
-    '    <description>Notes on database security, static analysis, protocol design, and developer tooling.</description>',
+    '    <description>Notes on database security, static analysis, protocol design, multi-agent systems, and developer tooling.</description>',
     '    <language>en</language>',
     `    <atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />`,
     ...items,

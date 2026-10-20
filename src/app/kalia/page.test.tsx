@@ -48,6 +48,12 @@ describe('KaliaPage', () => {
     expect(screen.getAllByText('$0').length).toBeGreaterThan(0);
   });
 
+  it('opens with a 60-second summary', () => {
+    render(<KaliaPage />);
+
+    expect(screen.getByRole('heading', { name: 'In 60 seconds' })).toBeInTheDocument();
+  });
+
   it('renders the replay console with real log data', () => {
     render(<KaliaPage />);
 

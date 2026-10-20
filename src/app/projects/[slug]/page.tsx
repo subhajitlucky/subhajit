@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { JsonLd } from '@/components/JsonLd';
 import { getProject, projects } from '@/data/projects';
 import { createProjectMetadata } from '@/lib/metadata';
+import { projectStructuredData } from '@/lib/structured-data';
 import { externalLinkProps } from '@/lib/urls';
 
 type ProjectPageProps = {
@@ -33,6 +35,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <article className="case-study site-frame">
+      <JsonLd data={projectStructuredData(project)} />
       <header className="case-study-header">
         <p className="case-study-meta">
           {project.category} · {project.status}
@@ -51,6 +54,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </header>
 
       <div className="case-study-body">
+        <section className="case-study-tldr" aria-labelledby="tldr-title">
+          <h2 id="tldr-title">TL;DR</h2>
+          <ul className="plain-list">
+            {project.tldr.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+
         <section aria-labelledby="problem-title">
           <h2 id="problem-title">Problem</h2>
           <p>{project.problem}</p>

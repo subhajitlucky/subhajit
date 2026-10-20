@@ -1,5 +1,5 @@
 import { posts } from '@/data/posts';
-import { projects } from '@/data/projects';
+import { listedProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 
 export const dynamic = 'force-static';
@@ -24,7 +24,7 @@ export function GET() {
     '',
   ];
 
-  for (const project of projects) {
+  for (const project of listedProjects) {
     lines.push(
       `- [${project.title}](${siteConfig.baseUrl}/projects/${project.slug}): ${project.summary}`,
     );

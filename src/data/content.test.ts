@@ -1,6 +1,7 @@
 import {
   featuredProjects,
   getProject,
+  listedProjects,
   projects,
   roleFilters,
   secondaryProjects,
@@ -14,7 +15,7 @@ describe('portfolio content integrity', () => {
     expect(siteConfig.summary).toBe(
       'I build web products and AI systems, from the interface to the infrastructure.',
     );
-    expect(siteConfig.availability).toBe('Open to remote roles');
+    expect(siteConfig.availability).toBe('Open to full-stack opportunities');
     expect(siteConfig.description).toBe(
       'Full-Stack Product Engineer building web products and AI systems.',
     );
@@ -45,20 +46,18 @@ describe('portfolio content integrity', () => {
 
   it('preserves the approved featured and secondary project order', () => {
     expect(featuredProjects.map((project) => project.slug)).toEqual([
-      'kalia',
+      'tarka-sabha',
+      'campushelper',
       'codebase-doctor',
       'rls-doctor',
-      'tarka-sabha',
+      'chitradata',
       'cscosmos',
-      'campushelper',
     ]);
     expect(secondaryProjects.map((project) => project.slug)).toEqual([
-      'chitradata',
+      'kalia',
       'smritiflow',
       'sutra',
-      'intentpay',
       'astapraharicha',
-      'quantumticket',
     ]);
   });
 
@@ -71,9 +70,11 @@ describe('portfolio content integrity', () => {
 
   it('gives every selected project inspectable proof and valid links', () => {
     expect(projects).toHaveLength(12);
+    expect(listedProjects).toHaveLength(10);
 
     for (const project of projects) {
       expect(project.proof.length).toBeGreaterThan(0);
+      expect(project.tldr.length).toBeGreaterThan(0);
       expect(project.links.some((link) => link.kind === 'source')).toBe(true);
 
       for (const link of project.links) {
@@ -97,9 +98,9 @@ describe('portfolio content integrity', () => {
       .filter((filter) => filter.value !== 'all')
       .map((filter) => filter.value);
 
-    expect(validRoles).toEqual(['swe', 'fullstack', 'frontend', 'backend', 'web3']);
+    expect(validRoles).toEqual(['swe', 'fullstack', 'frontend', 'backend']);
 
-    for (const project of projects) {
+    for (const project of listedProjects) {
       expect(project.roles.length).toBeGreaterThan(0);
       expect(new Set(project.roles).size).toBe(project.roles.length);
 

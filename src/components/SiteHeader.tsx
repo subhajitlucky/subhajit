@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { siteConfig } from '@/data/site';
-import { externalLinkProps, isExternalUrl } from '@/lib/urls';
+import { externalLinkProps, isAssetUrl, isExternalUrl } from '@/lib/urls';
 
 export function SiteHeader() {
   return (
@@ -23,7 +23,7 @@ export function SiteHeader() {
                     <a href={item.href} {...externalLinkProps}>
                       {content}
                     </a>
-                  ) : item.href.startsWith('/') ? (
+                  ) : item.href.startsWith('/') && !isAssetUrl(item.href) ? (
                     <Link href={item.href}>{content}</Link>
                   ) : (
                     <a href={item.href}>{content}</a>

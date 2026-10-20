@@ -1,8 +1,8 @@
 import { posts } from '@/data/posts';
-import { featuredProjects } from '@/data/projects';
+import { featuredProjects, listedProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 import { createProjectMetadata, rootMetadata } from '@/lib/metadata';
-import { postStructuredData, structuredData } from '@/lib/structured-data';
+import { postStructuredData, projectStructuredData, structuredData } from '@/lib/structured-data';
 
 describe('portfolio discovery metadata', () => {
   it('uses the canonical portfolio origin and hiring-focused root metadata', () => {
@@ -48,17 +48,21 @@ describe('portfolio discovery metadata', () => {
     );
   });
 
-  it('publishes a Person and one CreativeWork entry for every featured project', () => {
-    expect(structuredData['@graph']).toEqual(
-      expect.arrayContaining([expect.objectContaining({ '@type': 'Person', name: siteConfig.name })]),
-    );
+  it('publishes Project structured data for every listed case study', () => {
+    for (const project of listedProjects) {
+      expect(projectStructuredData(project)).toEqual(
+        expect.objectContaining({
+          '@type': 'SoftwareSourceCode',
+          name: project.title,
+          url: `${siteConfig.baseUrl}/projects/${project.slug}`,
+        }),
+      );
+    }
+  });
 
-    const creativeWorks = structuredData['@graph'].filter(
-      (entry) => entry['@type'] === 'SoftwareSourceCode',
-    );
-    expect(creativeWorks).toHaveLength(featuredProjects.length);
-    expect(creativeWorks.map((entry) => entry.name)).toEqual(
-      featuredProjects.map((project) => project.title),
-    );
+  it('keeps the root graph focused on the Person', () => {
+    expect(structuredData['@graph']).toEqual([
+      expect.objectContaining({ '@type': 'Person', name: siteConfig.name }),
+    ]);
   });
 });

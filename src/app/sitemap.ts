@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { posts } from '@/data/posts';
-import { projects } from '@/data/projects';
+import { listedProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.9,
     },
-    ...projects.map((project) => ({
+    ...listedProjects.map((project) => ({
       url: `${siteConfig.baseUrl}/projects/${project.slug}`,
       changeFrequency: 'monthly' as const,
       priority: project.featured ? 0.8 : 0.7,

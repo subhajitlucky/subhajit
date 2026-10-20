@@ -5,7 +5,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { notFound } from 'next/navigation';
 import { getPost, posts, type PostBlock } from '@/data/posts';
 import { siteConfig } from '@/data/site';
-import { figureDimensions } from '@/lib/kalia-figures';
+import { figureDimensions } from '@/lib/figure-dimensions';
 import { postStructuredData } from '@/lib/structured-data';
 
 type PostPageProps = {

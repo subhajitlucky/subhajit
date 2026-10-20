@@ -17,7 +17,7 @@ import {
   TRAINING_MIXTURE,
   VERSIONS,
 } from './data';
-import { figureDimensions } from '@/lib/kalia-figures';
+import { figureDimensions } from '@/lib/figure-dimensions';
 
 const NAV = [
   { label: 'model', href: '#model' },
@@ -79,6 +79,39 @@ export function KaliaHero() {
         every numbered decision, and every incident. Every experiment was pre-registered before it
         ran, and no claim on this page is a screenshot — each links to the primary log.
       </p>
+
+      <section className="kalia-tldr" aria-labelledby="kalia-tldr-title">
+        <h2 id="kalia-tldr-title">In 60 seconds</h2>
+        <ul>
+          <li>
+            A 57.9M-parameter decoder-only transformer trained from random initialization on two
+            free Kaggle T4s.
+          </li>
+          <li>
+            v0.1.2 was released at step 3,478 of 4,770; every numbered decision, incident, and
+            pre-registered experiment is public.
+          </li>
+          <li>
+            Held-out loss <strong>2.4366</strong> / <strong>0.8184</strong> bits-per-byte on the
+            original evaluation set. v0.2.0 is <strong>0.2285 nats</strong> better on the rebuilt
+            set.
+          </li>
+          <li>
+            Zero-shot: PIQA <strong>61.4%</strong>, ARC-Easy <strong>45.8%</strong>, HellaSwag{' '}
+            <strong>36.8%</strong>, WinoGrande <strong>50.2%</strong>, LAMBADA{' '}
+            <strong>23.0%</strong>.
+          </li>
+          <li>
+            The Abhimanyu gap — reversed-text loss minus forward loss — is{' '}
+            <strong>6.06 nats</strong>. The reversal-training experiment failed and was rejected by
+            the pre-registered rule.
+          </li>
+          <li>
+            Read it as training infrastructure and experiment discipline, not a competitive model:
+            v0.2.0 regressed on two benchmarks and is published as an experiment.
+          </li>
+        </ul>
+      </section>
 
       <div className="kalia-stats">
         {HERO_STATS.map((stat) => (

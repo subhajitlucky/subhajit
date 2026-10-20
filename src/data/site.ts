@@ -5,7 +5,7 @@ export const siteConfig = {
   summary:
     'I build web products and AI systems, from the interface to the infrastructure.',
   location: 'Odisha, India',
-  availability: 'Open to remote roles',
+  availability: 'Open to full-stack opportunities',
   email: 'subhajitpradhan310@gmail.com',
   baseUrl: 'https://subhajitpradhan.vercel.app',
   resumePath: '/resume.pdf',

@@ -4,7 +4,7 @@ import { getPostsByDateDesc } from '@/data/posts';
 import { siteConfig } from '@/data/site';
 
 const description =
-  'Notes on database security, static analysis, protocol design, and developer tooling by Subhajit Pradhan.';
+  'Notes on database security, static analysis, protocol design, multi-agent systems, and developer tooling by Subhajit Pradhan.';
 
 export const metadata: Metadata = {
   title: 'Writing',

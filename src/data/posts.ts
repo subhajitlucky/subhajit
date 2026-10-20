@@ -1,3 +1,5 @@
+import { tarkaCouncilPost } from './tarka-post';
+
 export type PostBlock =
   | { kind: 'p'; text: string }
   | { kind: 'code'; lang: string; code: string; caption?: string }
@@ -23,6 +25,7 @@ export type Post = {
 };
 
 export const posts: Post[] = [
+  tarkaCouncilPost,
   {
     slug: "five-postgres-rls-mistakes",
     title: "Five Postgres RLS mistakes that leak tenant rows",

@@ -9,6 +9,8 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { rootMetadata } from '@/lib/metadata';
 import './globals.css';
 
+const analyticsEnabled = process.env.VERCEL === '1';
+
 const sans = Geist({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -34,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           {children}
         </main>
         <SiteFooter />
-        <Analytics />
+        {analyticsEnabled ? <Analytics /> : null}
       </body>
     </html>
   );

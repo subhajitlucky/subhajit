@@ -8,11 +8,6 @@ export const roleLabels: Record<Role, string> = {
   web3: 'Web3',
 };
 
-export const roleFilters: { value: Role | 'all'; label: string }[] = [
-  { value: 'all', label: 'All' },
-  ...(Object.entries(roleLabels) as [Role, string][]).map(([value, label]) => ({ value, label })),
-];
-
 export type ProjectLink = {
   label: string;
   href: string;
@@ -36,6 +31,8 @@ export type Project = {
   flow: { label: string; detail: string }[];
   links: ProjectLink[];
   featured: boolean;
+  hidden?: boolean;
+  tldr: string[];
 };
 
 export type ProjectIndexItem = Pick<
@@ -63,7 +60,7 @@ export const projects: Project[] = [
       'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval (v0.1.2, original held-out set; re-baselined at 3.0533 on the rebuilt set); zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
       'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
       'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
-      'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency decoder that triples character retention (+0.061, 95% CI), and the first known test of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
+      'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency decoder that triples character retention (+0.061, 95% CI), and the first test I know of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
     ],
     decisions: [
       'Screen every recipe change at 30M parameters before spending full-run quota on it.',
@@ -90,7 +87,12 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
-    featured: true,
+    tldr: [
+      '58M-parameter decoder-only transformer trained from random initialization on free Kaggle GPUs.',
+      'v0.1.2 released; every numbered decision, incident, and pre-registered experiment is public.',
+      'The v0.2.0 experiment is 0.2285 nats better on the rebuilt set, but regressed on two benchmarks and was not released.',
+    ],
+    featured: false,
   },
 
   {
@@ -136,6 +138,11 @@ export const projects: Project[] = [
         href: 'https://github.com/subhajitlucky/codebase-doctor/blob/main/docs/architecture.md',
         kind: 'evidence',
       },
+    ],
+    tldr: [
+      'A single CLI that audits repositories and emits deterministic findings.',
+      'Text, JSON, and SARIF output with stable fingerprints and baselines for CI.',
+      'Read-only discovery by default; validation and database access require explicit permission.',
     ],
     featured: true,
   },
@@ -184,6 +191,11 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
+    tldr: [
+      'A read-only Postgres and Supabase RLS auditor that models policies, roles, and grants together.',
+      'Reports structural access risks with text or stable JSON output.',
+      'Probe mode proves cross-tenant reads inside rolled-back transactions without changing data.',
+    ],
     featured: true,
   },
 
@@ -231,6 +243,11 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
+    tldr: [
+      'Server-side multi-agent debate runner that keeps sessions advancing after the tab closes.',
+      'Deterministic speaker order, mention-aware turns, encrypted provider keys, and persisted history.',
+      'Synthesis generates several drafts and selects the best against a weighted rubric.',
+    ],
     featured: true,
   },
 
@@ -270,6 +287,11 @@ export const projects: Project[] = [
     links: [
       { label: 'Source', href: 'https://github.com/subhajitlucky/cscosmos', kind: 'source' },
       { label: 'Live application', href: 'https://cscosmos.vercel.app', kind: 'live' },
+    ],
+    tldr: [
+      'A searchable computer-science learning hub built on a typed topic catalog.',
+      'Native visualizers sit beside focused external microsites for each subject.',
+      'Search, status, and topic routes are statically generated from the same data.',
     ],
     featured: true,
   },
@@ -318,7 +340,12 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
-    featured: false,
+    tldr: [
+      'A local-first chart studio and India map maker that runs entirely in the browser.',
+      'No account, no backend, and no uploads; chart state stays on the device.',
+      'Client-side PNG and PDF export from HD through 8K.',
+    ],
+    featured: true,
   },
 
   {
@@ -365,6 +392,11 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
+    tldr: [
+      'A CLI that keeps repository memory current for coding agents.',
+      'Scan, refresh, status, and resume workflows generate machine-readable and human-readable handoffs.',
+      'The generated context is explicitly marked fresh or stale.',
+    ],
     featured: false,
   },
 
@@ -376,7 +408,7 @@ export const projects: Project[] = [
     category: 'Agent protocols',
     roles: ['swe', 'backend'],
     summary:
-      'A deterministic agent protocol with a measured compact wire format: 2.8-7.5 tokens per message, 10-25x cheaper than deployed JSON-RPC protocols.',
+      'A deterministic agent protocol with a measured compact wire format: 2.8-7.5 tokens per message, up to 25x cheaper than deployed JSON-RPC protocols.',
     problem:
       'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two — and almost nobody measures what messages actually cost.',
     system:
@@ -415,6 +447,11 @@ export const projects: Project[] = [
         href: 'https://github.com/subhajitlucky/sutra/blob/main/spec/SUTRA_C.md',
         kind: 'evidence',
       },
+    ],
+    tldr: [
+      'A deterministic agent protocol with a measured compact wire format.',
+      'SUTRA-C encodes the same semantics in 2.8–7.5 tokens per message, with decoder round-trip checks.',
+      'The spec, tests, and an end-to-end deal demo are public.',
     ],
     featured: false,
   },
@@ -457,6 +494,11 @@ export const projects: Project[] = [
       { label: 'Source', href: 'https://github.com/subhajitlucky/campushelper', kind: 'source' },
       { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
     ],
+    tldr: [
+      'A campus lost-and-found platform with authenticated reports, image uploads, claims, and moderation.',
+      'Next.js, NextAuth, Prisma/PostgreSQL, Vercel Blob, Zod validation, rate limits, and RLS.',
+      'Admin workflows cover review and listing lifecycle.',
+    ],
     featured: true,
   },
 
@@ -497,7 +539,13 @@ export const projects: Project[] = [
     links: [
       { label: 'Source', href: 'https://github.com/subhajitlucky/intentpay', kind: 'source' },
     ],
+    tldr: [
+      'An AI-assisted Web3 transaction prototype that turns natural language into a reviewed plan.',
+      'The wallet remains the final execution boundary; the model never signs or sends.',
+      'Prototype scope: Sepolia and a limited set of transaction types.',
+    ],
     featured: false,
+    hidden: true,
   },
 
   {
@@ -542,6 +590,11 @@ export const projects: Project[] = [
         href: 'https://github.com/subhajitlucky/astapraharicha/tree/main/src',
         kind: 'evidence',
       },
+    ],
+    tldr: [
+      'An interactive digital mandala for a village 24-hour chanting festival.',
+      'Eight themed watches, a shader-driven backdrop, a memory gallery, and moderated uploads.',
+      'Odia-first, single-page, and built for the atmosphere of the festival.',
     ],
     featured: false,
   },
@@ -589,12 +642,39 @@ export const projects: Project[] = [
         kind: 'evidence',
       },
     ],
+    tldr: [
+      'An NFT event-ticketing dApp with organizer, attendee, and scanner workflows.',
+      'Solidity contracts on Sepolia, read directly from a React client.',
+      'Tickets are NFTs; scanners validate entry at the venue.',
+    ],
     featured: false,
+    hidden: true,
   }
 ];
 
-export const featuredProjects = projects.filter((project) => project.featured);
-export const secondaryProjects = projects.filter((project) => !project.featured);
+const featuredOrder = [
+  'tarka-sabha',
+  'campushelper',
+  'codebase-doctor',
+  'rls-doctor',
+  'chitradata',
+  'cscosmos',
+];
+
+export const listedProjects = projects.filter((project) => !project.hidden);
+
+const listedRoles = new Set(listedProjects.flatMap((project) => project.roles));
+
+export const roleFilters: { value: Role | 'all'; label: string }[] = [
+  { value: 'all', label: 'All' },
+  ...(Object.entries(roleLabels) as [Role, string][])
+    .filter(([value]) => listedRoles.has(value))
+    .map(([value, label]) => ({ value, label })),
+];
+export const featuredProjects = featuredOrder
+  .map((slug) => projects.find((project) => project.slug === slug))
+  .filter((project): project is Project => Boolean(project));
+export const secondaryProjects = listedProjects.filter((project) => !project.featured);
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);

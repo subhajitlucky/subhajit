@@ -2,11 +2,14 @@
 
 ## Current: 2026-10-20 hardening pass
 
-- `npm test` (16 files, 62 tests), `npm run typecheck`, `npm run lint`, `npm run build` (28 static pages), and `npm audit --omit=dev --audit-level=high` all pass.
+- `npm test` (16 files, 70 tests), `npm run typecheck`, `npm run lint`, `npm run build` (28 static pages), `npm run test:e2e` (22 browser checks), `npm run test:lighthouse`, and `npm audit --omit=dev --audit-level=high` all pass.
 - Upgraded `next` and `eslint-config-next` to 16.4.2, and refreshed the lockfile; the production dependency audit is clean.
 - Fixed the KALIA mobile figure clipping and decision-row overflow at 320px, restored the stored light theme on client-side navigation, and corrected the CTA, dim-text, and benchmark-delta contrast ratios.
 - Added native table and list semantics to the KALIA appendices, per-page Twitter metadata, per-page Open Graph images, and BlogPosting structured data, project-specific link names, PWA icons, a 404 title, a production CSP, accurate image dimensions, and a CI workflow.
 - Corrected the long-document statistic wording, the Chapter 3 timeline order, and the missing-log count; removed literal backticks from rendered copy.
+- Curated the project index to six full-stack featured projects and ten listed case studies; the two Web3 prototypes are hidden from the index, sitemap, and llms.txt.
+- Added case-study TL;DRs, a 60-second KALIA summary, project structured data, the Tarka Sabha council post, and simplified the availability line.
+- Added Playwright + axe, internal link checks, Lighthouse budgets, and content-integrity tests.
 
 ## Historical: 2026-10-13 post-review fixes
 

@@ -1,4 +1,17 @@
-import { DECISIONS, HERO_STATS, INCIDENTS, RECIPE, SAMPLES, TIMELINE } from './data';
+import { readFileSync } from 'node:fs';
+
+import {
+  BENCH_COMPARISON,
+  DECISIONS,
+  HERO_STATS,
+  INCIDENTS,
+  RECIPE,
+  SAMPLES,
+  TIMELINE,
+  TRAINING_DATA,
+  TRAINING_MIXTURE,
+  VERSIONS,
+} from './data';
 import { DETERMINISTIC_EVAL, PLANNED_STEPS, STOP_STEP, TRAIN_LOG, VAL_POINTS } from './train-log';
 
 describe('kalia page data', () => {
@@ -47,6 +60,72 @@ describe('kalia page data', () => {
     expect(DETERMINISTIC_EVAL[0]).toBe(STOP_STEP);
     expect(DETERMINISTIC_EVAL[1]).toBeGreaterThanOrEqual(Math.min(...valLosses));
     expect(DETERMINISTIC_EVAL[1]).toBeLessThanOrEqual(Math.max(...valLosses));
+  });
+
+  it('keeps derived checkpoint numbers consistent', () => {
+    const v012 = VERSIONS.find((version) => version.id === 'v0.1.2');
+    const v020 = VERSIONS.find((version) => version.id === 'v0.2.0');
+
+    expect(v012).toBeDefined();
+    expect(v020).toBeDefined();
+    if (!v012 || !v020) return;
+
+    expect(Math.round((v012.valLoss - v020.valLoss) * 10000) / 10000).toBe(0.2285);
+    expect((v012.valLoss - v020.valLoss) / 0.05).toBeCloseTo(4.57, 2);
+  });
+
+  it('keeps benchmark comparisons within the published noise rule', () => {
+    expect(BENCH_COMPARISON).toHaveLength(5);
+
+    for (const row of BENCH_COMPARISON) {
+      expect(row.stderr).toBeGreaterThan(0);
+      expect(Math.abs(row.v020 - row.v012) / row.stderr).toBeLessThan(2);
+    }
+
+    expect(BENCH_COMPARISON.filter((row) => row.v020 < row.v012)).toHaveLength(2);
+  });
+
+  it('keeps numeric timeline times in order within each chapter', () => {
+    for (const day of TIMELINE) {
+      const times = day.entries
+        .map((entry) => entry.time)
+        .filter((time) => /^\d{2}:\d{2}$/.test(time))
+        .map((time) => Number(time.replace(':', '')));
+
+      expect(times).toEqual([...times].sort((a, b) => a - b));
+    }
+  });
+
+  it('keeps the training mixture internally consistent', () => {
+    expect(TRAINING_DATA.reduce((total, source) => total + source.share, 0)).toBe(100);
+    expect(TRAINING_MIXTURE.longDocShare).toBe(17.7);
+    expect(TRAINING_MIXTURE.candidate.longDocShare).toBe(99.3);
+  });
+
+  it('keeps the replay CSV and TypeScript log in sync', () => {
+    const trainCsv = readFileSync('public/kalia/logs/train_log.csv', 'utf8')
+      .trim()
+      .split('\n')
+      .slice(1)
+      .map((line) => line.split(','))
+      .map(([step, loss, lr, tokens, elapsed]) => [
+        Number(step),
+        Number(loss),
+        Number(lr),
+        Number(tokens),
+        Number(elapsed),
+      ]);
+
+    expect(trainCsv).toEqual(TRAIN_LOG);
+
+    const valCsv = readFileSync('public/kalia/logs/val_log.csv', 'utf8')
+      .trim()
+      .split('\n')
+      .slice(1)
+      .map((line) => line.split(','))
+      .map(([step, loss]) => [Number(step), Number(loss)]);
+
+    expect(valCsv).toEqual(VAL_POINTS);
   });
 
   it('publishes headline stats, samples, and the recipe', () => {

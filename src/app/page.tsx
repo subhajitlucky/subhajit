@@ -21,7 +21,7 @@ export default function HomePage() {
         <p className="intro-summary">{siteConfig.summary}</p>
         <div className="intro-links" aria-label="Contact and profile links">
           <a href={siteConfig.links.email}>Email</a>
-          <Link href={siteConfig.resumePath}>Resume</Link>
+          <a href={siteConfig.resumePath}>Resume</a>
           <a href={siteConfig.links.github} {...externalLinkProps}>
             GitHub
           </a>

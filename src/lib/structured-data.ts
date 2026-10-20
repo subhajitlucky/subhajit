@@ -1,5 +1,5 @@
 import type { Post } from '@/data/posts';
-import { featuredProjects } from '@/data/projects';
+import type { Project } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 
 const personId = `${siteConfig.baseUrl}/#person`;
@@ -20,16 +20,6 @@ export const structuredData = {
       },
       sameAs: [siteConfig.links.github, siteConfig.links.linkedin],
     },
-    ...featuredProjects.map((project) => ({
-      '@type': 'SoftwareSourceCode',
-      '@id': `${siteConfig.baseUrl}/projects/${project.slug}#project`,
-      name: project.title,
-      description: project.summary,
-      url: `${siteConfig.baseUrl}/projects/${project.slug}`,
-      codeRepository: project.links.find((link) => link.kind === 'source')?.href,
-      programmingLanguage: project.stack,
-      author: { '@id': personId },
-    })),
   ],
 };
 
@@ -51,5 +41,22 @@ export function postStructuredData(post: Post) {
     publisher: { '@type': 'Person', '@id': personId, name: siteConfig.name, url: siteConfig.baseUrl },
     keywords: post.tags.join(', '),
     timeRequired: `PT${post.readingMinutes}M`,
+  };
+}
+
+export function projectStructuredData(project: Project) {
+  const url = `${siteConfig.baseUrl}/projects/${project.slug}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    '@id': `${url}#project`,
+    name: project.title,
+    description: project.summary,
+    url,
+    codeRepository: project.links.find((link) => link.kind === 'source')?.href,
+    programmingLanguage: project.stack,
+    keywords: project.stack.join(', '),
+    author: { '@type': 'Person', '@id': personId, name: siteConfig.name, url: siteConfig.baseUrl },
   };
 }

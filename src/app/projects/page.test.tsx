@@ -1,5 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
-import { projects } from '@/data/projects';
+import { listedProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 import ProjectsPage, { metadata } from './page';
 
@@ -10,7 +10,7 @@ describe('ProjectsPage', () => {
     const intro = screen.getByRole('heading', { name: 'Selected work' }).nextElementSibling;
 
     expect(intro?.textContent?.trim()).toBe(
-      'Twelve public projects across developer tools, AI systems, language models, full-stack products, data visualization, and Web3.',
+      'Ten selected projects across developer tools, AI systems, full-stack products, and data visualization.',
     );
   });
 
@@ -18,13 +18,13 @@ describe('ProjectsPage', () => {
     render(<ProjectsPage />);
 
     const entries = screen.getAllByTestId('project-index-item');
-    expect(entries).toHaveLength(12);
+    expect(entries).toHaveLength(10);
     expect(entries.map((entry) => within(entry).getByRole('heading').textContent)).toEqual(
-      projects.map((project) => project.title),
+      listedProjects.map((project) => project.title),
     );
 
     entries.forEach((entry, index) => {
-      const project = projects[index];
+      const project = listedProjects[index];
       expect(
         within(entry).getByRole('link', {
           name: new RegExp(`${project.title} details`, 'i'),

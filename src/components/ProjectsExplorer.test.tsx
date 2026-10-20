@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { ProjectsExplorer } from '@/components/ProjectsExplorer';
-import { projects } from '@/data/projects';
+import { listedProjects } from '@/data/projects';
 
 function renderedTitles() {
   return screen
@@ -9,22 +9,22 @@ function renderedTitles() {
 }
 
 describe('ProjectsExplorer', () => {
-  it('renders every project in canonical order by default', () => {
-    render(<ProjectsExplorer projects={projects} />);
+  it('renders every listed project in canonical order by default', () => {
+    render(<ProjectsExplorer projects={listedProjects} />);
 
-    expect(renderedTitles()).toEqual(projects.map((project) => project.title));
+    expect(renderedTitles()).toEqual(listedProjects.map((project) => project.title));
     expect(screen.getByRole('button', { name: 'All' })).toHaveAttribute('aria-pressed', 'true');
     expect(screen.getByRole('status')).toHaveTextContent(
-      `Showing ${projects.length} of ${projects.length} projects`,
+      `Showing ${listedProjects.length} of ${listedProjects.length} projects`,
     );
   });
 
   it('filters to role-fit projects with the strongest fit first', () => {
-    render(<ProjectsExplorer projects={projects} />);
+    render(<ProjectsExplorer projects={listedProjects} />);
 
     fireEvent.click(screen.getByRole('button', { name: 'Backend' }));
 
-    const expected = [...projects]
+    const expected = [...listedProjects]
       .filter((project) => project.roles.includes('backend'))
       .sort(
         (first, second) =>
@@ -39,17 +39,13 @@ describe('ProjectsExplorer', () => {
     expect(renderedTitles()).toEqual(expected);
     expect(renderedTitles()[0]).toBe('RLS Doctor');
     expect(screen.getByRole('status')).toHaveTextContent(
-      `Showing ${expected.length} of ${projects.length} projects`,
+      `Showing ${expected.length} of ${listedProjects.length} projects`,
     );
   });
 
-  it('shows the web3 projects and restores all projects after', () => {
-    render(<ProjectsExplorer projects={projects} />);
+  it('does not offer a filter with no listed projects', () => {
+    render(<ProjectsExplorer projects={listedProjects} />);
 
-    fireEvent.click(screen.getByRole('button', { name: 'Web3' }));
-    expect(renderedTitles()).toEqual(['IntentPay', 'QuantumTicket']);
-
-    fireEvent.click(screen.getByRole('button', { name: 'All' }));
-    expect(renderedTitles()).toEqual(projects.map((project) => project.title));
+    expect(screen.queryByRole('button', { name: 'Web3' })).not.toBeInTheDocument();
   });
 });

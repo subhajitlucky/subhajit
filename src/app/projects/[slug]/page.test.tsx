@@ -17,6 +17,7 @@ describe('ProjectPage', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Codebase Doctor' })).toBeInTheDocument();
 
     for (const heading of [
+      'TL;DR',
       'Problem',
       'System',
       'Proof',
