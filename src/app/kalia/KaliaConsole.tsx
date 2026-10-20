@@ -36,6 +36,7 @@ export function KaliaConsole() {
   const [started, setStarted] = useState(false);
   const interactedRef = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef(0);
 
   const markInteracted = useCallback(() => {
     interactedRef.current = true;
@@ -73,17 +74,18 @@ export function KaliaConsole() {
   }, [reducedMotion, started]);
 
   useEffect(() => {
+    cursorRef.current = cursor;
+  }, [cursor]);
+
+  useEffect(() => {
     if (!playing) return;
     const rowsPerSecond = SPEEDS[speedIndex].rowsPerSecond;
     const interval = window.setInterval(() => {
-      setCursor((current) => {
-        const next = current + 1;
-        if (next >= total - 1) {
-          setPlaying(false);
-          return total - 1;
-        }
-        return next;
-      });
+      if (cursorRef.current >= total - 1) {
+        setPlaying(false);
+        return;
+      }
+      setCursor((current) => Math.min(current + 1, total - 1));
     }, 1000 / rowsPerSecond);
     return () => window.clearInterval(interval);
   }, [playing, speedIndex, total]);

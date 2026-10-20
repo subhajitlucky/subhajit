@@ -8,7 +8,7 @@
   --k-line-strong: rgba(255, 255, 255, 0.16);
   --k-text: #f4f4f5;
   --k-muted: #a1a1aa;
-  --k-dim: #71717a;
+  --k-dim: #8b8b93;
   --k-accent: #f59e0b;
   --k-accent-bright: #fbbf24;
   --k-accent-soft: rgba(245, 158, 11, 0.14);
@@ -28,6 +28,7 @@
   --k-display: var(--font-kalia-display), 'Space Grotesk', system-ui, sans-serif;
   --k-mono: var(--font-kalia-mono), 'JetBrains Mono', ui-monospace, monospace;
 
+  color-scheme: dark;
   position: relative;
   background: var(--k-bg);
   color: var(--k-text);
@@ -36,6 +37,7 @@
 }
 
 html[data-kalia-theme='light'] .kalia {
+  color-scheme: light;
   --k-bg: #f6f4ef;
   --k-panel: #ffffff;
   --k-panel-2: #fbfaf7;
@@ -43,7 +45,7 @@ html[data-kalia-theme='light'] .kalia {
   --k-line-strong: rgba(24, 24, 27, 0.24);
   --k-text: #18181b;
   --k-muted: #52525b;
-  --k-dim: #6b7280;
+  --k-dim: #5f6570;
   --k-accent: #b45309;
   --k-accent-bright: #92400e;
   --k-accent-soft: rgba(180, 83, 9, 0.10);
@@ -83,7 +85,7 @@ html[data-kalia-theme='light'] .kalia {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-.kalia a {
+:where(.kalia) a {
   color: inherit;
 }
 
@@ -336,6 +338,18 @@ html[data-kalia-theme='light'] .kalia {
 
 .kalia-prose strong {
   color: var(--k-text);
+}
+
+/* ---------- figures ---------- */
+
+.kalia-figure {
+  max-width: 46rem;
+  margin: 0;
+}
+
+.kalia-figure img {
+  width: 100%;
+  height: auto;
 }
 
 /* ---------- console ---------- */
@@ -644,9 +658,26 @@ html[data-kalia-theme='light'] .kalia {
 /* ---------- benchmarks ---------- */
 
 .kalia-bench {
+  display: block;
+  width: 100%;
+  max-width: 44rem;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.kalia-bench tbody {
   display: grid;
   gap: 1rem;
-  max-width: 44rem;
+}
+
+.kalia-bench th,
+.kalia-bench td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+  font-weight: inherit;
+  vertical-align: baseline;
 }
 
 .kalia-bench-row {
@@ -728,6 +759,9 @@ html[data-kalia-theme='light'] .kalia {
 
 .kalia-decisions {
   display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   background: var(--k-line);
@@ -738,7 +772,7 @@ html[data-kalia-theme='light'] .kalia {
   background: var(--k-panel);
   padding: 0.8rem 0.9rem;
   display: grid;
-  grid-template-columns: 3rem 1fr auto;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
   gap: 0.6rem;
   align-items: baseline;
 }
@@ -750,6 +784,8 @@ html[data-kalia-theme='light'] .kalia {
 }
 
 .kalia-decision-text {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 0.86rem;
   color: var(--k-text);
   line-height: 1.5;
@@ -800,6 +836,8 @@ html[data-kalia-theme='light'] .kalia {
 }
 
 .kalia-incident p {
+  min-width: 0;
+  overflow-wrap: anywhere;
   margin: 0;
   font-size: 0.85rem;
   line-height: 1.65;
@@ -809,11 +847,18 @@ html[data-kalia-theme='light'] .kalia {
 /* ---------- recipe + links ---------- */
 
 .kalia-recipe {
+  display: block;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--k-line);
+  border: 1px solid var(--k-line);
+}
+
+.kalia-recipe tbody {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
-  background: var(--k-line);
-  border: 1px solid var(--k-line);
 }
 
 .kalia-recipe-row {
@@ -825,15 +870,26 @@ html[data-kalia-theme='light'] .kalia {
   font-size: 0.85rem;
 }
 
-.kalia-recipe-row span:first-child {
+.kalia-recipe th,
+.kalia-recipe td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-align: left;
+  font-weight: inherit;
+  vertical-align: baseline;
+}
+
+.kalia-recipe th {
   color: var(--k-dim);
   font-family: var(--k-mono);
   font-size: 0.74rem;
+  font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.kalia-recipe-row span:last-child {
+.kalia-recipe td {
   font-family: var(--k-mono);
   font-size: 0.8rem;
   text-align: right;
@@ -871,6 +927,15 @@ html[data-kalia-theme='light'] .kalia {
   font-size: 0.8rem;
   color: var(--k-muted);
   line-height: 1.55;
+}
+
+.kalia-stat-note {
+  margin: 0.9rem 0 0;
+  max-width: 46rem;
+  color: var(--k-dim);
+  font-family: var(--k-mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
 }
 
 .kalia-outro {
@@ -917,13 +982,28 @@ html[data-kalia-theme='light'] .kalia {
   .kalia-samples,
   .kalia-decisions,
   .kalia-incidents,
-  .kalia-recipe,
   .kalia-links {
+    grid-template-columns: 1fr;
+  }
+
+  .kalia-recipe tbody {
     grid-template-columns: 1fr;
   }
 
   .kalia-bench-row {
     grid-template-columns: 7rem 1fr 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .kalia-decision {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  .kalia-decision .kalia-pill {
+    grid-column: 2;
+    justify-self: start;
+    white-space: normal;
   }
 }
 

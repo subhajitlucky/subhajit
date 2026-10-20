@@ -342,7 +342,7 @@ import { charge } from '../payments/index.js';`,
           },
           {
             kind: 'p',
-            text: 'Dynamic imports make this worse. import(\`./plugins/\${name}.js\`) is not a single edge; it is a pattern that may resolve to many files or none. The honest response is to record a dynamic boundary and say so, not to guess.',
+            text: 'Dynamic imports make this worse. import("./plugins/${name}.js") is not a single edge; it is a pattern that may resolve to many files or none. The honest response is to record a dynamic boundary and say so, not to guess.',
           },
         ],
       },
@@ -945,7 +945,7 @@ template write         4/6               5/6`,
         blocks: [
           {
             kind: 'p',
-            text: "The wire format is frozen in the package with a specification, 17 unit tests, and an end-to-end demo that runs the full six-message deal through the codec, renders every decoded message back into readable SUTRA, and validates it with the project's own parser:",
+            text: "The wire format is frozen in the package with a specification, 17 codec unit tests, and an end-to-end demo that runs the full six-message deal through the codec, renders every decoded message back into readable SUTRA, and validates it with the project's own parser:",
           },
           {
             kind: 'code',
@@ -1024,5 +1024,5 @@ export function getPost(slug: string) {
 }
 
 export function getPostsByDateDesc() {
-  return [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+  return [...posts].sort((a, b) => b.date.localeCompare(a.date));
 }

@@ -2,6 +2,8 @@ import { posts } from '@/data/posts';
 import { projects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 
+export const dynamic = 'force-static';
+
 export function GET() {
   const lines = [
     `# ${siteConfig.name}`,
@@ -14,9 +16,9 @@ export function GET() {
     '',
     '## KALIA',
     '',
-    '- [KALIA page](https://subhajitpradhan.vercel.app/kalia): 58M-parameter language model trained from scratch on free GPUs, with replayable training log, decisions, and incidents.',
-    '- [Weights](https://huggingface.co/kalia-lm/kalia-v012): Apache-2.0 weights and model card.',
-    '- [Source](https://github.com/subhajitlucky/kalia): training code, tests, journal, and pre-registration ledger.',
+    `- [KALIA page](${siteConfig.baseUrl}/kalia): 58M-parameter language model trained from scratch on free GPUs, with replayable training log, decisions, and incidents.`,
+    `- [Weights](https://huggingface.co/kalia-lm/kalia-v012): Apache-2.0 weights and model card.`,
+    `- [Source](${siteConfig.links.github}/kalia): training code, tests, journal, and pre-registration ledger.`,
     '',
     '## Selected work',
     '',

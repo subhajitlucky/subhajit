@@ -1,11 +1,19 @@
 # Portfolio release verification
 
-## Current: 2026-10-13 post-review fixes
+## Current: 2026-10-20 hardening pass
+
+- `npm test` (16 files, 62 tests), `npm run typecheck`, `npm run lint`, `npm run build` (28 static pages), and `npm audit --omit=dev --audit-level=high` all pass.
+- Upgraded `next` and `eslint-config-next` to 16.4.2, and refreshed the lockfile; the production dependency audit is clean.
+- Fixed the KALIA mobile figure clipping and decision-row overflow at 320px, restored the stored light theme on client-side navigation, and corrected the CTA, dim-text, and benchmark-delta contrast ratios.
+- Added native table and list semantics to the KALIA appendices, per-page Twitter metadata, per-page Open Graph images, and BlogPosting structured data, project-specific link names, PWA icons, a 404 title, a production CSP, accurate image dimensions, and a CI workflow.
+- Corrected the long-document statistic wording, the Chapter 3 timeline order, and the missing-log count; removed literal backticks from rendered copy.
+
+## Historical: 2026-10-13 post-review fixes
 
 The fixes below were applied after an external review of the repository and verified on the working tree with the full gate:
 
 - `npm test` (15 files, 57 tests), `npm run typecheck`, `npm run lint`, and `npm run build` (27 static pages) all exited 0.
-- Changes covered: `isExternalUrl` accepts `http:` and `https:`; the KALIA console exposes its chart and controls to assistive technology (`aria-pressed` play/speed controls, valued scrub slider, screen-reader chart summary); `/llms.txt` lists all twelve case studies plus the KALIA sources; the footer year is dynamic; `robots.txt` drops the deprecated `host` directive; `themeColor` matches the manifest; the skills grid is 2×2; and `/writing/rss.xml` serves a static RSS 2.0 feed (verified: HTTP 200, `application/rss+xml`, `force-static` prerender, escaped entities, RFC 822 dates) with a discovery `link rel="alternate"` on `/writing`.
+- Changes covered: `isExternalUrl` accepts `http:` and `https:`; the KALIA console exposes its chart and controls to assistive technology (`aria-pressed` play/speed controls, valued scrub slider, screen-reader chart summary); `/llms.txt` lists all twelve case studies plus the KALIA sources; the footer year is dynamic; `robots.txt` drops the deprecated `host` directive; `themeColor` matches the manifest; the skills grid is two columns; and `/writing/rss.xml` serves a static RSS 2.0 feed (verified: HTTP 200, `application/rss+xml`, `force-static` prerender, escaped entities, RFC 822 dates) with a discovery `link rel="alternate"` on `/writing`.
 
 The sections below are the earlier 2026-08-30 snapshot and are kept as history; the counts and page totals in them describe that commit, not the current tree.
 

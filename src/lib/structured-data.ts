@@ -1,3 +1,4 @@
+import type { Post } from '@/data/posts';
 import { featuredProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 
@@ -31,3 +32,24 @@ export const structuredData = {
     })),
   ],
 };
+
+export function postStructuredData(post: Post) {
+  const url = `${siteConfig.baseUrl}/writing/${post.slug}`;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.date,
+    dateModified: post.date,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    image: `${siteConfig.baseUrl}/opengraph-image`,
+    author: { '@type': 'Person', '@id': personId, name: siteConfig.name, url: siteConfig.baseUrl },
+    publisher: { '@type': 'Person', '@id': personId, name: siteConfig.name, url: siteConfig.baseUrl },
+    keywords: post.tags.join(', '),
+    timeRequired: `PT${post.readingMinutes}M`,
+  };
+}

@@ -18,7 +18,7 @@ describe('ProjectCard', () => {
   it('renders source, package, and live links but not evidence links', () => {
     render(<ProjectCard project={project} />);
     for (const link of project.links) {
-      const matches = screen.queryAllByRole('link', { name: link.label });
+      const matches = screen.queryAllByRole('link', { name: new RegExp(link.label, 'i') });
       if (link.kind === 'evidence') {
         expect(matches).toHaveLength(0);
       } else {

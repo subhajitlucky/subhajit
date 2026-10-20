@@ -144,9 +144,14 @@ export const TIMELINE: TimelineDay[] = [
         body: 'Control gap 5.11 nats, treatment 5.25 — the gap got 0.14 nats worse, and forward loss rose 0.08. Both bars missed, on both seeds, in the same direction. The prediction that did hold is the more useful one: the gap is already 5.1 nats at 30M parameters, so it is a property of the architecture, not a symptom of undertraining.',
       },
       {
+        time: '15:00',
+        title: 'The rule does the deciding',
+        body: 'The promotion rule was hashed before the results existed, so there is nothing to renegotiate: the transform is rejected and never enters v0.2.0 (decision D42). A 50% reversed training mixture is not the same problem as reversing tokens, and the honest reading is that the chunk-order transform teaches nothing about entry into a reversed sequence. Token-level reversal stays on the list as a separate hypothesis, not a quiet retry.',
+      },
+      {
         time: '16:20',
         title: 'The published loss curve was missing its first half',
-        body: 'The training log on Hugging Face began at step 1,740, because a fix that restores logs on resume landed one session after that session had already started with the old code. 347 logged steps \u2014 the whole descent from 10.7 down to the plateau \u2014 were gone from the public record. Rebuilt from the repository\u2019s own commit history, checked for gaps, and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 oscillate inside noise.',
+        body: 'The training log on Hugging Face began at step 1,740, because a fix that restores logs on resume landed one session after that session had already started with the old code. The first 173 logged steps \u2014 the whole descent from 10.7 down to the plateau \u2014 were gone from the public record; the rebuilt log now has 347 rows from step 10 to 3,470. Rebuilt from the repository\u2019s own commit history, checked for gaps, and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 oscillate inside noise.',
       },
       {
         time: '19:05',
@@ -158,11 +163,6 @@ export const TIMELINE: TimelineDay[] = [
           caption:
             'Figure A4 — the same question, answered once both versions were re-measured on the same set. The shaded band is the 1,500 steps at the end that bought nothing measurable.',
         },
-      },
-      {
-        time: '15:00',
-        title: 'The rule does the deciding',
-        body: 'The promotion rule was hashed before the results existed, so there is nothing to renegotiate: the transform is rejected and never enters v0.2.0 (decision D42). A 50% reversed training mixture is not the same problem as reversing tokens, and the honest reading is that the chunk-order transform teaches nothing about entry into a reversed sequence. Token-level reversal stays on the list as a separate hypothesis, not a quiet retry.',
       },
     ],
   },
@@ -219,7 +219,7 @@ export const TIMELINE: TimelineDay[] = [
           src: '/kalia/training-data.svg',
           alt: 'The training mixture as a stacked bar, beside the share of each source whose documents reach the 1,024-token context: 26.2% for FineWeb-Edu, 0.03% for TinyStories, 13.2% for Cosmopedia, and 17.7% for the mixture overall.',
           caption:
-            'What that probe found, and it is the reason LAMBADA moved: a fifth of the corpus supplies 0.03% of its long documents.',
+            'What that probe found, and it is the reason LAMBADA moved: a fifth of the corpus is TinyStories, but only 0.03% of its own documents are long enough to fill the context.',
         },
       },
       {
@@ -467,7 +467,8 @@ export type TrainingSource = {
  * The 2.4B-token mixture, and the measurement that explains the LAMBADA
  * regression: `longDocShare` is the share of each source's documents at least as
  * long as the model's context window. Token-weighted only 17.7% of the corpus
- * qualifies, and TinyStories - a fifth of the mixture - supplies 0.03% of it.
+ * qualifies; TinyStories - a fifth of the mixture - has only 0.03% of its own
+ * documents long enough to fill the context.
  */
 export const TRAINING_DATA: TrainingSource[] = [
   {
@@ -590,7 +591,7 @@ export const INCIDENTS: Incident[] = [
   { id: 'I11', title: 'A misreported duration', detail: 'I described a 44-minute ablation as having run five hours, trusting my sense of time over the run-start timestamp. The correction is in the journal.' },
   { id: 'I12', title: 'Weekly GPU quota exhausted', detail: 'The push failed with 30 of 30 GPU-hours used; the UI earlier read "24 hours remaining". Only the push attempt is authoritative. Experiments deferred to the weekly reset.' },
   { id: 'I13', title: 'A queue, not a bug', detail: 'Two kernels sat QUEUED for 45 minutes at Sunday peak capacity, and a retry loop pushed the account past its limit — the cap of two batch GPU sessions counts queued ones, so a retry that assumes a failure can consume the retry\'s own budget. Deleting the duplicate and pushing once started the run immediately.' },
-  { id: 'I14', title: 'The published loss curve was missing its first half', detail: 'The v0.1.2 training log on Hugging Face began at step 1740: a code change adding log-restore-on-resume landed at 06:00 UTC, one session after that session had already started with the old code, so 347 logged steps vanished from the public record. Rebuilt from the repository\'s own commit history, verified contiguous (steps 10 to 3470, no gaps) and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 steps oscillate inside noise.' },
+  { id: 'I14', title: 'The published loss curve was missing its first half', detail: 'The v0.1.2 training log on Hugging Face began at step 1740: a code change adding log-restore-on-resume landed at 06:00 UTC, one session after that session had already started with the old code, so the first 173 logged steps vanished from the public record; the rebuilt log now has 347 rows from step 10 to 3470, verified contiguous and republished. The recovered curve supports the stop decision: the descent finishes by step 1,500 and the remaining 1,750 steps oscillate inside noise.' },
   { id: 'I15', title: 'Training windows ignored document boundaries', detail: 'The corpus is EOS-delimited — all four sources, median document ~200 tokens — but windows were sampled with no document awareness and attention ran unmasked, so nearly every 1,024-token window crossed a boundary. Worse, the mixer writes the four corpora in million-token round-robin blocks, so 0.3% of windows splice two corpora with no separator at all. Invisible to loss and to every benchmark we tracked: found by reading the mixer. Fixed with a block-diagonal document mask behind a config flag, and pre-registered as an experiment (X17) at the same 0.010-nat bar that once rejected Muon+.' },
   { id: 'I16', title: '41.7% of the code corpus is copyleft, and it shipped', detail: 'A 20,000-file sample of the code corpus measures 41.7% of characters under non-permissive licences, with GPL-family terms covering 39.5% of all files. The licence filter was written, tested, and correct — it just landed 40 minutes after the corpus that needed it, and nothing tied a new filter to a rebuild of the datasets already built. v0.1.2 therefore trained on roughly 50M copyleft tokens, about 2% of its training set, and its published card had listed three of the four sources while omitting the code slice entirely. Eleven minutes of CPU and one random sample found what no loss curve could. The v0.1.2 card now discloses it, and publishing training data is redefined as publishing the filtered corpus plus the filter — never the raw corpus, because redistributing copyleft text is the step that actually triggers the obligation.' },
   { id: 'I17', title: 'The dataset was silently dropping two directories', detail: 'kaggle datasets version defaults to --dir-mode skip, which ignores subdirectories entirely. The code dataset had been published flat, so configs/ and eval/ were both absent and it contained zero JSON files — meaning no kernel could resolve eval/probe_sentences.json, which is the real reason the Abhimanyu gap was never measurable even though the code supported it. The upload reported success every time. Four kernels failed in a row behind a green upload, each from one unchecked assumption: a missing file, an import used before it was defined, a missing directory, and a parser handed markdown where it expected JSON. The dataset publisher now stages one layout, always uses -r zip, refuses to publish an incomplete payload, then downloads the result back and asserts seventeen required files resolve. Assert the interface, then trust it.' },

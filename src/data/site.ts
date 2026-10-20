@@ -17,6 +17,7 @@ export const siteConfig = {
     email: 'mailto:subhajitpradhan310@gmail.com',
   },
   nav: [
+    { label: 'Projects', href: '/projects' },
     { label: 'KALIA', href: '/kalia' },
     { label: 'Writing', href: '/writing' },
     { label: 'Email', href: 'mailto:subhajitpradhan310@gmail.com' },

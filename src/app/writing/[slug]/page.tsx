@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { JsonLd } from '@/components/JsonLd';
 import { notFound } from 'next/navigation';
 import { getPost, posts, type PostBlock } from '@/data/posts';
 import { siteConfig } from '@/data/site';
+import { figureDimensions } from '@/lib/kalia-figures';
+import { postStructuredData } from '@/lib/structured-data';
 
 type PostPageProps = {
   params: Promise<{ slug: string }>;
@@ -32,7 +35,11 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
       url: canonicalPath,
       title: `${post.title} | ${siteConfig.name}`,
       description: post.summary,
-      images: ['/opengraph-image'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} | ${siteConfig.name}`,
+      description: post.summary,
     },
   };
 }
@@ -57,9 +64,16 @@ function Block({ block }: { block: PostBlock }) {
   }
 
   if (block.kind === 'image') {
+    const dimensions = figureDimensions(block.src);
     return (
       <figure className="post-figure">
-        <Image src={block.src} alt={block.alt} width={720} height={400} unoptimized />
+        <Image
+          src={block.src}
+          alt={block.alt}
+          width={dimensions.width}
+          height={dimensions.height}
+          unoptimized
+        />
         {block.caption ? <figcaption>{block.caption}</figcaption> : null}
       </figure>
     );
@@ -94,6 +108,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <article className="post site-frame">
+      <JsonLd data={postStructuredData(post)} />
       <header className="post-header">
         <p className="post-meta">
           <time dateTime={post.date}>{post.date}</time>

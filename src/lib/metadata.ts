@@ -25,7 +25,7 @@ export const rootMetadata: Metadata = {
     'open source',
   ],
   alternates: { canonical: '/' },
-  icons: { icon: '/favicon.svg' },
+  icons: { icon: '/favicon.svg', apple: '/apple-icon.png' },
   openGraph: {
     type: 'website',
     url: siteConfig.baseUrl,
@@ -54,7 +54,11 @@ export function createProjectMetadata(project: Project): Metadata {
       url: canonicalPath,
       title: `${project.title} case study | ${siteConfig.name}`,
       description: project.summary,
-      images: ['/opengraph-image'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} case study | ${siteConfig.name}`,
+      description: project.summary,
     },
   };
 }

@@ -1,7 +1,8 @@
+import { posts } from '@/data/posts';
 import { featuredProjects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
-import { rootMetadata } from '@/lib/metadata';
-import { structuredData } from '@/lib/structured-data';
+import { createProjectMetadata, rootMetadata } from '@/lib/metadata';
+import { postStructuredData, structuredData } from '@/lib/structured-data';
 
 describe('portfolio discovery metadata', () => {
   it('uses the canonical portfolio origin and hiring-focused root metadata', () => {
@@ -18,6 +19,33 @@ describe('portfolio discovery metadata', () => {
       expect.objectContaining({ title: `${siteConfig.name} | ${siteConfig.role}` }),
     );
     expect(siteConfig.resumePath).toBe('/resume.pdf');
+  });
+
+  it('gives project case studies their own Twitter card metadata', () => {
+    const project = featuredProjects[0];
+    const metadata = createProjectMetadata(project);
+
+    expect(metadata.twitter).toEqual(
+      expect.objectContaining({
+        card: 'summary_large_image',
+        title: `${project.title} case study | ${siteConfig.name}`,
+        description: project.summary,
+      }),
+    );
+  });
+
+  it('publishes BlogPosting structured data for writing posts', () => {
+    const post = posts[0];
+    const data = postStructuredData(post);
+
+    expect(data).toEqual(
+      expect.objectContaining({
+        '@type': 'BlogPosting',
+        headline: post.title,
+        datePublished: post.date,
+        url: `${siteConfig.baseUrl}/writing/${post.slug}`,
+      }),
+    );
   });
 
   it('publishes a Person and one CreativeWork entry for every featured project', () => {

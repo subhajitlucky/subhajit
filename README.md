@@ -24,7 +24,7 @@ npm run dev
 ```
 
 ```bash
-npm test        # 57 tests
+npm test        # 62 tests
 npm run typecheck
 npm run lint
 npm run build
@@ -39,6 +39,10 @@ Where the content lives:
 - Metadata and structured data: `src/lib/metadata.ts`, `src/lib/structured-data.ts`
 
 Pushes to `main` deploy through Vercel. The test suite proves the repository, not the deployment — those are separate checks.
+
+## Security notes
+
+`npm audit --omit=dev` is clean. The production CSP allows inline scripts because static Next hydration injects them; no third-party scripts are loaded. The remaining audit advisories are dev-only glob/brace parsing issues in the ESLint toolchain with no patched upstream release.
 
 ## Contact
 

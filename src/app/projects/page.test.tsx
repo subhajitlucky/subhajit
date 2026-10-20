@@ -25,11 +25,16 @@ describe('ProjectsPage', () => {
 
     entries.forEach((entry, index) => {
       const project = projects[index];
-      expect(within(entry).getByRole('link', { name: 'Details' })).toHaveAttribute(
-        'href',
-        `/projects/${project.slug}`,
-      );
-      expect(within(entry).getByRole('link', { name: 'Source' })).toHaveAttribute(
+      expect(
+        within(entry).getByRole('link', {
+          name: new RegExp(`${project.title} details`, 'i'),
+        }),
+      ).toHaveAttribute('href', `/projects/${project.slug}`);
+      expect(
+        within(entry).getByRole('link', {
+          name: new RegExp(`Source for ${project.title}`, 'i'),
+        }),
+      ).toHaveAttribute(
         'href',
         project.links.find((link) => link.kind === 'source')?.href,
       );

@@ -89,6 +89,12 @@ describe('KaliaPage', () => {
     expect(screen.getByText(/Figure A3 — the full curve/)).toBeInTheDocument();
   });
 
+  it('exposes the data tables as native tables', () => {
+    render(<KaliaPage />);
+
+    expect(screen.getAllByRole('table')).toHaveLength(5);
+  });
+
   it('offers verification links and a citation block', () => {
     render(<KaliaPage />);
 

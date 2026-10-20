@@ -21,16 +21,27 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="project-card-links">
         {actionLinks.map((link) =>
           isExternalUrl(link.href) ? (
-            <a key={link.href} href={link.href} {...externalLinkProps}>
+            <a
+              key={link.href}
+              href={link.href}
+              aria-label={`${link.label} for ${project.title}`}
+              {...externalLinkProps}
+            >
               {link.label}
             </a>
           ) : (
-            <a key={link.href} href={link.href}>
+            <a
+              key={link.href}
+              href={link.href}
+              aria-label={`${link.label} for ${project.title}`}
+            >
               {link.label}
             </a>
           ),
         )}
-        <Link href={`/projects/${project.slug}`}>Details</Link>
+        <Link href={`/projects/${project.slug}`} aria-label={`${project.title} details`}>
+          Details
+        </Link>
       </div>
     </article>
   );

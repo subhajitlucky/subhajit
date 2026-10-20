@@ -1,4 +1,5 @@
 import { Geist } from 'next/font/google';
+import Script from 'next/script';
 import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { JsonLd } from '@/components/JsonLd';
@@ -23,9 +24,14 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en" className={sans.variable} suppressHydrationWarning>
       <body>
+        <Script id="kalia-theme" strategy="beforeInteractive">
+          {`try{var s=localStorage.getItem('kalia-theme');var t=(s==='light'||s==='dark')?s:(window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');document.documentElement.dataset.kaliaTheme=t;}catch(e){}`}
+        </Script>
         <JsonLd />
         <SiteHeader />
-        <main id="main-content">{children}</main>
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

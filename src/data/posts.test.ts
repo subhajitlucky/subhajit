@@ -1,4 +1,4 @@
-import { getPost, posts } from '@/data/posts';
+import { getPost, getPostsByDateDesc, posts } from '@/data/posts';
 
 describe('writing content integrity', () => {
   it('publishes the long-form technical posts', () => {
@@ -36,6 +36,18 @@ describe('writing content integrity', () => {
     expect(serialized).not.toContain('game-changer');
     expect(serialized).not.toContain('revolutionize');
     expect(serialized).not.toContain("in today's fast-paced");
+  });
+
+  it('orders posts by date without reversing same-day entries', () => {
+    const ordered = getPostsByDateDesc();
+    const dates = ordered.map((post) => post.date);
+
+    expect(dates).toEqual([...dates].sort((a, b) => b.localeCompare(a)));
+
+    const sameDay = ordered.filter((post) => post.date === '2026-09-23').map((post) => post.slug);
+    expect(sameDay).toEqual(
+      posts.filter((post) => post.date === '2026-09-23').map((post) => post.slug),
+    );
   });
 
   it('looks up posts by slug without manufacturing missing entries', () => {

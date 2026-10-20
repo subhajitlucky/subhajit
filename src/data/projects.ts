@@ -38,6 +38,11 @@ export type Project = {
   featured: boolean;
 };
 
+export type ProjectIndexItem = Pick<
+  Project,
+  'slug' | 'title' | 'status' | 'category' | 'roles' | 'summary' | 'links'
+>;
+
 export const projects: Project[] = [
 
   {
@@ -55,7 +60,7 @@ export const projects: Project[] = [
       'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
     proof: [
       'Public release: weights, model card, and the full engineering record (every numbered decision and incident, and hash-anchored pre-registrations).',
-      'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval; zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
+      'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval (v0.1.2, original held-out set; re-baselined at 3.0533 on the rebuilt set); zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
       'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
       'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
       'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency decoder that triples character retention (+0.061, 95% CI), and the first known test of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
@@ -330,7 +335,7 @@ export const projects: Project[] = [
     system:
       'A TypeScript monorepo scans repository structure and Git state, generates machine-readable memory artifacts, and writes concise agent-facing documents for scan, refresh, status, and resume workflows.',
     proof: [
-      'Published with `smritiflow` and `sf` command aliases.',
+      'Published with the smritiflow and sf command aliases.',
       'Generates cache, project map, scan report, AGENTS.md, and focused handoff documents.',
       'Includes init, scan, refresh, status, and resume workflows.',
       'Covers parsers, generators, and end-to-end artifact generation with automated tests.',
@@ -380,7 +385,7 @@ export const projects: Project[] = [
       'A 384-encoding sweep and a 162-configuration round selected the wire format by measurement; every variant is decoder-verified lossless.',
       'SUTRA-C costs 7.5 tokens/message (2.8 in agreed-template mode) versus 72.5 for deployed JSON-RPC envelopes, counted with production tokenizers.',
       'Two model families read and write the compact form at 12/12 in comprehension tests; the densest template form reaches 6/6 reads on one.',
-      '17 unit tests, a frozen specification, and an end-to-end deal demo that re-validates every decoded message with the parser.',
+      '17 codec unit tests, a frozen specification, and an end-to-end deal demo that re-validates every decoded message with the parser.',
     ],
     decisions: [
       'Select encodings by measurement — token counts, decoder round-trips, model comprehension — not by taste.',

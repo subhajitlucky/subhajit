@@ -2,12 +2,12 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { roleFilters, roleLabels, type Project, type Role } from '@/data/projects';
+import { roleFilters, roleLabels, type ProjectIndexItem, type Role } from '@/data/projects';
 import { externalLinkProps } from '@/lib/urls';
 
 type RoleFilter = Role | 'all';
 
-export function ProjectsExplorer({ projects }: { projects: Project[] }) {
+export function ProjectsExplorer({ projects }: { projects: ProjectIndexItem[] }) {
   const [activeRole, setActiveRole] = useState<RoleFilter>('all');
 
   const visibleProjects = useMemo(() => {
@@ -54,9 +54,11 @@ export function ProjectsExplorer({ projects }: { projects: Project[] }) {
                 <p>{project.summary}</p>
               </div>
               <div className="index-project-actions">
-                <Link href={`/projects/${project.slug}`}>Details</Link>
+                <Link href={`/projects/${project.slug}`} aria-label={`${project.title} details`}>
+                  Details
+                </Link>
                 {source ? (
-                  <a href={source.href} {...externalLinkProps}>
+                  <a href={source.href} aria-label={`${source.label} for ${project.title}`} {...externalLinkProps}>
                     {source.label}
                   </a>
                 ) : null}
