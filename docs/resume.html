@@ -4,15 +4,15 @@
 <meta charset="utf-8" />
 <title>Subhajit Pradhan — Resume</title>
 <style>
-  @page { size: letter; margin: 0.5in 0.75in; }
+  @page { size: letter; margin: 0.4in 0.7in; }
   * { box-sizing: border-box; }
   html, body {
     margin: 0;
     padding: 0;
     color: #111;
     font-family: "Liberation Sans", Arial, sans-serif;
-    font-size: 9.2pt;
-    line-height: 1.25;
+    font-size: 9pt;
+    line-height: 1.22;
   }
   .name {
     font-family: "Liberation Serif", "Times New Roman", serif;
@@ -43,7 +43,7 @@
   h2 {
     font-size: 11.5pt;
     font-weight: 700;
-    margin: 9pt 0 4pt;
+    margin: 7pt 0 3pt;
     padding-bottom: 2pt;
     border-bottom: 1px solid #111;
   }
@@ -109,9 +109,9 @@
       <span class="place">Remote</span>
     </div>
     <ul>
-      <li>Build and ship full-stack features in Next.js, TypeScript, PostgreSQL/Supabase, and ClickHouse across web, API, and analytics layers.</li>
-      <li>Develop backend APIs and background job processing on Google Cloud Platform, with authentication, role-based access control, caching, and dashboard data pipelines.</li>
-      <li>Debug production incidents, optimize SQL queries, and clear performance bottlenecks in live services, verifying fixes with tests and staged rollouts.</li>
+      <li>Build and ship full-stack features for a production product in Next.js, TypeScript, PostgreSQL/Supabase, and ClickHouse across web, API, and analytics layers.</li>
+      <li>Develop backend APIs and background jobs on Google Cloud Platform, including authentication, role-based access control, caching, and dashboard data pipelines.</li>
+      <li>Owned backend delivery in the final phase; debugged production incidents, optimized SQL, and improved dashboard performance with tests and staged rollouts.</li>
     </ul>
   </div>
 
@@ -136,8 +136,8 @@
     <div class="project-title">Codebase Doctor – Repository Auditor for Humans and Coding Agents</div>
     <div class="project-stack">TypeScript, Node.js, MCP, SARIF &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/codebase-doctor">npm</a> | <a href="https://github.com/subhajitlucky/codebase-doctor">GitHub</a></div>
     <ul>
-      <li>Published npm CLI and MCP server with a full test suite; CI verifies each release from the packed tarball. Audits secrets (working tree and Git history), dependencies (npm/pnpm/Yarn/Bun + OSV advisories), PostgreSQL RLS, Dockerfiles, and GitHub Actions.</li>
-      <li>Builds a multi-language source graph across JS/TS, Python, Go, Java, and Rust for impact analysis; reports stable fingerprints with baselines in text, JSON, or SARIF so CI separates new issues from known ones.</li>
+      <li>Published npm CLI and MCP server with a full test suite and release CI; audits secrets, dependencies, RLS, Dockerfiles, and GitHub Actions.</li>
+      <li>Builds a multi-language source graph for impact analysis; emits stable text, JSON, or SARIF fingerprints and baselines.</li>
     </ul>
   </div>
 
@@ -145,8 +145,8 @@
     <div class="project-title">RLS Doctor – Postgres and Supabase Row Level Security Auditor</div>
     <div class="project-stack">TypeScript, PostgreSQL, Supabase &nbsp;·&nbsp; <a href="https://www.npmjs.com/package/rls-doctor">npm</a> | <a href="https://github.com/subhajitlucky/rls-doctor">GitHub</a></div>
     <ul>
-      <li>Published npm CLI that audits RLS policies, grants, and role-membership paths from live catalog metadata; ships SARIF output, baselines, and a GitHub Action for pull-request checks.</li>
-      <li>Probe mode impersonates application roles in rolled-back read-only transactions, including simulated JWT users, to prove cross-tenant row reads without changing the database.</li>
+      <li>Published npm CLI that audits RLS policies, grants, and role-membership paths; ships SARIF, baselines, and a GitHub Action.</li>
+      <li>Probe mode impersonates application roles in rolled-back transactions to prove cross-tenant reads without changing data.</li>
     </ul>
   </div>
 
@@ -154,8 +154,17 @@
     <div class="project-title">Tarka Sabha – Multi-Agent AI Debate Platform</div>
     <div class="project-stack">Next.js, TypeScript, PostgreSQL, Prisma &nbsp;·&nbsp; <a href="https://tarkasabha.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/tarkaSabha">GitHub</a></div>
     <ul>
-      <li>Multi-agent debate platform routing multiple LLM providers with configurable personas; API keys encrypted with AES-256-GCM with model calls kept server-side.</li>
-      <li>Persists auth-backed debate state (chats, messages, rate limits) in PostgreSQL/Prisma with deterministic round-robin and mention-aware speaker selection.</li>
+      <li>Multi-agent debate platform routing multiple LLM providers with configurable personas; keys encrypted with AES-256-GCM and model calls kept server-side.</li>
+      <li>Persists auth-backed chats, messages, and rate limits in PostgreSQL/Prisma with deterministic, mention-aware speaker selection.</li>
+    </ul>
+  </div>
+
+  <div class="project">
+    <div class="project-title">CampusHelper – Full-Stack Campus Lost-and-Found Platform</div>
+    <div class="project-stack">Next.js, TypeScript, PostgreSQL, Prisma, Supabase &nbsp;·&nbsp; <a href="https://campushelper.vercel.app">Live</a> | <a href="https://github.com/subhajitlucky/campushelper">GitHub</a></div>
+    <ul>
+      <li>Built an authenticated lost-and-found platform with Google sign-in, image uploads, searchable reports, claims, and admin moderation.</li>
+      <li>Enforced server-side validation, rate limits, and database-level RLS across Prisma/Postgres and Vercel Blob uploads.</li>
     </ul>
   </div>
 
