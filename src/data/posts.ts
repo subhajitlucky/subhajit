@@ -733,54 +733,98 @@ codebase-doctor audit . --changed --baseline baseline.json --fail-on high`,
     slug: 'kalia-build-log',
     title: 'Training a 58M language model from scratch on free GPUs',
     summary:
-      'Zero dollars and a full public record: micro-ablations before full runs, an optimizer that won 7 of 7 checkpoints and was still not promoted, a validation plateau resolved by a deterministic evaluation, and the quota exhaustion that ended training at 73% of the schedule.',
+      'Zero dollars and a full public record: a 58M-parameter model trained from random initialization on free Kaggle GPUs. v0.1.2 stopped at 73% of its schedule; v0.2.0 finished and improved held-out loss by 0.2285 nats, then failed its own stability rule on two benchmarks. The most useful result was discovering that the project’s best architecture win was noise.',
     date: '2026-09-23',
-    readingMinutes: 17,
+    readingMinutes: 10,
     tags: ['language models', 'training', 'Muon', 'Kaggle', 'from scratch'],
     sections: [
       {
-        id: 'goal',
-        title: 'The goal and the constraint',
+        id: 'result',
+        title: '58M parameters, zero dollars',
         blocks: [
           {
-            kind: 'link',
-            href: '/kalia',
-            label: 'Dedicated page: KALIA 0.1.2',
-            note: 'The full paper-style record — model specification, evaluation, a replayable training console, and every decision and incident.',
+            kind: 'p',
+            text: 'KALIA is a 58M-parameter language model trained from random initialization on free Kaggle GPUs. No pretrained weights. No fine-tuning. No budget.',
           },
           {
             kind: 'p',
-            text: "I trained KALIA, a 58M-parameter language model, from random initialization to coherent story generation using only free-tier Kaggle GPUs. No pretrained weights, no distillation, no fine-tuning, and zero dollars of compute. It writes short stories, scores 61.4% on PIQA, and every weight in it exists nowhere else.",
+            text: 'The first release, v0.1.2, stopped at 73% of its schedule and scored 3.0533 held-out loss / 0.9992 bits-per-byte. The second, v0.2.0, finished the schedule and reached 2.8248 / 0.9244, 0.2285 nats better. But v0.2.0 failed its own stability rule on two benchmarks, so it is an experiment, not the new default.',
           },
           {
             kind: 'p',
-            text: "Two rules shaped the project. The first was from-scratch: fine-tuning forks someone else's brain, and I wanted an artifact where every byte was accountable — the corpus mixture, the tokenizer, the architecture, the optimizer, the exact run. The second rule was verifiability: every experiment is pre-registered with a SHA-256 hash before it runs, every decision is numbered, and every incident is published, including the ones that make me look bad.",
+            text: "The most useful result was not a better model. It was discovering that the project's best architecture result was noise.",
           },
           {
-            kind: 'list',
+            kind: 'code',
+            lang: 'text',
+            code: `version   tokens   held-out loss   bits/byte   status
+v0.1.2    1.82B    3.0533          0.9992      released
+v0.2.0    2.50B    2.8248          0.9244      experiment`,
+            caption: 'Same held-out set, same 100-batch protocol. The old 2.4366 is a different yardstick and is never compared (D43).',
+          },
+          {
+            kind: 'callout',
+            title: 'What this is, and what it is not',
             items: [
-              'The constraint stack: 30 GPU-hours per week on 2x NVIDIA T4 (32GB total).',
-              '8.5-hour maximum session length, so the trainer had to be resumable by design.',
-              'API-triggered runs cannot read secrets, so real training sessions start from the browser.',
-              'Total compute spent on the released model: about 20 GPU-hours.',
+              'This is a from-scratch 58M model, one corpus, and a public record of every decision and failure.',
+              'It is not an assistant. It has no instruction tuning, weak factual recall, and entity drift over long outputs.',
+              'It is not a frontier model. OPT-125M is twice the size and trained on roughly 100x more tokens; comparisons are context, not a head-to-head.',
             ],
           },
         ],
       },
       {
-        id: 'measure-first',
+        id: 'where',
+        title: 'Where this fits',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'The architecture is deliberately standard: pre-norm decoder-only, RMSNorm, SwiGLU, RoPE, QK-Norm, logit soft-cap (tau=30), weight tying, no biases. The optimizer is Muon on hidden matrices and AdamW for embeddings, head, and norms.',
+          },
+          {
+            kind: 'p',
+            text: 'The contribution is not a new block. It is the record: pre-registered ablations, replication at fresh seeds, and published failures. That is what makes the numbers checkable.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `model        params   tokens   PIQA   ARC-Easy
+KALIA v0.1.2 58M      1.82B    61.4   45.8
+KALIA v0.2.0 58M      2.50B    63.8   42.0
+OPT-125M     125M     ~180B    63.0   43.5`,
+            caption: 'Scale context, not a head-to-head. Harness versions differ; KALIA uses lm-eval 0.4.9, 0-shot, 500 samples.',
+          },
+        ],
+      },
+      {
+        id: 'constraint',
+        title: 'The constraint',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'The free tier gives 2x T4 (32GB total), about 30 GPU-hours a week, and 8.5-hour sessions. The trainer had to resume by design: checkpoints every 30 minutes to the HuggingFace Hub, an atomic swap, and a barrier so two workers never write the same file.',
+          },
+          {
+            kind: 'p',
+            text: "Two rules shaped the run. From scratch: every weight is learned by this project's own training. Pre-registration: every experiment gets a SHA-256 hash before it runs, every decision is numbered, every incident is published.",
+          },
+          {
+            kind: 'p',
+            text: 'The first release used about 20 GPU-hours. The total cash cost was zero dollars.',
+          },
+          {
+            kind: 'p',
+            text: 'The corpus is 2.4B tokens: FineWeb-Edu 60%, TinyStories 20%, Cosmopedia 15%, permissively licensed Python 5%. The licence audit and rebuild are their own story, below.',
+          },
+        ],
+      },
+      {
+        id: 'measure',
         title: 'Measure before you spend',
         blocks: [
           {
             kind: 'p',
-            text: "When quota is the scarce resource, the worst thing you can do is discover a bad recipe with it. Every change is first screened at 30M parameters on 50M tokens, roughly 30 minutes per arm, with identical seed and token budget. Only winners are promoted to full runs.",
-          },
-          {
-            kind: 'code',
-            lang: 'bash',
-            code: `# Screen three optimizers at 30M params, 500 steps each (~90 minutes total)
-python ablate.py --arms micro-base,micro-muon,micro-muon-qk --steps 500`,
-            caption: 'The micro-ablation ladder: one change per arm, same data and seed.',
+            text: 'When quota is the scarce resource, the worst thing you can do is discover a bad recipe with it. Every change is screened at 30M params on 50M tokens, about 30 minutes per arm, same seed and token budget.',
           },
           {
             kind: 'list',
@@ -788,7 +832,6 @@ python ablate.py --arms micro-base,micro-muon,micro-muon-qk --steps 500`,
               'AdamW: 3.8041 step-700 validation loss.',
               'Muon: 3.5937, a 0.21 improvement.',
               'Muon + QK-Norm + logit soft-capping: 3.5103, a 0.29 improvement.',
-              'The ordering held at every evaluation checkpoint, so it was not noise.',
             ],
           },
           {
@@ -799,177 +842,201 @@ python ablate.py --arms micro-base,micro-muon,micro-muon-qk --steps 500`,
           },
           {
             kind: 'p',
-            text: "The full-scale run confirmed it: the new recipe reached the AdamW baseline's final loss with about 23% fewer tokens, and kept a persistent gap of roughly 0.15 nats at equal step counts.",
+            text: "At full scale the recipe reached the AdamW baseline's final loss with about 23% fewer tokens: 3.2214 at step 1,730 versus 3.2702 at step 2,250.",
+          },
+          {
+            kind: 'p',
+            text: 'Muon+ beat plain Muon on 7 of 7 checkpoints by 0.015 nats. The promotion bar, fixed before the run, was 0.02. It did not ship. A threshold bent for a favored result is not a threshold.',
           },
         ],
       },
       {
-        id: 'not-promoted',
-        title: 'Muon+ validated, not promoted',
+        id: 'run',
+        title: 'The run: a plateau and a quota wall',
         blocks: [
           {
             kind: 'p',
-            text: "Muon+ adds one post-polar normalization step to Muon, and the papers report gains from 60M parameters upward. In our ablation it beat plain Muon on 7 of 7 checkpoints. It was not promoted to the full-scale recipe.",
+            text: 'v0.1.2 trained across three sessions. For a thousand steps validation loss refused to move while training loss kept falling. A single point cannot tell a noisy eval from a real plateau.',
           },
           {
             kind: 'p',
-            text: "The gain was 0.015 nats. The promotion threshold, fixed before the experiment ran, was 0.02. A threshold that is bent for a favored result is not a threshold, so the full-scale model kept plain Muon and the 0.015 result remains in the record as validated but below the bar.",
+            text: 'The deterministic evaluation settled it: 100 fixed-seed batches over 819,200 tokens returned 3.0533 loss and 0.9992 bits-per-byte.',
+          },
+          {
+            kind: 'p',
+            text: 'The weekly quota ran out at step 3,478 of 4,770, 73% of the schedule. The pre-registered rule said stop on a plateau; the quota made the stop physical. The plateau and the stop are published, not smoothed over.',
+          },
+          {
+            kind: 'p',
+            text: 'Zero-shot: PIQA 61.4, ARC-Easy 45.8, HellaSwag 36.8, WinoGrande 50.2, LAMBADA 23.0. The custom Abhimanyu gap, reversed-text loss minus forward loss, was 6.06 nats. The model can enter fluent text but cannot exit it.',
           },
         ],
       },
       {
-        id: 'architecture',
-        title: 'Architecture search: three negatives and one finding',
+        id: 'failed',
+        title: 'The experiment that failed',
         blocks: [
           {
             kind: 'p',
-            text: "With the optimizer settled, the next question was shape. Four arms, same data, same seed, 763 steps: the control design, a looped model that passes through the same weights twice for double effective depth, a thin-and-deep model, and grouped-query attention.",
-          },
-          {
-            kind: 'list',
-            items: [
-              'Control (Muon + QK-Norm): 3.4924 step-700 validation loss.',
-              'Looped depth: 3.5012 — quality-neutral.',
-              'Thin and deep: 3.6969 — clearly worse.',
-              'Grouped-query attention: 3.5031 — quality-neutral, with 4% fewer parameters.',
-            ],
-          },
-          {
-            kind: 'image',
-            src: '/kalia/architecture-ablation.svg',
-            alt: 'Bar chart comparing step-700 validation loss for the control architecture, looped depth, thin-and-deep, and grouped-query attention; the control arm is lowest.',
-            caption: 'Nothing beat the control arm by the pre-set margin, so the negatives shipped with the results.',
+            text: 'The Abhimanyu gap suggested a fix: chunk-preserving reversal training. Reverse the order of short chunks, keep the tokens inside each chunk readable.',
           },
           {
             kind: 'p',
-            text: "Nothing beat control by the pre-set margin, so the architecture stayed as it was and the negatives were published. One finding survived anyway: the looped model ran only 1.35x slower per step, not 2x, because the reused weights stay hot in cache between passes. Double effective depth for a third more compute is interesting economics — it just did not buy quality at this scale.",
-          },
-        ],
-      },
-      {
-        id: 'the-run',
-        title: 'The run: a plateau, a decay, and a quota wall',
-        blocks: [
-          {
-            kind: 'p',
-            text: "The released model trained across three sessions. For a thousand steps the validation loss refused to move while training loss kept falling — the classic shape of a noisy eval or a real plateau, and impossible to tell apart from a single point.",
-          },
-          {
-            kind: 'list',
-            items: [
-              'Step 1500: 2.5270, then 1750: 2.5453, 2000: 2.6334, 2250: 2.6261, 2500: 2.5736 — flat inside a band of about 0.1.',
-              'Step 2750: 2.4438, then 3000: 2.3986 as the cosine decay bit, then 3250: 2.5138 — the swings were the eval, not the model.',
-              'The weekly GPU quota ran out at step 3478 of 4770, 73% of the schedule.',
-            ],
-          },
-          {
-            kind: 'image',
-            src: '/kalia/val-loss-v012.svg',
-            alt: 'Line chart of validation loss from step 250 to 3250: a steep descent from 4.0881 to 2.5270 by step 1500, then a plateau band between 2.40 and 2.63 for the remaining 1,750 steps, plus a separate deterministic evaluation point at step 3478 with loss 2.4366.',
-            caption: 'The full curve: the descent finishes by step 1,500 and everything after it oscillates inside 0.23 nats. The first half was missing from the published log — a mid-run code change dropped it — and was rebuilt from the model repository commit history.',
-          },
-          {
-            kind: 'p',
-            text: "A deterministic evaluation settled the question the noisy training evals could not: 100 fixed-seed batches over 819,200 tokens returned 2.4366 loss and 0.8184 bits-per-byte, on the original corpus's held-out set. That set was later rebuilt for licence compliance and the rebuilt one is 0.62 nats harder for identical weights, so the figure is not comparable to anything measured afterwards — a lesson that arrived as decision D43.",
-          },
-        ],
-      },
-      {
-        id: 'evaluation',
-        title: 'Evaluation beyond loss',
-        blocks: [
-          {
-            kind: 'list',
-            items: [
-              'Probe held-out loss on 20 fixed sentences: 3.2303, or 0.9415 bits-per-byte.',
-              'Zero-shot benchmarks, 500 samples each: PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8% (normalized), WinoGrande 50.2%, LAMBADA 23.0% accuracy at perplexity 194.',
-              'For scale context, leaderboard tables list OPT-125M — twice the parameters and roughly 160x the training tokens — at PIQA 63.0% and ARC-Easy 43.5%. Treat that as context, not a head-to-head: harness versions differ.',
-            ],
-          },
-          {
-            kind: 'image',
-            src: '/kalia/benchmarks.svg',
-            alt: 'Bar chart of zero-shot benchmark accuracy: PIQA 61.4, ARC-Easy 45.8, HellaSwag 36.8, WinoGrande 50.2, with dashed chance lines at 50 and 25 percent.',
-            caption: 'Above chance on every task; genuinely competitive on PIQA and ARC-Easy for a 58M storyteller.',
-          },
-          {
-            kind: 'p',
-            text: "The metric I am most attached to is custom. Take held-out text, measure the model's loss on it forward, then measure its loss on the same text with the tokens reversed. Forward 3.23, reversed 9.29. The Abhimanyu gap is the difference: 6.06 nats. The model can enter fluent text but cannot exit it — the computational form of the warrior who entered the Chakravyuha formation and could not find his way out. Random guessing would be about 10.8, so reversed text is nearly as foreign to the model as noise.",
+            text: 'The prediction, threshold, and analysis plan were hashed before the run. Both seeds missed both pre-registered bars, and the gap got worse by 0.14 nats. The transform was rejected.',
           },
           {
             kind: 'code',
-            lang: 'bash',
-            code: `# Reproduce the evaluation on the released checkpoint
-python eval_probes.py --ckpt ckpt.pt --out out/eval/report.md
-python eval_reversibility.py --ckpt ckpt.pt --out out/eval/reversibility.md
-python eval_val.py --ckpt ckpt.pt --val-bin val.bin --batches 100`,
-            caption: 'The evaluation suite runs on CPU; no GPU quota is spent.',
+            lang: 'text',
+            code: `arm          gap       forward val
+control      5.1107    3.8816
+reversal     5.2465    3.9641`,
+            caption: 'Both metrics moved in the wrong direction. The negative result is published with the same prominence as a win.',
+          },
+          {
+            kind: 'p',
+            text: 'Token-level reversal remains a separate hypothesis. It is not a quiet retry of the same experiment.',
+          },
+        ],
+      },
+      {
+        id: 'best',
+        title: "The best result that wasn't",
+        blocks: [
+          {
+            kind: 'p',
+            text: "The architecture search produced a candidate that looked like the project's best result: X20, a static per-channel modulation, beat control by 0.1358 nats, 3.1x any previous architecture effect.",
+          },
+          {
+            kind: 'p',
+            text: 'It was one seed. The project had already learned to distrust a 0.0436 result on those grounds, so X20 got a pre-registered replication at two fresh seeds.',
+          },
+          {
+            kind: 'p',
+            text: 'It inverted: +0.0516, worse than control, at both seeds. The replication also measured the control’s own spread: two sessions at seed 1337 agreed to 0.0018, but fresh seeds sat about 0.11 nats higher. That spread is larger than every earlier “win” (X18’s -0.0436, X19’s -0.0018).',
+          },
+          {
+            kind: 'image',
+            src: '/kalia/replication-collapse.svg',
+            alt: 'Bar chart showing the X20 static gate below the control at seed 1337 and above the control at two fresh seeds, reversing the apparent gain.',
+            caption: 'The project’s best architecture result, replicated at two fresh seeds. The effect inverted.',
+          },
+          {
+            kind: 'p',
+            text: 'At 58M the control spread is 0.2892 nats, 2.5x the 30M spread. That is the measurement floor. Every single-seed architecture delta in the project was read against a baseline nobody had measured. The architecture line closed; no arm may run from one seed again.',
+          },
+          {
+            kind: 'image',
+            src: '/kalia/seed-spread.svg',
+            alt: 'Chart of the 58M seed spread: the same recipe across three seeds and two sessions, with each seed re-landing within 0.004 nats of itself and the seeds sitting 0.29 nats apart.',
+            caption: 'The 58M seed spread. Same recipe, three seeds, two sessions: each seed re-lands within 0.004 nats of itself; the seeds sit 0.29 nats apart.',
+          },
+          {
+            kind: 'p',
+            text: 'The lesson is uncomfortable and useful: a big effect from one seed is less established, not more. The budget moved to the continual-update corpus and the replay sweep.',
+          },
+        ],
+      },
+      {
+        id: 'v020',
+        title: 'v0.2.0: the loss improved, the benchmarks disagreed',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'v0.2.0 used a compliance-rebuilt 2.5B-token corpus and the full 4,770-step schedule. Held-out loss: 2.8248, 0.2285 nats better, 4.6x the 0.05 bar. Bits-per-byte: 0.9244.',
+          },
+          {
+            kind: 'image',
+            src: '/kalia/val-loss.svg',
+            alt: 'Line chart of validation loss for v0.1.2 and v0.2.0 on the same rebuilt held-out set: v0.1.2 scores 3.0533 and v0.2.0 scores 2.8248, 0.2285 nats better.',
+            caption: 'Both versions on the same rebuilt yardstick. v0.1.2 was re-measured on the v2b set; the old 2.4366 is never compared.',
+          },
+          {
+            kind: 'p',
+            text: 'The benchmarks split: PIQA 63.8 (+2.4), HellaSwag 39.8 (+3.0), WinoGrande 50.8 (+0.6), LAMBADA 20.8 (-2.2), ARC-Easy 42.0 (-3.8). The standard errors are about 2 points; none of the five movements reaches 2 sigma.',
+          },
+          {
+            kind: 'image',
+            src: '/kalia/bench-compare.svg',
+            alt: 'Grouped bar chart comparing v0.1.2 and v0.2.0 on five zero-shot benchmarks, with a grey band of plus or minus one standard error; no movement clears two standard errors.',
+            caption: 'Zero-shot accuracy, both versions, with the measurement noise drawn in. The grey band is about 2 points.',
+          },
+          {
+            kind: 'p',
+            text: 'The stability rule allowed no task to regress by more than 1 point. v0.2.0 fails on two, so it is released as an experiment, not promoted over v0.1.2. The thresholds were not moved after seeing the result.',
+          },
+          {
+            kind: 'p',
+            text: 'Loss improved; accuracy did not follow. That points at the data, not capacity or the method.',
+          },
+          {
+            kind: 'p',
+            text: 'The corpus explains LAMBADA: only 17.7% of tokens are in documents long enough to fill the 1,024-token context. TinyStories is a fifth of the mixture, but only 0.03% of its documents are long enough. The model was trained mostly on short documents and tested on long-range cloze.',
           },
         ],
       },
       {
         id: 'record',
-        title: 'The record is the point',
+        title: 'What failed, and what it taught',
         blocks: [
           {
             kind: 'p',
-            text: "Any training run produces a loss curve. What makes this one auditable is everything around it: the numbered decisions, the published incidents, the hash-anchored pre-registrations and their registered amendments, and a dated journal. The incidents are the useful part.",
+            text: 'The model results are only half the record. The engineering failures are the other half.',
           },
           {
             kind: 'list',
             items: [
-              'A resume race where both distributed workers wrote the same checkpoint file; fixed with a single downloader, an atomic swap, and a barrier.',
-              'A silent success: a failed training subprocess was still marked complete, because shell-style commands do not fail notebook cells; fixed by asserting exit codes.',
-              'A misreported duration: I described a 44-minute ablation as having run five hours, because I trusted my sense of time instead of the run-start timestamp. The correction is in the journal.',
-              'A documentation error caught late: our own docs described the released model as Muon+ when the config proved it was plain Muon. Every public text was corrected, and the hashed v0.2.0 pre-registration received a registered amendment rather than a silent edit.',
+              "Licence audit: 41.7% of the code corpus was non-permissive (39.5% GPL-family). The filter existed and was tested; it landed 40 minutes after the corpus that needed it. v0.1.2's code slice (~50M tokens, ~2% of training) was built without it. The model card discloses it; v0.2.0 is licence-clean by construction.",
+              'Dataset publisher: the Kaggle publisher defaulted to `--dir-mode skip`, so the code dataset shipped with no configs, no eval folder, and no JSON. Every upload reported success. Assert the interface, then trust it.',
+              'Held-out set: a corpus rebuild silently replaced the measuring stick, making a healthy run look 0.74 nats worse. Re-measure both sides before believing a cross-rebuild comparison (D43).',
+              'Accuracy thresholds: two pre-registered bars (0.5 pp, 1.0 pp) sat below the ~2 pp standard error. One passed on noise. Future bars must sit above the measured noise floor (D45).',
+              'Citations: one load-bearing continual-learning citation was about the wrong paper. It was retracted in place; the decision survived on weaker grounds (D49).',
             ],
           },
           {
             kind: 'p',
-            text: "None of this is glamorous. All of it is why the numbers in this post can be checked by anyone with a browser, and why I trust them myself.",
-          },
-        ],
-      },
-      {
-        id: 'release',
-        title: 'What is public now',
-        blocks: [
-          {
-            kind: 'list',
-            items: [
-              'Weights, model card, configs, and the full resumable checkpoint on HuggingFace (Apache-2.0).',
-              'Source, tests, notebooks, journal, decisions, incidents, and the pre-registration ledger on GitHub (MIT).',
-              'Training data is never redistributed; every source is attributed in the model card.',
-              'The Kaggle notebooks that built and evaluated the model are private for now, and the self-contained ones will be published next.',
-            ],
-          },
-          {
-            kind: 'code',
-            lang: 'python',
-            code: `# Generate from the released checkpoint (CPU is fine; the model is ~230MB)
-from huggingface_hub import hf_hub_download
-path = hf_hub_download("kalia-lm/kalia-v012", "checkpoints/ckpt.pt")
-# then, from a clone of the repository:
-# python sample.py --ckpt <path> --prompt "Once upon a time"`,
-            caption: 'The raw checkpoint loads with the project\u2019s own model code, no transformers required.',
+            text: 'The record is the point. A run produces a loss curve; the decisions, incidents, and retractions are what make the curve checkable.',
           },
         ],
       },
       {
         id: 'reproduce',
-        title: 'Reproduce it',
+        title: 'Reproduce this',
         blocks: [
+          {
+            kind: 'p',
+            text: 'The numbers above are from commit `5301db6`. The full test suite runs on CPU; heavy training belongs on Kaggle.',
+          },
           {
             kind: 'code',
             lang: 'bash',
-            code: `git clone https://github.com/subhajitlucky/kalia && cd kalia
-python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
-python -m pytest tests/ -v`,
-            caption: 'The full test suite runs on CPU.',
+            code: `git clone https://github.com/subhajitlucky/kalia
+cd kalia
+git checkout 5301db6
+python3 -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+python -m pytest -q
+python tools/check_notebooks.py`,
+            caption: 'The suite checks notebooks and the public claims before any GPU quota is spent.',
           },
           {
             kind: 'p',
-            text: "Data preparation, training, and evaluation all run on free Kaggle notebooks, and every one of them is in the repository. The pre-registration hashes are in the ledger, so anyone can verify that a prediction existed before its result did.",
+            text: 'Weights, model card, configs, and the full resumable checkpoint: `kalia-lm/kalia-v012` and `kalia-lm/kalia-v020` on HuggingFace (Apache-2.0). Source, journal, decisions, incidents, and the pre-registration ledger: GitHub (MIT). Training data is not redistributed; sources are attributed.',
+          },
+          {
+            kind: 'p',
+            text: 'The old 2.4366 / 0.8184 BPB is v0.1.2 on the original held-out set. It is not comparable to 3.0533 / 0.9992 on the rebuilt set, and the two are never tabulated together.',
+          },
+          {
+            kind: 'link',
+            href: '/kalia',
+            label: 'KALIA model page',
+            note: 'The full paper-style record: replayable training console, benchmarks, decisions, incidents, and the recipe.',
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/kalia',
+            label: 'KALIA on GitHub',
+            note: 'Source, tests, notebooks, journal, decisions, incidents, and the pre-registration ledger.',
           },
         ],
       },
@@ -979,11 +1046,27 @@ python -m pytest tests/ -v`,
         blocks: [
           {
             kind: 'p',
-            text: "The Abhimanyu gap was the thread I wanted to pull. The pre-registered experiment tested whether chunk-preserving reversal training — reversing the order of short chunks while keeping tokens inside each chunk readable — closes the gap without hurting forward loss. The prediction, threshold, and analysis plan were hashed before the run. It failed: the gap came out 0.14 nats worse than the control, on both seeds, on both metrics, and the transform was rejected by the rule that had already decided what would count as success.",
+            text: 'v0.3.0 is a continual update of v0.2.0, not a new base: new corpus, learning rate re-warmed and re-decayed, old data replayed. The replay ratio has to be measured at 58M because published replay results stop at 0.6B.',
           },
           {
             kind: 'p',
-            text: "Then came v0.2.0, now training: a compliance-clean corpus of 2.4B tokens, with only those changes that pass promotion rules hashed before any result existed. The reversal transform was not one of them. Its final evaluation — yardstick, thresholds, and the claims it is forbidden to make — was registered while it was still training.",
+            text: 'The programme also moved to inference-time levers: an entity-consistency decoder triples character retention (+0.061), a best-of-N/retrieval probe, and four Vedic recitation orders as replay schedules. The 58M measurement floor stopped small architecture claims.',
+          },
+          {
+            kind: 'callout',
+            title: 'What to do with this',
+            items: [
+              'Pre-register the threshold before the run. A threshold bent for a favored result is not a threshold.',
+              "Measure the baseline's own spread before reading any delta. At 30M the control moved 0.11 nats across seeds; at 58M, 0.2892.",
+              'Publish the negative results. The failed reversal, the inverted gate, and the licence audit are more useful than another loss curve.',
+              'Do not compare numbers across a corpus rebuild. Re-measure both sides on the same yardstick.',
+            ],
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/kalia/blob/main/docs/preregistrations/LEDGER.md',
+            label: 'The pre-registration ledger',
+            note: 'Hashed predictions, registered amendments, and the rule that decided each experiment.',
           },
         ],
       },
