@@ -1,11 +1,10 @@
 import { expect, test } from '@playwright/test';
-
-const routes = ['/', '/projects', '/writing/tarka-sabha-council', '/kalia'];
+import { ALL_ROUTES } from './routes';
 
 test.describe('320px layout', () => {
   test.use({ viewport: { width: 320, height: 800 } });
 
-  for (const route of routes) {
+  for (const route of ALL_ROUTES) {
     test(`${route} has no horizontal page overflow`, async ({ page }) => {
       await page.goto(route, { waitUntil: 'networkidle' });
 

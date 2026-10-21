@@ -1,10 +1,9 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-
-const routes = ['/', '/projects', '/projects/kalia', '/writing/tarka-sabha-council', '/kalia'];
+import { ALL_ROUTES } from './routes';
 
 test.describe('accessibility', () => {
-  for (const route of routes) {
+  for (const route of ALL_ROUTES) {
     test(`${route} has no WCAG A/AA violations`, async ({ page }) => {
       await page.goto(route, { waitUntil: 'networkidle' });
 

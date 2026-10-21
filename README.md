@@ -28,7 +28,7 @@ npm test        # 70 unit tests
 npm run typecheck
 npm run lint
 npm run build
-npm run test:e2e  # 22 browser checks; run after build
+npm run test:e2e  # 51 browser checks; run after build
 npm run test:lighthouse
 ```
 

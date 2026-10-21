@@ -57,7 +57,8 @@ export const projects: Project[] = [
       'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
     proof: [
       'Public release: weights, model card, and the full engineering record (every numbered decision and incident, and hash-anchored pre-registrations).',
-      'Held-out loss 2.4366 / 0.8184 bits-per-byte on a deterministic 819k-token eval (v0.1.2, original held-out set; re-baselined at 3.0533 on the rebuilt set); zero-shot PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%.',
+      'Two checkpoints on one rebuilt yardstick: v0.1.2 scores 3.0533 held-out loss / 0.9992 bits-per-byte; v0.2.0 scores 2.8248 / 0.9244, a 0.2285-nat improvement. v0.2.0 is an experiment: two benchmarks regressed beyond the pre-registered stability rule.',
+      'Zero-shot v0.1.2: PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%. The architecture line was closed after X20 inverted under replication; the 58M control seed spread is 0.2892 nats.',
       'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
       'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
       'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency decoder that triples character retention (+0.061, 95% CI), and the first test I know of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
@@ -80,7 +81,8 @@ export const projects: Project[] = [
     ],
     links: [
       { label: 'Source', href: 'https://github.com/subhajitlucky/kalia', kind: 'source' },
-      { label: 'Weights and model card', href: 'https://huggingface.co/kalia-lm/kalia-v012', kind: 'live' },
+      { label: 'v0.1.2 weights and model card', href: 'https://huggingface.co/kalia-lm/kalia-v012', kind: 'live' },
+      { label: 'v0.2.0 experiment', href: 'https://huggingface.co/kalia-lm/kalia-v020', kind: 'evidence' },
       {
         label: 'Pre-registration ledger',
         href: 'https://github.com/subhajitlucky/kalia/blob/main/docs/preregistrations/LEDGER.md',
@@ -90,7 +92,8 @@ export const projects: Project[] = [
     tldr: [
       '58M-parameter decoder-only transformer trained from random initialization on free Kaggle GPUs.',
       'v0.1.2 released; every numbered decision, incident, and pre-registered experiment is public.',
-      'The v0.2.0 experiment is 0.2285 nats better on the rebuilt set, but regressed on two benchmarks and was not released.',
+      'v0.2.0 is released as a 0.2285-nat-better experiment, not promoted: ARC-Easy and LAMBADA regressed beyond the pre-registered rule.',
+      'The largest architecture result inverted under replication; the 58M seed spread is 0.2892 nats.',
     ],
     featured: true,
   },
@@ -107,10 +110,12 @@ export const projects: Project[] = [
     problem:
       'Repository reviews often depend on opaque model judgment, scattered linters, and one-off commands. That makes coverage difficult to inspect and results difficult to reproduce.',
     system:
-      'A TypeScript CLI inventories repositories, detects relevant ecosystems, plans validation commands, and produces stable text, JSON, and SARIF reports. Side-effecting checks and database access require separate permission.',
+      'A TypeScript CLI inventories repositories, builds a bounded multi-language source graph, scans secrets, dependencies, workflows, RLS, and accessibility, and emits stable text, JSON, or SARIF. Coverage limits are reported per domain; validation and live database access require separate permission.',
     proof: [
       'Published as an npm CLI with clean-package installation checks.',
-      'Emits schema-versioned text, JSON, and SARIF reports with stable finding fingerprints.',
+      '17/17 seeded benchmark cases, 100% rule recall, zero medium+ false positives; 11/11 red-team mutants caught, 7/7 controls clean.',
+      'A 100-repo field study found at least one high-severity finding in 23% of agent-configured repositories; 10% had a broken import target.',
+      'Emits schema-versioned text, JSON, and SARIF with stable finding fingerprints.',
       'Separates read-only discovery from explicitly permitted validation and database access.',
       'Ships a provider-neutral Agent Skill and CI-focused exit semantics.',
     ],
@@ -141,6 +146,7 @@ export const projects: Project[] = [
     ],
     tldr: [
       'A single CLI that audits repositories and emits deterministic findings.',
+      '17/17 benchmark cases, 0 medium+ false positives; a 100-repo field study found 23% with a high-severity finding.',
       'Text, JSON, and SARIF output with stable fingerprints and baselines for CI.',
       'Read-only discovery by default; validation and database access require explicit permission.',
     ],
@@ -159,10 +165,12 @@ export const projects: Project[] = [
     problem:
       'Small policy mistakes can expose rows through disabled RLS, broad roles, missing write checks, or overlooked privilege paths. Normal application tests rarely explain the catalog state behind those failures.',
     system:
-      'The CLI reads PostgreSQL catalog metadata, models policies, roles, memberships, and grants together, then reports specific risks with text or JSON output without mutating the target database.',
+      'The CLI reads PostgreSQL catalog metadata, models policies, roles, memberships, and grants together, and reports structural risks. A read-only probe impersonates app roles in a rolled-back transaction; shadow, prove, and fix add disposable-world verification and repair.',
     proof: [
       'Published on npm with install-free npx usage.',
+      'A static audit of 60 open-source Supabase repos found at least one high or critical RLS pattern in 63%; median RLS Score 38/100.',
       'Runs read-only catalog analysis and sanitizes credentials from connection errors.',
+      'Probe mode proves cross-tenant reads inside rolled-back transactions without changing data.',
       'Includes disposable PostgreSQL integration fixtures and CI coverage.',
       'Packages the review workflow as an installable Agent Skill.',
     ],
@@ -193,7 +201,7 @@ export const projects: Project[] = [
     ],
     tldr: [
       'A read-only Postgres and Supabase RLS auditor that models policies, roles, and grants together.',
-      'Reports structural access risks with text or stable JSON output.',
+      'A 60-repo study found at least one high or critical pattern in 63%; median RLS Score 38/100.',
       'Probe mode proves cross-tenant reads inside rolled-back transactions without changing data.',
     ],
     featured: true,
@@ -211,12 +219,14 @@ export const projects: Project[] = [
     problem:
       'Multi-agent conversations need more structure than a loop of prompts: personas, providers, credentials, speaker selection, history, and failure states must remain separable.',
     system:
-      'A Next.js application stores auth-backed debate state in PostgreSQL while a server-side adapter normalizes model providers and an orchestrator selects sequential or mentioned speakers.',
+      'A Next.js application stores auth-backed debate state in PostgreSQL. A server-side adapter normalizes providers; an orchestrator selects sequential or mentioned speakers; a server-side runner claims due chats with FOR UPDATE SKIP LOCKED so debates continue after the tab closes.',
     proof: [
       'Runs as a public web application with a public source repository.',
       'Models providers, personas, chats, messages, and rate limits as separate persisted concepts.',
       'Encrypts provider keys at rest and keeps model calls server-side.',
-      'Uses deterministic round-robin selection with mention-aware priority.',
+      'Uses deterministic round-robin selection with mention-aware priority; turn telemetry records selection reason, tokens, latency, and tool calls.',
+      'Synthesis generates several drafts and selects against a weighted rubric; a blind council-vs-single comparison is built in.',
+      '15 test files and 193 tests cover the orchestrator, agent loop, synthesis rubric, head-to-head flow, and runner.',
     ],
     decisions: [
       'Separate provider APIs from the product workflow behind one adapter boundary.',
@@ -246,7 +256,7 @@ export const projects: Project[] = [
     tldr: [
       'Server-side multi-agent debate runner that keeps sessions advancing after the tab closes.',
       'Deterministic speaker order, mention-aware turns, encrypted provider keys, and persisted history.',
-      'Synthesis generates several drafts and selects the best against a weighted rubric.',
+      'Synthesis generates several drafts and selects against a weighted rubric; 15 test files / 193 tests cover the orchestration.',
     ],
     featured: true,
   },
@@ -414,6 +424,7 @@ export const projects: Project[] = [
     system:
       'A Python lexer, parser, AST, evaluator, and transaction state model implement nine semantic primitives. A measured compact wire format (SUTRA-C) encodes the same semantics in a fraction of the tokens, with a token-cost lab that verifies every encoding by decoder round-trip.',
     proof: [
+      'SUTRA-C v0.7 is frozen; the project is now at v0.10 with compact HTTP transport, template negotiation, and 42 tests.',
       'A 384-encoding sweep and a 162-configuration round selected the wire format by measurement; every variant is decoder-verified lossless.',
       'SUTRA-C costs 7.5 tokens/message (2.8 in agreed-template mode) versus 72.5 for deployed JSON-RPC envelopes, counted with production tokenizers.',
       'Two model families read and write the compact form at 12/12 in comprehension tests; the densest template form reaches 6/6 reads on one.',
