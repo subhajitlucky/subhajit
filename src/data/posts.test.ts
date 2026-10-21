@@ -69,6 +69,10 @@ describe('writing content integrity', () => {
             expect(block.lang.length).toBeGreaterThan(0);
           }
           if (block.kind === 'list') expect(block.items.length).toBeGreaterThan(0);
+          if (block.kind === 'callout') {
+            expect(block.title.length).toBeGreaterThan(0);
+            expect(block.items.length).toBeGreaterThan(0);
+          }
           if (block.kind === 'image') {
             expect(block.src.length).toBeGreaterThan(0);
             expect(block.alt.length).toBeGreaterThan(0);

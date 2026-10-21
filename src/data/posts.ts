@@ -5,6 +5,7 @@ export type PostBlock =
   | { kind: 'code'; lang: string; code: string; caption?: string }
   | { kind: 'list'; items: string[] }
   | { kind: 'h3'; text: string }
+  | { kind: 'callout'; title: string; items: string[] }
   | { kind: 'image'; src: string; alt: string; caption?: string }
   | { kind: 'link'; href: string; label: string; note?: string };
 
@@ -32,7 +33,7 @@ export const posts: Post[] = [
     summary:
       "Row Level Security fails quietly. A static audit of 60 open-source Supabase apps found a high or critical RLS pattern in 63% of them. These are the five mistakes behind most of it, with the exact severity and fix.",
     date: "2026-09-23",
-    readingMinutes: 9,
+    readingMinutes: 8,
     tags: ['PostgreSQL', 'Supabase', 'security', 'multi-tenant'],
     sections: [
       {
@@ -56,6 +57,15 @@ export const posts: Post[] = [
           {
             kind: 'p',
             text: "The five mistakes below account for most of it. Each one is a real finding from rls-doctor, with the severity the tool assigns and the SQL that fixes it.",
+          },
+          {
+            kind: 'callout',
+            title: 'What this is, and what it is not',
+            items: [
+              'This is a static audit of 60 public Supabase migrations, plus a read-only probe you can run on your own database.',
+              'It is not a random sample of production apps, a compliance audit, or a substitute for application-level authorization tests.',
+              'The 60-repo study is a convenience sample. 57% of those repos had at least one statement the offline parser could not evaluate, so the true rate may be higher.',
+            ],
           },
         ],
       },
@@ -270,6 +280,30 @@ alter default privileges in schema rls_doctor_demo
         ],
       },
       {
+        id: 'where-it-fits',
+        title: 'Where this fits',
+        blocks: [
+          {
+            kind: 'p',
+            text: "Postgres documents RLS semantics; Supabase's guides show policy patterns. Most reviews stop at one of three layers: the SQL text, the catalog, or an application test.",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `layer                     question it answers
+SQL lint                  does the migration text look risky?
+catalog audit (this tool) which roles can reach which rows, given grants and policies?
+application test          does this endpoint leak for this fixture?
+probe (this tool)         can this role or subject read another tenant's rows now?`,
+            caption: 'The layers answer different questions. None of them is a compliance certificate.',
+          },
+          {
+            kind: 'p',
+            text: "The catalog audit and the probe are complementary. The catalog sees every table and role; the probe sees actual rows, but only for the fixtures you seed. Neither replaces an application test.",
+          },
+        ],
+      },
+      {
         id: 'prove',
         title: 'Prove it, do not just read the policies',
         blocks: [
@@ -359,12 +393,58 @@ npx rls-doctor probe --schema public --app-roles authenticated \
         ],
       },
       {
+        id: 'reproduce',
+        title: 'Reproduce this',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'The demo and the 60-repo study are from RLS Doctor commit `c942d25` (v0.5.8). Clone it and run the same demo:',
+          },
+          {
+            kind: 'code',
+            lang: 'bash',
+            code: `git clone https://github.com/subhajitlucky/rls-doctor
+cd rls-doctor
+git checkout c942d25
+npm ci
+npm run build
+node dist/cli.js demo`,
+            caption: 'Docker is required for the live demo. Without it, the recorded run is printed.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `Summary: 3 tables, 3 policies, highest risk CRITICAL
+Findings: critical 1, high 4, medium 1, low 2, info 1
+RLS Score: 29/100
+- [high] probe-cross-owner-read rls_doctor_demo.orders:
+  Role authenticated reads rows across 2 distinct owner_id values`,
+            caption: 'Expected demo output. The container is removed afterward.',
+          },
+          {
+            kind: 'p',
+            text: 'For the study, run `node scripts/study-supabase-rls.mjs --limit 60 --pages 2 --out results.json` with a GitHub token. The script writes aggregate records, not repository names.',
+          },
+        ],
+      },
+      {
         id: 'limits',
         title: 'What a catalog audit cannot prove',
         blocks: [
           {
             kind: 'p',
             text: "The catalog is one layer. It is not the whole security model. These are the gaps that matter:",
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `question                                   answer
+Did the study measure false positives?     no; static findings, not ground truth
+Was the sample random?                     no; first 60 unique GitHub results
+Can a catalog audit prove app authz?       no; it sees catalog state only
+Can probe see custom session GUCs?         not unless reproduced; Medium finding
+Does service_role bypass RLS?              yes, by design; keep it server-side`,
+            caption: 'What the numbers do and do not mean.',
           },
           {
             kind: 'list',
@@ -375,6 +455,7 @@ npx rls-doctor probe --schema public --app-roles authenticated \
               "Custom session settings. Probe sets `request.jwt.claims`; a policy that reads another GUC may return zero rows and hide a leak. The tool reports `probe-session-dependent-policy` as Medium.",
               "Empty fixtures. A probe that sees zero rows on empty tables proves nothing. Seed two owners before you trust a green result.",
               "Offline parser coverage. `--schema-file` turns unsupported statements into limitations, not findings. Read them.",
+              "service_role bypasses RLS by design. The catalog audit cannot protect a leaked service key; keep it server-side.",
             ],
           },
           {
@@ -408,6 +489,16 @@ npx rls-doctor probe --schema public --app-roles authenticated \
             href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/docs/blog/2026-10-09-open-source-rls-audit.md',
             label: 'The 60-repo study',
             note: 'Method, headline numbers, and the coverage limits, including what the sample cannot prove.',
+          },
+          {
+            kind: 'callout',
+            title: 'What to do with this',
+            items: [
+              'Run npx rls-doctor demo to see a proven leak in a disposable database.',
+              'Add check --schema-file to CI with --fail-on medium; adopt a baseline for an existing database.',
+              'Probe with --subjects before release and seed two owners so a green result means something.',
+              'Keep service_role server-side; it bypasses RLS by design.',
+            ],
           },
         ],
       },
@@ -948,6 +1039,15 @@ JSON-RPC envelope           72.5              1.0x`,
             kind: 'p',
             text: 'The short version: count the format, remove the syntax, and let position carry meaning.',
           },
+          {
+            kind: 'callout',
+            title: 'What this is, and what it is not',
+            items: [
+              'This is a measured engineering report: one 12-message corpus, one six-message deal, two model families, and a public codec.',
+              'It is not a peer-reviewed benchmark or a claim that SUTRA-C is universally cheaper. The results are specific to these messages, this tokenizer, and these models.',
+              'The failures are included: the semicolon, the meter read, the binary wire, and the low-effort runs.',
+            ],
+          },
         ],
       },
       {
@@ -1082,6 +1182,32 @@ after the model's 'sF' trick              73              6.1`,
         ],
       },
       {
+        id: 'related',
+        title: 'Where this fits',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'The closest deployed baseline is JSON-RPC/MCP. Lean JSON is cheaper than JSON-RPC but still pays for keys and punctuation. Protobuf, CBOR, and MessagePack are compact binary encodings, but they are not tokenizers: a model reading a binary payload still pays for the bytes, and short messages pay tag overhead.',
+          },
+          {
+            kind: 'p',
+            text: 'I did not benchmark Protobuf, CBOR, or MessagePack end to end. In this lab, binary wires lost to tuned text for short messages; that is a result for this corpus, not a universal law. The comparison here is against JSON-RPC and English, because those are the formats agents actually emit.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `format              kind          measured here?
+JSON-RPC / MCP      text JSON     yes, 72.5 tok/msg
+lean JSON           text JSON     yes, 42.8
+readable SUTRA      text DSL      yes, 22.3
+SUTRA-C             text wire     yes, 7.5
+SUTRA-C meter       text wire     yes, 2.8
+Protobuf / CBOR     binary        no`,
+            caption: 'The missing row is the honest one. A binary comparison is a separate experiment.',
+          },
+        ],
+      },
+      {
         id: 'models',
         title: 'Can a model actually read it?',
         blocks: [
@@ -1168,6 +1294,17 @@ parser wants  INTENT buy(item="SmartTV", max_price=50000);`,
               'The tests also caught two harness bugs. Both runs are archived and re-scored offline; no test was re-rolled.',
             ],
           },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `failure                  observation                    what it means
+missing semicolon        readable emit 0/12, 0/12       compact has no terminator
+meter read too dense     GPT-6 Luna 2/6, DeepSeek 6/6   default to 7.5, not 2.8
+low reasoning effort     parse 0.86 -> 0.71             do not audit with low effort
+novel values             parse 5/6, emit 6/6            dictionary fallback works
+binary wire              lost to tuned text             text wins for short messages`,
+            caption: 'The failures are part of the result. Every run is logged.',
+          },
         ],
       },
       {
@@ -1229,20 +1366,45 @@ back = decode(wire, session)      # == the original message`,
             text: 'The oops button handles surprises. If a message falls outside the agreed template, prefix the full compact statement with `!`. The example `!Rp!price_too_low` is 7 tokens glued, or 8 with spaces. Then the session continues compact. One deviation does not reset the meter.',
           },
           {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/sutra',
+            label: 'SUTRA on GitHub',
+            note: 'Source, the frozen wire spec, the token-cost lab, and every logged experiment, winners and losers.',
+          },
+        ],
+      },
+      {
+        id: 'reproduce',
+        title: 'Reproduce this',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'The numbers above are from SUTRA commit `2b8c168`. Clone it, run both demos, and compare the output:',
+          },
+          {
             kind: 'code',
             lang: 'bash',
             code: `git clone https://github.com/subhajitlucky/sutra
 cd sutra
+git checkout 2b8c168
+python3 -m venv .venv && . .venv/bin/activate
 pip install tiktoken
 python examples/compact_deal.py
 python examples/network_meter_demo.py`,
             caption: 'Both demos run on CPU. The meter demo uses real HTTP.',
           },
           {
-            kind: 'link',
-            href: 'https://github.com/subhajitlucky/sutra',
-            label: 'SUTRA on GitHub',
-            note: 'Source, the frozen wire spec, the token-cost lab, and every logged experiment, winners and losers.',
+            kind: 'code',
+            lang: 'text',
+            code: `readable SUTRA             134        22.33
+SUTRA-C (compact)           45         7.50
+SUTRA-C template/meter      17         2.83
+JSON-RPC envelope          435        72.50`,
+            caption: 'Expected compact-deal output. The meter demo prints a 3-step HTTP run.',
+          },
+          {
+            kind: 'p',
+            text: 'The token-cost lab is in `experiments/token-cost/`; the frozen format is `spec/SUTRA_C.md`. Every round, including the failures, is logged in the repository.',
           },
         ],
       },
@@ -1265,16 +1427,12 @@ python examples/network_meter_demo.py`,
             text: 'What I would measure next: a third model family, 50+ message sessions for drift and ellipsis state, and real traffic instead of a synthetic deal.',
           },
           {
-            kind: 'p',
-            text: 'What I learned, in four lines:',
-          },
-          {
-            kind: 'list',
+            kind: 'callout',
+            title: 'What to do with this',
             items: [
-              'Format is a cost center. Count it, not just model calls.',
-              'Position is cheaper than labels. A schema can replace keys, quotes, and braces.',
-              'An encoding only counts if the model can read and write it. Test both directions.',
-              'The failures are the map: the semicolon, the meter read, the binary wire.',
+              'Measure the format, not just the model. The envelope is part of the bill.',
+              'Use the 7.5-token compact form by default. Test the 2.8-token meter form on your model before shipping it.',
+              'Keep the session stateful only when both sides can stay in sync; a surprise message needs a resync path.',
             ],
           },
           {

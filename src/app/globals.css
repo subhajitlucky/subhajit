@@ -892,6 +892,34 @@ a:focus-visible {
   line-height: 1.55;
 }
 
+.post-callout {
+  margin: 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--accent);
+  border-radius: 0.5rem;
+  background: #f8fafc;
+}
+
+.post-callout h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+
+.post-callout ul {
+  margin: 0;
+  padding-inline-start: 1.15rem;
+}
+
+.post-callout li {
+  margin: 0.3rem 0;
+  line-height: 1.5;
+}
+
+.post-callout li::marker {
+  color: var(--accent);
+}
+
 .code-block {
   margin: 0;
   display: grid;

@@ -53,6 +53,19 @@ function Block({ block }: { block: PostBlock }) {
     return <h3>{block.text}</h3>;
   }
 
+  if (block.kind === 'callout') {
+    return (
+      <aside className="post-callout">
+        <h3>{block.title}</h3>
+        <ul>
+          {block.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </aside>
+    );
+  }
+
   if (block.kind === 'list') {
     return (
       <ul className="plain-list">
