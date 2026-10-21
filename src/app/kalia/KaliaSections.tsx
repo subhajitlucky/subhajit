@@ -92,9 +92,13 @@ export function KaliaHero() {
             pre-registered experiment is public.
           </li>
           <li>
-            Held-out loss <strong>2.4366</strong> / <strong>0.8184</strong> bits-per-byte on the
-            original evaluation set. v0.2.0 is <strong>0.2285 nats</strong> better on the rebuilt
-            set.
+            Held-out loss <strong>3.0533</strong> / <strong>0.9992</strong> bits-per-byte for v0.1.2
+            on the rebuilt yardstick. v0.2.0 is <strong>2.8248</strong> / <strong>0.9244</strong>, a{' '}
+            <strong>0.2285-nat</strong> improvement.
+          </li>
+          <li>
+            The project&rsquo;s largest architecture result inverted under replication. The 58M seed
+            spread is <strong>0.2892 nats</strong>, and it is now the measurement floor.
           </li>
           <li>
             Zero-shot: PIQA <strong>61.4%</strong>, ARC-Easy <strong>45.8%</strong>, HellaSwag{' '}
@@ -122,8 +126,9 @@ export function KaliaHero() {
         ))}
       </div>
       <p className="kalia-stat-note">
-        Val loss and bits/byte in this row are KALIA 0.1.2 on the original held-out set. Section 2
-        re-baselines both checkpoints on the rebuilt set; the two yardsticks are never compared.
+        Val loss and bits/byte in this row are KALIA 0.1.2 on the rebuilt yardstick. The earlier
+        2.4366 / 0.8184 was measured on the original held-out set; the two are never compared.
+        Section 2 compares both checkpoints on the rebuilt set.
       </p>
 
       <div className="kalia-cta-row">
@@ -370,13 +375,13 @@ export function ResultsSection() {
         </tbody>
       </table>
       <p className="kalia-prose" style={{ marginTop: '1.6rem' }}>
-        Held-out loss on the deterministic 100-batch evaluation is <strong>2.4366</strong> (819,200
-        tokens, fixed seed) — <strong>0.8184 bits-per-byte</strong>, measured on the original
-        corpus&rsquo;s held-out set. That set was later rebuilt for licence compliance; the rebuilt
-        one is 0.62 nats harder for these same weights (3.0533), which is why v0.2.0 is scored
-        against the rebuilt set and the two figures are never tabulated together. A 58M storyteller
-        at <strong>61.4% PIQA</strong> and <strong>45.8% ARC-Easy</strong> is competitive with
-        125M-class models trained on roughly 160x more tokens, and weakest on the one task that
+        Held-out loss on the deterministic 100-batch evaluation is <strong>3.0533</strong> (819,200
+        tokens, fixed seed) — <strong>0.9992 bits-per-byte</strong> — on the rebuilt yardstick. The
+        earlier <strong>2.4366 / 0.8184</strong> was measured on the original held-out set; that set
+        is 0.62 nats easier for the same weights, and the two are never tabulated together. v0.2.0
+        scores <strong>2.8248 / 0.9244</strong> on the rebuilt set. A 58M storyteller at{' '}
+        <strong>61.4% PIQA</strong> and <strong>45.8% ARC-Easy</strong> is competitive with
+        125M-class models trained on roughly 100x more tokens, and weakest on the one task that
         requires long-range narrative memory (LAMBADA, 23%). The custom metric is the one that
         matters next: the <strong>Abhimanyu gap</strong> — reversed-text loss (9.29) minus forward
         loss (3.23) — is <strong>6.06 nats</strong>. The model can enter fluent text but cannot exit

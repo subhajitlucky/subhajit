@@ -44,7 +44,8 @@ describe('KaliaPage', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'KALIA' })).toBeInTheDocument();
     expect(screen.getByText(/Now begins the discipline of words/)).toBeInTheDocument();
     expect(screen.getByText('57.9M')).toBeInTheDocument();
-    expect(screen.getAllByText('2.4366').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('3.0533').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('2.8248').length).toBeGreaterThan(0);
     expect(screen.getAllByText('$0').length).toBeGreaterThan(0);
   });
 

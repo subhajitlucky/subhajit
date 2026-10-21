@@ -114,7 +114,7 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: 'afternoon',
         title: 'The deterministic eval',
-        body: 'A CPU evaluation — free, no GPU quota — runs 100 fixed-seed batches over 819,200 tokens: 2.4366 loss, 0.8184 bits-per-byte, on the held-out set of the corpus as it then stood. The model never regressed; the swings were sampling noise. Under the pre-registered stopping rule, the plateau plus the quota wall make the stop final at step 3,478.',
+        body: 'A CPU evaluation — free, no GPU quota — runs 100 fixed-seed batches over 819,200 tokens: 2.4366 loss, 0.8184 bits-per-byte, on the held-out set of the corpus as it then stood. The later licence rebuild replaced that set and re-baselined the same weights at 3.0533; the two are never compared. The model never regressed; the swings were sampling noise. Under the pre-registered stopping rule, the plateau plus the quota wall make the stop final at step 3,478.',
       },
       {
         time: 'afternoon',
@@ -661,8 +661,8 @@ export const RECIPE = [
 export const HERO_STATS = [
   { label: 'parameters', value: '57.9M' },
   { label: 'tokens seen', value: '1.82B' },
-  { label: 'val loss', value: '2.4366' },
-  { label: 'bits/byte', value: '0.8184' },
+  { label: 'val loss', value: '3.0533' },
+  { label: 'bits/byte', value: '0.9992' },
   { label: 'PIQA', value: '61.4%' },
   { label: 'Abhimanyu gap', value: '6.06 nats' },
   { label: 'GPU-hours', value: '~20' },
