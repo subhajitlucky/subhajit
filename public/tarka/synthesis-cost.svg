@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" width="720" height="300" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">Synthesis provider-call cost</title>
+<desc id="chart-desc">Bar chart: a single completion costs 1 provider call, a council with 3 candidates and 1 round costs 6 calls, and a two-round council costs 12 calls.</desc>
+<rect width="720" height="300" fill="#ffffff"/>
+<text x="24" y="30" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="16" fill="#111827" text-anchor="start" font-weight="600">What a synthesis run costs in provider calls</text>
+<text x="24" y="50" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400">Drafts plus judgments. Debate turns add one call each.</text>
+<text x="24" y="110" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11.5" fill="#111827" text-anchor="start" font-weight="400">Single completion</text>
+<rect x="300" y="92" width="29.166666666666668" height="28" fill="#94a3b8" rx="4"/>
+<text x="337.1666666666667" y="111" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">1 call</text>
+<text x="24" y="164" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11.5" fill="#111827" text-anchor="start" font-weight="400">Council, 3 candidates, 1 round</text>
+<rect x="300" y="146" width="175.0" height="28" fill="#2563eb" rx="4"/>
+<text x="483.0" y="165" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">6 calls</text>
+<text x="24" y="218" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11.5" fill="#111827" text-anchor="start" font-weight="400">Council, 3 candidates, 2 rounds</text>
+<rect x="300" y="200" width="350.0" height="28" fill="#d97706" rx="4"/>
+<text x="658.0" y="219" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">12 calls</text>
+<text x="24" y="276" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">3 candidates = 3 drafts + 3 judgments. Two rounds are optional. Tool calls add up to 4 round-trips per turn.</text>
+</svg>

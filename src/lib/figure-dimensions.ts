@@ -9,6 +9,8 @@ export const KALIA_FIGURE_DIMENSIONS = {
   '/kalia/val-loss.svg': { width: 720, height: 420 },
   '/kalia/val-loss-v012.svg': { width: 720, height: 400 },
   '/tarka/council.svg': { width: 720, height: 360 },
+  '/tarka/rubric-weights.svg': { width: 720, height: 330 },
+  '/tarka/synthesis-cost.svg': { width: 720, height: 300 },
   '/sutra/tokens-per-message.svg': { width: 720, height: 310 },
   '/sutra/comprehension.svg': { width: 720, height: 360 },
   '/sutra/journey.svg': { width: 720, height: 330 },
