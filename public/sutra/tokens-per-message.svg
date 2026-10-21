@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 310" width="720" height="310" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">Tokens per message by encoding</title>
+<desc id="chart-desc">Bar chart: JSON-RPC 72.5 tokens, readable SUTRA 22.3, SUTRA-C 7.5, SUTRA-C meter 2.8 tokens per message.</desc>
+<rect width="720" height="310" fill="#ffffff"/>
+<text x="24" y="30" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="16" fill="#111827" text-anchor="start" font-weight="600">Tokens per message: the same six-message deal</text>
+<text x="24" y="50" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400">o200k_base tokenizer. Lower is better.</text>
+<line x1="180.0" y1="70" x2="180.0" y2="266" stroke="#e5e7eb" stroke-width="1"/>
+<text x="180.0" y="282" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" font-weight="400">0</text>
+<line x1="295.8620689655172" y1="70" x2="295.8620689655172" y2="266" stroke="#e5e7eb" stroke-width="1"/>
+<text x="295.8620689655172" y="282" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" font-weight="400">20</text>
+<line x1="411.7241379310345" y1="70" x2="411.7241379310345" y2="266" stroke="#e5e7eb" stroke-width="1"/>
+<text x="411.7241379310345" y="282" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" font-weight="400">40</text>
+<line x1="527.5862068965517" y1="70" x2="527.5862068965517" y2="266" stroke="#e5e7eb" stroke-width="1"/>
+<text x="527.5862068965517" y="282" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="middle" font-weight="400">60</text>
+<text x="24" y="99" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="400">JSON-RPC envelope</text>
+<rect x="180" y="80" width="420.0" height="28" fill="#9ca3af" rx="4"/>
+<text x="608.0" y="99" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">72.5</text>
+<text x="24" y="145" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="400">readable SUTRA</text>
+<rect x="180" y="126" width="129.18620689655174" height="28" fill="#93c5fd" rx="4"/>
+<text x="317.18620689655177" y="145" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">22.3</text>
+<text x="24" y="191" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="400">SUTRA-C</text>
+<rect x="180" y="172" width="43.44827586206897" height="28" fill="#2563eb" rx="4"/>
+<text x="231.44827586206895" y="191" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">7.5</text>
+<text x="24" y="237" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="400">SUTRA-C meter</text>
+<rect x="180" y="218" width="16.220689655172414" height="28" fill="#059669" rx="4"/>
+<text x="204.2206896551724" y="237" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">2.8</text>
+<text x="240.2206896551724" y="237" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#059669" text-anchor="start" font-weight="600">25.6x cheaper</text>
+<text x="180" y="302" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">One six-message buyer/seller deal. Readable SUTRA is the same language before compaction.</text>
+</svg>

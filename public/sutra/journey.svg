@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">SUTRA token count by optimization stage</title>
+<desc id="chart-desc">Line chart: readable SUTRA 27.5 tokens per message, 384-encoding sweep 6.7, 162-config sweep 6.25, after the sF trick 6.1, meter mode 2.8 on a six-message deal.</desc>
+<rect width="720" height="330" fill="#ffffff"/>
+<text x="24" y="30" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="16" fill="#111827" text-anchor="start" font-weight="600">The same 12 messages, measured down</text>
+<text x="24" y="50" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400">o200k tokens per message. Every stage decoder-verified.</text>
+<line x1="70" y1="270.0" x2="660" y2="270.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="274.0" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="end" font-weight="400">0</text>
+<line x1="70" y1="206.66666666666669" x2="660" y2="206.66666666666669" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="210.66666666666669" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="end" font-weight="400">10</text>
+<line x1="70" y1="143.33333333333334" x2="660" y2="143.33333333333334" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="147.33333333333334" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="end" font-weight="400">20</text>
+<line x1="70" y1="80.0" x2="660" y2="80.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="84.0" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="end" font-weight="400">30</text>
+<text x="24" y="72" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">tokens / message</text>
+<polyline points="110,95.83333333333334 230,227.56666666666666 350,230.41666666666666 470,231.36666666666667" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round"/>
+<line x1="530" y1="70" x2="530" y2="282" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 4"/>
+<line x1="470" y1="231.36666666666667" x2="590" y2="252.26666666666668" stroke="#059669" stroke-width="2" stroke-dasharray="5 5"/>
+<circle cx="110" cy="95.83333333333334" r="5" fill="#2563eb"/>
+<circle cx="230" cy="227.56666666666666" r="5" fill="#2563eb"/>
+<circle cx="350" cy="230.41666666666666" r="5" fill="#2563eb"/>
+<circle cx="470" cy="231.36666666666667" r="5" fill="#2563eb"/>
+<circle cx="590" cy="252.26666666666668" r="5" fill="#059669"/>
+<text x="110" y="84" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="600">27.5</text>
+<text x="230" y="216" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="600">6.7</text>
+<text x="350" y="246" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="600">6.25</text>
+<text x="470" y="220" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="600">6.1</text>
+<text x="590" y="242" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="middle" font-weight="600">2.8</text>
+<text x="110" y="298" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="400">readable</text>
+<text x="230" y="298" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="400">384 sweep</text>
+<text x="350" y="298" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="400">162 sweep</text>
+<text x="470" y="298" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="400">after sF</text>
+<text x="590" y="298" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" font-weight="400">meter*</text>
+<text x="70" y="320" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">* meter is the six-message deal; the first four points are the 12-message corpus.</text>
+</svg>

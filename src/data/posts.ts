@@ -30,56 +30,86 @@ export const posts: Post[] = [
     slug: "five-postgres-rls-mistakes",
     title: "Five Postgres RLS mistakes that leak tenant rows",
     summary:
-      "Row Level Security fails quietly. These five policy mistakes let application roles read or write other tenants' rows, and each one is easy to miss in review.",
+      "Row Level Security fails quietly. A static audit of 60 open-source Supabase apps found a high or critical RLS pattern in 63% of them. These are the five mistakes behind most of it, with the exact severity and fix.",
     date: "2026-09-23",
-    readingMinutes: 11,
+    readingMinutes: 9,
     tags: ['PostgreSQL', 'Supabase', 'security', 'multi-tenant'],
     sections: [
       {
         id: 'opening',
-        title: "The question",
+        title: 'Two users, one table',
         blocks: [
           {
             kind: 'p',
-            text: "Teams adopt Postgres Row Level Security because it pushes tenant isolation into the database, where application bugs cannot forget it. That is the right instinct. The failure mode is worse than a missing WHERE clause: RLS can be present, policies can exist, every test can pass, and application roles can still read another tenant's rows.",
+            text: "Two users. One table. User A can read User B's order. RLS is on. The policy exists. Your tests pass.",
           },
           {
             kind: 'p',
-            text: "This post walks five mistakes that produce exactly that outcome. Each one comes from a real policy shape. For each, you get the vulnerable SQL, what a behavioral probe shows, and the fixed policy.",
+            text: "This is common. A static audit of 60 open-source Supabase apps found at least one high or critical RLS pattern in 63% of them. One in four had a critical finding. The median RLS Score was 38/100.",
+          },
+          {
+            kind: 'image',
+            src: '/rls/study-patterns.svg',
+            alt: 'Bar chart of RLS patterns across 60 open-source Supabase repositories: public read 35, RLS on with zero policies 19, public write 15, missing WITH CHECK 5, RLS off and reachable 4, TRUNCATE reachable 2, broad default privilege 1.',
+            caption: 'Static audit of 60 public Supabase repositories, 2026-10-09. Counts are repositories with at least one instance, not individual findings.',
+          },
+          {
+            kind: 'p',
+            text: "The five mistakes below account for most of it. Each one is a real finding from rls-doctor, with the severity the tool assigns and the SQL that fixes it.",
+          },
+        ],
+      },
+      {
+        id: 'short-version',
+        title: 'The short version',
+        blocks: [
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `#  mistake                          severity   finding id
+1  RLS off on a granted table       high       rls-disabled-exposed
+2  to public + using (true)         high/crit  public-unconditional-read/write
+3  UPDATE without WITH CHECK        medium     write-policy-missing-check
+4  TRUNCATE reachable               high       reachable-truncate
+5  FORCE RLS off                    info       force-rls-disabled`,
+            caption: 'Same five mistakes, with the severity rls-doctor assigns.',
+          },
+          {
+            kind: 'p',
+            text: "The severity matters as much as the mistake. If your CI runs `--fail-on high`, mistake 3 will not fail the build. Keep that in mind when you wire up the gate.",
           },
         ],
       },
       {
         id: 'mistake-1',
-        title: "1. RLS is disabled on a granted table",
+        title: '1. RLS is off on a granted table',
         blocks: [
           {
             kind: 'p',
-            text: "You enable RLS on the tables that \"matter\" and leave the rest alone. But if a table is granted to an application role and RLS is off, the grant is the only boundary — and it is an all-rows boundary.",
+            text: "A grant says a role may read a table. RLS is the row filter. If RLS is off, the grant is the only boundary, and it is an all-rows boundary.",
           },
           {
             kind: 'code',
             lang: "sql",
-            code: `-- The grant says: this role may read orders.
-grant select on rls_doctor_demo.orders to authenticated;
+            code: `grant select on rls_doctor_demo.orders to authenticated;
 
--- RLS was never turned on. No policy is even consulted.
+-- RLS was never enabled. No policy is even consulted.
 -- authenticated can select every row in the table.`,
-            caption: "A reachable table with RLS disabled is a full-table read.",
+            caption: 'A reachable table with RLS off is a full-table read.',
           },
           {
             kind: 'p',
-            text: "A probe makes this concrete. Impersonating authenticated with two different owner_id subjects returns both users' rows:",
+            text: "The catalog finding is High: `rls-disabled-exposed`. A probe makes it concrete:",
           },
           {
             kind: 'code',
             lang: "text",
             code: `rls_doctor_demo.orders
-  authenticated@user-1   rows  sampled 2 row(s), 1 foreign row(s), 1 own row(s) by owner_id
-  authenticated@user-2   rows  sampled 2 row(s), 1 foreign row(s), 1 own row(s) by owner_id
+  authenticated          rows  sampled 2 row(s), 2 distinct owner_id
 
-- [high] probe-cross-owner-read rls_doctor_demo.orders: Role authenticated
-  reads rows across 2 distinct owner_id values`,
+- [high] probe-cross-owner-read rls_doctor_demo.orders:
+  Role authenticated reads rows across 2 distinct owner_id values`,
+            caption: 'The probe impersonates the app role inside a read-only transaction and rolls back.',
           },
           {
             kind: 'code',
@@ -91,21 +121,21 @@ create policy "users read own orders"
   for select
   to authenticated
   using (owner_id = (select auth.uid()));`,
-            caption: "Enable RLS, then constrain every command the role can exercise.",
+            caption: 'Enable RLS, then constrain every command the role can exercise.',
           },
           {
             kind: 'p',
-            text: "Do this for every table an application role can reach, including join tables and audit logs. A single unguarded table is a tenant leak.",
+            text: "Do this for every table an application role can reach, including join tables and audit logs. One unguarded table is a tenant leak.",
           },
         ],
       },
       {
         id: 'mistake-2',
-        title: "2. TO public with an unconditional USING (true)",
+        title: '2. TO public with an unconditional USING (true)',
         blocks: [
           {
             kind: 'p',
-            text: "This is the most common leak in Supabase projects. A policy exists, RLS is enabled, and the policy allows everyone to read everything.",
+            text: "This is the most common leak in Supabase projects. A policy exists, RLS is on, and the policy allows everyone to read everything.",
           },
           {
             kind: 'code',
@@ -115,15 +145,11 @@ create policy "users read own orders"
   for select
   to public
   using (true);`,
-            caption: "A policy that never fails is not a policy. It is a grant.",
+            caption: 'A policy that never fails is not a policy. It is a grant.',
           },
           {
             kind: 'p',
-            text: "Two separate problems stack here. First, to public reaches every role that can use the schema, including anon if it has USAGE. Second, using (true) places no row-level condition on the result set.",
-          },
-          {
-            kind: 'p',
-            text: "The fix is not \"add a policy.\" The fix is to name the audience and constrain the predicate:",
+            text: "Two problems stack. `to public` reaches every role that can use the schema, including `anon`. `using (true)` places no row-level condition on the result. For reads, the finding is High. For writes, it is Critical.",
           },
           {
             kind: 'code',
@@ -132,21 +158,21 @@ create policy "users read own orders"
   on rls_doctor_demo.profiles
   to authenticated
   using ((select auth.uid()) = id);`,
-            caption: "Name the role. Constrain the predicate. Prefer subselects so the planner can cache the policy.",
+            caption: 'Name the role. Constrain the predicate.',
           },
           {
             kind: 'p',
-            text: "Public content is a real category. If a row is genuinely public, scope the policy to the columns or a published flag — do not use an unconditional predicate on a multi-tenant table.",
+            text: "If a row is genuinely public, scope it with a `published` flag or a dedicated public view. Do not put an unconditional predicate on a multi-tenant table.",
           },
         ],
       },
       {
         id: 'mistake-3',
-        title: "3. UPDATE without WITH CHECK",
+        title: '3. UPDATE without WITH CHECK',
         blocks: [
           {
             kind: 'p',
-            text: "A USING clause decides which rows a command may see. It does not decide which rows a command may write. Without WITH CHECK, an updater can move a row into another tenant.",
+            text: "`USING` decides which rows the command can see. `WITH CHECK` decides which rows it can write. Without `WITH CHECK`, an update can move a row into another tenant.",
           },
           {
             kind: 'code',
@@ -155,13 +181,13 @@ create policy "users read own orders"
   on rls_doctor_demo.profiles
   for update
   to public
-  using (true);   -- can update any row ...
-                  -- ... and no WITH CHECK: can set owner_id to anyone`,
-            caption: "USING alone on an UPDATE policy is a write-what-you-want hole.",
+  using (true);   -- can update any row
+                  -- no WITH CHECK: can set owner_id to anyone`,
+            caption: 'USING alone on an UPDATE policy is a write-what-you-want hole.',
           },
           {
             kind: 'p',
-            text: "The attack does not need a bug in the application. A normal profile-edit endpoint that accepts an owner_id field is enough. The row passes USING, the new values are never checked, and the tenant boundary moves.",
+            text: "The finding is Medium: `write-policy-missing-check`. This is the one people miss in CI. `--fail-on high` will not fail on it. Use `--fail-on medium` if you want the build to catch it.",
           },
           {
             kind: 'code',
@@ -171,21 +197,21 @@ create policy "users read own orders"
   to authenticated
   using ((select auth.uid()) = id)
   with check ((select auth.uid()) = id);`,
-            caption: "For UPDATE, set both USING and WITH CHECK. For INSERT, WITH CHECK is the only gate.",
+            caption: 'For UPDATE, set both USING and WITH CHECK. For INSERT, WITH CHECK is the only gate.',
           },
           {
             kind: 'p',
-            text: "Audit rule: every INSERT and UPDATE policy needs an explicit WITH CHECK. If the write path cannot be described as a predicate over the new row, the policy is incomplete.",
+            text: "Audit rule: every INSERT and UPDATE policy needs an explicit `WITH CHECK`. If the write path cannot be described as a predicate over the new row, the policy is incomplete.",
           },
         ],
       },
       {
         id: 'mistake-4',
-        title: "4. TRUNCATE reachable by application roles",
+        title: '4. TRUNCATE reachable by application roles',
         blocks: [
           {
             kind: 'p',
-            text: "RLS does not protect TRUNCATE. Not partially. At all. If an application role can truncate a table, it can empty another tenant's rows regardless of every policy on that table.",
+            text: "RLS does not protect `TRUNCATE`. Not partially. At all. If an application role can truncate a table, it can empty another tenant's rows regardless of every policy on that table.",
           },
           {
             kind: 'code',
@@ -194,104 +220,194 @@ create policy "users read own orders"
   on rls_doctor_demo.profiles to authenticated;
 
 -- Every policy on profiles is irrelevant for TRUNCATE.
-truncate rls_doctor_demo.profiles;  -- succeeds, wipes every tenant`,
-            caption: "TRUNCATE is a DDL-shaped command with no row-level gate.",
+truncate rls_doctor_demo.profiles;  -- wipes every tenant`,
+            caption: 'TRUNCATE is a DDL-shaped command with no row-level gate.',
           },
           {
             kind: 'p',
-            text: "Application roles should never hold TRUNCATE. Reserve it for a maintenance role that is not reachable from the app connection string:",
+            text: "The catalog finding is High: `reachable-truncate`. Application roles should never hold it. Reserve it for a maintenance role that is not reachable from the app connection string.",
           },
           {
             kind: 'code',
             lang: "sql",
             code: `revoke truncate on rls_doctor_demo.profiles from authenticated;
-grant truncate on rls_doctor_demo.profiles to maintenance_role;`,
-          },
-          {
-            kind: 'p',
-            text: "The same class of problem applies to default privileges. If a default privilege grants INSERT to authenticated on a schema, every future table created in that schema starts with that grant — before anyone writes a policy.",
-          },
-          {
-            kind: 'code',
-            lang: "sql",
-            code: `revoke all on tables in schema rls_doctor_demo from authenticated;
+grant truncate on rls_doctor_demo.profiles to maintenance_role;
+
+-- Tighten current grants and the defaults that create future ones.
+revoke all on all tables in schema rls_doctor_demo from authenticated;
 alter default privileges in schema rls_doctor_demo
   revoke all on tables from authenticated;`,
-            caption: "Tighten both current grants and the defaults that create future ones.",
+            caption: 'The all tables in schema form is the one that works. revoke all on tables in schema is not valid Postgres.',
           },
         ],
       },
       {
         id: 'mistake-5',
-        title: "5. FORCE RLS is off, so the owner bypasses every policy",
+        title: '5. FORCE RLS is off, so the owner bypasses every policy',
         blocks: [
           {
             kind: 'p',
-            text: "By default, the table owner is exempt from RLS. If your application connects as the owner — the role that ran the migrations — every policy you wrote is decorative.",
+            text: "By default, the table owner is exempt from RLS. If your application connects as the owner, the role that ran the migrations, every policy you wrote is decorative.",
           },
           {
             kind: 'p',
-            text: "This is silent. Tests pass because the test connection is the owner. Production leaks because the production connection is also the owner. Superusers and BYPASSRLS roles bypass RLS in every case; FORCE RLS closes the owner path only.",
+            text: "This is silent. Tests pass because the test connection is the owner. Production leaks because the production connection is also the owner.",
           },
           {
             kind: 'code',
             lang: "sql",
             code: `alter table rls_doctor_demo.profiles force row level security;`,
-            caption: "Enable FORCE RLS after confirming owner-side maintenance workflows still need their access path.",
+            caption: 'Enable FORCE RLS after confirming owner-side maintenance workflows still have an access path.',
           },
           {
             kind: 'p',
-            text: "Pair this with a separate application role. The app connects as authenticated, not as the migration owner. FORCE RLS is then the second lock, not the first.",
+            text: "The finding is Info: `force-rls-disabled`. That is not a typo. It matters, but it is not a leak on its own. If an app role can reach a SUPERUSER or BYPASSRLS role, that is a separate High finding: `rls-bypass-role`.",
+          },
+          {
+            kind: 'p',
+            text: "Pair FORCE RLS with a separate application role. The app connects as `authenticated`, not as the migration owner. FORCE RLS is then the second lock, not the first.",
           },
         ],
       },
       {
-        id: 'what-audit-cannot-prove',
-        title: "What a catalog audit cannot prove",
+        id: 'prove',
+        title: 'Prove it, do not just read the policies',
         blocks: [
           {
             kind: 'p',
-            text: "A catalog read — policies, grants, role memberships, defaults — catches all five mistakes. That is worth doing in CI. It is also bounded.",
+            text: "The fastest way to see this is the demo. It starts a disposable Postgres, applies an unsafe schema, seeds two users, runs `check` and `probe`, and proves the leak. No credentials, no cleanup.",
           },
           {
-            kind: 'list',
-            items: [
-              "Catalog inspection cannot see application-level authorization. A policy can be correct and the API can still return another tenant's rows through a join the policy never touches.",
-              "Hosted platform settings, views, and SECURITY DEFINER functions need a separate review. Views especially: a security_barrier view can widen access beyond the base table's policies.",
-              "Row counts in a probe depend on the fixture. A probe that sees zero cross-owner reads on empty tables proves nothing. Seed two owners before you trust a green result.",
-            ],
+            kind: 'code',
+            lang: "bash",
+            code: `npx rls-doctor demo`,
+            caption: 'When Docker is unavailable, the demo falls back to a recorded run.',
+          },
+          {
+            kind: 'code',
+            lang: "text",
+            code: `Summary: 3 tables, 3 policies, highest risk CRITICAL
+Findings: critical 1, high 4, medium 1, low 2, info 1
+RLS Score: 29/100
+
+- [high] probe-cross-owner-read rls_doctor_demo.orders:
+  Role authenticated reads rows across 2 distinct owner_id values`,
+            caption: 'The demo removes the container. Nothing is left behind.',
           },
           {
             kind: 'p',
-            text: "Use both layers. Catalog analysis answers \"are the policies shaped safely?\" Behavioral probing answers \"can this role actually read another tenant's rows right now?\"",
+            text: "For a real database, `probe` can impersonate actual Supabase users. Pass `--subjects` to prove one user can read another user's rows:",
+          },
+          {
+            kind: 'code',
+            lang: "bash",
+            code: `npx rls-doctor probe --schema public \
+  --app-roles authenticated \
+  --subjects 00000000-0000-0000-0000-000000000001 \
+             00000000-0000-0000-0000-000000000002 \
+  --owner-columns owner_id`,
+            caption: 'The probe sets request.jwt.claims per subject, inside a read-only transaction.',
+          },
+          {
+            kind: 'p',
+            text: "Without `--subjects`, the probe proves that a role sees multiple owners. With `--subjects`, it proves that a specific user sees another user's rows. The second is the stronger claim.",
+          },
+          {
+            kind: 'code',
+            lang: "text",
+            code: `authenticated@000...001  rows  1 foreign row(s), 1 own row(s)
+authenticated@000...002  rows  1 foreign row(s), 1 own row(s)
+- [high] probe-cross-subject-read rls_doctor_demo.orders:
+  Role authenticated reads rows belonging to other users`,
+            caption: 'Probe always rolls back and is safe against a read replica.',
           },
         ],
       },
       {
         id: 'ci',
-        title: "Put it in CI",
+        title: 'Put it in CI',
         blocks: [
           {
             kind: 'p',
-            text: "The whole point of these mistakes is that they survive code review. A repeatable check is the only durable fix. Two commands cover the static and behavioral layers:",
+            text: "The whole point of these mistakes is that they survive code review. A repeatable check is the durable fix. You can run the catalog audit without a database at all:",
           },
           {
             kind: 'code',
             lang: "bash",
-            code: `# Static: catalog metadata only. Read-only. No data touched.
-npx rls-doctor check --schema public --fail-on high
+            code: `# No database, no credentials: audit the migration itself.
+npx rls-doctor@0.5.8 check \
+  --schema-file supabase/migrations/0001_init.sql \
+  --fail-on medium
 
-# Behavioral: impersonate app roles in a rolled-back transaction.
-npx rls-doctor probe --app-roles authenticated --owner-columns owner_id`,
-            caption: "Both commands are read-only against the target database. Probe rolls back.",
+# Live database: adopt without failing on day one.
+npx rls-doctor check --schema public --baseline rls-baseline.json --update-baseline
+npx rls-doctor check --schema public --baseline rls-baseline.json --fail-on medium
+
+# Before release: prove access with seeded users.
+npx rls-doctor probe --schema public --app-roles authenticated \
+  --subjects <uuid-a> <uuid-b> --owner-columns owner_id`,
+            caption: 'Pin the version in CI. npx without a version can change the rules under you.',
           },
           {
             kind: 'p',
-            text: "Run check on every pull request that touches migrations or policies. Run probe against a seeded staging schema before release. Save a baseline so CI fails on new findings, not on known ones you have already decided to accept.",
+            text: "Why `medium`? Missing `WITH CHECK` is Medium. `FORCE RLS` off is Info; if you want that to fail too, use `--fail-on info` or a separate check. The score penalties are critical 25, high 10, medium 4, low 1.",
           },
           {
             kind: 'p',
-            text: "These two commands are what rls-doctor does. You can get the same result by querying pg_policies and pg_class by hand; the CLI exists so the check is one line and the output is the same every time.",
+            text: "The GitHub Action uploads SARIF to the Security tab. JSON reports include stable fingerprints and a baseline diff, so a team can turn the check on without a hundred failures on day one.",
+          },
+        ],
+      },
+      {
+        id: 'limits',
+        title: 'What a catalog audit cannot prove',
+        blocks: [
+          {
+            kind: 'p',
+            text: "The catalog is one layer. It is not the whole security model. These are the gaps that matter:",
+          },
+          {
+            kind: 'list',
+            items: [
+              "Application-level authorization. A policy can be correct and the API can still return another tenant's rows through a join the policy never touches.",
+              "Views and SECURITY DEFINER functions. A view can run with the owner's permissions and bypass the base table's policies.",
+              "Hosted Supabase settings. The Data API configuration is outside the catalog.",
+              "Custom session settings. Probe sets `request.jwt.claims`; a policy that reads another GUC may return zero rows and hide a leak. The tool reports `probe-session-dependent-policy` as Medium.",
+              "Empty fixtures. A probe that sees zero rows on empty tables proves nothing. Seed two owners before you trust a green result.",
+              "Offline parser coverage. `--schema-file` turns unsupported statements into limitations, not findings. Read them.",
+            ],
+          },
+          {
+            kind: 'p',
+            text: "Use both layers. Catalog analysis answers 'are the policies shaped safely?' Probe answers 'can this role read another tenant's rows right now?' Neither replaces the other.",
+          },
+        ],
+      },
+      {
+        id: 'try',
+        title: 'Try it',
+        blocks: [
+          {
+            kind: 'p',
+            text: "The point is not to trust the policy text. Prove who can read what.",
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/rls-doctor',
+            label: 'RLS Doctor on GitHub',
+            note: 'Source, the 60-repo study, the proof mode, and the CI examples.',
+          },
+          {
+            kind: 'link',
+            href: 'https://www.npmjs.com/package/rls-doctor',
+            label: 'npm package',
+            note: 'Install-free usage: npx rls-doctor demo.',
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/docs/blog/2026-10-09-open-source-rls-audit.md',
+            label: 'The 60-repo study',
+            note: 'Method, headline numbers, and the coverage limits, including what the sample cannot prove.',
           },
         ],
       },
@@ -788,7 +904,7 @@ python -m pytest tests/ -v`,
     summary:
       'A JSON-RPC message averaged 72.5 tokens in a six-message agent deal. A compact wire format built from five compression devices in Panini\'s Ashtadhyayi carries the same deal in 2.8-7.5 tokens. Every encoding is decoder-verified, and two model families read and write the compact form at 12/12.',
     date: '2026-10-15',
-    readingMinutes: 8,
+    readingMinutes: 9,
     tags: ['protocols', 'tokenization', 'agents', 'Panini', 'compact encoding'],
     sections: [
       {
@@ -821,6 +937,12 @@ SUTRA-C                      7.5              9.7x
 SUTRA-C meter                2.8             25.6x
 JSON-RPC envelope           72.5              1.0x`,
             caption: 'One six-message deal, o200k_base. Lower is better.',
+          },
+          {
+            kind: 'image',
+            src: '/sutra/tokens-per-message.svg',
+            alt: 'Horizontal bar chart comparing tokens per message: JSON-RPC 72.5, readable SUTRA 22.3, SUTRA-C 7.5, and SUTRA-C meter 2.8.',
+            caption: 'The same deal, four encodings. The compact form removes syntax; the meter form removes information both sides already know.',
           },
           {
             kind: 'p',
@@ -948,6 +1070,12 @@ after the model's 'sF' trick              73              6.1`,
             caption: 'Every stage is decoder-verified. The 384 and 162 rows are the winning configuration, not the whole sweep.',
           },
           {
+            kind: 'image',
+            src: '/sutra/journey.svg',
+            alt: 'Line chart of tokens per message by stage: readable SUTRA 27.5, 384-encoding sweep 6.7, 162-config sweep 6.25, after the sF trick 6.1, and meter mode 2.8 on a six-message deal.',
+            caption: 'The first win was 4x. After that, the remaining gains were small until the template did the heavy lifting.',
+          },
+          {
             kind: 'p',
             text: 'The last drop came from a model, not from me. It wrote `sF` instead of `s F`, gluing the broadcast prefix into one token. I adopted it. 75 tokens became 73.',
           },
@@ -970,6 +1098,34 @@ compact write         12/12             12/12
 meter read             2/6               6/6
 meter write            4/6               5/6`,
             caption: 'Round 7. The third model family returned no usable array and is logged as blocked.',
+          },
+          {
+            kind: 'image',
+            src: '/sutra/comprehension.svg',
+            alt: 'Grouped bar chart of correctness: both models read and write compact SUTRA-C at 12/12; GPT-6 Luna reads meter mode 2/6 and writes 4/6; DeepSeek v4.1 Flash reads 6/6 and writes 5/6.',
+            caption: 'Round 7: 12 compact messages and 6 meter messages per cell. The meter form is not equally readable across models.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `["bI buy a 50000 739676","sF available a seller@store 48000",
+ "q availability a","o o 48000 a m","K o p 46000 a","a o",
+ "R o !h","c pay 48000 seller@store ~739676", ...]`,
+            caption: 'DeepSeek v4.1 Flash, compact emit: 12/12 correct. Raw output from the round-7 log.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `cell                  prompt   output   correct
+GPT-6 Luna c1 parse      616      854     12/12
+GPT-6 Luna c1 emit       932       95     12/12
+GPT-6 Luna meter parse   414      497      2/6
+GPT-6 Luna meter emit    617       24      4/6
+DeepSeek c1 parse        616      444     12/12
+DeepSeek c1 emit         932       95     12/12
+DeepSeek meter parse     414      271      6/6
+DeepSeek meter emit      617       24      5/6`,
+            caption: 'Round 7 token accounting from the per-call log. Output tokens include the model formatting the answer.',
           },
           {
             kind: 'p',

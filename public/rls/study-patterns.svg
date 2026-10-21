@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">RLS patterns across 60 open-source Supabase repositories</title>
+<desc id="chart-desc">Horizontal bar chart of repository counts by RLS pattern: public read 35, RLS on with zero policies 19, public write 15, missing WITH CHECK 5, RLS off and reachable 4, TRUNCATE reachable 2, broad default privilege 1.</desc>
+<rect width="720" height="380" fill="#ffffff"/>
+<text x="24" y="30" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="16" fill="#111827" text-anchor="start" font-weight="600">Which RLS mistakes showed up in 60 Supabase repos</text>
+<text x="24" y="50" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400">Static audit of migration files, 2026-10-09. Counts are repositories with at least one instance.</text>
+<text x="24" y="74" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#111827" text-anchor="start" font-weight="600">63% high/critical · 25% critical · median score 38/100</text>
+<rect x="430" y="62" width="10" height="10" fill="#dc2626" rx="2"/>
+<text x="446" y="71" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">critical</text>
+<rect x="505" y="62" width="10" height="10" fill="#d97706" rx="2"/>
+<text x="521" y="71" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">high</text>
+<rect x="560" y="62" width="10" height="10" fill="#2563eb" rx="2"/>
+<text x="576" y="71" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">medium</text>
+<text x="24" y="117" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">public read (using true)</text>
+<rect x="260" y="100" width="380.0" height="24" fill="#d97706" rx="3"/>
+<text x="648.0" y="117" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">35</text>
+<text x="24" y="155" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">RLS on, zero policies</text>
+<rect x="260" y="138" width="206.2857142857143" height="24" fill="#2563eb" rx="3"/>
+<text x="474.28571428571433" y="155" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">19</text>
+<text x="24" y="193" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">public write</text>
+<rect x="260" y="176" width="162.85714285714286" height="24" fill="#dc2626" rx="3"/>
+<text x="430.8571428571429" y="193" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">15</text>
+<text x="24" y="231" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">UPDATE missing WITH CHECK</text>
+<rect x="260" y="214" width="54.28571428571429" height="24" fill="#2563eb" rx="3"/>
+<text x="322.2857142857143" y="231" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">5</text>
+<text x="24" y="269" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">RLS off, reachable</text>
+<rect x="260" y="252" width="43.42857142857143" height="24" fill="#d97706" rx="3"/>
+<text x="311.42857142857144" y="269" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">4</text>
+<text x="24" y="307" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">TRUNCATE reachable</text>
+<rect x="260" y="290" width="21.714285714285715" height="24" fill="#d97706" rx="3"/>
+<text x="289.7142857142857" y="307" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">2</text>
+<text x="24" y="345" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="400">broad default privilege</text>
+<rect x="260" y="328" width="10.857142857142858" height="24" fill="#d97706" rx="3"/>
+<text x="278.85714285714283" y="345" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">1</text>
+<text x="24" y="366" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">Counts are repositories, not findings. A repository can contain more than one pattern.</text>
+</svg>
