@@ -508,222 +508,343 @@ Does service_role bypass RLS?              yes, by design; keep it server-side`,
     slug: "what-breaks-if-i-change-this-file",
     title: "What breaks if I change this file?",
     summary:
-      "Grep tells you where a name appears. It does not tell you what depends on this file. Here is how a multi-language source graph answers the question, and where it stops being honest.",
+      "Grep tells you where a name appears. It does not tell you what depends on this file. A bounded static source graph answers the question, names the path, and reports what it could not resolve.",
     date: "2026-09-23",
-    readingMinutes: 12,
+    readingMinutes: 8,
     tags: ['static analysis', 'developer tools', 'compilers', 'CI'],
     sections: [
       {
-        id: 'opening',
-        title: "The question",
+        id: 'question',
+        title: 'The question',
         blocks: [
           {
             kind: 'p',
-            text: "You are about to change a function signature. Before you do, you want to know what breaks. The instinctive move is to grep for the function name. That gives you occurrences, not dependencies. It misses re-exports, aliased imports, dynamic imports, and every consumer that imports the module rather than the symbol.",
+            text: 'You are about to change a function signature. Before you do, you want to know what breaks.',
           },
           {
             kind: 'p',
-            text: "This post is about the structure that actually answers the question: a source graph. Not a full compiler — a bounded, honest model of \"this file references that file,\" good enough to scope a change and to tell you when it does not know.",
+            text: 'The instinct is to grep for the function name. That gives you occurrences, not dependencies. It misses re-exports, aliased imports, dynamic imports, and every consumer that imports the module rather than the symbol.',
+          },
+          {
+            kind: 'p',
+            text: 'The useful answer is a source graph: a bounded model of "this file references that file," good enough to scope a change and honest about what it cannot resolve.',
+          },
+          {
+            kind: 'p',
+            text: 'A changed file is not a bug. The graph reports the path; it does not prove the dependant is broken.',
+          },
+          {
+            kind: 'callout',
+            title: 'What this is, and what it is not',
+            items: [
+              'This is a bounded static source graph across JS/TS, Python, Go, Java, and Rust.',
+              'It is not a runtime dependency graph, a type-checker, or a test suite.',
+              'It does not prove that a dependant is broken. It proves that a static path exists.',
+            ],
+          },
+          {
+            kind: 'image',
+            src: '/codebase-doctor/blast-radius.svg',
+            alt: 'Diagram: a changed src/db/schema.ts reaches src/repositories/user.ts, src/api/users/[id]/route.ts, src/app/dashboard/page.tsx, and tests/integration/user.test.ts through resolved imports. A cross-package edge from packages/billing/src/charge.ts and a dynamic boundary in src/plugins/loader.ts are also shown.',
+            caption: 'One changed root, five dependants. The graph names the path; it does not prove a bug.',
           },
         ],
       },
       {
-        id: 'why-grep-fails',
-        title: "Why grep is not enough",
+        id: 'grep',
+        title: 'Why grep lies',
         blocks: [
           {
             kind: 'p',
-            text: "Consider a small TypeScript module with a barrel file:",
+            text: 'Consider a small TypeScript module with a barrel file:',
           },
           {
             kind: 'code',
-            lang: "typescript",
+            lang: 'typescript',
             code: `// src/payments/index.ts
 export { charge } from './charge.js';
 export type { ChargeResult } from './types.js';
 
 // src/api/checkout.ts
 import { charge } from '../payments/index.js';`,
-            caption: "checkout.ts never names charge.ts. It names the barrel.",
+            caption: 'checkout.ts never names charge.ts. It names the barrel.',
           },
           {
             kind: 'p',
-            text: "A grep for charge finds both files and also every unrelated use of the word. It does not tell you that changing charge.ts breaks checkout.ts through the barrel. A source graph does, because it records edges between files after resolution — not between strings.",
+            text: 'A grep for `charge` finds both files and every unrelated use of the word. It does not tell you that changing `charge.ts` breaks `checkout.ts` through the barrel. A source graph does, because it records edges between resolved files, not between strings.',
           },
           {
             kind: 'p',
-            text: 'Dynamic imports make this worse. import("./plugins/${name}.js") is not a single edge; it is a pattern that may resolve to many files or none. The honest response is to record a dynamic boundary and say so, not to guess.',
+            text: "Dynamic imports make it worse. `import('./plugins/${name}.js')` is not a single edge; it is a pattern that may resolve to many files or none. The honest response is to record a dynamic boundary and say so, not to guess.",
           },
         ],
       },
       {
-        id: 'pipeline',
-        title: "The pipeline",
+        id: 'graph',
+        title: 'The graph',
         blocks: [
           {
             kind: 'p',
-            text: "Building the graph is four bounded steps. Each step has a job and a limit.",
+            text: 'Building the graph is four bounded steps.',
           },
           {
             kind: 'h3',
-            text: "1. Inventory",
+            text: '1. Inventory',
           },
           {
             kind: 'p',
-            text: "Walk the repository under the ignore rules — .gitignore, .npmignore, default noise. Produce a file list with paths and kinds (source, config, test, asset). Nothing is analyzed yet. This step answers \"what exists,\" not \"what it means.\"",
+            text: 'Walk the repository under the ignore rules: .gitignore, .npmignore, default noise. Produce a file list with paths and kinds. Nothing is analyzed yet. This step answers "what exists," not "what it means."',
           },
           {
             kind: 'h3',
-            text: "2. Workspaces and project boundaries",
+            text: '2. Workspaces and project boundaries',
           },
           {
             kind: 'p',
-            text: "A monorepo is not one project. package.json files, pnpm-workspace.yaml, go.work, Cargo.toml, and pyproject.toml mark ownership boundaries. Imports that cross a boundary are still edges, but they are labeled. A change that fans out across five packages is a different risk from one that stays inside a single package.",
+            text: 'A monorepo is not one project. package.json files, pnpm-workspace.yaml, go.work, Cargo.toml, and pyproject.toml mark ownership boundaries. Imports that cross a boundary are still edges, but they are labeled. A change that fans out across five packages is a different risk from one that stays inside a single package.',
           },
           {
             kind: 'h3',
-            text: "3. Resolution",
+            text: '3. Resolution',
           },
           {
             kind: 'p',
-            text: "For each source file, extract its references and resolve each one to a concrete file — or record why it could not be resolved. This is the step that differs per language. It is also the step where most tools silently give up.",
+            text: 'For each source file, extract its references and resolve each one to a concrete file, or record why it could not be resolved. This is the step that differs per language. It is also the step where most tools silently give up.',
           },
           {
             kind: 'h3',
-            text: "4. Impact",
+            text: '4. Impact',
           },
           {
             kind: 'p',
-            text: "Given a changed set, walk the graph to its reverse-reachable set. That set is the blast radius. Report it with the edges that got you there, so a human can check the walk.",
+            text: 'Given a changed set, walk the graph to its reverse-reachable set. That set is the blast radius. Report it with the edges that got you there, so a human can check the walk. The report preserves the full impacted-file count while serializing only bounded impact records.',
           },
           {
             kind: 'code',
-            lang: "text",
+            lang: 'text',
             code: `Changed: src/payments/charge.ts
 Blast radius (3 files, 2 boundaries):
   src/payments/index.ts          via  export { charge } from './charge.js'
   src/api/checkout.ts            via  import { charge } from '../payments/index.js'
   packages/billing/src/charge.ts via  cross-package: @app/payments
 Unresolved: 1 dynamic boundary in src/plugins/loader.ts`,
-            caption: "A useful impact report names the path, not just the file count.",
+            caption: 'A useful impact report names the path, not just the file count.',
+          },
+          {
+            kind: 'p',
+            text: 'The disposable demo prints the same shape:',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `src/config.ts → src/db.ts
+src/config.ts → src/db.ts → src/jobs.ts
+src/api/route.ts → src/server.ts`,
+            caption: 'Codebase Doctor demo. The fixture is removed afterward.',
+          },
+          {
+            kind: 'p',
+            text: 'The path proves only the static edge chain. It does not prove the dependant is broken. That distinction is the whole product.',
           },
         ],
       },
       {
-        id: 'per-language',
-        title: "What each language gets wrong",
+        id: 'guess',
+        title: 'What it refuses to guess',
         blocks: [
           {
             kind: 'p',
-            text: "Resolution is not one algorithm. Each ecosystem has a rule that will bite you if you assume the others.",
+            text: 'A graph that guesses is worse than a graph that says "unknown." The graph module is finding-free by design. A separate source-integrity doctor reports one rule, `source/import-target-missing`, and only for four proof classes:',
           },
           {
             kind: 'list',
             items: [
-              "TypeScript / JavaScript: path aliases in tsconfig, extension-less imports, .js suffixes pointing at .ts files, barrel index files, and export * from chains. CJS require and ESM import coexist in the same repo.",
-              "Python: implicit namespace packages, src/ layout versus flat layout, importlib.import_module with a computed name, and relative imports whose meaning changes with the package root.",
-              "Go: module paths that do not match directory layout, internal/ visibility rules, and build tags that include or exclude a file per GOOS.",
-              "Java: package names decoupled from directories just enough to be surprising, wildcard imports that pull in a namespace without naming a class, and annotation processors that generate sources the graph never sees.",
-              "Rust: mod declarations that are not file paths in the way you expect, cfg-gated modules, and crate-relative use statements.",
+              'An explicit relative target with a supported source extension.',
+              'A single deterministic alias whose configured target explicitly names a supported source file.',
+              'A unique workspace package whose explicit entry names a supported source file.',
+              'An internal Go package under a module path without a replace directive.',
             ],
           },
           {
             kind: 'p',
-            text: "A tool that claims \"multi-language\" and uses one regex for all five is not lying about the regex. It is lying about the answer.",
+            text: 'Extensionless, JSON, custom-loader, conditional, ambiguous, external, and dynamic references are not findings. Cycles are valid topology. It does not check named exports or validate that a referenced export name exists.',
+          },
+          {
+            kind: 'p',
+            text: 'Raw import specifiers and source text are withheld; findings expose normalized paths, import kind, proof class, and a safe location. At most 1,000 findings per audit, with partial coverage whenever that ceiling or any graph limitation applies.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `[high] source/import-target-missing src/api/route.ts:2
+  proof: explicit relative target
+  target: src/server.ts — not present in the inventory`,
+            caption: 'A proof class, a normalized path, and a safe location. No guessed import specifier.',
+          },
+          {
+            kind: 'p',
+            text: 'That is the difference between a scanner and a reviewer: a scanner can report a clean result on a file it never parsed. This one cannot.',
           },
         ],
       },
       {
-        id: 'missing-targets',
-        title: "Missing-target detection",
+        id: 'receipts',
+        title: 'The receipts',
         blocks: [
           {
             kind: 'p',
-            text: "The inverse of impact analysis is often more valuable. Every resolved reference implies a file should exist. When it does not, you have found a bug the type-checker might also find — or might not, if the file is generated, vendored, or conditionally loaded.",
+            text: 'The graph is only useful if it is measured. The repository ships three independent checks:',
+          },
+          {
+            kind: 'list',
+            items: [
+              'Benchmark: 17 seeded single-defect fixtures, 16/16 expected rule matches (100% recall), zero medium+ false positives, 2/2 review verdicts, 1/1 suppression honesty.',
+              'Red team: 18 adversarial cases, 11/11 mutants caught, 7/7 controls clean.',
+              'Field study: 100 agent-configured public repositories, 23% with at least one high-severity finding, 10% with a broken import target.',
+            ],
           },
           {
             kind: 'code',
-            lang: "text",
-            code: `Finding: import target missing (source-integrity/missing-target)
-  Location: src/api/checkout.ts:3:24
-  Reference: ../payments/charge.js
-  Resolved to: src/payments/charge.ts  — not present in the inventory
-  Confidence: high`,
+            lang: 'text',
+            code: `check                         result
+cases passed                  17/17
+expected rule matches         16/16 (100%)
+medium+ false positives       0
+review verdicts               2/2
+suppression honesty           1/1
+red-team mutants caught       11/11
+red-team controls clean       7/7`,
+            caption: 'Measured, not asserted. The harness is deterministic: no network, no model, no database.',
+          },
+          {
+            kind: 'image',
+            src: '/codebase-doctor/field-study.svg',
+            alt: 'Bar chart of 100 agent-configured repositories: 23% had at least one high-severity finding, 11% risky agent configuration, 10% a broken import target, 4% private key material, 1% a committed provider token.',
+            caption: 'The field study is a convenience sample, not a census. Shallow clones mean the history number is a floor.',
           },
           {
             kind: 'p',
-            text: "This is the check you want after a merge that deleted files, after a rename, and after a partial revert. It is also the check that catches a broken barrel: the barrel exports from a path that no longer exists, and nothing else in the repo mentions that path.",
-          },
-        ],
-      },
-      {
-        id: 'fingerprints',
-        title: "Stable fingerprints and baselines",
-        blocks: [
-          {
-            kind: 'p',
-            text: "A graph that produces findings is only useful in CI if it can tell new problems from old ones. That requires a fingerprint that survives line-number drift but changes when the problem changes.",
-          },
-          {
-            kind: 'p',
-            text: "A workable fingerprint is a hash over the rule identity and the structural location — module, exported symbol, reference text — not over the line number. Then you store a baseline of accepted findings, and CI fails only on findings whose fingerprint is not in the baseline.",
-          },
-          {
-            kind: 'code',
-            lang: "bash",
-            code: `# Accept today's known findings.
-codebase-doctor audit . --json > baseline.json
-
-# Later, after an external repair, verify.
-codebase-doctor verify . --baseline baseline.json
-
-# On every PR, fail only on new findings.
-codebase-doctor audit . --changed --baseline baseline.json --fail-on high`,
-          },
-          {
-            kind: 'p',
-            text: "Without this, teams turn the check off the first week because it fails on forty known issues. With it, the check stays on and actually catches regressions.",
+            text: 'The differential scoreboard is the honesty check: two independently written offline analyzers over the same SQL corpus, 10 findings matched, 0 severity mismatches, 1 documented coverage difference, safe schema clean under both.',
           },
         ],
       },
       {
         id: 'limits',
-        title: "What the graph cannot see",
+        title: 'What the graph cannot see',
         blocks: [
           {
             kind: 'p',
-            text: "The value of the tool is bounded by its honesty about limits. These are the ones that matter:",
+            text: 'The value of the tool is bounded by its honesty about limits.',
           },
           {
             kind: 'list',
             items: [
-              "Reflection and runtime wiring. A dependency-injection container that resolves a type by name is not a static edge. The graph should say \"dynamic boundary\" and stop.",
-              "Generated sources. Code emitted at build time is not in the inventory unless you point the tool at the output directory. Migrations that generate ORM clients are a common blind spot.",
-              "Cross-language edges. A TypeScript file that shells out to a Python script is not a source edge. Record the process boundary or accept the gap.",
-              "Semantic impact. Knowing that A imports B does not mean a change to B is safe for A. A signature-preserving refactor and a behavior change look identical to the graph.",
+              'Reflection and runtime wiring. A dependency-injection container that resolves a type by name is not a static edge. The graph says dynamic boundary and stops.',
+              'Generated sources. Code emitted at build time is not in the inventory unless you point the tool at the output directory.',
+              'Cross-language edges. A TypeScript file that shells out to a Python script is a process boundary, not a source edge.',
+              'Semantic impact. Knowing that A imports B does not mean a change to B is safe for A. A signature-preserving refactor and a behavior change look identical to the graph.',
+              'Partial coverage. A bounded scan says so with exact total, emitted, and omitted counts. A clean run means the scope was checked, not that the code is bug-free.',
             ],
           },
           {
             kind: 'p',
-            text: "Any tool that reports a clean blast radius without listing its unresolved boundaries is reporting confidence it has not earned. Coverage has to be visible in the report — what was analyzed, what was skipped, and why.",
+            text: 'Any report that claims a clean blast radius without listing unresolved boundaries is reporting confidence it has not earned.',
           },
         ],
       },
       {
-        id: 'close',
-        title: "Where this lives",
+        id: 'fits',
+        title: 'Where this fits',
         blocks: [
           {
             kind: 'p',
-            text: "This is the model behind codebase-doctor: a bounded inventory, per-language resolution, a reverse-reachable impact set, missing-target detection, and fingerprints that make the output usable in CI. The report carries its own coverage and limitations next to the findings.",
+            text: 'This is not a type-checker, a linter, or a runtime dependency graph. TypeScript catches type errors; ESLint catches style and correctness patterns; tests catch behavior. The source graph answers a narrower question: which files can reach this one through static imports?',
           },
           {
             kind: 'p',
-            text: "If you want the same result without the tool, you can build a graph for one language in an afternoon and be wrong in exactly the ways listed above. The tool exists because the wrong answers are expensive and quiet.",
+            text: 'That question is cheap to answer before a merge and expensive to answer after an incident. It is also the question a coding agent should ask before editing a file it did not write.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `tool              question
+grep              where does this string appear?
+linter            does this pattern match a rule?
+type-checker      does this program type-check?
+test suite        does this behavior hold for these fixtures?
+source graph      which files can reach this change?`,
+            caption: 'Different layers, different answers. None of them is a proof of correctness.',
+          },
+        ],
+      },
+      {
+        id: 'reproduce',
+        title: 'Reproduce this',
+        blocks: [
+          {
+            kind: 'p',
+            text: 'The reproduce block uses commit `d56638a`; the benchmark and field-study snapshots are dated 2026-10-09.',
+          },
+          {
+            kind: 'code',
+            lang: 'bash',
+            code: `git clone https://github.com/subhajitlucky/codebase-doctor
+cd codebase-doctor
+git checkout d56638a
+npm ci
+npm run build
+node dist/cli.js demo
+node dist/cli.js audit . --changed --format brief`,
+            caption: 'The demo builds a disposable fixture, proves a broken import and a secret, prints the blast radius, and exits 1.',
+          },
+          {
+            kind: 'code',
+            lang: 'text',
+            code: `codebase-doctor brief
+scope=changed findings=3 shown=3 coverage=incomplete score=70
+[high] source/import-target-missing src/api/route.ts:2 — ...
+[high] security/secrets/provider-token src/config.ts:6 — ...
+[info] repository/no-visible-tests (repository) — ...
+coverage-limitations: repository: partial, backend: not-selected, database: skipped, performance: partial`,
+            caption: 'The coverage line is part of the result, not an afterthought.',
           },
           {
             kind: 'p',
-            text: "codebase-doctor is open source, runs offline by default, and never writes to the repository it audits.",
+            text: 'The benchmark harness is `node scripts/benchmark.mjs`; the red-team corpus is `node scripts/red-team.mjs`; the field study is `node scripts/study-agent-repos.mjs` with a GitHub token.',
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/codebase-doctor',
+            label: 'Codebase Doctor on GitHub',
+            note: 'Source, architecture, benchmark harness, red-team corpus, and the field-study script.',
+          },
+          {
+            kind: 'link',
+            href: 'https://www.npmjs.com/package/codebase-doctor',
+            label: 'npm package',
+            note: 'Install-free usage: npx -y codebase-doctor audit . --changed --format brief.',
+          },
+        ],
+      },
+      {
+        id: 'so-what',
+        title: 'What to do with this',
+        blocks: [
+          {
+            kind: 'callout',
+            title: 'What to do with this',
+            items: [
+              'Run audit . --changed --base main before merging a change.',
+              'Read the coverage-limitations line before calling the result clean.',
+              'Use verify . --baseline before.json after a fix; a fingerprint that disappears is evidence, not a feeling.',
+              'Do not ask the graph to prove semantic correctness. It proves reachability.',
+            ],
+          },
+          {
+            kind: 'link',
+            href: 'https://github.com/subhajitlucky/codebase-doctor/blob/main/docs/architecture.md',
+            label: 'The architecture contract',
+            note: 'The full source-graph, coverage, precision, and bounded-report contract.',
           },
         ],
       },

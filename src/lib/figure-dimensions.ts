@@ -13,6 +13,8 @@ export const KALIA_FIGURE_DIMENSIONS = {
   '/sutra/comprehension.svg': { width: 720, height: 360 },
   '/sutra/journey.svg': { width: 720, height: 330 },
   '/rls/study-patterns.svg': { width: 720, height: 380 },
+  '/codebase-doctor/blast-radius.svg': { width: 720, height: 390 },
+  '/codebase-doctor/field-study.svg': { width: 720, height: 330 },
 } as const;
 
 export function figureDimensions(src: string) {

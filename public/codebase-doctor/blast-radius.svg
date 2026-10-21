@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 390" width="720" height="390" role="img" aria-labelledby="chart-title chart-desc">
+<title id="chart-title">Blast radius diagram</title>
+<desc id="chart-desc">A changed file at src/db/schema.ts is traced through src/repositories/user.ts, src/api/users/[id]/route.ts, src/app/dashboard/page.tsx, and tests/integration/user.test.ts. A cross-package edge from packages/billing/src/charge.ts is shown, plus a dynamic boundary in src/plugins/loader.ts that is reported as a limitation.</desc>
+<rect width="720" height="390" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/></marker><marker id="arrow-purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7c3aed"/></marker></defs>
+<text x="24" y="30" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="16" fill="#111827" text-anchor="start" font-weight="600">Blast radius: one changed file, five dependants</text>
+<text x="24" y="50" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="12" fill="#6b7280" text-anchor="start" font-weight="400">Reverse edges from a changed source root. The report names the path, not just the file count.</text>
+<rect x="40" y="90" width="170" height="58" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" rx="6"/>
+<text x="50" y="110" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="9" fill="#2563eb" text-anchor="start" font-weight="700">changed root</text>
+<text x="50" y="128" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="11" fill="#111827" text-anchor="start" font-weight="600">src/db/schema.ts</text>
+<rect x="260" y="90" width="170" height="58" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1" rx="6"/>
+<text x="270" y="128" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">src/repositories/user.ts</text>
+<rect x="480" y="90" width="190" height="58" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1" rx="6"/>
+<text x="490" y="116" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">src/api/users/[id]/</text>
+<text x="490" y="132" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">route.ts</text>
+<rect x="480" y="190" width="190" height="58" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1" rx="6"/>
+<text x="490" y="216" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">src/app/dashboard/</text>
+<text x="490" y="232" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">page.tsx</text>
+<rect x="480" y="290" width="190" height="58" fill="#f8fafc" stroke="#e5e7eb" stroke-width="1" rx="6"/>
+<text x="490" y="316" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">tests/integration/</text>
+<text x="490" y="332" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">user.test.ts</text>
+<rect x="40" y="190" width="170" height="58" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5" rx="6"/>
+<text x="50" y="216" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">packages/billing/src/</text>
+<text x="50" y="232" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">charge.ts</text>
+<rect x="40" y="290" width="170" height="58" fill="#fffbeb" stroke="#d97706" stroke-width="1.5" rx="6" stroke-dasharray="4 4"/>
+<text x="50" y="312" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10.5" fill="#111827" text-anchor="start" font-weight="600">src/plugins/loader.ts</text>
+<text x="50" y="330" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="9" fill="#d97706" text-anchor="start" font-weight="600">dynamic boundary</text>
+<line x1="210" y1="119" x2="260" y2="119" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="430" y1="119" x2="480" y2="119" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="575" y1="148" x2="575" y2="190" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="575" y1="248" x2="575" y2="290" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M 210 219 L 260 145" fill="none" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+<text x="211" y="184" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="9" fill="#7c3aed" text-anchor="start" font-weight="600">@app/payments</text>
+<text x="220" y="320" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="9.5" fill="#d97706" text-anchor="start" font-weight="400">not a static edge: reported as a limitation</text>
+<text x="220" y="334" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="9.5" fill="#d97706" text-anchor="start" font-weight="400">when the import is non-literal</text>
+<text x="24" y="375" font-family="system-ui,-apple-system,'Segoe UI',Roboto,sans-serif" font-size="10" fill="#6b7280" text-anchor="start" font-weight="400">Solid: resolved static import. Purple: cross-package edge. Dashed: dynamic boundary, not a guessed edge.</text>
+</svg>
