@@ -101,9 +101,11 @@ export function KaliaHero() {
             spread is <strong>0.2892 nats</strong>, and it is now the measurement floor.
           </li>
           <li>
-            Zero-shot: PIQA <strong>61.4%</strong>, ARC-Easy <strong>45.8%</strong>, HellaSwag{' '}
-            <strong>36.8%</strong>, WinoGrande <strong>50.2%</strong>, LAMBADA{' '}
-            <strong>23.0%</strong>.
+            At 2,000 samples, no benchmark movement between the checkpoints reaches 2&sigma;:
+            PIQA <strong>+1.74</strong>, ARC-Easy <strong>+0.45</strong>, HellaSwag{' '}
+            <strong>0.00</strong>, WinoGrande <strong>+0.47</strong>, LAMBADA{' '}
+            <strong>&minus;1.25</strong>. Only LAMBADA is outside the pre-registered 1.0-point
+            rule.
           </li>
           <li>
             The Abhimanyu gap — reversed-text loss minus forward loss — is{' '}
@@ -112,7 +114,8 @@ export function KaliaHero() {
           </li>
           <li>
             Read it as training infrastructure and experiment discipline, not a competitive model:
-            v0.2.0 regressed on two benchmarks and is published as an experiment.
+            v0.2.0 fails the registered rule on LAMBADA only; the 500-sample ARC-Easy regression
+            did not replicate, and it is published as an experiment.
           </li>
         </ul>
       </section>
@@ -126,9 +129,10 @@ export function KaliaHero() {
         ))}
       </div>
       <p className="kalia-stat-note">
-        Val loss and bits/byte in this row are KALIA 0.1.2 on the rebuilt yardstick. The earlier
-        2.4366 / 0.8184 was measured on the original held-out set; the two are never compared.
-        Section 2 compares both checkpoints on the rebuilt set.
+        Val loss, bits/byte and PIQA in this row are KALIA 0.1.2 on the rebuilt yardstick; PIQA is
+        the 2,000-sample measurement. The earlier 2.4366 / 0.8184 was measured on the original
+        held-out set; the two are never compared. Section 2 compares both checkpoints on the
+        rebuilt set.
       </p>
 
       <div className="kalia-cta-row">
@@ -193,7 +197,7 @@ export function VersionsSection() {
       <div className="kalia-section-head">
         <h2 className="kalia-section-title">2. Two checkpoints, one yardstick</h2>
         <p className="kalia-section-note">
-          Table 2 &middot; deterministic 100-batch evaluation, 819,200 tokens, fixed seed
+          Table 2 &middot; loss at 819,200 tokens; zero-shot at 2,000 samples
         </p>
       </div>
       <p className="kalia-prose">
@@ -227,14 +231,14 @@ export function VersionsSection() {
       <figure className="kalia-figure" style={{ marginTop: '2.2rem' }}>
         <Image
           src="/kalia/bench-compare.svg"
-          alt="Grouped bars for five zero-shot tasks, both versions side by side, each over a grey band showing plus or minus one standard error of about two points. The three gains sit within 1.5 standard errors; the two that fell — LAMBADA and ARC-Easy — fail the pre-registered regression rule."
+          alt="Grouped bars for five zero-shot tasks at 2,000 samples, both versions side by side, each with error bars. No movement reaches two standard errors; only LAMBADA is outside the one-point rule, and the 500-sample ARC-Easy regression did not replicate."
           width={benchDimensions.width}
           height={benchDimensions.height}
         />
         <figcaption>
-          Both versions, same harness, same 500 samples, same code path. The grey band is the
-          measurement&rsquo;s own uncertainty, so a reader can see which bars actually separate and
-          which merely look like they do.
+          Both versions, same harness, same 2,000 samples, same code path. Error bars are ±1
+          standard error; no movement reaches 2&sigma;. The original 500-sample figure is kept in
+          the chapter log below.
         </figcaption>
       </figure>
       <h3 className="kalia-section-title" style={{ marginTop: '2.2rem', fontSize: '1.05rem' }}>
@@ -245,7 +249,6 @@ export function VersionsSection() {
           {BENCH_COMPARISON.map((row) => {
             const delta = row.v020 - row.v012;
             const sigma = Math.abs(delta) / row.stderr;
-            const flat = sigma < 1;
             return (
               <tr className="kalia-bench-row" key={row.task}>
                 <th scope="row" className="kalia-bench-name">
@@ -264,7 +267,7 @@ export function VersionsSection() {
                     {delta >= 0 ? '+' : ''}
                     {delta.toFixed(2)}
                   </strong>
-                  {flat ? ' (inside noise)' : ` (${sigma.toFixed(1)}σ)`} &middot; {row.note}
+                  {` (${sigma.toFixed(2)}σ)`} &middot; {row.note}
                 </td>
               </tr>
             );
@@ -272,17 +275,19 @@ export function VersionsSection() {
         </tbody>
       </table>
       <p className="kalia-prose" style={{ marginTop: '1.6rem' }}>
-        Read that table with the error bars attached. At 500 samples these benchmarks carry a
-        standard error of roughly <strong>2 points</strong>, and the{' '}
-        <strong>three gains &mdash; PIQA, HellaSwag, WinoGrande &mdash; all sit within 1.6&sigma;</strong>:
-        none of them can be called an improvement. The two that fell &mdash; ARC-Easy at 1.7&sigma;
-        and LAMBADA at 1.2&sigma; &mdash; are the honest signal, and they are why v0.2.0 is published
-        as an experiment rather than as a release.
+        Read that table with the error bars attached. At 2,000 samples the standard errors are
+        about <strong>1.0&ndash;1.4 points</strong>, and <strong>no movement reaches 2&sigma;</strong>.
+        The 500-sample run this page originally reported had a roughly 2-point error bar: its
+        ARC-Easy <strong>&minus;3.80</strong> became <strong>+0.45</strong> at 2,000, and its
+        HellaSwag <strong>+3.00</strong> became <strong>0.00</strong>. The original numbers remain
+        in the chapter log; they did not survive the larger sample.
       </p>
       <p className="kalia-prose" style={{ marginTop: '1rem' }}>
-        The pre-registered rule was that no task may regress by more than 1.0 point.
-        <strong> v0.2.0 fails it on two.</strong> The thresholds were not moved afterwards, and the
-        noise floor was published beside the verdict rather than used to rescue it.
+        The pre-registered rule was that no task may regress by more than 1.0 point.{' '}
+        <strong>At 2,000 samples, v0.2.0 fails it on LAMBADA only</strong> &mdash; by 0.25 points,
+        at z = &minus;0.92. The thresholds were not moved afterwards, and the noise floor was
+        published beside the verdict rather than used to rescue it. That is why v0.2.0 remains an
+        experiment rather than a promotion.
       </p>
     </section>
   );
@@ -374,14 +379,19 @@ export function ResultsSection() {
           ))}
         </tbody>
       </table>
+      <p className="kalia-prose" style={{ marginTop: '1rem' }}>
+        These are the first-release numbers at 500 samples. The 2,000-sample re-measurement in
+        Section 2 gives v0.1.2 PIQA 59.6, ARC-Easy 46.0, HellaSwag 35.6, WinoGrande 50.3 and
+        LAMBADA 25.2; no movement between the checkpoints reaches 2&sigma;.
+      </p>
       <p className="kalia-prose" style={{ marginTop: '1.6rem' }}>
         Held-out loss on the deterministic 100-batch evaluation is <strong>3.0533</strong> (819,200
         tokens, fixed seed) — <strong>0.9992 bits-per-byte</strong> — on the rebuilt yardstick. The
         earlier <strong>2.4366 / 0.8184</strong> was measured on the original held-out set; that set
         is 0.62 nats easier for the same weights, and the two are never tabulated together. v0.2.0
-        scores <strong>2.8248 / 0.9244</strong> on the rebuilt set. A 58M storyteller at{' '}
-        <strong>61.4% PIQA</strong> and <strong>45.8% ARC-Easy</strong> is competitive with
-        125M-class models trained on roughly 100x more tokens, and weakest on the one task that
+        scores <strong>2.8248 / 0.9244</strong> on the rebuilt set. At release, a 58M storyteller at{' '}
+        <strong>61.4% PIQA</strong> and <strong>45.8% ARC-Easy</strong> (500 samples) is competitive
+        with 125M-class models trained on roughly 100x more tokens, and weakest on the one task that
         requires long-range narrative memory (LAMBADA, 23%). The custom metric is the one that
         matters next: the <strong>Abhimanyu gap</strong> — reversed-text loss (9.29) minus forward
         loss (3.23) — is <strong>6.06 nats</strong>. The model can enter fluent text but cannot exit

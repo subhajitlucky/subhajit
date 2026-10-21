@@ -854,7 +854,7 @@ coverage-limitations: repository: partial, backend: not-selected, database: skip
     slug: 'kalia-build-log',
     title: 'Training a 58M language model from scratch on free GPUs',
     summary:
-      'Zero dollars and a full public record: a 58M-parameter model trained from random initialization on free Kaggle GPUs. v0.1.2 stopped at 73% of its schedule; v0.2.0 finished and improved held-out loss by 0.2285 nats, then failed its own stability rule on two benchmarks. The most useful result was discovering that the project’s best architecture win was noise.',
+      'Zero dollars and a full public record: a 58M-parameter model trained from random initialization on free Kaggle GPUs. v0.1.2 stopped at 73% of its schedule; v0.2.0 finished and improved held-out loss by 0.2285 nats. At 2,000 samples only LAMBADA is outside its stability rule; the earlier 500-sample ARC-Easy regression did not replicate. The most useful result was discovering that the project’s best architecture win was noise.',
     date: '2026-09-23',
     readingMinutes: 10,
     tags: ['language models', 'training', 'Muon', 'Kaggle', 'from scratch'],
@@ -869,7 +869,7 @@ coverage-limitations: repository: partial, backend: not-selected, database: skip
           },
           {
             kind: 'p',
-            text: 'The first release, v0.1.2, stopped at 73% of its schedule and scored 3.0533 held-out loss / 0.9992 bits-per-byte. The second, v0.2.0, finished the schedule and reached 2.8248 / 0.9244, 0.2285 nats better. But v0.2.0 failed its own stability rule on two benchmarks, so it is an experiment, not the new default.',
+            text: 'The first release, v0.1.2, stopped at 73% of its schedule and scored 3.0533 held-out loss / 0.9992 bits-per-byte. The second, v0.2.0, finished the schedule and reached 2.8248 / 0.9244, 0.2285 nats better. At 2,000 samples only LAMBADA is outside the stability rule; the 500-sample ARC-Easy regression did not replicate. It remains an experiment, not the new default.',
           },
           {
             kind: 'p',
@@ -910,10 +910,10 @@ v0.2.0    2.50B    2.8248          0.9244      experiment`,
             kind: 'code',
             lang: 'text',
             code: `model        params   tokens   PIQA   ARC-Easy
-KALIA v0.1.2 58M      1.82B    61.4   45.8
-KALIA v0.2.0 58M      2.50B    63.8   42.0
+KALIA v0.1.2 58M      1.82B    59.6   46.0
+KALIA v0.2.0 58M      2.50B    61.4   46.4
 OPT-125M     125M     ~180B    63.0   43.5`,
-            caption: 'Scale context, not a head-to-head. Harness versions differ; KALIA uses lm-eval 0.4.9, 0-shot, 500 samples.',
+            caption: 'Scale context, not a head-to-head. Harness versions differ; KALIA uses lm-eval 0.4.9, 0-shot, 2,000 samples.',
           },
         ],
       },
@@ -989,7 +989,7 @@ OPT-125M     125M     ~180B    63.0   43.5`,
           },
           {
             kind: 'p',
-            text: 'Zero-shot: PIQA 61.4, ARC-Easy 45.8, HellaSwag 36.8, WinoGrande 50.2, LAMBADA 23.0. The custom Abhimanyu gap, reversed-text loss minus forward loss, was 6.06 nats. The model can enter fluent text but cannot exit it.',
+            text: 'Zero-shot at the 500-sample release: PIQA 61.4, ARC-Easy 45.8, HellaSwag 36.8, WinoGrande 50.2, LAMBADA 23.0. The 2,000-sample re-measurement gives PIQA 59.6, ARC-Easy 46.0, HellaSwag 35.6, WinoGrande 50.3, LAMBADA 25.2. The custom Abhimanyu gap, reversed-text loss minus forward loss, was 6.06 nats. The model can enter fluent text but cannot exit it.',
           },
         ],
       },
@@ -1073,7 +1073,7 @@ reversal     5.2465    3.9641`,
           },
           {
             kind: 'p',
-            text: 'The benchmarks split: PIQA 63.8 (+2.4), HellaSwag 39.8 (+3.0), WinoGrande 50.8 (+0.6), LAMBADA 20.8 (-2.2), ARC-Easy 42.0 (-3.8). The standard errors are about 2 points; none of the five movements reaches 2 sigma.',
+            text: 'At 2,000 samples the comparison is smaller: PIQA 61.4 (+1.74), HellaSwag 35.6 (0.00), WinoGrande 50.8 (+0.47), LAMBADA 23.9 (-1.25), ARC-Easy 46.4 (+0.45). No movement reaches 2 sigma. Only LAMBADA is outside the 1.0-point rule; the 500-sample ARC-Easy -3.8 did not replicate.',
           },
           {
             kind: 'image',
@@ -1171,7 +1171,7 @@ python tools/check_notebooks.py`,
           },
           {
             kind: 'p',
-            text: 'The programme also moved to inference-time levers: an entity-consistency decoder triples character retention (+0.061), a best-of-N/retrieval probe, and four Vedic recitation orders as replay schedules. The 58M measurement floor stopped small architecture claims.',
+            text: 'The programme also moved to inference-time levers: an entity-consistency holdout showed the recorded +0.061 was circular (the honest held-out half is +0.011 [-0.007, +0.032], while coverage survives), a best-of-N/retrieval probe, and four Vedic recitation orders as replay schedules. The 58M measurement floor stopped small architecture claims.',
           },
           {
             kind: 'callout',

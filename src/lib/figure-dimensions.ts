@@ -1,6 +1,7 @@
 export const KALIA_FIGURE_DIMENSIONS = {
   '/kalia/architecture-ablation.svg': { width: 720, height: 286 },
   '/kalia/bench-compare.svg': { width: 720, height: 424 },
+  '/kalia/bench-compare-500.svg': { width: 720, height: 424 },
   '/kalia/benchmarks.svg': { width: 720, height: 286 },
   '/kalia/optimizer-ablation.svg': { width: 720, height: 242 },
   '/kalia/replication-collapse.svg': { width: 720, height: 430 },

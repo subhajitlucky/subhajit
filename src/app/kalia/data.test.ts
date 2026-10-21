@@ -96,7 +96,8 @@ describe('kalia page data', () => {
       expect(Math.abs(row.v020 - row.v012) / row.stderr).toBeLessThan(2);
     }
 
-    expect(BENCH_COMPARISON.filter((row) => row.v020 < row.v012)).toHaveLength(2);
+    expect(BENCH_COMPARISON.filter((row) => row.v020 < row.v012)).toHaveLength(1);
+    expect(BENCH_COMPARISON.find((row) => row.v020 < row.v012)?.task).toBe('LAMBADA');
   });
 
   it('keeps numeric timeline times in order within each chapter', () => {

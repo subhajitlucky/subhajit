@@ -57,11 +57,11 @@ export const projects: Project[] = [
       'A decoder-only transformer (10 layers, 512 dim, RoPE, RMSNorm, SwiGLU, QK-Norm, logit soft-capping) with a resumable DDP trainer that survives Kaggle\'s 8.5-hour session caps by syncing checkpoints to the HuggingFace Hub, a license-filtered tokenization pipeline, a micro-ablation harness, and an evaluation suite covering held-out loss, bits-per-byte, zero-shot benchmarks, and a custom entry-exit asymmetry metric.',
     proof: [
       'Public release: weights, model card, and the full engineering record (every numbered decision and incident, and hash-anchored pre-registrations).',
-      'Two checkpoints on one rebuilt yardstick: v0.1.2 scores 3.0533 held-out loss / 0.9992 bits-per-byte; v0.2.0 scores 2.8248 / 0.9244, a 0.2285-nat improvement. v0.2.0 is an experiment: two benchmarks regressed beyond the pre-registered stability rule.',
-      'Zero-shot v0.1.2: PIQA 61.4%, ARC-Easy 45.8%, HellaSwag 36.8%. The architecture line was closed after X20 inverted under replication; the 58M control seed spread is 0.2892 nats.',
+      'Two checkpoints on one rebuilt yardstick: v0.1.2 scores 3.0533 held-out loss / 0.9992 bits-per-byte; v0.2.0 scores 2.8248 / 0.9244, a 0.2285-nat improvement. v0.2.0 is an experiment: at 2,000 samples only LAMBADA is outside the pre-registered 1.0-point rule; the 500-sample ARC-Easy regression did not replicate.',
+      'Zero-shot at 2,000 samples: v0.1.2 PIQA 59.6%, ARC-Easy 46.0%, HellaSwag 35.6%; v0.2.0 PIQA 61.4%, ARC-Easy 46.4%, HellaSwag 35.6%. No movement reaches 2σ. The architecture line was closed after X20 inverted under replication; the 58M control seed spread is 0.2892 nats.',
       'Overtook the AdamW baseline\'s final loss with roughly 23% fewer tokens after micro-ablations selected Muon with QK-Norm and logit soft-capping.',
       'About 20 GPU-hours total on the free tier; a promising optimizer variant was rejected because it missed the promotion threshold set before the experiment ran.',
-      'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency decoder that triples character retention (+0.061, 95% CI), and the first test I know of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
+      'Post-release research continues in public: a replicated mixture-policy failure ("the dessert"), an entity-consistency holdout that showed the recorded +0.061 was circular (the honest half is +0.011 [−0.007, +0.032], while coverage survives), and the first test I know of Vedic recitation orders as replay schedules (four arms, ranked by structure depth on two independent instruments).',
     ],
     decisions: [
       'Screen every recipe change at 30M parameters before spending full-run quota on it.',
@@ -92,7 +92,7 @@ export const projects: Project[] = [
     tldr: [
       '58M-parameter decoder-only transformer trained from random initialization on free Kaggle GPUs.',
       'v0.1.2 released; every numbered decision, incident, and pre-registered experiment is public.',
-      'v0.2.0 is released as a 0.2285-nat-better experiment, not promoted: ARC-Easy and LAMBADA regressed beyond the pre-registered rule.',
+      'v0.2.0 is released as a 0.2285-nat-better experiment, not promoted: at 2,000 samples only LAMBADA is outside the pre-registered rule; the 500-sample ARC-Easy regression did not replicate.',
       'The largest architecture result inverted under replication; the 58M seed spread is 0.2892 nats.',
     ],
     featured: true,

@@ -242,7 +242,7 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: '04:10',
         title: 'Our accuracy bars were below our own noise',
-        body: 'The same arm passed its accuracy prediction \u2014 1.2 points on WinoGrande against a half-point bar \u2014 and the pass was worthless. The standard errors on these benchmarks at 500 samples are about two points, so the bar sat four and a half times under the noise and the result was 0.54 sigma: the expected size of nothing. The same flaw was in the promotion rule for the version that had just finished, which allowed one point of regression. The thresholds stay exactly as registered and the noise floor is published beside the verdict rather than used to rescue it. But the interim regressions now split cleanly: ARC-Easy and LAMBADA are real, and the other three were inside the noise all along.',
+        body: 'The same arm passed its accuracy prediction \u2014 1.2 points on WinoGrande against a half-point bar \u2014 and the pass was worthless. The standard errors on these benchmarks at 500 samples are about two points, so the bar sat four and a half times under the noise and the result was 0.54 sigma: the expected size of nothing. The same flaw was in the promotion rule for the version that had just finished, which allowed one point of regression. The thresholds stay exactly as registered and the noise floor is published beside the verdict rather than used to rescue it. The interim split was recorded at 500 samples. At the later 2,000-sample re-measurement, ARC-Easy did not replicate, and only LAMBADA remains outside the 1.0-point rule.',
       },
       {
         time: '05:20',
@@ -252,12 +252,12 @@ export const TIMELINE: TimelineDay[] = [
       {
         time: '06:30',
         title: 'The missing fifth task',
-        body: 'The registered evaluation came back with four of five benchmarks. LAMBADA had silently failed to load: the dataset still ships a loading script and modern tooling refuses to run those. The data was never missing \u2014 six parquet files, the standard 5,153 examples \u2014 only the loader path the harness requested was dead. Fixing it took five attempts and four different wrong turns, each an assumption I had not checked, and the fix now lives in the repository with tests rather than inside a notebook. Final answer: 20.8, a 2.2 point drop.',
+        body: 'The registered evaluation came back with four of five benchmarks. LAMBADA had silently failed to load: the dataset still ships a loading script and modern tooling refuses to run those. The data was never missing \u2014 six parquet files, the standard 5,153 examples \u2014 only the loader path the harness requested was dead. Fixing it took five attempts and four different wrong turns, each an assumption I had not checked, and the fix now lives in the repository with tests rather than inside a notebook. Final answer at 500 samples: 20.8, a 2.2 point drop. The later 2,000-sample re-measurement puts LAMBADA at 23.90 against 25.15 \u2014 a 1.25-point drop, not 2 sigma.',
         figure: {
-          src: '/kalia/bench-compare.svg',
-          alt: 'Grouped bars for five zero-shot tasks, both versions, each with a grey band showing plus or minus one standard error of about two points. The two tasks that moved down fail the pre-registered regression rule.',
+          src: '/kalia/bench-compare-500.svg',
+          alt: 'The historical 500-sample grouped bars for five zero-shot tasks, both versions, with plus or minus one standard error of about two points.',
           caption:
-            'Figure A6 \u2014 the completed evaluation. The grey band is the measurement\u2019s own uncertainty; the two that moved down fail the pre-registered regression rule.',
+            'Figure A6 \u2014 the 500-sample evaluation as it was recorded. The 2,000-sample re-measurement is in Section 2; its ARC-Easy regression did not replicate.',
         },
       },
       {
@@ -425,31 +425,39 @@ export type BenchComparison = {
   note: string;
   v012: number;
   v020: number;
-  /** lm-eval standard error at limit=500, in points. See D45. */
+  /** Combined standard error of the paired difference, in points, at 2,000 samples. */
   stderr: number;
 };
 
 /**
- * 0-shot, 500 samples, lm-evaluation-harness 0.4.9.
+ * 0-shot, 2,000 samples, lm-evaluation-harness 0.4.9, measured 2026-10-21.
  *
- * `stderr` is carried because it changes how the table must be read: at this
- * sample size three of these five movements are smaller than the measurement's
- * own standard error and are not separable from v0.1.2 at all. The table is
- * directional; the loss number above it is the result.
+ * The 500-sample run this page originally reported had a ~2-point standard
+ * error; its ARC-Easy -3.80 and HellaSwag +3.00 did not survive the larger
+ * sample. Every row here is the higher-resolution measurement. `stderr` is the
+ * combined standard error of the difference, so `delta / stderr` is the z in
+ * the table. No movement reaches 2 sigma.
  */
 export const BENCH_COMPARISON: BenchComparison[] = [
-  { task: 'PIQA', chance: 50, note: 'physical commonsense', v012: 61.4, v020: 63.8, stderr: 2.15 },
+  { task: 'PIQA', chance: 50, note: 'physical commonsense', v012: 59.63, v020: 61.37, stderr: 1.61 },
   {
     task: 'HellaSwag',
     chance: 25,
     note: 'sentence completion (normalized)',
-    v012: 36.8,
-    v020: 39.8,
-    stderr: 1.99,
+    v012: 35.60,
+    v020: 35.60,
+    stderr: 1.51,
   },
-  { task: 'WinoGrande', chance: 50, note: 'coreference', v012: 50.2, v020: 50.8, stderr: 2.24 },
-  { task: 'LAMBADA', chance: 0, note: 'long-range cloze', v012: 23.0, v020: 20.8, stderr: 1.82 },
-  { task: 'ARC-Easy', chance: 25, note: 'science questions', v012: 45.8, v020: 42.0, stderr: 2.21 },
+  { task: 'WinoGrande', chance: 50, note: 'coreference', v012: 50.28, v020: 50.75, stderr: 1.99 },
+  {
+    task: 'LAMBADA',
+    chance: 0,
+    note: 'long-range cloze; fails the 1.0-point rule',
+    v012: 25.15,
+    v020: 23.90,
+    stderr: 1.36,
+  },
+  { task: 'ARC-Easy', chance: 25, note: 'science questions', v012: 45.95, v020: 46.40, stderr: 1.58 },
 ];
 
 /* ----------------------------------------------------------- training data */
@@ -611,6 +619,11 @@ export type Benchmark = {
   note: string;
 };
 
+/**
+ * v0.1.2's scores at the first release: 0-shot, 500 samples. These are kept
+ * as the historical release numbers; the 2,000-sample comparison in Section 2
+ * is the higher-resolution measurement.
+ */
 export const BENCHMARKS: Benchmark[] = [
   { task: 'PIQA', score: 61.4, chance: 50, note: 'physical commonsense' },
   { task: 'ARC-Easy', score: 45.8, chance: 25, note: 'science questions' },
@@ -663,7 +676,7 @@ export const HERO_STATS = [
   { label: 'tokens seen', value: '1.82B' },
   { label: 'val loss', value: '3.0533' },
   { label: 'bits/byte', value: '0.9992' },
-  { label: 'PIQA', value: '61.4%' },
+  { label: 'PIQA (2k)', value: '59.6%' },
   { label: 'Abhimanyu gap', value: '6.06 nats' },
   { label: 'GPU-hours', value: '~20' },
   { label: 'cost', value: '$0' },
