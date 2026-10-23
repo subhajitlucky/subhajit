@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { CopyCommand } from '@/components/CopyCommand';
 import { JsonLd } from '@/components/JsonLd';
 import { getProject, projects } from '@/data/projects';
 import { createProjectMetadata } from '@/lib/metadata';
@@ -35,98 +34,52 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  const primaryLink =
-    project.links.find((link) => link.kind === 'live') ??
-    project.links.find((link) => link.kind === 'package') ??
-    project.links.find((link) => link.kind === 'source') ??
-    project.links[0];
-  const secondaryLinks = project.links.filter(
-    (link) => link !== primaryLink && link.kind !== 'evidence',
-  );
-  const evidenceLinks = project.links.filter((link) => link.kind === 'evidence');
-
   return (
     <article className="case-study site-frame">
       <JsonLd data={projectStructuredData(project)} />
       <header className="case-study-header">
         <p className="case-study-meta">
-          <span className="case-study-category">{project.category}</span>
-          <span className="case-study-status">{project.status}</span>
+          {project.category} · {project.status}
         </p>
         <h1>{project.title}</h1>
         <p className="case-study-what">{project.whatItIs}</p>
-        <div className="case-study-actions">
-          {primaryLink ? (
-            <a
-              className="button button-primary"
-              href={primaryLink.href}
-              {...(isExternalUrl(primaryLink.href) ? externalLinkProps : {})}
-            >
-              {primaryLink.label}
-              {isExternalUrl(primaryLink.href) ? <span aria-hidden="true">↗</span> : null}
-            </a>
-          ) : null}
-          {secondaryLinks.map((link) => (
-            <a
-              className="button button-secondary"
-              key={link.href}
-              href={link.href}
-              {...(isExternalUrl(link.href) ? externalLinkProps : {})}
-            >
-              {link.label}
-              {isExternalUrl(link.href) ? <span aria-hidden="true">↗</span> : null}
-            </a>
-          ))}
-        </div>
-        {evidenceLinks.length > 0 ? (
-          <ul className="case-study-evidence-links" aria-label="More evidence">
-            {evidenceLinks.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} {...externalLinkProps}>
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-        <ul className="stack-list" aria-label="Technologies">
-          {project.stack.map((technology) => (
-            <li key={technology}>{technology}</li>
+        <ul className="case-study-links">
+          {project.links.map((link) => (
+            <li key={link.href}>
+              <a href={link.href} {...externalLinkProps}>
+                {link.label}
+              </a>
+            </li>
           ))}
         </ul>
+        <p className="case-study-stack">{project.stack.join(' · ')}</p>
       </header>
 
       <div className="case-study-quick">
-        <section className="quick-panel" aria-labelledby="usage-title">
+        <section aria-labelledby="usage-title">
           <h2 id="usage-title">How to use it</h2>
           <ol className="usage-list">
             {project.usage.map((step) => (
               <li key={step.text}>
-                <div className="usage-step">
-                  <span>{step.text}</span>
-                  {step.link ? (
-                    isExternalUrl(step.link.href) ? (
-                      <a className="usage-link" href={step.link.href} {...externalLinkProps}>
-                        {step.link.label}
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    ) : (
-                      <Link className="usage-link" href={step.link.href}>
-                        {step.link.label}
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    )
-                  ) : null}
-                  {step.command ? <CopyCommand command={step.command} /> : null}
-                </div>
+                <span>{step.text}</span>
+                {step.link ? (
+                  isExternalUrl(step.link.href) ? (
+                    <a href={step.link.href} {...externalLinkProps}>
+                      {step.link.label}
+                    </a>
+                  ) : (
+                    <Link href={step.link.href}>{step.link.label}</Link>
+                  )
+                ) : null}
+                {step.command ? <code>{step.command}</code> : null}
               </li>
             ))}
           </ol>
         </section>
 
-        <section className="quick-panel" aria-labelledby="proof-title">
+        <section aria-labelledby="proof-title">
           <h2 id="proof-title">Proof</h2>
-          <ul className="proof-list">
+          <ul className="plain-list">
             {project.tldr.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -135,22 +88,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </div>
 
       <details className="case-study-notes">
-        <summary>
-          <span className="notes-label">
-            <span className="notes-title">Engineering notes</span>
-            <span className="notes-hint">Problem, architecture, decisions, tradeoffs, and full proof</span>
-          </span>
-          <svg className="notes-icon" viewBox="0 0 16 16" aria-hidden="true">
-            <path
-              d="M4 6l4 4 4-4"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-            />
-          </svg>
-        </summary>
+        <summary>Engineering notes</summary>
         <div className="case-study-body">
           <section aria-labelledby="problem-title">
             <h2 id="problem-title">Problem</h2>

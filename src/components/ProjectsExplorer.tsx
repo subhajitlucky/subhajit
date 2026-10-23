@@ -54,20 +54,11 @@ export function ProjectsExplorer({ projects }: { projects: ProjectIndexItem[] })
                 <p>{project.summary}</p>
               </div>
               <div className="index-project-actions">
-                <Link
-                  className="index-action index-action-primary"
-                  href={`/projects/${project.slug}`}
-                  aria-label={`${project.title} details`}
-                >
+                <Link href={`/projects/${project.slug}`} aria-label={`${project.title} details`}>
                   Details
                 </Link>
                 {source ? (
-                  <a
-                    className="index-action"
-                    href={source.href}
-                    aria-label={`${source.label} for ${project.title}`}
-                    {...externalLinkProps}
-                  >
+                  <a href={source.href} aria-label={`${source.label} for ${project.title}`} {...externalLinkProps}>
                     {source.label}
                   </a>
                 ) : null}

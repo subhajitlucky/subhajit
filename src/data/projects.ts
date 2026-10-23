@@ -299,7 +299,7 @@ export const projects: Project[] = [
     links: [
       { label: 'Live application', href: 'https://tarkasabha.vercel.app', kind: 'live' },
       { label: 'Sample dossier', href: 'https://tarkasabha.vercel.app/diligence', kind: 'live' },
-      { label: 'Product page', href: 'https://tarkasabha.vercel.app/product', kind: 'evidence' },
+      { label: 'Product', href: 'https://tarkasabha.vercel.app/product', kind: 'evidence' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
     ],
     tldr: [

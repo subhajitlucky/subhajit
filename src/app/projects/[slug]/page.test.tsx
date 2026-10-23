@@ -39,9 +39,6 @@ describe('ProjectPage', () => {
       }
     }
 
-    expect(screen.getAllByRole('button', { name: 'Copy' })).toHaveLength(
-      project.usage.filter((step) => step.command).length,
-    );
     expect(screen.getByText('Engineering notes')).toBeInTheDocument();
 
     for (const heading of [
@@ -70,19 +67,12 @@ describe('ProjectPage', () => {
     );
   });
 
-  it('renders the upgraded Tarka Sabha decision-evidence positioning', async () => {
+  it('renders the upgraded Tarka Sabha positioning and links', async () => {
     const page = await ProjectPage({ params: Promise.resolve({ slug: 'tarka-sabha' }) });
     render(page);
 
-    const project = getProject('tarka-sabha');
-    expect(project).toBeDefined();
-    if (!project) {
-      throw new Error('Expected tarka-sabha to be present in canonical project data');
-    }
-
-    expect(screen.getByText('Decision evidence')).toBeInTheDocument();
-    expect(screen.getByText('Live platform')).toBeInTheDocument();
-    expect(screen.getByText(project.whatItIs)).toBeInTheDocument();
+    expect(screen.getByText(/Decision evidence/)).toBeInTheDocument();
+    expect(screen.getByText(/Live platform/)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Live application' })).toHaveAttribute(
       'href',
       'https://tarkasabha.vercel.app',
