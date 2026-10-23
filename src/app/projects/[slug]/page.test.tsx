@@ -10,21 +10,38 @@ vi.mock('next/navigation', () => ({
 }));
 
 describe('ProjectPage', () => {
-  it('builds a complete case study from canonical project data', async () => {
+  it('leads with what the project is and how to use it', async () => {
     const page = await ProjectPage({ params: Promise.resolve({ slug: 'codebase-doctor' }) });
     render(page);
 
     expect(screen.getByRole('heading', { level: 1, name: 'Codebase Doctor' })).toBeInTheDocument();
 
+    const project = getProject('codebase-doctor');
+    expect(project).toBeDefined();
+    if (!project) {
+      throw new Error('Expected codebase-doctor to be present in canonical project data');
+    }
+
+    expect(screen.getByText(project.whatItIs)).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'How to use it' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Proof' })).toBeInTheDocument();
+
+    for (const step of project.usage) {
+      expect(screen.getByText(step.text)).toBeInTheDocument();
+      if (step.command) {
+        expect(screen.getByText(step.command)).toBeInTheDocument();
+      }
+    }
+
+    expect(screen.getByText('Engineering notes')).toBeInTheDocument();
+
     for (const heading of [
-      'TL;DR',
       'Problem',
       'System',
-      'Proof',
       'Architecture',
       'Decisions',
       'Tradeoffs and limitations',
-      'Technologies',
+      'Full proof',
     ]) {
       expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
     }
@@ -34,12 +51,6 @@ describe('ProjectPage', () => {
       'https://github.com/subhajitlucky/codebase-doctor',
     );
 
-    const project = getProject('codebase-doctor');
-    expect(project).toBeDefined();
-    if (!project) {
-      throw new Error('Expected codebase-doctor to be present in canonical project data');
-    }
-
     for (const link of project.links) {
       expect(screen.getByRole('link', { name: link.label })).toHaveAttribute('href', link.href);
     }
@@ -48,6 +59,14 @@ describe('ProjectPage', () => {
     expect(within(flow).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
       project.flow.map((step) => `${step.label}${step.detail}`),
     );
+  });
+
+  it('keeps the engineering notes collapsed by default', async () => {
+    const page = await ProjectPage({ params: Promise.resolve({ slug: 'codebase-doctor' }) });
+    render(page);
+
+    const summary = screen.getByText('Engineering notes');
+    expect(summary.closest('details')).not.toHaveAttribute('open');
   });
 
   it('pre-renders every canonical project route', () => {

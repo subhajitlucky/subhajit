@@ -581,7 +581,7 @@ a:focus-visible {
   line-height: 1.1;
 }
 
-.case-study-header > p {
+.case-study-what {
   margin: 1rem 0 0;
   color: var(--muted);
   font-size: 1.05rem;
@@ -601,6 +601,85 @@ a:focus-visible {
   min-height: 2.5rem;
   align-items: center;
   font-weight: 500;
+}
+
+.case-study-stack {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.case-study-quick {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  border-block-start: 1px solid var(--line);
+  border-block-end: 1px solid var(--line);
+  padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.case-study-quick h2 {
+  margin: 0 0 0.9rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.usage-list {
+  display: grid;
+  gap: 0.9rem;
+  margin: 0;
+  padding-inline-start: 1.2rem;
+  color: var(--muted);
+}
+
+.usage-list li {
+  padding-inline-start: 0.2rem;
+}
+
+.usage-list code {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-block-start: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: #f9fafb;
+  color: var(--text);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.case-study-notes {
+  border-block-start: 1px solid var(--line);
+}
+
+.case-study-notes > summary {
+  display: flex;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+
+.case-study-notes > summary::-webkit-details-marker {
+  display: none;
+}
+
+.case-study-notes > summary::after {
+  content: '+';
+  color: var(--muted);
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.case-study-notes[open] > summary::after {
+  content: '−';
 }
 
 .case-study-body {
@@ -729,6 +808,10 @@ a:focus-visible {
   .index-project-actions {
     flex-direction: row;
     gap: 1.25rem;
+  }
+
+  .case-study-quick {
+    grid-template-columns: 1fr;
   }
 
   .case-study-body section {

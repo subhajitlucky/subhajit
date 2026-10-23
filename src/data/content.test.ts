@@ -74,7 +74,10 @@ describe('portfolio content integrity', () => {
 
     for (const project of projects) {
       expect(project.proof.length).toBeGreaterThan(0);
-      expect(project.tldr.length).toBeGreaterThan(0);
+      expect(project.tldr).toHaveLength(3);
+      expect(project.whatItIs.length).toBeGreaterThan(0);
+      expect(project.whatItIs.length).toBeLessThanOrEqual(200);
+      expect(project.usage.length).toBeGreaterThanOrEqual(3);
       expect(project.links.some((link) => link.kind === 'source')).toBe(true);
 
       for (const link of project.links) {

@@ -6,7 +6,7 @@ I build web products and AI systems, from the interface to the infrastructure. T
 
 Start here:
 
-- **[Projects](https://subhajitpradhan.vercel.app/projects)** — ten case studies, each stating its decisions, tradeoffs, and limitations
+- **[Projects](https://subhajitpradhan.vercel.app/projects)** — ten project pages with a quick start, proof, and optional engineering notes
 - **[KALIA](https://subhajitpradhan.vercel.app/kalia)** — the dedicated model page: a replayable training console built from the real logs, every numbered decision, every incident, benchmarks, samples, and the recipe
 - **[Build log](https://subhajitpradhan.vercel.app/writing/kalia-build-log)** — the training story: micro-ablations, the optimizer I rejected, the plateau, and the quota wall
 - **[Writing](https://subhajitpradhan.vercel.app/writing)** — long-form technical posts

@@ -14,6 +14,11 @@ export type ProjectLink = {
   kind: 'source' | 'package' | 'live' | 'evidence';
 };
 
+export type UsageStep = {
+  text: string;
+  command?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -22,6 +27,8 @@ export type Project = {
   category: string;
   roles: Role[];
   summary: string;
+  whatItIs: string;
+  usage: UsageStep[];
   problem: string;
   system: string;
   proof: string[];
@@ -51,6 +58,16 @@ export const projects: Project[] = [
     roles: ['swe', 'backend'],
     summary:
       'A 58M-parameter language model trained from scratch on free Kaggle GPUs, with every experiment pre-registered and every incident published.',
+    whatItIs:
+      'A 58M-parameter language model trained from scratch on free Kaggle GPUs. The weights, training logs, and pre-registered experiments are public.',
+    usage: [
+      { text: 'Open the KALIA page to replay the training console and read the decision log.' },
+      { text: 'Download the v0.1.2 weights and model card from Hugging Face.' },
+      {
+        text: 'Generate text from the downloaded checkpoint:',
+        command: 'python sample.py --ckpt <path-to-checkpoint> --prompt "Once upon a time"',
+      },
+    ],
     problem:
       'Training a language model usually means renting GPUs or fine-tuning someone else\'s weights. I wanted an artifact where every weight, every byte of data, and every decision was mine, and a process that could be audited rather than taken on trust.',
     system:
@@ -90,10 +107,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      '58M-parameter decoder-only transformer trained from random initialization on free Kaggle GPUs.',
-      'v0.1.2 released; every numbered decision, incident, and pre-registered experiment is public.',
-      'v0.2.0 is released as a 0.2285-nat-better experiment, not promoted: at 2,000 samples only LAMBADA is outside the pre-registered rule; the 500-sample ARC-Easy regression did not replicate.',
-      'The largest architecture result inverted under replication; the 58M seed spread is 0.2892 nats.',
+      '58M parameters trained from random initialization in about 20 free GPU-hours.',
+      'v0.1.2: 3.0533 held-out loss and 0.9992 bits-per-byte.',
+      'v0.2.0: 2.8248 loss and 0.9244 bits-per-byte, released as an experiment.',
     ],
     featured: true,
   },
@@ -107,6 +123,13 @@ export const projects: Project[] = [
     roles: ['swe', 'backend'],
     summary:
       'A CLI that audits a repository and reports deterministic findings as text, JSON, or SARIF. Works with or without a model in the loop.',
+    whatItIs:
+      'A CLI that scans a repository for leaked secrets, vulnerable dependencies, unsafe Postgres RLS, and broken CI. It prints a readable report or SARIF for GitHub code scanning.',
+    usage: [
+      { text: 'Run a sample audit on a disposable fixture:', command: 'npx -y codebase-doctor demo' },
+      { text: 'Audit the current repository:', command: 'npx -y codebase-doctor audit .' },
+      { text: 'Write SARIF for GitHub code scanning:', command: 'npx -y codebase-doctor audit . --format sarif > results.sarif' },
+    ],
     problem:
       'Repository reviews often depend on opaque model judgment, scattered linters, and one-off commands. That makes coverage difficult to inspect and results difficult to reproduce.',
     system:
@@ -145,10 +168,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'A single CLI that audits repositories and emits deterministic findings.',
-      '17/17 benchmark cases, 0 medium+ false positives; a 100-repo field study found 23% with a high-severity finding.',
-      'Text, JSON, and SARIF output with stable fingerprints and baselines for CI.',
-      'Read-only discovery by default; validation and database access require explicit permission.',
+      '17/17 seeded benchmark cases and 0 medium+ false positives.',
+      '11/11 red-team mutants caught; 7/7 controls clean.',
+      'A 100-repo study found a high-severity issue in 23% of agent-configured repos.',
     ],
     featured: true,
   },
@@ -162,6 +184,13 @@ export const projects: Project[] = [
     roles: ['backend', 'swe'],
     summary:
       'A read-only Postgres and Supabase RLS auditor. Reports policy, role, and grant risks from catalog metadata without touching data.',
+    whatItIs:
+      'A read-only Postgres and Supabase auditor. It finds RLS policies, roles, and grants that can expose rows across tenants without changing your database.',
+    usage: [
+      { text: 'Prove a leak on a disposable Postgres instance:', command: 'npx rls-doctor demo' },
+      { text: 'Audit the database in DATABASE_URL or SUPABASE_DB_URL:', command: 'npx rls-doctor check' },
+      { text: 'Get a 0-100 RLS score:', command: 'npx rls-doctor check --score' },
+    ],
     problem:
       'Small policy mistakes can expose rows through disabled RLS, broad roles, missing write checks, or overlooked privilege paths. Normal application tests rarely explain the catalog state behind those failures.',
     system:
@@ -200,9 +229,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'A read-only Postgres and Supabase RLS auditor that models policies, roles, and grants together.',
-      'A 60-repo study found at least one high or critical pattern in 63%; median RLS Score 38/100.',
-      'Probe mode proves cross-tenant reads inside rolled-back transactions without changing data.',
+      'A 60-repo Supabase study found a high or critical RLS pattern in 63%.',
+      'Median RLS Score: 38/100.',
+      'Probe mode proves cross-tenant reads inside rolled-back transactions.',
     ],
     featured: true,
   },
@@ -216,6 +245,13 @@ export const projects: Project[] = [
     roles: ['fullstack', 'backend', 'frontend'],
     summary:
       'A multi-agent debate platform with configurable personas, provider routing, encrypted keys, and inspectable speaker state.',
+    whatItIs:
+      'A multi-agent debate platform. Pick personas and model providers, give them a topic, and the server runs the debate turn by turn, even after you close the tab.',
+    usage: [
+      { text: 'Open tarkasabha.vercel.app and sign in.' },
+      { text: 'Pick at least two personas, choose their providers, and enter a topic.' },
+      { text: 'Start the debate; each turn shows the speaker, model, tokens, and latency.' },
+    ],
     problem:
       'Multi-agent conversations need more structure than a loop of prompts: personas, providers, credentials, speaker selection, history, and failure states must remain separable.',
     system:
@@ -254,9 +290,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'Server-side multi-agent debate runner that keeps sessions advancing after the tab closes.',
-      'Deterministic speaker order, mention-aware turns, encrypted provider keys, and persisted history.',
-      'Synthesis generates several drafts and selects against a weighted rubric; 15 test files / 193 tests cover the orchestration.',
+      '12+ LLM providers behind one server-side adapter.',
+      'Deterministic speaker order with mention-aware turns.',
+      '193 tests cover the orchestrator, agent loop, and synthesis rubric.',
     ],
     featured: true,
   },
@@ -270,6 +306,13 @@ export const projects: Project[] = [
     roles: ['frontend', 'fullstack'],
     summary:
       'A searchable computer-science learning hub with interactive modules across web, systems, security, AI, and infrastructure.',
+    whatItIs:
+      'A free computer-science learning hub with interactive visualizers for web, systems, security, AI, and infrastructure. Every topic is a live module or clearly marked as planned.',
+    usage: [
+      { text: 'Open cscosmos.vercel.app.' },
+      { text: 'Search for a topic or pick a domain.' },
+      { text: 'Open a live module; planned topics show their status instead of a placeholder lesson.' },
+    ],
     problem:
       'Interactive computer-science explanations are often isolated across small demos, making it difficult for learners to discover related concepts or understand what is available.',
     system:
@@ -299,9 +342,9 @@ export const projects: Project[] = [
       { label: 'Live application', href: 'https://cscosmos.vercel.app', kind: 'live' },
     ],
     tldr: [
-      'A searchable computer-science learning hub built on a typed topic catalog.',
-      'Native visualizers sit beside focused external microsites for each subject.',
-      'Search, status, and topic routes are statically generated from the same data.',
+      '245 topics across 8 domains.',
+      '47 native visualizers and 1,500+ static pages.',
+      'Search, status, and routes come from one typed topic catalog.',
     ],
     featured: true,
   },
@@ -315,6 +358,13 @@ export const projects: Project[] = [
     roles: ['frontend'],
     summary:
       'A local-first chart studio and India map maker with template, palette, and export workflows that run entirely in the browser.',
+    whatItIs:
+      'A local-first chart studio and India map maker. Paste data, pick a template, and export a presentation-ready PNG or PDF without uploading anything.',
+    usage: [
+      { text: 'Open chitradata.vercel.app.' },
+      { text: 'Paste or edit data, then pick a chart type or the India map.' },
+      { text: 'Choose a preset for social, slides, or A4 and download the PNG or PDF.' },
+    ],
     problem:
       'Building presentable charts and regional maps usually means hosted tools, account gates, or uploads. Teams need readable, on-brand visuals without sending data to a server.',
     system:
@@ -351,9 +401,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'A local-first chart studio and India map maker that runs entirely in the browser.',
-      'No account, no backend, and no uploads; chart state stays on the device.',
-      'Client-side PNG and PDF export from HD through 8K.',
+      'Runs entirely in the browser; no account, backend, or uploads.',
+      'Five chart types plus a state-level India choropleth.',
+      'PNG and PDF export from HD to 8K.',
     ],
     featured: false,
   },
@@ -367,6 +417,13 @@ export const projects: Project[] = [
     roles: ['swe', 'backend'],
     summary:
       'A CLI that keeps repository memory current so coding agents can resume work with accurate project context.',
+    whatItIs:
+      'A CLI that writes and refreshes repository memory for coding agents: project map, current state, and resume notes. Agents start with fresh context instead of guessing.',
+    usage: [
+      { text: 'Create the memory contract once per repository:', command: 'npx smritiflow init' },
+      { text: 'Scan before substantial work:', command: 'npx smritiflow scan' },
+      { text: 'Check freshness before resuming:', command: 'npx smritiflow status' },
+    ],
     problem:
       'Long-running code work loses decisions and current state between sessions. Rebuilding that context wastes time and encourages agents to act on stale assumptions.',
     system:
@@ -403,9 +460,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'A CLI that keeps repository memory current for coding agents.',
-      'Scan, refresh, status, and resume workflows generate machine-readable and human-readable handoffs.',
-      'The generated context is explicitly marked fresh or stale.',
+      'Generates docs/ai/*, AGENTS.md, and a project map.',
+      'check fails CI when generated docs drift from code.',
+      'Scan, refresh, status, resume, and hook workflows.',
     ],
     featured: false,
   },
@@ -419,10 +476,17 @@ export const projects: Project[] = [
     roles: ['swe', 'backend'],
     summary:
       'A deterministic agent protocol with a measured compact wire format: 2.8-7.5 tokens per message, up to 25x cheaper than deployed JSON-RPC protocols.',
+    whatItIs:
+      'A deterministic agent-to-agent protocol with a compact wire format. Agents negotiate with eight semantic primitives, and every message can be decoded and verified.',
+    usage: [
+      { text: 'Run a complete deal locally:', command: 'python -m sutra demo' },
+      { text: 'Execute a .sutra message file:', command: 'python -m sutra run examples/buyer.sutra' },
+      { text: 'Start an HTTP agent:', command: 'python -m sutra serve --agent "seller@store" --port 8001' },
+    ],
     problem:
       'Natural language is expressive but ambiguous, while raw JSON carries structure without domain semantics. Agent coordination needs a compact layer between the two — and almost nobody measures what messages actually cost.',
     system:
-      'A Python lexer, parser, AST, evaluator, and transaction state model implement nine semantic primitives. A measured compact wire format (SUTRA-C) encodes the same semantics in a fraction of the tokens, with a token-cost lab that verifies every encoding by decoder round-trip.',
+      'A Python lexer, parser, AST, evaluator, and transaction state model implement eight semantic primitives. A measured compact wire format (SUTRA-C) encodes the same semantics in a fraction of the tokens, with a token-cost lab that verifies every encoding by decoder round-trip.',
     proof: [
       'SUTRA-C v0.7 is frozen; the project is now at v0.10 with compact HTTP transport, template negotiation, and 42 tests.',
       'A 384-encoding sweep and a 162-configuration round selected the wire format by measurement; every variant is decoder-verified lossless.',
@@ -460,9 +524,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'A deterministic agent protocol with a measured compact wire format.',
-      'SUTRA-C encodes the same semantics in 2.8–7.5 tokens per message, with decoder round-trip checks.',
-      'The spec, tests, and an end-to-end deal demo are public.',
+      'SUTRA-C: 2.8-7.5 tokens per message vs 72.5 for JSON-RPC.',
+      '42 tests; 384 encodings verified by decoder round-trip.',
+      '12/12 comprehension across two model families.',
     ],
     featured: false,
   },
@@ -476,6 +540,13 @@ export const projects: Project[] = [
     roles: ['fullstack', 'frontend', 'backend'],
     summary:
       'A campus lost-and-found platform with authenticated reports, image uploads, searchable records, claims, and moderation workflows.',
+    whatItIs:
+      'A campus lost-and-found platform. Students post lost or found items, search reports, and coordinate claims; admins moderate the listing lifecycle.',
+    usage: [
+      { text: 'Open campushelper.vercel.app and sign in with Google.' },
+      { text: 'Post a lost or found item with photos and details.' },
+      { text: 'Search for a match, open the report, and send a claim.' },
+    ],
     problem:
       'Campus lost-and-found is usually handled in scattered chat groups, so records disappear and ownership claims are difficult to verify or follow up.',
     system:
@@ -506,9 +577,9 @@ export const projects: Project[] = [
       { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
     ],
     tldr: [
-      'A campus lost-and-found platform with authenticated reports, image uploads, claims, and moderation.',
-      'Next.js, NextAuth, Prisma/PostgreSQL, Vercel Blob, Zod validation, rate limits, and RLS.',
-      'Admin workflows cover review and listing lifecycle.',
+      'Authenticated reports, image uploads, search, claims, and comments.',
+      'Zod validation, rate limits, CSRF protection, and database RLS.',
+      'Admin dashboard for review and listing lifecycle.',
     ],
     featured: true,
   },
@@ -522,6 +593,20 @@ export const projects: Project[] = [
     roles: ['web3', 'backend', 'fullstack'],
     summary:
       'An AI-assisted Web3 transaction prototype that turns natural-language intent into a structured plan the user reviews before wallet execution.',
+    whatItIs:
+      'A Web3 payment prototype. Describe a payment in plain language, review the structured plan, and approve it in your wallet. The model never signs or sends.',
+    usage: [
+      {
+        text: 'Install the API and frontend dependencies:',
+        command: 'npm install && cd frontend && npm install',
+      },
+      {
+        text: 'Copy the example environment file, then set ENCRYPTION_KEY and OPENROUTER_API_KEY:',
+        command: 'cp .env.example .env',
+      },
+      { text: 'Start the API with npm run dev in the root, then run npm run dev in frontend/.' },
+      { text: 'Open localhost:5173, describe a payment, review the plan, and approve it in the wallet.' },
+    ],
     problem:
       'Wallets expose irreversible actions through low-level addresses, gas settings, and contract calls, which is difficult for non-technical users and risky for teams that need guardrails.',
     system:
@@ -551,9 +636,9 @@ export const projects: Project[] = [
       { label: 'Source', href: 'https://github.com/subhajitlucky/intentpay', kind: 'source' },
     ],
     tldr: [
-      'An AI-assisted Web3 transaction prototype that turns natural language into a reviewed plan.',
-      'The wallet remains the final execution boundary; the model never signs or sends.',
-      'Prototype scope: Sepolia and a limited set of transaction types.',
+      'The model plans; the wallet remains the execution boundary.',
+      'AES-256-GCM encrypted wallet data, daily limits, and whitelists.',
+      'Sepolia prototype with named recipients and split payments.',
     ],
     featured: false,
     hidden: true,
@@ -568,6 +653,13 @@ export const projects: Project[] = [
     roles: ['frontend'],
     summary:
       'An interactive digital mandala for a village 24-hour chanting festival, with eight themed watches and a memory gallery.',
+    whatItIs:
+      'An interactive site for a 24-hour village chanting festival, divided into eight watches. Each watch has its own theme, atmosphere, and memory gallery.',
+    usage: [
+      { text: 'Open astapraharicha.vercel.app.' },
+      { text: 'Pick one of the eight watches and scroll through its theme.' },
+      { text: 'Browse the memory slideshow or upload a memory for review.' },
+    ],
     problem:
       'Living cultural traditions are usually documented as static pages, which cannot convey a festival structured across eight watches of a full day and night.',
     system:
@@ -603,9 +695,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'An interactive digital mandala for a village 24-hour chanting festival.',
-      'Eight themed watches, a shader-driven backdrop, a memory gallery, and moderated uploads.',
-      'Odia-first, single-page, and built for the atmosphere of the festival.',
+      'Eight themed watches on one page.',
+      'Shader-driven mandala, GSAP transitions, and Three.js.',
+      'Moderated memory uploads and a slideshow gallery.',
     ],
     featured: false,
   },
@@ -619,6 +711,13 @@ export const projects: Project[] = [
     roles: ['web3'],
     summary:
       'An NFT event-ticketing dApp where organizers mint events, attendees buy on-chain, and scanners validate entry.',
+    whatItIs:
+      'An NFT ticketing dApp on Sepolia. Organizers mint events, attendees buy tickets as NFTs, and scanners verify ownership at the door.',
+    usage: [
+      { text: 'Open quantumticket.vercel.app and connect MetaMask or Rainbow.' },
+      { text: 'As an organizer, create an event and set the ticket supply.' },
+      { text: 'As an attendee, buy a ticket; as a scanner, validate it at the venue.' },
+    ],
     problem:
       'Conventional ticketing is prone to forgery, scalping, and opaque resale, and organizers lack verifiable ownership and entry control.',
     system:
@@ -654,9 +753,9 @@ export const projects: Project[] = [
       },
     ],
     tldr: [
-      'An NFT event-ticketing dApp with organizer, attendee, and scanner workflows.',
-      'Solidity contracts on Sepolia, read directly from a React client.',
-      'Tickets are NFTs; scanners validate entry at the venue.',
+      'ERC-721 tickets deployed on Sepolia.',
+      'Anti-scalping limit: 5 tickets per wallet per event.',
+      'Separate attendee, organizer, and scanner routes.',
     ],
     featured: false,
     hidden: true,
