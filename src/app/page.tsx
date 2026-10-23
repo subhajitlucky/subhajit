@@ -20,13 +20,19 @@ export default function HomePage() {
         <h1 id="intro-title">{siteConfig.role}</h1>
         <p className="intro-summary">{siteConfig.summary}</p>
         <div className="intro-links" aria-label="Contact and profile links">
-          <a href={siteConfig.links.email}>Email</a>
-          <a href={siteConfig.resumePath}>Resume</a>
-          <a href={siteConfig.links.github} {...externalLinkProps}>
-            GitHub
+          <a className="button button-primary" href={siteConfig.links.email}>
+            Email
           </a>
-          <a href={siteConfig.links.linkedin} {...externalLinkProps}>
+          <a className="button button-secondary" href={siteConfig.resumePath}>
+            Resume
+          </a>
+          <a className="button button-secondary" href={siteConfig.links.github} {...externalLinkProps}>
+            GitHub
+            <span aria-hidden="true">↗</span>
+          </a>
+          <a className="button button-secondary" href={siteConfig.links.linkedin} {...externalLinkProps}>
             LinkedIn
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
       </section>

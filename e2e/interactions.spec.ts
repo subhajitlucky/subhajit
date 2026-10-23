@@ -1,6 +1,20 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('interactions', () => {
+  test('project command copy button writes the command to the clipboard', async ({
+    context,
+    page,
+  }) => {
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('/projects/codebase-doctor', { waitUntil: 'networkidle' });
+
+    await page.getByRole('button', { name: 'Copy' }).first().click();
+    await expect(page.getByRole('button', { name: 'Copied' }).first()).toBeVisible();
+    await expect
+      .poll(() => page.evaluate(() => navigator.clipboard.readText()))
+      .toBe('npx -y codebase-doctor demo');
+  });
+
   test('project role filters update the list and status', async ({ page }) => {
     await page.goto('/projects', { waitUntil: 'networkidle' });
 

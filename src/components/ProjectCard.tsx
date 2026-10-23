@@ -22,6 +22,7 @@ export function ProjectCard({ project }: { project: Project }) {
         {actionLinks.map((link) =>
           isExternalUrl(link.href) ? (
             <a
+              className="card-action"
               key={link.href}
               href={link.href}
               aria-label={`${link.label} for ${project.title}`}
@@ -31,6 +32,7 @@ export function ProjectCard({ project }: { project: Project }) {
             </a>
           ) : (
             <a
+              className="card-action"
               key={link.href}
               href={link.href}
               aria-label={`${link.label} for ${project.title}`}
@@ -39,7 +41,11 @@ export function ProjectCard({ project }: { project: Project }) {
             </a>
           ),
         )}
-        <Link href={`/projects/${project.slug}`} aria-label={`${project.title} details`}>
+        <Link
+          className="card-action card-action-primary"
+          href={`/projects/${project.slug}`}
+          aria-label={`${project.title} details`}
+        >
           Details
         </Link>
       </div>

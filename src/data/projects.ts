@@ -17,6 +17,7 @@ export type ProjectLink = {
 export type UsageStep = {
   text: string;
   command?: string;
+  link?: { label: string; href: string };
 };
 
 export type Project = {
@@ -61,8 +62,14 @@ export const projects: Project[] = [
     whatItIs:
       'A 58M-parameter language model trained from scratch on free Kaggle GPUs. The weights, training logs, and pre-registered experiments are public.',
     usage: [
-      { text: 'Open the KALIA page to replay the training console and read the decision log.' },
-      { text: 'Download the v0.1.2 weights and model card from Hugging Face.' },
+      {
+        text: 'Open the KALIA page to replay the training console and read the decision log.',
+        link: { label: 'KALIA console', href: '/kalia' },
+      },
+      {
+        text: 'Download the v0.1.2 weights and model card from Hugging Face.',
+        link: { label: 'Hugging Face', href: 'https://huggingface.co/kalia-lm/kalia-v012' },
+      },
       {
         text: 'Generate text from the downloaded checkpoint:',
         command: 'python sample.py --ckpt <path-to-checkpoint> --prompt "Once upon a time"',
@@ -240,59 +247,65 @@ export const projects: Project[] = [
     slug: 'tarka-sabha',
     title: 'Tarka Sabha',
     index: '04',
-    status: 'Live application',
-    category: 'Multi-agent systems',
+    status: 'Live platform',
+    category: 'Decision evidence',
     roles: ['fullstack', 'backend', 'frontend'],
     summary:
-      'A multi-agent debate platform with configurable personas, provider routing, encrypted keys, and inspectable speaker state.',
+      'A decision evidence workspace for technical diligence: ingest a codebase, extract decisions, attach source-backed evidence, and publish a shareable dossier.',
     whatItIs:
-      'A multi-agent debate platform. Pick personas and model providers, give them a topic, and the server runs the debate turn by turn, even after you close the tab.',
+      'Tarka Sabha turns technical decisions into source-backed evidence and a diligence dossier. Teams ingest a repository, confirm decisions, record approvals, and share an expiring report with a buyer.',
     usage: [
-      { text: 'Open tarkasabha.vercel.app and sign in.' },
-      { text: 'Pick at least two personas, choose their providers, and enter a topic.' },
-      { text: 'Start the debate; each turn shows the speaker, model, tokens, and latency.' },
+      {
+        text: 'Open the live decision workspace and sign in.',
+        link: { label: 'tarkasabha.vercel.app', href: 'https://tarkasabha.vercel.app' },
+      },
+      {
+        text: 'See the output first in the public sample dossier.',
+        link: { label: 'Sample dossier', href: 'https://tarkasabha.vercel.app/diligence' },
+      },
+      { text: 'In a workspace, ingest a public GitHub repository and confirm the candidate decisions.' },
+      { text: 'Generate a dossier, then share an expiring, redacted link with the reviewer.' },
     ],
     problem:
-      'Multi-agent conversations need more structure than a loop of prompts: personas, providers, credentials, speaker selection, history, and failure states must remain separable.',
+      'Technical diligence usually lives in chat threads, scattered docs, and verbal assurance. A buyer needs to see what the code decided, which claims have evidence, and what is still unresolved.',
     system:
-      'A Next.js application stores auth-backed debate state in PostgreSQL. A server-side adapter normalizes providers; an orchestrator selects sequential or mentioned speakers; a server-side runner claims due chats with FOR UPDATE SKIP LOCKED so debates continue after the tab closes.',
+      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, extracts candidate decisions, records evidence, approvals, and outcomes, scores decision debt, and generates versioned dossiers with expiring share links. The original multi-agent debate council remains as an optional review room.',
     proof: [
-      'Runs as a public web application with a public source repository.',
-      'Models providers, personas, chats, messages, and rate limits as separate persisted concepts.',
-      'Encrypts provider keys at rest and keeps model calls server-side.',
-      'Uses deterministic round-robin selection with mention-aware priority; turn telemetry records selection reason, tokens, latency, and tool calls.',
-      'Synthesis generates several drafts and selects against a weighted rubric; a blind council-vs-single comparison is built in.',
-      '15 test files and 193 tests cover the orchestrator, agent loop, synthesis rubric, head-to-head flow, and runner.',
+      'Live decision-evidence workspace with workspaces, roles, decisions, evidence, approvals, reports, sources, and dossiers.',
+      'Public sample dossier at /diligence with a downloadable, versioned evidence report.',
+      'GitHub ingestion snapshots files, commits, pull requests, and issues with path, commit, and SHA-256 hashes.',
+      'Decision debt is an explainable 0-100 score; dossiers include evidence appendices and open questions.',
+      'Append-only audit events, HMAC-signed dossier exports, and expiring or revocable share links.',
+      'The original multi-agent council remains as an optional review room with 12+ providers.',
     ],
     decisions: [
-      'Separate provider APIs from the product workflow behind one adapter boundary.',
-      'Favor deterministic speaker selection for debuggability.',
-      'Persist conversation and rate-limit state instead of relying on browser memory.',
+      'Make the decision the primary object; the multi-agent council is an optional review room.',
+      'Link every evidence item to an immutable source snapshot so path, commit, and hash cannot drift.',
+      'Require a human to confirm or reject model-proposed decisions before they enter the log.',
+      'Publish dossiers with expiring, revocable links and optional source redaction.',
     ],
     tradeoffs: [
-      'Supporting many providers increases validation and failure-mode complexity.',
-      'Output quality still depends on persona design, topic framing, and context limits.',
+      'Ingestion currently targets public GitHub repositories; private-source workflows need more setup.',
+      'The product is aimed at technical M&A diligence, not general chat or open-ended research.',
+      'Evidence quality depends on source coverage and human confirmation.',
     ],
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'LLM APIs'],
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Tailwind CSS', 'LLM APIs'],
     flow: [
-      { label: 'Compose', detail: 'Define a topic and select persona participants.' },
-      { label: 'Select', detail: 'Choose the next speaker from deterministic and mention-aware state.' },
-      { label: 'Route', detail: 'Build a provider-specific request behind a shared server boundary.' },
-      { label: 'Persist', detail: 'Store the response and advance inspectable debate state.' },
+      { label: 'Ingest', detail: 'Snapshot a public GitHub repository, its commits, pull requests, and issues.' },
+      { label: 'Extract', detail: 'Propose candidate decisions from the source snapshots for human review.' },
+      { label: 'Verify', detail: 'Confirm decisions, attach evidence, record approvals, and score decision debt.' },
+      { label: 'Publish', detail: 'Generate a versioned dossier and share a redacted, expiring link.' },
     ],
     links: [
-      { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
       { label: 'Live application', href: 'https://tarkasabha.vercel.app', kind: 'live' },
-      {
-        label: 'Data model',
-        href: 'https://github.com/subhajitlucky/tarkaSabha/tree/main/prisma',
-        kind: 'evidence',
-      },
+      { label: 'Sample dossier', href: 'https://tarkasabha.vercel.app/diligence', kind: 'live' },
+      { label: 'Product page', href: 'https://tarkasabha.vercel.app/product', kind: 'evidence' },
+      { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
     ],
     tldr: [
-      '12+ LLM providers behind one server-side adapter.',
-      'Deterministic speaker order with mention-aware turns.',
-      '193 tests cover the orchestrator, agent loop, and synthesis rubric.',
+      'Turns code decisions into source-backed evidence and a diligence dossier.',
+      'Public sample dossier with GitHub ingestion, approvals, decision debt, and open questions.',
+      'The original multi-agent council remains as an optional review room.',
     ],
     featured: true,
   },
@@ -309,7 +322,10 @@ export const projects: Project[] = [
     whatItIs:
       'A free computer-science learning hub with interactive visualizers for web, systems, security, AI, and infrastructure. Every topic is a live module or clearly marked as planned.',
     usage: [
-      { text: 'Open cscosmos.vercel.app.' },
+      {
+        text: 'Open the live learning hub.',
+        link: { label: 'cscosmos.vercel.app', href: 'https://cscosmos.vercel.app' },
+      },
       { text: 'Search for a topic or pick a domain.' },
       { text: 'Open a live module; planned topics show their status instead of a placeholder lesson.' },
     ],
@@ -361,7 +377,10 @@ export const projects: Project[] = [
     whatItIs:
       'A local-first chart studio and India map maker. Paste data, pick a template, and export a presentation-ready PNG or PDF without uploading anything.',
     usage: [
-      { text: 'Open chitradata.vercel.app.' },
+      {
+        text: 'Open the live chart studio.',
+        link: { label: 'chitradata.vercel.app', href: 'https://chitradata.vercel.app' },
+      },
       { text: 'Paste or edit data, then pick a chart type or the India map.' },
       { text: 'Choose a preset for social, slides, or A4 and download the PNG or PDF.' },
     ],
@@ -543,7 +562,10 @@ export const projects: Project[] = [
     whatItIs:
       'A campus lost-and-found platform. Students post lost or found items, search reports, and coordinate claims; admins moderate the listing lifecycle.',
     usage: [
-      { text: 'Open campushelper.vercel.app and sign in with Google.' },
+      {
+        text: 'Open the live lost-and-found platform and sign in with Google.',
+        link: { label: 'campushelper.vercel.app', href: 'https://campushelper.vercel.app' },
+      },
       { text: 'Post a lost or found item with photos and details.' },
       { text: 'Search for a match, open the report, and send a claim.' },
     ],
@@ -656,7 +678,10 @@ export const projects: Project[] = [
     whatItIs:
       'An interactive site for a 24-hour village chanting festival, divided into eight watches. Each watch has its own theme, atmosphere, and memory gallery.',
     usage: [
-      { text: 'Open astapraharicha.vercel.app.' },
+      {
+        text: 'Open the live festival site.',
+        link: { label: 'astapraharicha.vercel.app', href: 'https://astapraharicha.vercel.app' },
+      },
       { text: 'Pick one of the eight watches and scroll through its theme.' },
       { text: 'Browse the memory slideshow or upload a memory for review.' },
     ],
@@ -714,7 +739,10 @@ export const projects: Project[] = [
     whatItIs:
       'An NFT ticketing dApp on Sepolia. Organizers mint events, attendees buy tickets as NFTs, and scanners verify ownership at the door.',
     usage: [
-      { text: 'Open quantumticket.vercel.app and connect MetaMask or Rainbow.' },
+      {
+        text: 'Open the live dApp and connect MetaMask or Rainbow.',
+        link: { label: 'quantumticket.vercel.app', href: 'https://quantumticket.vercel.app' },
+      },
       { text: 'As an organizer, create an event and set the ticket supply.' },
       { text: 'As an attendee, buy a ticket; as a scanner, validate it at the venue.' },
     ],

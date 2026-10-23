@@ -23,7 +23,7 @@ export const tarkaCouncilPost: Post = {
         },
         {
           kind: 'p',
-          text: 'Tarka Sabha is a live multi-agent debate platform. The part worth studying is the council loop: personas with jobs, a deterministic speaker order, tool checks, and a synthesis step that generates candidates and grades them.',
+          text: 'Tarka Sabha now leads with a decision evidence workspace for technical diligence; the original council remains as an optional review room. The part worth studying is the council loop: personas with jobs, a deterministic speaker order, tool checks, and a synthesis step that generates candidates and grades them.',
         },
         {
           kind: 'callout',
