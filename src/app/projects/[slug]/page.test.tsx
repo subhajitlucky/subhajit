@@ -78,9 +78,9 @@ describe('ProjectPage', () => {
       'https://tarkasabha.vercel.app',
     );
 
-    const sampleLinks = screen.getAllByRole('link', { name: 'Sample dossier' });
-    expect(sampleLinks.length).toBeGreaterThanOrEqual(1);
-    for (const link of sampleLinks) {
+    const liveLinks = screen.getAllByRole('link', { name: 'Live' });
+    expect(liveLinks.length).toBeGreaterThanOrEqual(1);
+    for (const link of liveLinks) {
       expect(link).toHaveAttribute('href', 'https://tarkasabha.vercel.app/diligence');
     }
   });

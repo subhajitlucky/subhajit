@@ -260,8 +260,8 @@ export const projects: Project[] = [
         link: { label: 'tarkasabha.vercel.app', href: 'https://tarkasabha.vercel.app' },
       },
       {
-        text: 'See the output first in the public sample dossier.',
-        link: { label: 'Sample dossier', href: 'https://tarkasabha.vercel.app/diligence' },
+        text: 'See the live dossier.',
+        link: { label: 'Live', href: 'https://tarkasabha.vercel.app/diligence' },
       },
       { text: 'In a workspace, ingest a public GitHub repository and confirm the candidate decisions.' },
       { text: 'Generate a dossier, then share an expiring, redacted link with the reviewer.' },
@@ -272,7 +272,7 @@ export const projects: Project[] = [
       'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, extracts candidate decisions for human confirmation, records evidence, approvals, and outcomes, scores decision debt, and generates versioned dossiers with expiring share links. The original multi-agent debate council remains as an optional review room. The repository has 329 tests across 42 test files.',
     proof: [
       'Live decision-evidence workspace with workspaces, roles, decisions, evidence, approvals, reports, sources, and dossiers.',
-      'Public sample dossier at /diligence with a downloadable, versioned evidence report.',
+      'Live dossier at /diligence with a downloadable, versioned evidence report.',
       'GitHub ingestion snapshots files, commits, pull requests, and issues with path, commit, and SHA-256 hashes.',
       'Decision debt is an explainable 0-100 score; dossiers include evidence appendices and open questions.',
       'Append-only audit events, HMAC-signed dossier exports, and expiring or revocable share links.',
@@ -299,13 +299,13 @@ export const projects: Project[] = [
     ],
     links: [
       { label: 'Live application', href: 'https://tarkasabha.vercel.app', kind: 'live' },
-      { label: 'Sample dossier', href: 'https://tarkasabha.vercel.app/diligence', kind: 'live' },
+      { label: 'Live', href: 'https://tarkasabha.vercel.app/diligence', kind: 'live' },
       { label: 'Product', href: 'https://tarkasabha.vercel.app/product', kind: 'evidence' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
     ],
     tldr: [
       'Turns code decisions into source-backed evidence and a diligence dossier.',
-      '329 tests across 42 files; public sample dossier with ingestion, approvals, debt, and open questions.',
+      '329 tests across 42 files; live dossier with ingestion, approvals, debt, and open questions.',
       'The original multi-agent council remains as an optional review room.',
     ],
     featured: true,
