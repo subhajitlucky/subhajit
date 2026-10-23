@@ -267,16 +267,16 @@ export const projects: Project[] = [
       { text: 'Generate a dossier, then share an expiring, redacted link with the reviewer.' },
     ],
     problem:
-      'Technical diligence usually lives in chat threads, scattered docs, and verbal assurance. A buyer needs to see what the code decided, which claims have evidence, and what is still unresolved.',
+      'A frontier model can generate a plausible diligence summary. A buyer still needs a reproducible record of what was examined, which claims have source evidence, what contradicts them, and who approved the conclusion.',
     system:
-      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, extracts candidate decisions, records evidence, approvals, and outcomes, scores decision debt, and generates versioned dossiers with expiring share links. The original multi-agent debate council remains as an optional review room.',
+      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, extracts candidate decisions for human confirmation, records evidence, approvals, and outcomes, scores decision debt, and generates versioned dossiers with expiring share links. The original multi-agent debate council remains as an optional review room. The repository has 329 tests across 42 test files.',
     proof: [
       'Live decision-evidence workspace with workspaces, roles, decisions, evidence, approvals, reports, sources, and dossiers.',
       'Public sample dossier at /diligence with a downloadable, versioned evidence report.',
       'GitHub ingestion snapshots files, commits, pull requests, and issues with path, commit, and SHA-256 hashes.',
       'Decision debt is an explainable 0-100 score; dossiers include evidence appendices and open questions.',
       'Append-only audit events, HMAC-signed dossier exports, and expiring or revocable share links.',
-      'The original multi-agent council remains as an optional review room with 12+ providers.',
+      '329 tests across 42 test files cover workspace permissions, ingestion, candidate confirmation, evidence, approvals, dossiers, shares, and the optional council.',
     ],
     decisions: [
       'Make the decision the primary object; the multi-agent council is an optional review room.',
@@ -285,8 +285,9 @@ export const projects: Project[] = [
       'Publish dossiers with expiring, revocable links and optional source redaction.',
     ],
     tradeoffs: [
-      'Ingestion currently targets public GitHub repositories; private-source workflows need more setup.',
-      'The product is aimed at technical M&A diligence, not general chat or open-ended research.',
+      'Ingestion currently targets public GitHub repositories; private-repo and data-room workflows need more setup.',
+      'Private deployment, SSO, SOC 2, and insurer/auditor acceptance are not built yet.',
+      'The decision-debt score is a prioritization heuristic, not a validated risk rating.',
       'Evidence quality depends on source coverage and human confirmation.',
     ],
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Tailwind CSS', 'LLM APIs'],
@@ -304,7 +305,7 @@ export const projects: Project[] = [
     ],
     tldr: [
       'Turns code decisions into source-backed evidence and a diligence dossier.',
-      'Public sample dossier with GitHub ingestion, approvals, decision debt, and open questions.',
+      '329 tests across 42 files; public sample dossier with ingestion, approvals, debt, and open questions.',
       'The original multi-agent council remains as an optional review room.',
     ],
     featured: true,
