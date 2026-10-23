@@ -299,7 +299,6 @@ export const projects: Project[] = [
     ],
     links: [
       { label: 'Live', href: 'https://tarkasabha.vercel.app', kind: 'live' },
-      { label: 'Product', href: 'https://tarkasabha.vercel.app/product', kind: 'evidence' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
     ],
     tldr: [
@@ -314,7 +313,7 @@ export const projects: Project[] = [
     slug: 'cscosmos',
     title: 'CSCosmos',
     index: '05',
-    status: 'Live application',
+    status: 'Production',
     category: 'Learning systems',
     roles: ['frontend', 'fullstack'],
     summary:
@@ -354,8 +353,8 @@ export const projects: Project[] = [
       { label: 'Learn', detail: 'Interactive visual systems make abstract concepts observable.' },
     ],
     links: [
+      { label: 'Live', href: 'https://cscosmos.vercel.app', kind: 'live' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/cscosmos', kind: 'source' },
-      { label: 'Live application', href: 'https://cscosmos.vercel.app', kind: 'live' },
     ],
     tldr: [
       '245 topics across 8 domains.',
@@ -369,7 +368,7 @@ export const projects: Project[] = [
     slug: 'chitradata',
     title: 'ChitraData',
     index: '06',
-    status: 'Live application',
+    status: 'Production',
     category: 'Data visualization',
     roles: ['frontend'],
     summary:
@@ -411,8 +410,8 @@ export const projects: Project[] = [
       { label: 'Export', detail: 'Download presentation-ready PNG or PDF from HD to 8K.' },
     ],
     links: [
+      { label: 'Live', href: 'https://chitradata.vercel.app', kind: 'live' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/chitraData', kind: 'source' },
-      { label: 'Live application', href: 'https://chitradata.vercel.app', kind: 'live' },
       {
         label: 'Chart studio',
         href: 'https://github.com/subhajitlucky/chitraData/tree/main/src',
@@ -554,7 +553,7 @@ export const projects: Project[] = [
     slug: 'campushelper',
     title: 'CampusHelper',
     index: '09',
-    status: 'Live application',
+    status: 'Production',
     category: 'Full-stack product',
     roles: ['fullstack', 'frontend', 'backend'],
     summary:
@@ -595,8 +594,8 @@ export const projects: Project[] = [
       { label: 'Moderate', detail: 'Admins review reports and manage the listing lifecycle.' },
     ],
     links: [
+      { label: 'Live', href: 'https://campushelper.vercel.app', kind: 'live' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/campushelper', kind: 'source' },
-      { label: 'Live application', href: 'https://campushelper.vercel.app', kind: 'live' },
     ],
     tldr: [
       'Authenticated reports, image uploads, search, claims, and comments.',
@@ -670,7 +669,7 @@ export const projects: Project[] = [
     slug: 'astapraharicha',
     title: 'Asta Praharicha',
     index: '11',
-    status: 'Live application',
+    status: 'Production',
     category: 'Interactive storytelling',
     roles: ['frontend'],
     summary:
@@ -711,8 +710,8 @@ export const projects: Project[] = [
       { label: 'Contribute', detail: 'Visitors upload memories through a moderated gallery flow.' },
     ],
     links: [
+      { label: 'Live', href: 'https://astapraharicha.vercel.app', kind: 'live' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/astapraharicha', kind: 'source' },
-      { label: 'Live application', href: 'https://astapraharicha.vercel.app', kind: 'live' },
       {
         label: 'Watch system',
         href: 'https://github.com/subhajitlucky/astapraharicha/tree/main/src',
@@ -731,7 +730,7 @@ export const projects: Project[] = [
     slug: 'quantumticket',
     title: 'QuantumTicket',
     index: '12',
-    status: 'Live application',
+    status: 'Production',
     category: 'Blockchain ticketing',
     roles: ['web3'],
     summary:
@@ -772,8 +771,8 @@ export const projects: Project[] = [
       { label: 'Validate', detail: 'Scanners verify ownership at the venue entrance.' },
     ],
     links: [
+      { label: 'Live', href: 'https://quantumticket.vercel.app', kind: 'live' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/quantumTicket', kind: 'source' },
-      { label: 'Live application', href: 'https://quantumticket.vercel.app', kind: 'live' },
       {
         label: 'Contracts',
         href: 'https://github.com/subhajitlucky/quantumTicket/tree/main/blockchain',
