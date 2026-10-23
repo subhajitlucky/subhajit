@@ -73,7 +73,7 @@ describe('ProjectPage', () => {
 
     expect(screen.getByText(/Decision evidence/)).toBeInTheDocument();
     expect(screen.getByText(/Live platform/)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Live application' })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: 'Workspace' })).toHaveAttribute(
       'href',
       'https://tarkasabha.vercel.app',
     );

@@ -298,7 +298,7 @@ export const projects: Project[] = [
       { label: 'Publish', detail: 'Generate a versioned dossier and share a redacted, expiring link.' },
     ],
     links: [
-      { label: 'Live application', href: 'https://tarkasabha.vercel.app', kind: 'live' },
+      { label: 'Workspace', href: 'https://tarkasabha.vercel.app', kind: 'live' },
       { label: 'Live', href: 'https://tarkasabha.vercel.app/diligence', kind: 'live' },
       { label: 'Product', href: 'https://tarkasabha.vercel.app/product', kind: 'evidence' },
       { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
