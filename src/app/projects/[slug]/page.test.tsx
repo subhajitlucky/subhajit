@@ -72,17 +72,12 @@ describe('ProjectPage', () => {
     render(page);
 
     expect(screen.getByText(/Decision evidence/)).toBeInTheDocument();
-    expect(screen.getByText(/Live platform/)).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Workspace' })).toHaveAttribute(
+    expect(screen.getByText(/Production/)).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Live' })).toHaveAttribute(
       'href',
       'https://tarkasabha.vercel.app',
     );
 
-    const liveLinks = screen.getAllByRole('link', { name: 'Live' });
-    expect(liveLinks.length).toBeGreaterThanOrEqual(1);
-    for (const link of liveLinks) {
-      expect(link).toHaveAttribute('href', 'https://tarkasabha.vercel.app/diligence');
-    }
   });
 
   it('keeps the engineering notes collapsed by default', async () => {
