@@ -86,7 +86,7 @@ describe('HomePage', () => {
     );
     expect(giakaaEntry).toHaveTextContent('Giakaa (Kailanchal Technologies Pvt Ltd)');
     expect(giakaaEntry).toHaveTextContent('Full Stack Software Developer');
-    expect(giakaaEntry).toHaveTextContent('May 2026-Nov 2026');
+    expect(giakaaEntry).toHaveTextContent('May 2026-Present');
     expect(giakaaEntry).toHaveTextContent('Remote');
     expect(within(giakaaEntry).getByRole('paragraph')).toHaveTextContent('ClickHouse');
     expect(giakaaEntry.textContent?.toLowerCase()).not.toContain('hema');
