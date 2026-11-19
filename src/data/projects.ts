@@ -89,6 +89,11 @@ export const projects: Project[] = [
         kind: 'live',
       },
       {
+        label: 'Build log',
+        href: '/writing/kalia-build-log',
+        kind: 'evidence',
+      },
+      {
         label: 'Pre-registration ledger',
         href: 'https://github.com/subhajitlucky/kalia/blob/main/docs/preregistrations/LEDGER.md',
         kind: 'evidence',
@@ -135,6 +140,11 @@ export const projects: Project[] = [
         href: 'https://github.com/subhajitlucky/codebase-doctor/blob/main/docs/architecture.md',
         kind: 'evidence',
       },
+      {
+        label: 'Deep dive',
+        href: '/writing/what-breaks-if-i-change-this-file',
+        kind: 'evidence',
+      },
     ],
   },
 
@@ -177,6 +187,11 @@ export const projects: Project[] = [
         href: 'https://github.com/subhajitlucky/rls-doctor/blob/main/src/audit/analyzer.ts',
         kind: 'evidence',
       },
+      {
+        label: 'Deep dive',
+        href: '/writing/five-postgres-rls-mistakes',
+        kind: 'evidence',
+      },
     ],
   },
 
@@ -186,35 +201,40 @@ export const projects: Project[] = [
     status: 'Live',
     category: 'Decision evidence',
     summary:
-      'A decision evidence workspace for technical diligence: ingest a codebase, extract decisions, attach source-backed evidence, and publish a dossier.',
+      'Extracts code decisions with cited snapshots, constrains the model to evidence, and publishes a diligence dossier.',
     whatItIs:
-      'Tarka Sabha turns technical decisions into source-backed evidence and a diligence dossier. Teams ingest a repository, confirm decisions, record approvals, and share an expiring report with a buyer.',
+      'A decision evidence workspace. Teams ingest a public repository, review model-proposed candidates, confirm what the evidence supports, and publish a versioned diligence dossier.',
     problem:
       'A frontier model can generate a plausible diligence summary. A buyer still needs a reproducible record of what was examined, which claims have source evidence, what contradicts them, and who approved the conclusion.',
     system:
-      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, extracts candidate decisions for human confirmation, records evidence, approvals, and outcomes, and generates versioned dossiers with expiring share links. Tests cover workspace permissions, ingestion, evidence, approvals, dossiers, and share links.',
+      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, proposes candidate decisions from a bounded prompt, requires snapshot citations, and records human confirmations, approvals, and outcomes. Versioned dossiers include evidence appendices and expiring share links.',
     proof: [
-      'Live workspace with workspaces, roles, decisions, evidence, approvals, reports, sources, and dossiers.',
-      'GitHub ingestion snapshots files, commits, pull requests, and issues with path, commit, and SHA-256 hashes; dossiers include evidence appendices and open questions.',
-      'Append-only audit events, HMAC-signed dossier exports, and expiring or revocable share links.',
+      'Public GitHub ingestion creates immutable file, commit, pull request, and issue snapshots with path, commit, and SHA-256 hashes.',
+      'The model proposes candidates from bounded snapshots; every candidate needs 1–3 cited snapshots, unknown source IDs and uncited candidates are dropped, and a human confirms or rejects each one.',
+      'Versioned dossiers ship with evidence appendices, open questions, expiring or revocable share links, and HMAC-signed exports.',
     ],
     decisions: [
-      'Make the decision the primary object; the multi-agent council is an optional review room.',
+      'Make the decision the primary object; the model is a candidate generator, not the authority.',
       'Link every evidence item to an immutable source snapshot so path, commit, and hash cannot drift.',
     ],
     tradeoffs: [
       'Ingestion currently targets public GitHub repositories; private-repo and data-room workflows need more setup.',
-      'The decision-debt score is a prioritization heuristic, not a validated risk rating.',
+      'Extraction is bounded by snapshot coverage; it cannot prove runtime behavior or code that was not ingested.',
     ],
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Tailwind CSS'],
     flow: [
       { label: 'Ingest', detail: 'Snapshot a public GitHub repository, its commits, pull requests, and issues.' },
-      { label: 'Extract', detail: 'Propose candidate decisions from the source snapshots for human review.' },
-      { label: 'Verify', detail: 'Confirm decisions, attach evidence, record approvals, and score decision debt.' },
+      { label: 'Extract', detail: 'Propose candidate decisions from bounded snapshots; each must cite a source.' },
+      { label: 'Confirm', detail: 'A human confirms or rejects each candidate, records approvals, and scores decision debt.' },
       { label: 'Publish', detail: 'Generate a versioned dossier and share a redacted, expiring link.' },
     ],
     links: [
       { label: 'Live', href: 'https://tarkasabha.vercel.app', kind: 'live' },
+      {
+        label: 'Sample dossier',
+        href: 'https://tarkasabha.vercel.app/diligence',
+        kind: 'evidence',
+      },
       { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
     ],
   },
