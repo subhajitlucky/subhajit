@@ -1,18 +1,6 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('interactions', () => {
-  test('project role filters update the list and status', async ({ page }) => {
-    await page.goto('/projects', { waitUntil: 'networkidle' });
-
-    await page.getByRole('button', { name: 'Full-stack', exact: true }).click();
-    await expect(page.getByRole('button', { name: 'Full-stack', exact: true })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
-    await expect(page.getByRole('status')).toContainText('Showing 3 of 10 projects');
-    await expect(page.getByTestId('project-index-item')).toHaveCount(3);
-  });
-
   test('KALIA theme persists across reloads', async ({ page }) => {
     await page.goto('/kalia', { waitUntil: 'networkidle' });
 

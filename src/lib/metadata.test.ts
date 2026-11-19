@@ -1,5 +1,5 @@
 import { posts } from '@/data/posts';
-import { featuredProjects, listedProjects } from '@/data/projects';
+import { projects } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 import { createProjectMetadata, rootMetadata } from '@/lib/metadata';
 import { postStructuredData, projectStructuredData, structuredData } from '@/lib/structured-data';
@@ -22,7 +22,7 @@ describe('portfolio discovery metadata', () => {
   });
 
   it('gives project case studies their own Twitter card metadata', () => {
-    const project = featuredProjects[0];
+    const project = projects[0];
     const metadata = createProjectMetadata(project);
 
     expect(metadata.twitter).toEqual(
@@ -48,8 +48,8 @@ describe('portfolio discovery metadata', () => {
     );
   });
 
-  it('publishes Project structured data for every listed case study', () => {
-    for (const project of listedProjects) {
+  it('publishes Project structured data for every case study', () => {
+    for (const project of projects) {
       expect(projectStructuredData(project)).toEqual(
         expect.objectContaining({
           '@type': 'SoftwareSourceCode',

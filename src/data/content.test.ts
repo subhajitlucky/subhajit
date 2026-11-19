@@ -1,33 +1,23 @@
-import {
-  featuredProjects,
-  getProject,
-  listedProjects,
-  projects,
-  roleFilters,
-  secondaryProjects,
-} from '@/data/projects';
-import { experience, siteConfig, skillGroups } from '@/data/site';
+import { getProject, projects, supportingWork } from '@/data/projects';
+import { experience, siteConfig } from '@/data/site';
 import { isExternalUrl } from '@/lib/urls';
 
 describe('portfolio content integrity', () => {
-  it('uses the approved plain product engineer positioning', () => {
+  it('uses the evidence-first product engineer positioning', () => {
     expect(siteConfig.role).toBe('Full-Stack Product Engineer');
     expect(siteConfig.summary).toBe(
-      'I build web products and AI systems, from the interface to the infrastructure.',
+      'I build systems that make software verifiable — static analysis, database security, and a language model trained from scratch.',
     );
-    expect(siteConfig.availability).toBe('Open to full-stack opportunities');
+    expect(siteConfig.availability).toBe('Open to full-stack product engineering roles');
     expect(siteConfig.description).toBe(
-      'Full-Stack Product Engineer building web products and AI systems.',
+      'Full-Stack Product Engineer building systems that make software verifiable.',
     );
-    expect(skillGroups.map((group) => group.label)).toEqual([
-      'Languages',
-      'Product engineering',
-      'Backend and data',
-      'AI and developer tools',
-      'Cloud and DevOps',
-      'Blockchain',
+    expect(siteConfig.nav.map((item) => item.label)).toEqual([
+      'Work',
+      'KALIA',
+      'Writing',
+      'Resume',
     ]);
-    expect(siteConfig.availability.toLowerCase()).not.toContain('relocation');
   });
 
   it('keeps the current Giakaa entry inside the approved disclosure boundary', () => {
@@ -39,50 +29,55 @@ describe('portfolio content integrity', () => {
       period: 'May 2026-Present',
       location: 'Remote',
       summary:
-        'Full-stack features in Next.js, TypeScript, PostgreSQL and ClickHouse; backend APIs and background processing on GCP.',
+        'Owned backend delivery in the final phase: production APIs, authentication and RBAC, background jobs on GCP, and SQL and dashboard performance.',
     });
+    expect(experience).toHaveLength(2);
     expect(JSON.stringify(currentRole).toLowerCase()).not.toContain('hema');
   });
 
-  it('preserves the approved featured and secondary project order', () => {
-    expect(featuredProjects.map((project) => project.slug)).toEqual([
+  it('keeps four case studies and three supporting one-liners', () => {
+    expect(projects.map((project) => project.slug)).toEqual([
       'kalia',
       'codebase-doctor',
       'rls-doctor',
       'tarka-sabha',
-      'cscosmos',
-      'campushelper',
     ]);
-    expect(secondaryProjects.map((project) => project.slug)).toEqual([
-      'chitradata',
-      'smritiflow',
-      'sutra',
-      'astapraharicha',
+    expect(supportingWork.map((item) => item.title)).toEqual([
+      'CSCosmos',
+      'SmritiFlow',
+      'ChitraData',
     ]);
   });
 
-  it('keeps featured summaries concise and linked to source', () => {
-    for (const project of featuredProjects) {
+  it('keeps summaries concise and linked to source', () => {
+    for (const project of projects) {
       expect(project.summary.length).toBeLessThanOrEqual(180);
       expect(project.links.some((link) => link.kind === 'source')).toBe(true);
     }
   });
 
-  it('gives every selected project inspectable proof and valid links', () => {
-    expect(projects).toHaveLength(12);
-    expect(listedProjects).toHaveLength(10);
-
+  it('gives every case study inspectable proof and valid links', () => {
     for (const project of projects) {
-      expect(project.proof.length).toBeGreaterThan(0);
-      expect(project.tldr).toHaveLength(3);
+      expect(project.proof).toHaveLength(3);
+      expect(project.decisions.length).toBeGreaterThan(0);
+      expect(project.tradeoffs.length).toBeGreaterThan(0);
       expect(project.whatItIs.length).toBeGreaterThan(0);
       expect(project.whatItIs.length).toBeLessThanOrEqual(200);
-      expect(project.usage.length).toBeGreaterThanOrEqual(3);
       expect(project.links.some((link) => link.kind === 'source')).toBe(true);
 
       for (const link of project.links) {
-        expect(isExternalUrl(link.href)).toBe(true);
+        if (isExternalUrl(link.href)) {
+          expect(link.href.startsWith('https://')).toBe(true);
+        } else {
+          expect(link.href.startsWith('/')).toBe(true);
+        }
       }
+    }
+  });
+
+  it('does not label live applications as production systems', () => {
+    for (const project of projects) {
+      expect(project.status).not.toBe('Production');
     }
   });
 
@@ -94,23 +89,6 @@ describe('portfolio content integrity', () => {
     expect(serialized).not.toContain('enterprise-grade');
     expect(serialized).not.toContain('production-ready');
     expect(serialized).not.toContain('thousands of users');
-  });
-
-  it('assigns every project an ordered, duplicate-free role fit', () => {
-    const validRoles = roleFilters
-      .filter((filter) => filter.value !== 'all')
-      .map((filter) => filter.value);
-
-    expect(validRoles).toEqual(['swe', 'fullstack', 'frontend', 'backend']);
-
-    for (const project of listedProjects) {
-      expect(project.roles.length).toBeGreaterThan(0);
-      expect(new Set(project.roles).size).toBe(project.roles.length);
-
-      for (const role of project.roles) {
-        expect(validRoles).toContain(role);
-      }
-    }
   });
 
   it('looks up projects by slug without manufacturing missing entries', () => {

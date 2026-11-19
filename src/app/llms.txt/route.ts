@@ -1,5 +1,5 @@
 import { posts } from '@/data/posts';
-import { listedProjects } from '@/data/projects';
+import { projects, supportingWork } from '@/data/projects';
 import { siteConfig } from '@/data/site';
 
 export const dynamic = 'force-static';
@@ -24,10 +24,17 @@ export function GET() {
     '',
   ];
 
-  for (const project of listedProjects) {
+  for (const project of projects) {
     lines.push(
       `- [${project.title}](${siteConfig.baseUrl}/projects/${project.slug}): ${project.summary}`,
     );
+  }
+
+  lines.push('', '## More work', '');
+
+  for (const item of supportingWork) {
+    const link = item.links[0];
+    lines.push(`- [${item.title}](${link.href}) (${item.status}): ${item.summary}`);
   }
 
   lines.push('', '## Writing', '');
@@ -45,9 +52,10 @@ export function GET() {
     '',
     '## Profiles',
     '',
-    ...siteConfig.nav
-      .filter((item) => item.href.startsWith('http'))
-      .map((item) => `- [${item.label}](${item.href})`),
+    `- [GitHub](${siteConfig.links.github})`,
+    `- [LinkedIn](${siteConfig.links.linkedin})`,
+    `- [Email](${siteConfig.links.email})`,
+    `- [Resume](${siteConfig.baseUrl}${siteConfig.resumePath})`,
   );
 
   return new Response(`${lines.join('\n')}\n`, {

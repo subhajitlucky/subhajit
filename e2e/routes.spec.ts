@@ -1,17 +1,8 @@
 import { expect, test } from '@playwright/test';
-
-const routes = [
-  '/',
-  '/projects',
-  '/projects/kalia',
-  '/projects/campushelper',
-  '/writing',
-  '/writing/tarka-sabha-council',
-  '/kalia',
-];
+import { ALL_ROUTES } from './routes';
 
 test.describe('public routes', () => {
-  for (const route of routes) {
+  for (const route of ALL_ROUTES) {
     test(`${route} renders one h1 without console errors`, async ({ page }) => {
       const errors: string[] = [];
       page.on('console', (message) => {

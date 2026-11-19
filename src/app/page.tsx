@@ -1,14 +1,23 @@
 import Link from 'next/link';
 import { ProjectCard } from '@/components/ProjectCard';
-import { featuredProjects } from '@/data/projects';
-import { education, experience, siteConfig, skillGroups } from '@/data/site';
+import { posts } from '@/data/posts';
+import { projects } from '@/data/projects';
+import { experience, siteConfig } from '@/data/site';
 import { externalLinkProps } from '@/lib/urls';
+
+const homeWritingSlugs = [
+  'five-postgres-rls-mistakes',
+  'what-breaks-if-i-change-this-file',
+  'kalia-build-log',
+];
 
 function entryId(organization: string) {
   return organization.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
 export default function HomePage() {
+  const homePosts = posts.filter((post) => homeWritingSlugs.includes(post.slug));
+
   return (
     <div className="home-page site-container">
       <section className="intro" aria-labelledby="intro-title">
@@ -31,13 +40,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="content-section" aria-labelledby="projects-title">
+      <section className="content-section" aria-labelledby="work-title">
         <div className="section-heading">
-          <h2 id="projects-title">Projects</h2>
-          <Link href="/projects">All projects</Link>
+          <h2 id="work-title">Selected work</h2>
+          <Link href="/projects">All work</Link>
         </div>
         <div className="project-grid">
-          {featuredProjects.map((project) => (
+          {projects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
@@ -62,26 +71,19 @@ export default function HomePage() {
         </ol>
       </section>
 
-      <section className="content-section" aria-labelledby="skills-title">
-        <h2 id="skills-title">Skills</h2>
-        <div className="skills-list">
-          {skillGroups.map((group) => (
-            <div key={group.label}>
-              <h3>{group.label}</h3>
-              <p>{group.items.join(', ')}</p>
-            </div>
-          ))}
+      <section className="content-section" aria-labelledby="writing-title">
+        <div className="section-heading">
+          <h2 id="writing-title">Writing</h2>
+          <Link href="/writing">All writing</Link>
         </div>
-      </section>
-
-      <section className="content-section" aria-labelledby="education-title">
-        <h2 id="education-title">Education</h2>
-        <h3>{education.degree}</h3>
-        <p>{education.organization}</p>
-        <p>{education.location}</p>
-        <p>
-          {education.period} · {education.grade}
-        </p>
+        <ol className="home-writing-list">
+          {homePosts.map((post) => (
+            <li key={post.slug}>
+              <Link href={`/writing/${post.slug}`}>{post.title}</Link>
+              <span>{post.readingMinutes} min</span>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="contact-section" aria-labelledby="contact-title">

@@ -4,7 +4,7 @@ import { SiteHeader } from '@/components/SiteHeader';
 import { siteConfig } from '@/data/site';
 
 describe('site shell', () => {
-  it('provides skip navigation and direct hiring links', () => {
+  it('provides skip navigation and a compact primary nav', () => {
     render(<SiteHeader />);
 
     const homeLink = screen.getByRole('link', {
@@ -21,6 +21,20 @@ describe('site shell', () => {
     const navigation = screen.getByRole('navigation', { name: /direct links/i });
     expect(navigation).toBeInTheDocument();
 
+    for (const label of ['Work', 'KALIA', 'Writing', 'Resume']) {
+      expect(screen.getByRole('link', { name: label })).toBeInTheDocument();
+    }
+
+    expect(screen.queryByRole('link', { name: 'Email' })).not.toBeInTheDocument();
+  });
+
+  it('keeps contact links in the footer', () => {
+    render(<SiteFooter />);
+
+    expect(screen.getByText(siteConfig.location)).toBeInTheDocument();
+    expect(screen.getByText(siteConfig.availability)).toBeInTheDocument();
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
+
     for (const label of ['Email', 'Resume', 'GitHub', 'LinkedIn']) {
       expect(screen.getByRole('link', { name: label })).toBeInTheDocument();
     }
@@ -30,13 +44,5 @@ describe('site shell', () => {
       expect(link).toHaveAttribute('target', '_blank');
       expect(link).toHaveAttribute('rel', expect.stringContaining('noopener'));
     }
-  });
-
-  it('keeps the footer compact and informational', () => {
-    render(<SiteFooter />);
-
-    expect(screen.getByText(siteConfig.location)).toBeInTheDocument();
-    expect(screen.getByText(siteConfig.availability)).toBeInTheDocument();
-    expect(screen.queryByRole('heading')).not.toBeInTheDocument();
   });
 });

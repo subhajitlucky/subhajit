@@ -10,7 +10,7 @@ vi.mock('next/navigation', () => ({
 }));
 
 describe('ProjectPage', () => {
-  it('leads with what the project is and how to use it', async () => {
+  it('leads with the problem, the build, and the evidence', async () => {
     const page = await ProjectPage({ params: Promise.resolve({ slug: 'codebase-doctor' }) });
     render(page);
 
@@ -23,34 +23,20 @@ describe('ProjectPage', () => {
     }
 
     expect(screen.getByText(project.whatItIs)).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'How to use it' })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Proof' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Try it' })).toBeInTheDocument();
 
-    for (const step of project.usage) {
+    for (const step of project.usage ?? []) {
       expect(screen.getByText(step.text)).toBeInTheDocument();
-      if (step.command) {
-        expect(screen.getByText(step.command)).toBeInTheDocument();
-      }
-      if (step.link) {
-        expect(screen.getByRole('link', { name: step.link.label })).toHaveAttribute(
-          'href',
-          step.link.href,
-        );
-      }
+      expect(screen.getByText(step.command)).toBeInTheDocument();
     }
 
-    expect(screen.getByText('Engineering notes')).toBeInTheDocument();
-
-    for (const heading of [
-      'Problem',
-      'System',
-      'Architecture',
-      'Decisions',
-      'Tradeoffs and limitations',
-      'Full proof',
-    ]) {
+    for (const heading of ['Problem', 'What I built', 'Decisions', 'Evidence', 'Limits']) {
       expect(screen.getByRole('heading', { name: heading })).toBeInTheDocument();
     }
+
+    expect(screen.queryByRole('heading', { name: 'How to use it' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Full proof' })).not.toBeInTheDocument();
+    expect(screen.queryByText('Engineering notes')).not.toBeInTheDocument();
 
     expect(screen.getByRole('link', { name: 'Source' })).toHaveAttribute(
       'href',
@@ -60,32 +46,38 @@ describe('ProjectPage', () => {
     for (const link of project.links) {
       expect(screen.getByRole('link', { name: link.label })).toHaveAttribute('href', link.href);
     }
-
-    const flow = screen.getByRole('list', { name: 'Architecture flow' });
-    expect(within(flow).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
-      project.flow.map((step) => `${step.label}${step.detail}`),
-    );
   });
 
-  it('renders the upgraded Tarka Sabha positioning and links', async () => {
+  it('renders the Tarka Sabha live positioning without a usage block', async () => {
     const page = await ProjectPage({ params: Promise.resolve({ slug: 'tarka-sabha' }) });
     render(page);
 
     expect(screen.getByText(/Decision evidence/)).toBeInTheDocument();
-    expect(screen.getByText(/Production/)).toBeInTheDocument();
+    expect(screen.getByText(/Decision evidence · Live/)).toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Try it' })).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Architecture' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Live' })).toHaveAttribute(
       'href',
       'https://tarkasabha.vercel.app',
     );
-
   });
 
-  it('keeps the engineering notes collapsed by default', async () => {
-    const page = await ProjectPage({ params: Promise.resolve({ slug: 'codebase-doctor' }) });
+  it('links the KALIA console from the case study', async () => {
+    const page = await ProjectPage({ params: Promise.resolve({ slug: 'kalia' }) });
     render(page);
 
-    const summary = screen.getByText('Engineering notes');
-    expect(summary.closest('details')).not.toHaveAttribute('open');
+    expect(screen.getByRole('link', { name: 'KALIA console' })).toHaveAttribute('href', '/kalia');
+    expect(screen.getByRole('heading', { name: 'Architecture' })).toBeInTheDocument();
+
+    const flow = screen.getByRole('list', { name: 'Architecture flow' });
+    const project = getProject('kalia');
+    expect(project?.flow).toBeDefined();
+    if (!project?.flow) {
+      throw new Error('Expected kalia flow to be present');
+    }
+    expect(within(flow).getAllByRole('listitem').map((item) => item.textContent)).toEqual(
+      project.flow.map((step) => `${step.label}${step.detail}`),
+    );
   });
 
   it('pre-renders every canonical project route', () => {

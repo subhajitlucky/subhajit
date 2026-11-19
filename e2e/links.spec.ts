@@ -14,7 +14,7 @@ test('sitemap and internal links resolve', async ({ page, request }) => {
     expect(response.status(), `sitemap link ${path}`).toBeLessThan(400);
   }
 
-  const routes = ['/', '/projects', '/kalia', '/writing', '/writing/tarka-sabha-council'];
+  const routes = ['/', '/projects', '/kalia', '/writing'];
   const internalLinks = new Set<string>();
 
   for (const route of routes) {

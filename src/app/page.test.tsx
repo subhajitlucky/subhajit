@@ -1,10 +1,11 @@
 import { render, screen, within } from '@testing-library/react';
-import { featuredProjects } from '@/data/projects';
-import { education, experience, siteConfig, skillGroups } from '@/data/site';
+import { posts } from '@/data/posts';
+import { projects } from '@/data/projects';
+import { experience, siteConfig } from '@/data/site';
 import HomePage from './page';
 
 describe('HomePage', () => {
-  it('opens with plain full-stack positioning and hiring links', () => {
+  it('opens with evidence-first positioning and hiring links', () => {
     render(<HomePage />);
 
     expect(screen.getByRole('heading', { level: 1, name: siteConfig.role })).toBeInTheDocument();
@@ -16,9 +17,9 @@ describe('HomePage', () => {
       'href',
       siteConfig.resumePath,
     );
-    expect(screen.getByRole('link', { name: 'GitHub' })).toHaveAttribute(
-      'href',
-      siteConfig.links.github,
+    expect(screen.getByRole('link', { name: 'GitHub' }).closest('div')).toHaveAttribute(
+      'aria-label',
+      'Contact and profile links',
     );
     expect(screen.getByRole('link', { name: 'LinkedIn' })).toHaveAttribute(
       'href',
@@ -30,25 +31,24 @@ describe('HomePage', () => {
     );
   });
 
-  it('renders featured project cards in the approved order', () => {
+  it('renders the four flagship projects in order', () => {
     render(<HomePage />);
 
     const cards = screen.getAllByTestId('project-card');
-    expect(cards).toHaveLength(featuredProjects.length);
+    expect(cards).toHaveLength(projects.length);
 
     expect(cards.map((card) => within(card).getByRole('heading').textContent)).toEqual(
-      featuredProjects.map((project) => project.title),
+      projects.map((project) => project.title),
     );
   });
 
-  it('renders useful source and product actions for each featured project', () => {
+  it('renders useful source and product actions for each project', () => {
     render(<HomePage />);
 
     const cards = screen.getAllByTestId('project-card');
-    expect(cards).toHaveLength(featuredProjects.length);
     const allowedKinds = new Set(['source', 'package', 'live']);
 
-    for (const [index, project] of featuredProjects.entries()) {
+    for (const [index, project] of projects.entries()) {
       const rowLinks = within(cards[index]).getAllByRole('link');
       const detailsLink = rowLinks.find(
         (link) =>
@@ -70,16 +70,17 @@ describe('HomePage', () => {
     }
   });
 
-  it('keeps all experience in sight and current employment concise', () => {
+  it('keeps the two current roles and drops the trainee entry', () => {
     render(<HomePage />);
 
     for (const organization of [
       'Giakaa (Kailanchal Technologies Pvt Ltd)',
       'uElement Technologies',
-      'QuadB Technologies',
     ]) {
       expect(screen.getByText(organization)).toBeInTheDocument();
     }
+
+    expect(screen.queryByText('QuadB Technologies')).not.toBeInTheDocument();
 
     const giakaaEntry = screen.getByTestId(
       'experience-giakaa-kailanchal-technologies-pvt-ltd',
@@ -88,45 +89,49 @@ describe('HomePage', () => {
     expect(giakaaEntry).toHaveTextContent('Full Stack Software Developer');
     expect(giakaaEntry).toHaveTextContent('May 2026-Present');
     expect(giakaaEntry).toHaveTextContent('Remote');
-    expect(within(giakaaEntry).getByRole('paragraph')).toHaveTextContent('ClickHouse');
+    expect(within(giakaaEntry).getByRole('paragraph')).toHaveTextContent('Owned backend delivery');
     expect(giakaaEntry.textContent?.toLowerCase()).not.toContain('hema');
 
     expect(screen.getByTestId('experience-uelement-technologies')).toHaveTextContent(
       'Associate Blockchain Developer',
     );
-    expect(screen.getByTestId('experience-quadb-technologies')).toHaveTextContent(
-      'Software Engineering Trainee',
-    );
   });
 
-  it('renders the plain section headings in reading order', () => {
+  it('renders the section headings in reading order', () => {
     render(<HomePage />);
 
-    const projects = screen.getByRole('heading', { name: 'Projects' });
+    const work = screen.getByRole('heading', { name: 'Selected work' });
     const experienceHeading = screen.getByRole('heading', { name: 'Experience' });
-    const skills = screen.getByRole('heading', { name: 'Skills' });
+    const writing = screen.getByRole('heading', { name: 'Writing' });
     const contact = screen.getByRole('heading', { name: 'Get in touch' });
 
     expect(
-      projects.compareDocumentPosition(experienceHeading) & Node.DOCUMENT_POSITION_FOLLOWING,
+      work.compareDocumentPosition(experienceHeading) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     expect(
-      experienceHeading.compareDocumentPosition(skills) & Node.DOCUMENT_POSITION_FOLLOWING,
+      experienceHeading.compareDocumentPosition(writing) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
-    expect(skills.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(writing.compareDocumentPosition(contact) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
-  it('renders every skill group and the education block', () => {
+  it('links three curated posts on the home page', () => {
     render(<HomePage />);
 
-    for (const group of skillGroups) {
-      expect(screen.getByRole('heading', { name: group.label })).toBeInTheDocument();
-      expect(screen.getByText(group.items.join(', '))).toBeInTheDocument();
+    for (const slug of [
+      'five-postgres-rls-mistakes',
+      'what-breaks-if-i-change-this-file',
+      'kalia-build-log',
+    ]) {
+      const post = posts.find((item) => item.slug === slug);
+      expect(post).toBeDefined();
+      if (!post) {
+        throw new Error(`Expected ${slug} to be present in canonical post data`);
+      }
+      expect(screen.getByRole('link', { name: post.title })).toHaveAttribute(
+        'href',
+        `/writing/${post.slug}`,
+      );
     }
-
-    expect(screen.getByRole('heading', { name: /education/i })).toBeInTheDocument();
-    expect(screen.getByText(education.degree)).toBeInTheDocument();
-    expect(screen.getByText(education.organization)).toBeInTheDocument();
   });
 
   it('keeps the contact section free of duplicated worldwide positioning', () => {

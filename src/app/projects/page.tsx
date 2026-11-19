@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
-import { ProjectsExplorer } from '@/components/ProjectsExplorer';
-import { listedProjects, type ProjectIndexItem } from '@/data/projects';
+import Link from 'next/link';
+import { projects, supportingWork } from '@/data/projects';
 import { siteConfig } from '@/data/site';
+import { externalLinkProps } from '@/lib/urls';
 
-const description = 'Developer tools, AI systems, and full-stack product work by Subhajit Pradhan.';
+const description =
+  'Four case studies across developer tools, AI systems, and full-stack product work by Subhajit Pradhan.';
 
 export const metadata: Metadata = {
   title: 'Selected work',
@@ -25,25 +27,68 @@ export const metadata: Metadata = {
 };
 
 export default function ProjectsPage() {
-  const indexItems: ProjectIndexItem[] = listedProjects.map(
-    ({ slug, title, status, category, roles, summary, links }) => ({
-      slug,
-      title,
-      status,
-      category,
-      roles,
-      summary,
-      links,
-    }),
-  );
-
   return (
     <div className="projects-index site-frame">
       <header className="projects-index-header">
         <h1>Selected work</h1>
-        <p>Ten selected projects across developer tools, AI systems, full-stack products, and data visualization.</p>
+        <p>Four case studies across developer tools, AI systems, and full-stack products. Supporting work below.</p>
       </header>
-      <ProjectsExplorer projects={indexItems} />
+
+      <ol className="projects-index-list">
+        {projects.map((project) => {
+          const source = project.links.find((link) => link.kind === 'source');
+
+          return (
+            <li data-testid="project-index-item" key={project.slug}>
+              <div className="index-project-copy">
+                <p className="index-project-meta">
+                  {project.category} · {project.status}
+                </p>
+                <h2>
+                  <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+                </h2>
+                <p>{project.summary}</p>
+              </div>
+              <div className="index-project-actions">
+                <Link href={`/projects/${project.slug}`} aria-label={`${project.title} details`}>
+                  Details
+                </Link>
+                {source ? (
+                  <a
+                    href={source.href}
+                    aria-label={`${source.label} for ${project.title}`}
+                    {...externalLinkProps}
+                  >
+                    {source.label}
+                  </a>
+                ) : null}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+
+      <section className="more-work" aria-labelledby="more-work-title">
+        <h2 id="more-work-title">More work</h2>
+        <ul className="more-work-list">
+          {supportingWork.map((item) => (
+            <li key={item.title} data-testid="more-work-item">
+              <div className="more-work-copy">
+                <h3>{item.title}</h3>
+                <p>{item.summary}</p>
+              </div>
+              <p className="more-work-status">{item.status}</p>
+              <div className="more-work-links">
+                {item.links.map((link) => (
+                  <a key={link.href} href={link.href} {...externalLinkProps}>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }

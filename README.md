@@ -2,11 +2,11 @@
 
 **Live: [subhajitpradhan.vercel.app](https://subhajitpradhan.vercel.app)**
 
-I build web products and AI systems, from the interface to the infrastructure. This repository is the site itself: project case studies, long-form technical writing, and one dedicated page for KALIA — a 58M-parameter language model I trained from scratch on free GPUs.
+I build systems that make software verifiable. This repository is the site itself: four project case studies, long-form technical writing, and one dedicated page for KALIA — a 58M-parameter language model I trained from scratch on free GPUs.
 
 Start here:
 
-- **[Projects](https://subhajitpradhan.vercel.app/projects)** — ten project pages with a quick start, proof, and optional engineering notes
+- **[Work](https://subhajitpradhan.vercel.app/projects)** — four case studies plus selected supporting work, each with the problem, the build, the evidence, and the limits
 - **[KALIA](https://subhajitpradhan.vercel.app/kalia)** — the dedicated model page: a replayable training console built from the real logs, every numbered decision, every incident, benchmarks, samples, and the recipe
 - **[Build log](https://subhajitpradhan.vercel.app/writing/kalia-build-log)** — the training story: micro-ablations, the optimizer I rejected, the plateau, and the quota wall
 - **[Writing](https://subhajitpradhan.vercel.app/writing)** — long-form technical posts
@@ -28,14 +28,14 @@ npm test        # 70 unit tests
 npm run typecheck
 npm run lint
 npm run build
-npm run test:e2e  # 51 browser checks; run after build
+npm run test:e2e  # browser checks; run after build
 npm run test:lighthouse
 ```
 
 Where the content lives:
 
-- Profile, experience, skills, education, nav: `src/data/site.ts`
-- Projects — claims, links, architecture, limitations: `src/data/projects.ts`
+- Profile, experience, nav: `src/data/site.ts`
+- Projects — four case studies, supporting work, claims, links, architecture, limitations: `src/data/projects.ts`
 - Writing posts: `src/data/posts.ts`
 - KALIA page: `src/app/kalia/data.ts`, with the training log generated into `src/app/kalia/train-log.ts` from the real logs served at `public/kalia/logs/`
 - Metadata and structured data: `src/lib/metadata.ts`, `src/lib/structured-data.ts`

@@ -17,7 +17,7 @@ export function ProjectCard({ project }: { project: Project }) {
         <Link href={`/projects/${project.slug}`}>{project.title}</Link>
       </h3>
       <p className="project-card-summary">{project.summary}</p>
-      <TagList tags={project.stack.slice(0, 5)} />
+      <TagList tags={project.stack.slice(0, 3)} />
       <div className="project-card-links">
         {actionLinks.map((link) =>
           isExternalUrl(link.href) ? (

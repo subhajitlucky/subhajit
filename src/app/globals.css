@@ -354,22 +354,31 @@ a:focus-visible {
   font-size: 0.925rem;
 }
 
-.skills-list {
+.home-writing-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border-block-start: 1px solid var(--line);
+  list-style: none;
 }
 
-.skills-list h3 {
-  margin: 0;
-  font-size: 1rem;
+.home-writing-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-block-end: 1px solid var(--line);
+  padding-block: 0.9rem;
+}
+
+.home-writing-list a {
   font-weight: 600;
 }
 
-.skills-list p {
-  margin: 0.4rem 0 0;
+.home-writing-list span {
   color: var(--muted);
-  font-size: 0.925rem;
+  font-size: 0.85rem;
 }
 
 /* Contact */
@@ -436,6 +445,14 @@ a:focus-visible {
   margin: 0;
 }
 
+.footer-links a {
+  color: var(--muted);
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
 /* Project index */
 .projects-index {
   padding-block: clamp(3rem, 7vw, 5rem);
@@ -458,47 +475,6 @@ a:focus-visible {
   margin: 1rem 0 0;
   color: var(--muted);
   font-size: 1.05rem;
-}
-
-.role-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-block-end: 1rem;
-}
-
-.role-filter button {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  font: inherit;
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 0.4rem 0.9rem;
-}
-
-.role-filter button:hover {
-  border-color: var(--text);
-  color: var(--text);
-}
-
-.role-filter button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-.role-filter button[aria-pressed='true'] {
-  background: var(--text);
-  border-color: var(--text);
-  color: var(--background);
-}
-
-.role-filter-status {
-  margin: 0 0 1.5rem;
-  color: var(--muted);
-  font-size: 0.8rem;
 }
 
 .projects-index-list {
@@ -557,6 +533,64 @@ a:focus-visible {
   font-weight: 500;
 }
 
+/* More work */
+.more-work {
+  margin-block-start: clamp(2.5rem, 5vw, 3.75rem);
+}
+
+.more-work h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.more-work-list {
+  margin: 0;
+  padding: 0;
+  border-block-start: 1px solid var(--line);
+  list-style: none;
+}
+
+.more-work-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 8rem auto;
+  gap: 1.5rem;
+  align-items: start;
+  border-block-end: 1px solid var(--line);
+  padding-block: 1.25rem;
+}
+
+.more-work-copy h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.more-work-copy p {
+  max-width: 40rem;
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.925rem;
+}
+
+.more-work-status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.more-work-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.more-work-links a {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* Case studies */
 .case-study {
   padding-block: clamp(3rem, 7vw, 5rem);
@@ -609,16 +643,13 @@ a:focus-visible {
   font-size: 0.85rem;
 }
 
-.case-study-quick {
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3rem);
+.case-study-try {
   border-block-start: 1px solid var(--line);
   border-block-end: 1px solid var(--line);
   padding-block: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
-.case-study-quick h2 {
+.case-study-try h2 {
   margin: 0 0 0.9rem;
   color: var(--muted);
   font-size: 0.8rem;
@@ -659,35 +690,6 @@ a:focus-visible {
   color: var(--text);
   font-size: 0.85rem;
   overflow-wrap: anywhere;
-}
-
-.case-study-notes {
-  border-block-start: 1px solid var(--line);
-}
-
-.case-study-notes > summary {
-  display: flex;
-  min-height: 3.5rem;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  font-weight: 600;
-  list-style: none;
-}
-
-.case-study-notes > summary::-webkit-details-marker {
-  display: none;
-}
-
-.case-study-notes > summary::after {
-  content: '+';
-  color: var(--muted);
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.case-study-notes[open] > summary::after {
-  content: '−';
 }
 
 .case-study-body {
@@ -799,10 +801,6 @@ a:focus-visible {
     gap: 1rem;
   }
 
-  .skills-list {
-    grid-template-columns: 1fr;
-  }
-
   .contact-section {
     align-items: flex-start;
     flex-direction: column;
@@ -818,8 +816,9 @@ a:focus-visible {
     gap: 1.25rem;
   }
 
-  .case-study-quick {
+  .more-work-list li {
     grid-template-columns: 1fr;
+    gap: 0.35rem;
   }
 
   .case-study-body section {
