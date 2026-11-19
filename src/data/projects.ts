@@ -207,19 +207,21 @@ export const projects: Project[] = [
     problem:
       'A frontier model can generate a plausible diligence summary. A buyer still needs a reproducible record of what was examined, which claims have source evidence, what contradicts them, and who approved the conclusion.',
     system:
-      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, proposes candidate decisions from a bounded prompt, requires snapshot citations, and records human confirmations, approvals, and outcomes. Versioned dossiers include evidence appendices and expiring share links.',
+      'A Next.js App Router application with PostgreSQL and Prisma. It ingests public GitHub sources into immutable snapshots, proposes candidate decisions from bounded snapshots with an optional focus, requires verbatim snapshot citations, and records human confirmations, approvals, and outcomes. Versioned dossiers include evidence appendices and expiring share links.',
     proof: [
-      'Public GitHub ingestion creates immutable file, commit, pull request, and issue snapshots with path, commit, and SHA-256 hashes.',
+      'A 6-call extraction eval across three public repos: 66.7% label recall, 100% accepted citation validity, 0 unsupported claims admitted, and 3/3 refusals.',
       'The model proposes candidates from bounded snapshots; every candidate needs 1–3 cited snapshots, unknown source IDs and uncited candidates are dropped, and a human confirms or rejects each one.',
       'Versioned dossiers ship with evidence appendices, open questions, expiring or revocable share links, and HMAC-signed exports.',
     ],
     decisions: [
       'Make the decision the primary object; the model is a candidate generator, not the authority.',
       'Link every evidence item to an immutable source snapshot so path, commit, and hash cannot drift.',
+      'Require a verbatim snapshot quote and drop paraphrases before a candidate reaches review.',
     ],
     tradeoffs: [
       'Ingestion currently targets public GitHub repositories; private-repo and data-room workflows need more setup.',
       'Extraction is bounded by snapshot coverage; it cannot prove runtime behavior or code that was not ingested.',
+      'The public eval is 18 labeled decisions; recall is directional, not a production guarantee.',
     ],
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Tailwind CSS'],
     flow: [
@@ -233,6 +235,11 @@ export const projects: Project[] = [
       {
         label: 'Sample dossier',
         href: 'https://tarkasabha.vercel.app/diligence',
+        kind: 'evidence',
+      },
+      {
+        label: 'Benchmark',
+        href: 'https://tarkasabha.vercel.app/benchmark',
         kind: 'evidence',
       },
       { label: 'Source', href: 'https://github.com/subhajitlucky/tarkaSabha', kind: 'source' },
